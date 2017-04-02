@@ -2,6 +2,7 @@ package by.bsuir.mpp.computershop.service.impl;
 
 import by.bsuir.mpp.computershop.entity.BaseEntity;
 import by.bsuir.mpp.computershop.service.CrudService;
+import by.bsuir.mpp.computershop.service.exception.EntityNotFoundException;
 import by.bsuir.mpp.computershop.service.exception.ServiceException;
 import org.springframework.data.repository.CrudRepository;
 
@@ -24,9 +25,11 @@ public abstract class AbstractCrudService<E extends BaseEntity<ID>, ID extends S
     @Override
     public E update(E entity) throws ServiceException {
         ID id = entity.getId();
-        E result = null;
+        E result;
         if (repository.exists(id)) {
             result = repository.save(entity);
+        } else {
+            throw new EntityNotFoundException(idToString(id));
         }
         if (result == null) {
             throw new ServiceException("Can't update entity.");
@@ -44,7 +47,7 @@ public abstract class AbstractCrudService<E extends BaseEntity<ID>, ID extends S
         E result;
         result = repository.findOne(id);
         if (result == null) {
-            throw new ServiceException(ServiceException.getNotFoundMessage(id.toString()));
+            throw new EntityNotFoundException(idToString(id));
         }
         return result;
     }
@@ -54,7 +57,11 @@ public abstract class AbstractCrudService<E extends BaseEntity<ID>, ID extends S
         if (repository.exists(id)) {
             repository.delete(id);
         } else {
-            throw new ServiceException(ServiceException.getNotFoundMessage(id.toString()));
+            throw new EntityNotFoundException(idToString(id));
         }
+    }
+
+    private String idToString(ID id) {
+        return id != null ? id.toString() : "null";
     }
 }
