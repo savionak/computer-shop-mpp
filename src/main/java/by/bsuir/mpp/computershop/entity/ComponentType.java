@@ -3,11 +3,15 @@ package by.bsuir.mpp.computershop.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "component_type")
 public class ComponentType extends BaseEntity<Long> {
 
+    @NotNull(message = "Component name cannot be null")
+    @Pattern(regexp = "^(?!\\s*$).+", message = "Component name cannot be empty")
     @Column(unique = true, nullable = false)
     private String name;
 

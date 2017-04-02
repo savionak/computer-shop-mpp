@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.validation.Valid;
 import java.io.Serializable;
 
 public abstract class AbstractCrudController<E extends BaseEntity<ID>, ID extends Serializable> implements CrudController<E, ID> {
@@ -23,7 +24,7 @@ public abstract class AbstractCrudController<E extends BaseEntity<ID>, ID extend
     }
 
     @Override
-    public E add(@RequestBody E entity) throws ControllerException {
+    public E add(@Valid @RequestBody E entity) throws ControllerException {
         logger.info(String.format("ADD new %s entity", entity.getClass()));
         E result;
         try {
@@ -39,7 +40,7 @@ public abstract class AbstractCrudController<E extends BaseEntity<ID>, ID extend
     }
 
     @Override
-    public E update(@RequestBody E entity) throws ControllerException {
+    public E update(@Valid @RequestBody E entity) throws ControllerException {
         logger.info(String.format("UPDATE entity with id = [%s]", entity.getId()));
         E result;
         try {
