@@ -4,6 +4,7 @@ import by.bsuir.mpp.computershop.entity.BaseEntity;
 import by.bsuir.mpp.computershop.service.CrudService;
 import by.bsuir.mpp.computershop.service.exception.EntityNotFoundException;
 import by.bsuir.mpp.computershop.service.exception.ServiceException;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.repository.CrudRepository;
 
 import java.io.Serializable;
@@ -19,45 +20,69 @@ public abstract class AbstractCrudService<E extends BaseEntity<ID>, ID extends S
     @Override
     public E add(E entity) throws ServiceException {
         entity.setId(null); // to avoid update existing entities
-        return repository.save(entity);
+        try {
+            return repository.save(entity);
+        } catch (DataAccessException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
     public E update(E entity) throws ServiceException {
         ID id = entity.getId();
         E result;
-        if (repository.exists(id)) {
-            result = repository.save(entity);
-        } else {
-            throw new EntityNotFoundException(idToString(id));
-        }
-        if (result == null) {
-            throw new ServiceException("Can't update entity.");
+        try {
+            if (id != null && repository.exists(id)) {
+                result = repository.save(entity);
+            } else {
+                throw new EntityNotFoundException(idToString(id));
+            }
+            if (result == null) {
+                throw new ServiceException("Can't update entity.");
+            }
+        } catch (DataAccessException e) {
+            throw new ServiceException(e);
         }
         return result;
     }
 
     @Override
     public Iterable<E> getAll() throws ServiceException {
-        return repository.findAll();
+        Iterable<E> result;
+        try {
+            result =  repository.findAll();
+        } catch (DataAccessException e) {
+            throw new ServiceException(e);
+        }
+        return result;
     }
 
     @Override
     public E getOne(ID id) throws ServiceException {
-        E result;
-        result = repository.findOne(id);
-        if (result == null) {
-            throw new EntityNotFoundException(idToString(id));
+        E result = null;
+        try {
+            if (id != null) {
+                result = repository.findOne(id);
+            }
+            if (result == null) {
+                throw new EntityNotFoundException(idToString(id));
+            }
+        } catch (DataAccessException e) {
+            throw new ServiceException(e);
         }
         return result;
     }
 
     @Override
     public void delete(ID id) throws ServiceException {
-        if (repository.exists(id)) {
-            repository.delete(id);
-        } else {
-            throw new EntityNotFoundException(idToString(id));
+        try{
+            if (id != null && repository.exists(id)) {
+                repository.delete(id);
+            } else {
+                throw new EntityNotFoundException(idToString(id));
+            }
+        } catch (DataAccessException e) {
+            throw new ServiceException(e);
         }
     }
 
