@@ -1,28 +1,18 @@
 package by.bsuir.mpp.computershop.entity;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "component_type")
-public class ComponentType implements Serializable {
-    public static final long serialVersionUID = 8547556L;
+public class ComponentType extends BaseEntity<Long> {
 
-    @Id
-    @GeneratedValue
-    private Long id;
-
+    @Column(unique = true, nullable = false)
     private String name;
+
     @Column(columnDefinition = "text")
     private String description;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName(){
         return this.name;
