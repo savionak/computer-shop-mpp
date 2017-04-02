@@ -1,7 +1,8 @@
-package by.bsuir.mpp.computershop.service;
+package by.bsuir.mpp.computershop.service.impl;
 
 import by.bsuir.mpp.computershop.entity.ComponentType;
 import by.bsuir.mpp.computershop.repository.ComponentTypeRepository;
+import by.bsuir.mpp.computershop.service.ComponentTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,9 +37,9 @@ public class ComponentTypeServiceImpl implements ComponentTypeService {
     }
 
     @Override
-    public ComponentType update(ComponentType type) {
+    public ComponentType update(Long id, ComponentType type) {
         ComponentType result = null;
-        ComponentType typeToUpdate = repository.findOne(type.getId());
+        ComponentType typeToUpdate = repository.findOne(id);
         if (typeToUpdate != null) {
             result = repository.save(type);
         } else {

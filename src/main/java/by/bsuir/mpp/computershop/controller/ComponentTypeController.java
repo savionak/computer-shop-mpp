@@ -16,12 +16,12 @@ public class ComponentTypeController {
         this.componentTypeService = componentTypeService;
     }
 
-    @RequestMapping(path = "", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public Iterable<ComponentType> getAllComponentTypes() {
         return componentTypeService.getAll();
     }
 
-    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(path = "{id}", method = RequestMethod.GET)
     public ComponentType getComponentTypeById(@PathVariable("id") Long id) {
         return componentTypeService.getOne(id);
     }
@@ -31,13 +31,12 @@ public class ComponentTypeController {
         return componentTypeService.add(newType);
     }
 
-    @RequestMapping(path = "/update", method = RequestMethod.PUT)
-    public ComponentType updateComponentType(
-            @RequestBody ComponentType type) {
-        return componentTypeService.update(type);
+    @RequestMapping(path = "update/{id}", method = RequestMethod.PUT)
+    public ComponentType updateComponentType(@PathVariable Long id, @RequestBody ComponentType type) {
+        return componentTypeService.update(id, type);
     }
 
-    @RequestMapping(path = "/delete/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(path = "delete/{id}", method = RequestMethod.DELETE)
     public void deleteComponentTypeById(@PathVariable("id") Long id) {
         componentTypeService.delete(id);
     }
