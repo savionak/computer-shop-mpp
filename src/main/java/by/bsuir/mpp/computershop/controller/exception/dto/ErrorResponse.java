@@ -1,4 +1,4 @@
-package by.bsuir.mpp.computershop.utils;
+package by.bsuir.mpp.computershop.controller.exception.dto;
 
 public class ErrorResponse {
     private String message;

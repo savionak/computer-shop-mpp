@@ -1,13 +1,13 @@
-package by.bsuir.mpp.computershop.utils;
+package by.bsuir.mpp.computershop.controller.exception.dto;
 
-public class CustomFieldError extends ErrorResponse {
+public class CustomFieldErrorResponse extends ErrorResponse {
     private String field;
 
-    public CustomFieldError(String message) {
+    public CustomFieldErrorResponse(String message) {
         super(message);
     }
 
-    public CustomFieldError(String field, String message) {
+    public CustomFieldErrorResponse(String field, String message) {
         super(message);
         this.field = field;
     }

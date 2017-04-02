@@ -1,16 +1,16 @@
-package by.bsuir.mpp.computershop.utils;
+package by.bsuir.mpp.computershop.controller.exception.dto;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ValidationError extends ErrorResponse {
+public class ValidationErrorResponse extends ErrorResponse {
     private List<ErrorResponse> errors = new ArrayList<>();
 
-    public ValidationError(String message) {
+    public ValidationErrorResponse(String message) {
         super(message);
     }
 
-    public void addFieldError(CustomFieldError error) {
+    public void addFieldError(CustomFieldErrorResponse error) {
         this.errors.add(error);
     }
 

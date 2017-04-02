@@ -1,9 +1,9 @@
 package by.bsuir.mpp.computershop.controller.exception.handler;
 
 import by.bsuir.mpp.computershop.controller.exception.ResourceNotFoundException;
-import by.bsuir.mpp.computershop.utils.CustomFieldError;
-import by.bsuir.mpp.computershop.utils.ErrorResponse;
-import by.bsuir.mpp.computershop.utils.ValidationError;
+import by.bsuir.mpp.computershop.controller.exception.dto.CustomFieldErrorResponse;
+import by.bsuir.mpp.computershop.controller.exception.dto.ErrorResponse;
+import by.bsuir.mpp.computershop.controller.exception.dto.ValidationErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -33,14 +33,14 @@ public class GlobalRestExceptionHandler {
     protected ResponseEntity<Object> handleInvalidArguments(MethodArgumentNotValidException ex) {
         BindingResult result = ex.getBindingResult();
         List<FieldError> errors = result.getFieldErrors();
-        ValidationError responseBody = processFieldErrors(errors);
+        ValidationErrorResponse responseBody = processFieldErrors(errors);
         return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
     }
 
-    private ValidationError processFieldErrors(List<FieldError> errors) {
-        ValidationError result = new ValidationError("Invalid arguments");
+    private ValidationErrorResponse processFieldErrors(List<FieldError> errors) {
+        ValidationErrorResponse result = new ValidationErrorResponse("Invalid arguments");
         for (FieldError fieldError: errors) {
-            result.addFieldError(new CustomFieldError(fieldError.getField(), fieldError.getDefaultMessage()));
+            result.addFieldError(new CustomFieldErrorResponse(fieldError.getField(), fieldError.getDefaultMessage()));
         }
         return result;
     }
