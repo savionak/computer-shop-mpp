@@ -30,10 +30,10 @@ public abstract class AbstractCrudController<E extends BaseEntity<ID>, ID extend
         try {
             result = service.add(entity);
         } catch (EntityNotFoundException e) {
-            logger.error(e.getMessage());
+            logger.warn(e.getMessage());
             throw new ResourceNotFoundException(e);
         } catch (ServiceException e) {
-            logger.error(e.getMessage());
+            logger.warn(e.getMessage());
             throw new ControllerException(e);
         }
         return result;
@@ -46,10 +46,10 @@ public abstract class AbstractCrudController<E extends BaseEntity<ID>, ID extend
         try {
             result = service.update(entity);
         } catch (EntityNotFoundException e) {
-            logger.error(e.getMessage());
+            logger.warn(e.getMessage());
             throw new ResourceNotFoundException(e);
         } catch (ServiceException e) {
-            logger.error(e.getMessage());
+            logger.warn(e.getMessage());
             throw new ControllerException(e);
         }
         return result;
@@ -62,10 +62,10 @@ public abstract class AbstractCrudController<E extends BaseEntity<ID>, ID extend
         try {
             result = service.getOne(id);
         } catch (EntityNotFoundException e) {
-            logger.error(e.getMessage());
+            logger.warn(e.getMessage());
             throw new ResourceNotFoundException(e);
         } catch (ServiceException e) {
-            logger.error(e.getMessage());
+            logger.warn(e.getMessage());
             throw new ControllerException(e);
         }
         return result;
@@ -78,7 +78,7 @@ public abstract class AbstractCrudController<E extends BaseEntity<ID>, ID extend
         try {
             result = service.getAll();
         } catch (ServiceException e) {
-            logger.error(e.getMessage());
+            logger.warn(e.getMessage());
             throw new ControllerException(e);
         }
         return result;
@@ -90,10 +90,10 @@ public abstract class AbstractCrudController<E extends BaseEntity<ID>, ID extend
         try {
             service.delete(id);
         } catch (EntityNotFoundException e) {
-            logger.error(e.getMessage());
+            logger.warn(e.getMessage());
             throw new ResourceNotFoundException(e);
         } catch (ServiceException e) {
-            logger.error(e.getMessage());
+            logger.warn(e.getMessage());
             throw new ControllerException(e);
         }
     }
