@@ -10,6 +10,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.io.Serializable;
 
 public abstract class AbstractCrudService<E extends BaseEntity<ID>, ID extends Serializable> implements CrudService<E, ID> {
+    private static final String ID_NOT_FOUND_FORMAT_STRING = "Entity with id = [%s] not found";
 
     private CrudRepository<E, ID> repository;
 
@@ -35,7 +36,7 @@ public abstract class AbstractCrudService<E extends BaseEntity<ID>, ID extends S
             if (id != null && repository.exists(id)) {
                 result = repository.save(entity);
             } else {
-                throw new EntityNotFoundException(idToString(id));
+                throw new EntityNotFoundException(idNotFoundMessage(id));
             }
             if (result == null) {
                 throw new ServiceException("Can't update entity.");
@@ -65,7 +66,7 @@ public abstract class AbstractCrudService<E extends BaseEntity<ID>, ID extends S
                 result = repository.findOne(id);
             }
             if (result == null) {
-                throw new EntityNotFoundException(idToString(id));
+                throw new EntityNotFoundException(idNotFoundMessage(id));
             }
         } catch (DataAccessException e) {
             throw new ServiceException(e);
@@ -79,11 +80,15 @@ public abstract class AbstractCrudService<E extends BaseEntity<ID>, ID extends S
             if (id != null && repository.exists(id)) {
                 repository.delete(id);
             } else {
-                throw new EntityNotFoundException(idToString(id));
+                throw new EntityNotFoundException(idNotFoundMessage(id));
             }
         } catch (DataAccessException e) {
             throw new ServiceException(e);
         }
+    }
+
+    private String idNotFoundMessage(ID id) {
+        return String.format(ID_NOT_FOUND_FORMAT_STRING, idToString(id));
     }
 
     private String idToString(ID id) {
