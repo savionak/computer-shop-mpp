@@ -5,8 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "component_type")
-public class ComponentType extends BaseEntity<Long> {
+@Table(name = "provider")
+public class Provider extends BaseEntity<Long>{
 
     @Column(unique = true, nullable = false)
     private String name;
