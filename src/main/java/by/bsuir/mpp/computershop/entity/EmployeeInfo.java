@@ -9,35 +9,33 @@ import javax.persistence.Table;
 
 public class EmployeeInfo extends BaseEntity<Long>{
 
-    @Column(nullable = false)
-    private String first_name;
+    @Column(name = "first_name",nullable = false)
+    private String firstName;
 
-    @Column(nullable = false)
-    private String last_name;
+    @Column(name = "last_name",nullable = false)
+    private String lastName;
 
-    @Column()
+    @Column(name = "patronymic")
     private String patronymic;
 
-    @Column(nullable = false)
+    @Column(name = "phone",nullable = false)
     private String phone;
 
-    @Column(nullable = false)
-    private String email;
 
-    public String getFirst_name(){
-        return this.first_name;
+    public String getFirstName(){
+        return this.firstName;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLast_name(){
-        return this.last_name;
+    public String getLastName(){
+        return this.lastName;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getPatronymic(){
@@ -55,12 +53,5 @@ public class EmployeeInfo extends BaseEntity<Long>{
     public void setPhone(String phone) {
         this.phone = phone;
     }
-
-    public String getEmail(){ return this.email;   }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
 
 }

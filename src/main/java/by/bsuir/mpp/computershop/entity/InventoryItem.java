@@ -1,46 +1,43 @@
 package by.bsuir.mpp.computershop.entity;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "inventory_item")
 
 public class InventoryItem extends BaseEntity<Long> {
 
-    @Column(nullable = false)
-    private int stocktaking_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "stocktaking_id", nullable = false)
+    private Inventory stocktakingId;
 
-    @Column(nullable = false)
-    private int component_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "component_id", nullable = false)
+    private ComponentStore componentId;
 
-    @Column(nullable = false)
-    private int real_count;
+    @Column(name = "real_count",nullable = false)
+    private int realCount;
 
-    public int getStocktaking_id(){
-        return this.stocktaking_id;
+    public Inventory getStocktakingId(){
+        return this.stocktakingId;
+    }
+    public void setStocktakingId(Inventory stocktakingId) {
+        this.stocktakingId = stocktakingId;
     }
 
-    public void setStocktaking_id(int stocktaking_id) {
-        this.stocktaking_id = stocktaking_id;
+    public ComponentStore getComponentId(){
+        return this.componentId;
+    }
+    public void setComponentId(ComponentStore componentId) {
+        this.componentId = componentId;
     }
 
-    public int getComponent_id(){
-        return this.component_id;
+    public int getRealCount(){
+        return this.realCount;
     }
-
-    public void setComponent_id(int component_id) {
-        this.component_id = component_id;
-    }
-
-    public int getReal_count(){
-        return this.real_count;
-    }
-
-    public void setReal_count(int real_count) {
-        this.real_count = real_count;
+    public void setRealCount(int realCount) {
+        this.realCount = realCount;
     }
 
 }

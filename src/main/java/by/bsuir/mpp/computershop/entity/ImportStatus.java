@@ -8,7 +8,7 @@ package by.bsuir.mpp.computershop.entity;
               return "зарегистрирован";
           }
       },
-      ADOPTED{
+      FINISHED{
           public String toString() {
               return "принят";
           }

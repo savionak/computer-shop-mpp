@@ -7,8 +7,9 @@ import java.sql.Date;
 @Table(name = "order")
 public class Import extends BaseEntity<Long> {
 
-    @Column(name = "provider_id",nullable = false)
-    private int providerId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "provider_id", nullable = false)
+    private Provider providerId;
 
     @Column(name = "date_time",nullable = false)
     private Date dateTime;
@@ -16,8 +17,9 @@ public class Import extends BaseEntity<Long> {
     @Column(name = "count",nullable = false)
     private int count;
 
-    @Column(name = "model_id",nullable = false)
-    private int modelId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "model_id", nullable = false)
+    private ComponentModel modelId;
 
     @Column(name = "purchase_price",nullable = false)
     private int purchasePrice;
@@ -25,18 +27,15 @@ public class Import extends BaseEntity<Long> {
     @Column(name = "price",nullable = false)
     private int price;
 
-    @Column(name = "status_id",nullable = false)
-    private int statusId;
-
-    @Column(name = "order_status",nullable = false)
+    @Column(name = "status",nullable = false)
     @Enumerated(EnumType.ORDINAL)
-    private OrderStatus orderStatus;
+    private ImportStatus status;
 
-    public int getProviderId(){
+    public Provider getProviderId(){
         return this.providerId;
     }
 
-    public void setProviderId(int name) {
+    public void setProviderId(Provider providerId) {
         this.providerId = providerId;
     }
 
@@ -56,11 +55,11 @@ public class Import extends BaseEntity<Long> {
         this.count = count;
     }
 
-    public int getModelId(){
+    public ComponentModel getModelId(){
         return this.modelId;
     }
 
-    public void setModelId(int modelId) {
+    public void setModelId(ComponentModel modelId) {
         this.modelId = modelId;
     }
 
@@ -80,20 +79,12 @@ public class Import extends BaseEntity<Long> {
         this.price = price;
     }
 
-    public int getStatusId(){
-        return this.statusId;
+    public ImportStatus getStatus(){
+        return this.status;
     }
 
-    public void setStatusId(int statusId) {
-        this.statusId = statusId;
-    }
-
-    public OrderStatus getOrder_status(){
-        return this.orderStatus;
-    }
-
-    public void setOrder_Status(OrderStatus orderStatus) {
-        this.orderStatus =orderStatus;
+    public void setStatus(ImportStatus status) {
+        this.status =status;
     }
 
 }

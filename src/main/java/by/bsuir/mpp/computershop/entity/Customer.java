@@ -8,10 +8,10 @@ import javax.persistence.Table;
 @Table(name = "customer")
 public class Customer extends BaseEntity<Long>{
 
-        @Column(unique = true, nullable = false)
+        @Column(name = "name",unique = true, nullable = false)
         private String name;
 
-        @Column(columnDefinition = "text")
+        @Column(name = "description",columnDefinition = "text")
         private String description;
 
         public String getName(){

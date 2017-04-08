@@ -18,11 +18,8 @@ public class Order extends BaseEntity<Long> {
     private Date ordDate;
 
     @Column(name = "status_id",nullable = false)
-    private int statusId;
-
-    @Column(name = "import_status",nullable = false)
     @Enumerated(EnumType.ORDINAL)
-    private ImportStatus importStatus;
+    private OrderStatus statusId;
 
     public int getCustomerId(){
         return this.customerId;
@@ -48,19 +45,11 @@ public class Order extends BaseEntity<Long> {
         this.cost = cost;
     }
 
-    public int getStatusId(){
+    public OrderStatus getOrderId(){
         return this.statusId;
     }
 
-    public void setStatusId(int statusId) {
-        this.statusId = statusId;
-    }
-
-    public ImportStatus getImport_status(){
-        return this.importStatus;
-    }
-
-    public void setImport_Status(ImportStatus importStatus) {
-        this.importStatus =importStatus;
+    public void setOrderId(OrderStatus statusId) {
+        this.statusId =statusId;
     }
 }

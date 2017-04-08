@@ -1,35 +1,39 @@
 package by.bsuir.mpp.computershop.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "component_store")
 
 public class ComponentStore extends BaseEntity<Long>{
 
-    @Column(nullable = false)
-    private int model_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "model_id", nullable = false)
+    private ComponentModel modelId;
 
-    @Column(nullable = false)
+    @Column(name = "price",nullable = false)
     private int price;
 
-    @Column(nullable = false)
+    @Column(name = "count",nullable = false)
     private int count;
 
-    public int getModel_id(){
-        return this.model_id;
-    }
+    @OneToMany(mappedBy = "componentId", cascade = CascadeType.ALL)
+    private List<InventoryItem> inventoryItems;
 
-    public void setModel_id(int model_id) {
-        this.model_id = model_id;
+    public List<InventoryItem> getInventoryItems(){return inventoryItems;}
+    public void setInventoryItems(List<InventoryItem> inventoryItems){this.inventoryItems = inventoryItems;}
+
+    public ComponentModel getModelId(){
+        return this.modelId;
+    }
+    public void setModelId(ComponentModel modelId) {
+        this.modelId = modelId;
     }
 
     public int getPrice(){
         return this.price;
     }
-
     public void setPrice(int price) {
         this.price = price;
     }
@@ -37,7 +41,6 @@ public class ComponentStore extends BaseEntity<Long>{
     public int getCount(){
         return this.count;
     }
-
     public void setCount(int count) {
         this.count = count;
     }

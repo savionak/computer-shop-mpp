@@ -7,7 +7,7 @@ import java.sql.Date;
 
 @Entity
 @Table(name = "export")
-public class Export {
+public class Export extends BaseEntity<Long>{
 
     @Column(name = "order_id",nullable = false)
     private int orderId;

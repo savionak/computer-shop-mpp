@@ -1,18 +1,24 @@
 package by.bsuir.mpp.computershop.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "component_type")
 public class ComponentType extends BaseEntity<Long> {
 
-    @Column(unique = true, nullable = false)
+    @Column(name = "name",unique = true, nullable = false)
     private String name;
 
-    @Column(columnDefinition = "text")
+    @Column(name = "description",columnDefinition = "text")
     private String description;
+
+    @OneToMany(mappedBy = "typeId", cascade = CascadeType.ALL)
+    private List<ComponentModel> componentModels;
+
+    public List<ComponentModel> getComponentModels(){return componentModels;}
+
+    public void setComponentModels(List<ComponentModel> componentModels){this.componentModels = componentModels;}
 
     public String getName(){
         return this.name;

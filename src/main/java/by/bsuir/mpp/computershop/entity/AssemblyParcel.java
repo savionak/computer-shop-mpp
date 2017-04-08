@@ -10,27 +10,27 @@ import javax.persistence.Table;
 
 public class AssemblyParcel {
 
-    @Column(nullable = false)
-    private int order_id;
+    @Column(name = "order_id",nullable = false)
+    private int orderId;
 
-    @Column(nullable = false)
+    @Column(name = "cost",nullable = false)
     private int cost;
 
-    @Column(nullable = false)
+    @Column(name = "count",nullable = false)
     private int count;
 
-    @Column(nullable = false)
-    private int done_count;
+    @Column(name = "done_count",nullable = false)
+    private int doneCount;
 
-    @Column(nullable = false)
+    @Column(name = "canceled", nullable = false)
     private boolean canceled;
 
-    public int getOrder_id(){
-        return this.order_id;
+    public int getOrderId(){
+        return this.orderId;
     }
 
-    public void setOrder_id(int order_id) {
-        this.order_id = order_id;
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 
     public int getCost(){
@@ -49,12 +49,12 @@ public class AssemblyParcel {
         this.count = count;
     }
 
-    public int getDone_count(){
-        return this.done_count;
+    public int getDoneCount(){
+        return this.doneCount;
     }
 
-    public void setDone_count(int done_count) {
-        this.done_count = done_count;
+    public void setDoneCount(int doneCount) {
+        this.doneCount = doneCount;
     }
 
     public boolean getCanceled(){

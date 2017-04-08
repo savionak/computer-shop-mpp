@@ -7,32 +7,33 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "order_component")
 
-public class OrderComponent extends BaseEntity<Long>{
+//МНОГОЕ-КО-МНОГИМ!!!!???
 
-    @Column(nullable = false)
-    private int order_id;
+public class OrderComponent {
 
-    @Column(nullable = false)
-    private int component_id;
+    @Column(name = "order_id",nullable = false)
+    private int orderId;
 
-    @Column(nullable = false)
+    @Column(name = "component_id",nullable = false)
+    private int componentId;
+
+    @Column(name = "count",nullable = false)
     private int count;
 
-
-    public int getOrder_id(){
-        return this.order_id;
+    public int getOrderId(){
+        return this.orderId;
     }
 
-    public void setOrder_id(int order_id) {
-        this.order_id = order_id;
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 
-    public int getComponent_id(){
-        return this.component_id;
+    public int getComponentId(){
+        return this.componentId;
     }
 
-    public void setComponent_id(int component_id) {
-        this.component_id = component_id;
+    public void setComponentId(int componentId) {
+        this.componentId = componentId;
     }
 
     public int getCount(){

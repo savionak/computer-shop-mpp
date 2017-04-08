@@ -1,64 +1,68 @@
 package by.bsuir.mpp.computershop.entity;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 @Entity
 @Table(name = "assembler_task")
 
 public class AssemblerTask extends BaseEntity<Long> {
 
-    @Column(unique = true, nullable = false)
-    private int order_id;
+    @Column(name = "order_id",unique = true, nullable = false)
+    private int orderId;
 
-    @Column(unique = true, nullable = false)
-    private int assembly_parcel_id;
+    @Column(name = "assembly_parcel_id",unique = true, nullable = false)
+    private int assemblyParcelId;
 
-    @Column(nullable = false)
-    private int assembler_id;
+    @Column(name = "assembler_id",nullable = false)
+    private int assemblerId;
 
-    @Column(nullable = false)
-    private int task_type_id;
+    @Column(name = "task_type_id",nullable = false)
+    private int taskTypeId;
 
-    @Column(nullable = false)
+    @Column(name = "count",nullable = false)
     private int count;
 
-    @Column(nullable = false)
-    private int done_count;
+    @Column(name = "done_count",nullable = false)
+    private int doneCount;
+
+    @Column(name = "done_date",nullable = false)
+    private Date doneDate;
 
     @Enumerated(EnumType.ORDINAL)
-    @Column(nullable = false)
-    private TaskType task_type;
+    @Column(name = "task_type",nullable = false)
+    private TaskType taskType;
 
-    public int getOrder_id(){
-        return this.order_id;
+    public int getOrderId(){
+        return this.orderId;
     }
 
-    public void setOrder_id(int order_id) {
-        this.order_id = order_id;
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 
-    public int getAssembly_parcel_id(){
-        return this.assembly_parcel_id;
+    public int getAssemblyParcelId(){
+        return this.assemblyParcelId;
     }
 
-    public void setAssembly_parcel_id(int assembly_parcel_id) {
-        this.assembly_parcel_id = assembly_parcel_id;
+    public void setAssemblyParcelId(int assemblyParcelId) {
+        this.assemblyParcelId = assemblyParcelId;
     }
 
-    public int getAssembler_id(){
-        return this.assembler_id;
+    public int getAssemblerId(){
+        return this.assemblerId;
     }
 
-    public void setAssembler_id(int assembler_id) {
-        this.assembler_id = assembler_id;
+    public void setAssemblerId(int assemblerId) {
+        this.assemblerId = assemblerId;
     }
 
-    public int getTask_type_id(){
-        return this.task_type_id;
+    public int getTaskTypeId(){
+        return this.taskTypeId;
     }
 
-    public void setTask_type_id(int task_type_id) {
-        this.task_type_id = task_type_id;
+    public void setTaskTypeId(int taskTypeId) {
+        this.taskTypeId = taskTypeId;
     }
 
     public int getCount(){
@@ -69,20 +73,28 @@ public class AssemblerTask extends BaseEntity<Long> {
         this.count = count;
     }
 
-    public int getDone_count(){
-        return this.done_count;
+    public int getDoneCount(){
+        return this.doneCount;
     }
 
-    public void setDone_count(int done_count) {
-        this.done_count = done_count;
+    public void setDoneCount(int doneCount) {
+        this.doneCount = doneCount;
     }
 
-    public TaskType getTask_type(){
-        return this.task_type;
+    public Date getDoneDate(){
+        return this.doneDate;
     }
 
-    public void setTask_type(TaskType task_type) {
-        this.task_type =task_type;
+    public void setDoneDate(Date doneDate) {
+        this.doneDate = doneDate;
+    }
+
+    public TaskType getTaskType(){
+        return this.taskType;
+    }
+
+    public void setTaskType(TaskType taskType) {
+        this.taskType =taskType;
     }
 
 

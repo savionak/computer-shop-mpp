@@ -1,32 +1,35 @@
 package by.bsuir.mpp.computershop.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "inventory")
 public class Inventory extends BaseEntity<Long>{
 
-    @Column(nullable = false)
-    private Date st_date;
+    @Column(name = "st_date",nullable = false)
+    private Date stDate;
 
-    @Column(nullable = false)
+    @Column(name = "saldo",nullable = false)
     private int saldo;
 
-    public Date getSt_date(){
-        return this.st_date;
-    }
+    @OneToMany(mappedBy = "stocktakingId", cascade = CascadeType.ALL)
+    private List<InventoryItem> inventoryItems;
 
-    public void setSt_date(Date st_date) {
-        this.st_date = st_date;
+    public List<InventoryItem> getInventoryItems(){return inventoryItems;}
+    public void setInventoryItems(List<InventoryItem> inventoryItems){this.inventoryItems = inventoryItems;}
+
+    public Date getStDate(){
+        return this.stDate;
+    }
+    public void setStDate(Date stDate) {
+        this.stDate = stDate;
     }
 
     public int getSaldo() {
         return saldo;
     }
-
     public void setSaldo(int saldo) {
         this.saldo = saldo;
     }

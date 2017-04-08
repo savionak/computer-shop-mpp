@@ -1,8 +1,5 @@
 package by.bsuir.mpp.computershop.entity;
 
-/**
- * Created by Liza on 08.04.2017.
- */
 public enum EmployeeRole {
 
         RECEIVER{
@@ -10,7 +7,7 @@ public enum EmployeeRole {
                 return "приемщик";
             }
         },
-        COLLECTOR{
+        ASSEMBLER{
             public String toString() {
                 return "сборщик";
             }
@@ -28,7 +25,7 @@ public enum EmployeeRole {
             }
         }
         ,
-        ADMINISTRATOR{
+        ADMIN{
             public String toString() {
                 return "администратор";
             }

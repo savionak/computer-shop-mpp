@@ -7,29 +7,21 @@ import javax.persistence.*;
 
 public class EmployeeAuth extends BaseEntity<Long> {
 
-    @Column(nullable = false)
-    private int role_id;
+    @Enumerated( EnumType.ORDINAL)
+    @Column(name ="role ", nullable = false)
+    private EmployeeRole role;
 
-    @Column(unique = true, nullable = false)
+    @Column(name = "login",unique = true, nullable = false)
     private String login;
 
-    @Column(unique = true, nullable = false)
-    private String pass_hash;
+    @Column(name = "pass_hash",unique = true, nullable = false)
+    private String passHash;
 
-    @Column( nullable = false)
-    private String salt;
+    @Column(name ="blocked", nullable = false)
+    private Boolean blocked;
 
-    @Enumerated(EnumType.ORDINAL)
-    @Column( nullable = false)
-    private Status status;
-
-    public int getRole_id(){
-        return this.role_id;
-    }
-
-    public void setRole_id(int role_id) {
-        this.role_id = role_id;
-    }
+    @Column(name ="deleted", nullable = false)
+    private Boolean deleted;
 
     public String  getLogin(){
         return this.login;
@@ -37,24 +29,34 @@ public class EmployeeAuth extends BaseEntity<Long> {
 
     public void setLogin (String  role_id) {this.login = login;    }
 
-    public String  getPass_hash(){
-        return this.pass_hash;
+    public String getPassHash(){
+        return this.passHash;
     }
 
-    public void setPass_hash (String  pass_hash) {this.pass_hash = pass_hash;    }
+    public void setPassHash(String passHash) {this.passHash = passHash;    }
 
-    public String  getSalt(){
-        return this.salt;
+    public Boolean getStatus(){
+        return this.blocked;
     }
 
-    public void setSalt (String  salt) {this.salt = salt;    }
-
-    public Status getStatus(){
-        return this.status;
+    public void setStatus(Boolean blocked) {
+        this.blocked =blocked;
     }
 
-    public void setStatus(Status status) {
-        this.status =status;
+    public Boolean getDeleted(){
+        return this.deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted =deleted;
+    }
+
+    public EmployeeRole getRole(){
+        return this.role;
+    }
+
+    public void setRole(EmployeeRole role) {
+        this.role =role;
     }
 
 }
