@@ -9,26 +9,26 @@ import java.sql.Date;
 @Table(name = "export")
 public class Export {
 
-    @Column(nullable = false)
-    private int order_id;
+    @Column(name = "order_id",nullable = false)
+    private int orderId;
 
-    @Column(nullable = false)
-    private Date exp_date;
+    @Column(name = "exp_date",nullable = false)
+    private Date expDate;
 
-    public int getOrder_id(){
-        return this.order_id;
+    public int getOrderId(){
+        return this.orderId;
     }
 
-    public void setOrder_id(int customer_id) {
-        this.order_id = order_id;
+    public void setOrderId(int customer_id) {
+        this.orderId = orderId;
     }
 
-    public Date getExp_date() {
-        return exp_date;
+    public Date getExpDate() {
+        return expDate;
     }
 
-    public void setExp_date(Date exp_date) {
-        this.exp_date = exp_date;
+    public void setExpDate(Date expDate) {
+        this.expDate = expDate;
     }
 
 

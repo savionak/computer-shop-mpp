@@ -3,64 +3,97 @@ package by.bsuir.mpp.computershop.entity;
 import javax.persistence.*;
 import java.sql.Date;
 
-
 @Entity
-@Table(name = "import")
+@Table(name = "order")
 public class Import extends BaseEntity<Long> {
 
-    @Column(nullable = false)
-    private int customer_id;
+    @Column(name = "provider_id",nullable = false)
+    private int providerId;
 
-    @Column(nullable = false)
-    private int cost;
+    @Column(name = "date_time",nullable = false)
+    private Date dateTime;
 
-    @Column(nullable = false)
-    private Date ord_date;
+    @Column(name = "count",nullable = false)
+    private int count;
 
-    @Column(nullable = false)
-    private int status_id;
+    @Column(name = "model_id",nullable = false)
+    private int modelId;
 
-    @Column(nullable = false)
+    @Column(name = "purchase_price",nullable = false)
+    private int purchasePrice;
+
+    @Column(name = "price",nullable = false)
+    private int price;
+
+    @Column(name = "status_id",nullable = false)
+    private int statusId;
+
+    @Column(name = "order_status",nullable = false)
     @Enumerated(EnumType.ORDINAL)
-    private ImportStatus importStatus;
+    private OrderStatus orderStatus;
 
-    public int getCustomer_id(){
-        return this.customer_id;
+    public int getProviderId(){
+        return this.providerId;
     }
 
-    public void setCustomer_id(int customer_id) {
-        this.customer_id = customer_id;
+    public void setProviderId(int name) {
+        this.providerId = providerId;
     }
 
-    public Date getOrd_date() {
-        return ord_date;
+    public Date getDateTime() {
+        return dateTime;
     }
 
-    public void setOrd_date(Date ord_date) {
-        this.ord_date = ord_date;
+    public void setDateTime(Date dateTime) {
+        this.dateTime = dateTime;
     }
 
-    public int getCost(){
-        return this.cost;
+    public int getCount(){
+        return this.count;
     }
 
-    public void setCost(int cost) {
-        this.cost = cost;
+    public void setCount(int count) {
+        this.count = count;
     }
 
-    public int getStatus_id(){
-        return this.status_id;
+    public int getModelId(){
+        return this.modelId;
     }
 
-    public void setStatus_id(int status_id) {
-        this.status_id = status_id;
+    public void setModelId(int modelId) {
+        this.modelId = modelId;
     }
 
-    public ImportStatus getImport_status(){
-        return this.importStatus;
+    public int getPurchasePrice(){
+        return this.purchasePrice;
     }
 
-    public void setImport_Status(ImportStatus importStatus) {
-        this.importStatus =importStatus;
+    public void setPurchasePrice(int purchasePrice) {
+        this.purchasePrice = purchasePrice;
     }
+
+    public int getPrice(){
+        return this.price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public int getStatusId(){
+        return this.statusId;
+    }
+
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
+    }
+
+    public OrderStatus getOrder_status(){
+        return this.orderStatus;
+    }
+
+    public void setOrder_Status(OrderStatus orderStatus) {
+        this.orderStatus =orderStatus;
+    }
+
 }
