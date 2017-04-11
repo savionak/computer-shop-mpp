@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "order")
+@Table(name = "import")
 public class Import extends BaseEntity<Long> {
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -31,6 +31,18 @@ public class AssemblyParcel {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<AssemblerTask> assemblyOrders;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "assemblyOrder", cascade = CascadeType.ALL, orphanRemoval = true)
+    public List<AssemblyComponent>  assemblyComponents;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "assemblyId", cascade = CascadeType.ALL, orphanRemoval = true)
+    public List<AssemblyComponent>  assemblyId;
+
+    public List<AssemblyComponent> getAssemblyComponents(){return assemblyComponents;}
+    public void setAssemblyComponents(List<AssemblyComponent> assemblyComponents){this.assemblyComponents = assemblyComponents;}
+
+    public List<AssemblyComponent> getAssemblyId(){return assemblyId;}
+    public void setAssemblyId(List<AssemblyComponent> assemblyId){this.assemblyId = assemblyId;}
+
     public List<AssemblerTask> getAssemblyParcels(){return assemblyParcels;}
     public void setAssemblyParcels(List<AssemblerTask> assemblyParcels){this.assemblyParcels = assemblyParcels;}
 

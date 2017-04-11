@@ -10,7 +10,7 @@ public class ComponentStore extends BaseEntity<Long>{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "model_id", nullable = false)
-    private ComponentModel model;
+    private ComponentModel componentModel;
 
     @Column(name = "price",nullable = false)
     private int price;
@@ -18,11 +18,17 @@ public class ComponentStore extends BaseEntity<Long>{
     @Column(name = "count",nullable = false)
     private int count;
 
-    @OneToMany(mappedBy = "component", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "component", cascade = CascadeType.ALL)
     private List<InventoryItem> inventoryItems;
 
-    @OneToMany(mappedBy = "orderComponent", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "orderComponent", cascade = CascadeType.ALL, orphanRemoval = true)
     public List<OrderComponent>  orderComponents;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "assemblyComponent", cascade = CascadeType.ALL, orphanRemoval = true)
+    public List<AssemblyComponent>  assemblyComponents;
+
+    public List<AssemblyComponent> getAssemblyComponents(){return assemblyComponents;}
+    public void setAssemblyComponents(List<AssemblyComponent> assemblyComponents){this.assemblyComponents = assemblyComponents;}
 
     public List<OrderComponent> getOrderComponents(){return orderComponents;}
     public void setOrderComponents(List<OrderComponent> orderComponents){this.orderComponents = orderComponents;}
@@ -30,11 +36,11 @@ public class ComponentStore extends BaseEntity<Long>{
     public List<InventoryItem> getInventoryItems(){return inventoryItems;}
     public void setInventoryItems(List<InventoryItem> inventoryItems){this.inventoryItems = inventoryItems;}
 
-    public ComponentModel getModel(){
-        return this.model;
+    public ComponentModel getComponentModel(){
+        return this.componentModel;
     }
-    public void setModel(ComponentModel model) {
-        this.model = model;
+    public void setComponentModel(ComponentModel componentModel) {
+        this.componentModel = componentModel;
     }
 
     public int getPrice(){
