@@ -4,16 +4,16 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "order_component", catalog = "computer_shop")
+@Table(name = "order_component")
 @AssociationOverrides({
-        @AssociationOverride(name = "id.order", joinColumns = @JoinColumn(name = "order_id")),
-        @AssociationOverride(name = "id.component", joinColumns = @JoinColumn(name = "component_id"))})
+        @AssociationOverride(name = "orderOrder", joinColumns = @JoinColumn(name = "order_id")),
+        @AssociationOverride(name = "orderComponent", joinColumns = @JoinColumn(name = "component_id"))})
 
 public class OrderComponent implements Serializable {
 
 
     @EmbeddedId
-    private OrderComponentPK id = new OrderComponentPK();
+    private OrderComponentPK Pk = new OrderComponentPK();
 
     @Id
     @ManyToOne
@@ -28,28 +28,27 @@ public class OrderComponent implements Serializable {
     @Column(name = "count",nullable = false)
     private int count;
 
-
-    public OrderComponentPK getId(){
-        return this.id;
+    public OrderComponentPK getPk(){
+        return this.Pk;
     }
-    public void setId(OrderComponentPK count) {
-        this.id = id;
+    public void setPk(OrderComponentPK count) {
+        this.Pk = Pk;
     }
 
     @Transient
     public Order getOrder(){
-        return getId().getOrder();
+        return getPk().getOrder();
     }
     public void setOrder(Order orderOrder) {
-        getId().setOrder(orderOrder);
+        getPk().setOrder(orderOrder);
     }
 
     @Transient
     public ComponentStore getComponent(){
-        return getId().getComponent();
+        return getPk().getComponent();
     }
     public void setComponent(ComponentStore orderComponent) {
-        getId().setComponent(orderComponent);
+        getPk().setComponent(orderComponent);
     }
 
     public int getCount(){
@@ -57,6 +56,25 @@ public class OrderComponent implements Serializable {
     }
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        OrderComponent that = (OrderComponent) o;
+
+        if (getPk() != null ? !getPk().equals(that.getPk())
+                : that.getPk() != null)
+            return false;
+
+        return true;
+    }
+
+    public int hashCode() {
+        return (getPk() != null ? getPk().hashCode() : 0);
     }
 
 }

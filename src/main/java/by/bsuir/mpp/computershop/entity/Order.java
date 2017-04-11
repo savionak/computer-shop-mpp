@@ -6,7 +6,7 @@ import java.util.List;
 
 
 @Entity
-@Table(name = "import")
+@Table(name = "order")
 public class Order extends BaseEntity<Long> {
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -23,13 +23,13 @@ public class Order extends BaseEntity<Long> {
     @Enumerated(EnumType.ORDINAL)
     private OrderStatus statusId;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.ALL)
     private List<Export> exports;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.ALL)
     private List<AssemblyParcel> assemblyParcels;
 
-    @OneToMany(mappedBy = "orderOrder", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "orderOrder", cascade = CascadeType.ALL)
     private List<OrderComponent> orderComponents;
 
     public List<OrderComponent> getOrderComponents(){return orderComponents;}
