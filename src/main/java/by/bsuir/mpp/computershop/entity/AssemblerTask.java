@@ -7,23 +7,22 @@ import java.sql.Date;
 @Table(name = "assembler_task")
 
 public class AssemblerTask extends BaseEntity<Long> {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id",nullable = false)
+    private AssemblyParcel order;
 
-    @Column(name = "order_id",unique = true, nullable = false)
-    private int orderId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "assembly_parcel_id", nullable = false)
+    private AssemblyParcel assemblyParcel;
 
-    @Column(name = "assembly_parcel_id",unique = true, nullable = false)
-    private int assemblyParcelId;
-
-    @Column(name = "assembler_id",nullable = false)
-    private int assemblerId;
-
-    @Column(name = "task_type_id",nullable = false)
-    private int taskTypeId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "assembler_id", nullable = false)
+    private EmployeeAuth assembler;
 
     @Column(name = "count",nullable = false)
     private int count;
 
-    @Column(name = "done_count",nullable = false)
+    @Column(name = "done_count",nullable = false, columnDefinition = "int default 0")
     private int doneCount;
 
     @Column(name = "done_date",nullable = false)
@@ -33,42 +32,30 @@ public class AssemblerTask extends BaseEntity<Long> {
     @Column(name = "task_type",nullable = false)
     private TaskType taskType;
 
-    public int getOrderId(){
-        return this.orderId;
+    public AssemblyParcel getOrder(){
+        return this.order;
+    }
+    public void setOrder(AssemblyParcel order) {
+        this.order = order;
     }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
+    public AssemblyParcel getAssemblyParcel(){
+        return this.assemblyParcel;
+    }
+    public void setAssemblyParcel(AssemblyParcel assemblyParcel) {
+        this.assemblyParcel = assemblyParcel;
     }
 
-    public int getAssemblyParcelId(){
-        return this.assemblyParcelId;
+    public EmployeeAuth getAssembler(){
+        return this.assembler;
     }
-
-    public void setAssemblyParcelId(int assemblyParcelId) {
-        this.assemblyParcelId = assemblyParcelId;
-    }
-
-    public int getAssemblerId(){
-        return this.assemblerId;
-    }
-
-    public void setAssemblerId(int assemblerId) {
-        this.assemblerId = assemblerId;
-    }
-
-    public int getTaskTypeId(){
-        return this.taskTypeId;
-    }
-
-    public void setTaskTypeId(int taskTypeId) {
-        this.taskTypeId = taskTypeId;
+    public void setAssembler(EmployeeAuth assembler) {
+        this.assembler = assembler;
     }
 
     public int getCount(){
         return this.count;
     }
-
     public void setCount(int count) {
         this.count = count;
     }
@@ -76,7 +63,6 @@ public class AssemblerTask extends BaseEntity<Long> {
     public int getDoneCount(){
         return this.doneCount;
     }
-
     public void setDoneCount(int doneCount) {
         this.doneCount = doneCount;
     }
@@ -84,7 +70,6 @@ public class AssemblerTask extends BaseEntity<Long> {
     public Date getDoneDate(){
         return this.doneDate;
     }
-
     public void setDoneDate(Date doneDate) {
         this.doneDate = doneDate;
     }
@@ -92,7 +77,6 @@ public class AssemblerTask extends BaseEntity<Long> {
     public TaskType getTaskType(){
         return this.taskType;
     }
-
     public void setTaskType(TaskType taskType) {
         this.taskType =taskType;
     }

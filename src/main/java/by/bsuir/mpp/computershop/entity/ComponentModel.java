@@ -9,7 +9,7 @@ public class ComponentModel extends BaseEntity<Long>{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "type_id",unique = true, nullable = false)
-    private ComponentType typeId;
+    private ComponentType type;
 
     @Column(name = "name",nullable = false)
     private String name;
@@ -17,21 +17,29 @@ public class ComponentModel extends BaseEntity<Long>{
     @Column(name = "description",columnDefinition = "text")
     private String description;
 
-    @OneToMany(mappedBy = "modelId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "model", cascade = CascadeType.ALL)
     private List<Import> imports;
-    private List<ComponentStore> componentStores;
+
+    @OneToMany(mappedBy = "model", cascade = CascadeType.ALL)
+    private List<ComponentStore> storedComponent;
+
+    @OneToMany(mappedBy = "component", cascade = CascadeType.ALL)
+    private List<InventoryItem> inventoryItems;
+
+    public List<InventoryItem> getInventoryItems(){return inventoryItems;}
+    public void setInventoryItems(List<InventoryItem> storedComponent){this.inventoryItems = inventoryItems;}
 
     public List<Import> getImports(){return imports;}
     public void setImports(List<Import> imports){this.imports = imports;}
 
-    public List<ComponentStore> getComponentStores(){return componentStores;}
-    public void setComponentStores(List<ComponentStore> componentStores){this.componentStores = componentStores;}
+    public List<ComponentStore> getStoredComponent(){return storedComponent;}
+    public void setStoredComponent(List<ComponentStore> storedComponent){this.storedComponent = storedComponent;}
 
-    public ComponentType getTypeId(){
-        return this.typeId;
+    public ComponentType getType(){
+        return this.type;
     }
-    public void setTypeId(ComponentType typeId) {
-        this.typeId = typeId;
+    public void setType(ComponentType type) {
+        this.type = type;
     }
 
     public String getName(){

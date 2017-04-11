@@ -14,7 +14,7 @@ public class Inventory extends BaseEntity<Long>{
     @Column(name = "saldo",nullable = false)
     private int saldo;
 
-    @OneToMany(mappedBy = "stocktakingId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "stocktaking", cascade = CascadeType.ALL)
     private List<InventoryItem> inventoryItems;
 
     public List<InventoryItem> getInventoryItems(){return inventoryItems;}

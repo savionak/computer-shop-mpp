@@ -10,7 +10,7 @@ public class ComponentStore extends BaseEntity<Long>{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "model_id", nullable = false)
-    private ComponentModel modelId;
+    private ComponentModel model;
 
     @Column(name = "price",nullable = false)
     private int price;
@@ -18,17 +18,23 @@ public class ComponentStore extends BaseEntity<Long>{
     @Column(name = "count",nullable = false)
     private int count;
 
-    @OneToMany(mappedBy = "componentId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "component", cascade = CascadeType.ALL)
     private List<InventoryItem> inventoryItems;
+
+    @OneToMany(mappedBy = "orderComponent", cascade = CascadeType.ALL, orphanRemoval = true)
+    public List<OrderComponent>  orderComponents;
+
+    public List<OrderComponent> getOrderComponents(){return orderComponents;}
+    public void setOrderComponents(List<OrderComponent> orderComponents){this.orderComponents = orderComponents;}
 
     public List<InventoryItem> getInventoryItems(){return inventoryItems;}
     public void setInventoryItems(List<InventoryItem> inventoryItems){this.inventoryItems = inventoryItems;}
 
-    public ComponentModel getModelId(){
-        return this.modelId;
+    public ComponentModel getModel(){
+        return this.model;
     }
-    public void setModelId(ComponentModel modelId) {
-        this.modelId = modelId;
+    public void setModel(ComponentModel model) {
+        this.model = model;
     }
 
     public int getPrice(){

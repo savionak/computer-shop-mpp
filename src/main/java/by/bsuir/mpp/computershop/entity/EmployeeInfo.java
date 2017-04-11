@@ -1,13 +1,15 @@
 package by.bsuir.mpp.computershop.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "employee_info")
 
 public class EmployeeInfo extends BaseEntity<Long>{
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "auth_id", nullable = false)
+    private EmployeeAuth auth;
 
     @Column(name = "first_name",nullable = false)
     private String firstName;
@@ -21,11 +23,16 @@ public class EmployeeInfo extends BaseEntity<Long>{
     @Column(name = "phone",nullable = false)
     private String phone;
 
+    public EmployeeAuth getAuth(){
+        return this.auth;
+    }
+    public void setAuth(EmployeeAuth modelId) {
+        this.auth = auth;
+    }
 
     public String getFirstName(){
         return this.firstName;
     }
-
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -33,7 +40,6 @@ public class EmployeeInfo extends BaseEntity<Long>{
     public String getLastName(){
         return this.lastName;
     }
-
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
@@ -41,7 +47,6 @@ public class EmployeeInfo extends BaseEntity<Long>{
     public String getPatronymic(){
         return this.patronymic;
     }
-
     public void setPatronymic(String patronymic) {
         this.patronymic = patronymic;
     }
@@ -49,7 +54,6 @@ public class EmployeeInfo extends BaseEntity<Long>{
     public String getPhone(){
         return this.phone;
     }
-
     public void setPhone(String phone) {
         this.phone = phone;
     }

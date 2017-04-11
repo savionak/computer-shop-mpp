@@ -9,7 +9,7 @@ public class Import extends BaseEntity<Long> {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "provider_id", nullable = false)
-    private Provider providerId;
+    private Provider provider;
 
     @Column(name = "date_time",nullable = false)
     private Date dateTime;
@@ -19,7 +19,7 @@ public class Import extends BaseEntity<Long> {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "model_id", nullable = false)
-    private ComponentModel modelId;
+    private ComponentModel model;
 
     @Column(name = "purchase_price",nullable = false)
     private int purchasePrice;
@@ -31,12 +31,12 @@ public class Import extends BaseEntity<Long> {
     @Enumerated(EnumType.ORDINAL)
     private ImportStatus status;
 
-    public Provider getProviderId(){
-        return this.providerId;
+    public Provider getProvider(){
+        return this.provider;
     }
 
-    public void setProviderId(Provider providerId) {
-        this.providerId = providerId;
+    public void setProvider(Provider provider) {
+        this.provider = provider;
     }
 
     public Date getDateTime() {
@@ -55,12 +55,12 @@ public class Import extends BaseEntity<Long> {
         this.count = count;
     }
 
-    public ComponentModel getModelId(){
-        return this.modelId;
+    public ComponentModel getModel(){
+        return this.model;
     }
 
-    public void setModelId(ComponentModel modelId) {
-        this.modelId = modelId;
+    public void setModel(ComponentModel model) {
+        this.model = model;
     }
 
     public int getPurchasePrice(){

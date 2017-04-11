@@ -10,27 +10,27 @@ public class InventoryItem extends BaseEntity<Long> {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "stocktaking_id", nullable = false)
-    private Inventory stocktakingId;
+    private Inventory stocktaking;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "component_id", nullable = false)
-    private ComponentStore componentId;
+    private ComponentStore component;
 
     @Column(name = "real_count",nullable = false)
     private int realCount;
 
-    public Inventory getStocktakingId(){
-        return this.stocktakingId;
+    public Inventory getStocktaking(){
+        return this.stocktaking;
     }
-    public void setStocktakingId(Inventory stocktakingId) {
-        this.stocktakingId = stocktakingId;
+    public void setStocktaking(Inventory stocktaking) {
+        this.stocktaking = stocktaking;
     }
 
-    public ComponentStore getComponentId(){
-        return this.componentId;
+    public ComponentStore getComponent(){
+        return this.component;
     }
-    public void setComponentId(ComponentStore componentId) {
-        this.componentId = componentId;
+    public void setComponent(ComponentStore component) {
+        this.component = component;
     }
 
     public int getRealCount(){

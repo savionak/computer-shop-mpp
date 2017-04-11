@@ -13,7 +13,7 @@ public class ComponentType extends BaseEntity<Long> {
     @Column(name = "description",columnDefinition = "text")
     private String description;
 
-    @OneToMany(mappedBy = "typeId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "type", cascade = CascadeType.ALL)
     private List<ComponentModel> componentModels;
 
     public List<ComponentModel> getComponentModels(){return componentModels;}
