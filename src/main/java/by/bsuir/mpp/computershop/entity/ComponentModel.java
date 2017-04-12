@@ -23,12 +23,6 @@ public class ComponentModel extends BaseEntity<Long>{
     @OneToMany(mappedBy = "model", cascade = CascadeType.ALL)
     private List<ComponentStore> storedComponent;
 
-    @OneToMany(mappedBy = "component", cascade = CascadeType.ALL)
-    private List<InventoryItem> inventoryItems;
-
-    public List<InventoryItem> getInventoryItems(){return inventoryItems;}
-    public void setInventoryItems(List<InventoryItem> storedComponent){this.inventoryItems = inventoryItems;}
-
     public List<Import> getImports(){return imports;}
     public void setImports(List<Import> imports){this.imports = imports;}
 

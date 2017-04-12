@@ -1,7 +1,7 @@
 package by.bsuir.mpp.computershop.entity;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "import")
@@ -12,7 +12,7 @@ public class Import extends BaseEntity<Long> {
     private Provider provider;
 
     @Column(name = "date_time",nullable = false)
-    private Date dateTime;
+    private Timestamp dateTime;
 
     @Column(name = "count",nullable = false)
     private int count;
@@ -27,8 +27,8 @@ public class Import extends BaseEntity<Long> {
     @Column(name = "price",nullable = false)
     private int price;
 
-    @Column(name = "status",nullable = false)
-    @Enumerated(EnumType.ORDINAL)
+    @Column(columnDefinition = "ENUM ('REGISTERED', 'FINISHED')", name = "status",nullable = false)
+    @Enumerated(EnumType.STRING)
     private ImportStatus status;
 
     public Provider getProvider(){
@@ -39,11 +39,11 @@ public class Import extends BaseEntity<Long> {
         this.provider = provider;
     }
 
-    public Date getDateTime() {
+    public Timestamp getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(Date dateTime) {
+    public void setDateTime(Timestamp dateTime) {
         this.dateTime = dateTime;
     }
 
@@ -87,4 +87,19 @@ public class Import extends BaseEntity<Long> {
         this.status =status;
     }
 
+    public  enum ImportStatus
+    {
+        REGISTERED{
+            public String toString() {
+                return "зарегистрирован";
+            }
+        },
+        FINISHED{
+            public String toString() {
+                return "принят";
+            }
+        };
+        public abstract String toString();
+
+    }
 }

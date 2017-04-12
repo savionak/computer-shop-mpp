@@ -2,7 +2,7 @@ package by.bsuir.mpp.computershop.entity;
 
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
-@Embeddable
+//@Embeddable
 public class OrderComponentPK implements  java.io.Serializable  {
 
     private static final long serialVersionID = 1L;

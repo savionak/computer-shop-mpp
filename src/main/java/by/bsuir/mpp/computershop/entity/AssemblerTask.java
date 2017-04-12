@@ -3,41 +3,33 @@ package by.bsuir.mpp.computershop.entity;
 import javax.persistence.*;
 import java.sql.Date;
 
-@Entity
+//@Entity
 @Table(name = "assembler_task")
 
 public class AssemblerTask extends BaseEntity<Long> {
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id",nullable = false)
-    private AssemblyParcel order;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "assembly_parcel_id", nullable = false)
+    @JoinColumns({
+            @JoinColumn(name = "assembly_parcel_id", nullable = false),
+            @JoinColumn(name = "order_id", nullable = false)
+    })
     private AssemblyParcel assemblyParcel;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "assembler_id", nullable = false)
     private EmployeeAuth assembler;
 
-    @Column(name = "count",nullable = false)
-    private int count;
+    @Column(name = "count", nullable = false)
+    private long count;
 
-    @Column(name = "done_count",nullable = false, columnDefinition = "int default 0")
-    private int doneCount;
+    @Column(name = "done_count", nullable = false)
+    private long doneCount;
 
-    @Column(name = "done_date",nullable = false)
+    @Column(name = "done_date", nullable = false)
     private Date doneDate;
 
-    @Enumerated(EnumType.ORDINAL)
-    @Column(name = "task_type",nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "task_type", columnDefinition = "ENUM ('ASSEMBLE', 'DISASSEMBLE')", nullable = false)
     private TaskType taskType;
-
-    public AssemblyParcel getOrder(){
-        return this.order;
-    }
-    public void setOrder(AssemblyParcel order) {
-        this.order = order;
-    }
 
     public AssemblyParcel getAssemblyParcel(){
         return this.assemblyParcel;
@@ -53,17 +45,17 @@ public class AssemblerTask extends BaseEntity<Long> {
         this.assembler = assembler;
     }
 
-    public int getCount(){
+    public long getCount(){
         return this.count;
     }
-    public void setCount(int count) {
+    public void setCount(long count) {
         this.count = count;
     }
 
-    public int getDoneCount(){
+    public long getDoneCount(){
         return this.doneCount;
     }
-    public void setDoneCount(int doneCount) {
+    public void setDoneCount(long doneCount) {
         this.doneCount = doneCount;
     }
 
@@ -81,5 +73,18 @@ public class AssemblerTask extends BaseEntity<Long> {
         this.taskType =taskType;
     }
 
+    public enum TaskType{
+        ASSEMBLE {
+            public String toString() {
+                return "Сборка";
+            }
+        },
+        DISASSEMBLE {
+            public String toString() {
+                return "Разборка";
+            }
+        };
 
+        public abstract String toString();
+    }
 }

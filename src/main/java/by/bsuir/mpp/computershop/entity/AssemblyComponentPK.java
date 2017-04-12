@@ -2,41 +2,34 @@ package by.bsuir.mpp.computershop.entity;
 
 
 import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
-@Embeddable
+//@Embeddable
 public class AssemblyComponentPK implements Serializable{
 
     private static final long serialVersionID = 1L;
 
     @ManyToOne
-    private ComponentStore assemblyComponent;
+    @JoinColumn(name = "id")
+    private ComponentStore component;
 
     @ManyToOne
-    private AssemblyParcel assemblyOrder;
+    @JoinColumn(name = "id")
+    private AssemblyParcel parcel;
 
-    @ManyToOne
-    private AssemblyParcel assemblyId;
-
-    public ComponentStore getAssemblyComponent() {
-        return this.assemblyComponent;
+    public ComponentStore getComponent() {
+        return this.component;
     }
-    public void setAssemblyComponent(ComponentStore assemblyComponent) {
-        this.assemblyComponent = assemblyComponent;
+    public void setComponent(ComponentStore assemblyComponent) {
+        this.component = assemblyComponent;
     }
 
-    public AssemblyParcel getAssemblyOrder() {
-        return this.assemblyOrder;
+    public AssemblyParcel getParcel() {
+        return this.parcel;
     }
-    public void setAssemblyOrder(AssemblyParcel orderComponent) {
-        this.assemblyOrder = assemblyOrder;
-    }
-
-    public AssemblyParcel getAssemblyId() {
-        return this.assemblyId;
-    }
-    public void setAssemblyId(AssemblyParcel assemblyId) {
-        this.assemblyId = assemblyId;
+    public void setParcel(AssemblyParcel parcel) {
+        this.parcel = parcel;
     }
 
     public boolean equals(Object o) {
@@ -45,19 +38,15 @@ public class AssemblyComponentPK implements Serializable{
 
         AssemblyComponentPK that = (AssemblyComponentPK) o;
 
-        if (assemblyComponent != null ? !assemblyComponent.equals(that.assemblyComponent) : that.assemblyComponent != null) return false;
-        if (assemblyId != null ? !assemblyId.equals(that.assemblyId) : that.assemblyId != null) return false;
-        if (assemblyOrder != null ? !assemblyOrder.equals(that.assemblyOrder) : that.assemblyOrder != null)
-            return false;
-
+        if (component != null ? !component.equals(that.component) : that.component != null) return false;
+        if (parcel != null ? !parcel.equals(that.parcel) : that.parcel != null) return false;
         return true;
     }
 
     public int hashCode() {
         int result;
-        result = (assemblyComponent != null ? assemblyComponent.hashCode() : 0);
-        result = (assemblyOrder != null ? assemblyOrder.hashCode() : 0);
-        result = 31 * result + (assemblyId != null ? assemblyId.hashCode() : 0);
+        result = (component != null ? component.hashCode() : 0);
+        result = 31 * result + (parcel != null ? parcel.hashCode() : 0);
         return result;
 
     }

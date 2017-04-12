@@ -2,95 +2,45 @@ package by.bsuir.mpp.computershop.entity;
 
 
 import javax.persistence.*;
-import java.io.Serializable;
 
-@Entity
+//@Entity
 @Table(name = "assembly_component")
-@AssociationOverrides({
-        @AssociationOverride(name = "assemblyOrder", joinColumns = @JoinColumn(name = "order_id")),
-        @AssociationOverride(name = "assemblyComponent", joinColumns = @JoinColumn(name = "component_id")),
-        @AssociationOverride(name = "assemblyId", joinColumns = @JoinColumn(name = "assembly_id"))})
-public class AssemblyComponent implements Serializable{
+public class AssemblyComponent extends BaseEntity<Long>{
 
-
-    @EmbeddedId
-    private AssemblyComponentPK Pk = new AssemblyComponentPK();
-
-    @Id
     @ManyToOne
-    @JoinColumn(name = "order_id",nullable = false)
-    private AssemblyParcel assemblyOrder;
+    @JoinColumn(name = "component_id")
+    private ComponentStore componentId;
 
-    @Id
     @ManyToOne
-    @JoinColumn(name = "assembly_id",nullable = false)
-    private AssemblyParcel assemblyId;
-
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "component_id",nullable = false)
-    private ComponentStore assemblyComponent;
+    @JoinColumns({
+            @JoinColumn(name = "order_id"),
+            @JoinColumn(name = "assembly_id")}
+    )
+    private AssemblyParcel parcel;
 
     @Column(name = "count",nullable = false)
-    private int count;
+    private long count;
 
-    public AssemblyComponentPK getPk(){
-        return this.Pk;
-    }
-    public void setPk(AssemblyComponentPK count) {
-        this.Pk = Pk;
-    }
-
-    @Transient
-    public AssemblyParcel getAssemblyOrder(){
-        return getPk().getAssemblyOrder();
-    }
-    public void setAssemblyOrder(AssemblyParcel assemblyOrder) {
-        getPk().setAssemblyOrder(assemblyOrder);
-    }
-
-    @Transient
-    public AssemblyParcel getAssemblyId(){
-        return getPk().getAssemblyId();
-    }
-    public void setAssemblyId(AssemblyParcel assemblyId) {
-        getPk().setAssemblyId(assemblyId);
-    }
-
-    @Transient
-    public ComponentStore getAssemblyComponent(){
-        return getPk().getAssemblyComponent();
-    }
-    public void setAssemblyComponent(ComponentStore assemblyComponent) {
-        getPk().setAssemblyComponent(assemblyComponent);
-    }
-
-    public int getCount(){
+    public long getCount(){
         return this.count;
     }
-    public void setCount(int count) {
+    public void setCount(long count) {
         this.count = count;
     }
 
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-
-        OrderComponent that = (OrderComponent) o;
-
-        if (getPk() != null ? !getPk().equals(that.getPk())
-                : that.getPk() != null)
-            return false;
-
-        return true;
+    public ComponentStore getComponentId() {
+        return componentId;
     }
 
-    public int hashCode() {
-        return (getPk() != null ? getPk().hashCode() : 0);
+    public void setComponentId(ComponentStore componentId) {
+        this.componentId = componentId;
     }
 
+    public AssemblyParcel getParcel() {
+        return parcel;
+    }
 
-
+    public void setParcel(AssemblyParcel parcelId) {
+        this.parcel = parcelId;
+    }
 }

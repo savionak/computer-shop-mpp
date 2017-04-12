@@ -1,9 +1,9 @@
 package by.bsuir.mpp.computershop.entity;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.sql.Timestamp;
 
-@Entity
+//@Entity
 @Table(name = "export")
 public class Export extends BaseEntity<Long>{
 
@@ -11,8 +11,8 @@ public class Export extends BaseEntity<Long>{
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
-    @Column(name = "exp_date",nullable = false)
-    private Date expDate;
+    @Column(name = "exp_date", nullable = false)
+    private Timestamp expDate;
 
     public Order getOrder(){
         return this.order;
@@ -21,13 +21,10 @@ public class Export extends BaseEntity<Long>{
         this.order = order;
     }
 
-    public Date getExpDate() {
+    public Timestamp getExpDate() {
         return expDate;
     }
-    public void setExpDate(Date expDate) {
+    public void setExpDate(Timestamp expDate) {
         this.expDate = expDate;
     }
-
-
-
 }

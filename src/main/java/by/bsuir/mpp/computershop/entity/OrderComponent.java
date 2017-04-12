@@ -3,24 +3,20 @@ package by.bsuir.mpp.computershop.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
+//@Entity
 @Table(name = "order_component")
 @AssociationOverrides({
         @AssociationOverride(name = "orderOrder", joinColumns = @JoinColumn(name = "order_id")),
-        @AssociationOverride(name = "orderComponent", joinColumns = @JoinColumn(name = "component_id"))})
-
+        @AssociationOverride(name = "orderComponent", joinColumns = @JoinColumn(name = "component_id"))
+})
 public class OrderComponent implements Serializable {
-
-
     @EmbeddedId
     private OrderComponentPK Pk = new OrderComponentPK();
 
-    @Id
     @ManyToOne
     @JoinColumn(name = "order_id",nullable = false)
     private Order orderOrder;
 
-    @Id
     @ManyToOne
     @JoinColumn(name = "component_id",nullable = false)
     private ComponentStore orderComponent;

@@ -5,7 +5,7 @@ import java.sql.Date;
 import java.util.List;
 
 
-@Entity
+//@Entity
 @Table(name = "order")
 public class Order extends BaseEntity<Long> {
 
@@ -19,9 +19,9 @@ public class Order extends BaseEntity<Long> {
     @Column(name = "ord_date",nullable = false)
     private Date ordDate;
 
-    @Column(name = "status_id",nullable = false)
+    @Column(name = "status",nullable = false)
     @Enumerated(EnumType.ORDINAL)
-    private OrderStatus statusId;
+    private Status statusId;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.ALL)
     private List<Export> exports;
@@ -62,10 +62,35 @@ public class Order extends BaseEntity<Long> {
         this.cost = cost;
     }
 
-    public OrderStatus getOrderId(){
+    public Status getOrderId(){
         return this.statusId;
     }
-    public void setOrderId(OrderStatus statusId) {
+    public void setOrderId(Status statusId) {
         this.statusId =statusId;
+    }
+
+    public enum Status {
+        GOING{
+            public String toString() {
+                return "собирается";
+            }
+        },
+        READY{
+            public String toString() {
+                return "готов  сборке";
+            }
+        },
+        COMPLETED{
+            public String toString() {
+                return "завершен";
+            }
+        },
+        CANCELLED{
+            public String toString() {
+                return "отменен";
+            }
+        };
+        public abstract String toString();
+
     }
 }

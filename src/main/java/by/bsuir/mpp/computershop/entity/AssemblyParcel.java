@@ -4,10 +4,9 @@ package by.bsuir.mpp.computershop.entity;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
+//@Entity
 @Table(name = "assembly_parcel")
-
-public class AssemblyParcel {
+public class AssemblyParcel extends BaseEntity<Long> {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", nullable = false)
@@ -25,29 +24,11 @@ public class AssemblyParcel {
     @Column(name = "canceled", nullable = false, columnDefinition = "bool default false")
     private boolean canceled;
 
-    @OneToMany(mappedBy = "assembly_parcel", cascade = CascadeType.ALL)
-    private List<AssemblerTask> assemblyParcels;
+    @OneToMany(mappedBy = "assemblyParcel", cascade = CascadeType.ALL)
+    private List<AssemblerTask> tasks;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<AssemblerTask> assemblyOrders;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "assemblyOrder", cascade = CascadeType.ALL, orphanRemoval = true)
-    public List<AssemblyComponent>  assemblyComponents;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "assemblyId", cascade = CascadeType.ALL, orphanRemoval = true)
-    public List<AssemblyComponent>  assemblyId;
-
-    public List<AssemblyComponent> getAssemblyComponents(){return assemblyComponents;}
-    public void setAssemblyComponents(List<AssemblyComponent> assemblyComponents){this.assemblyComponents = assemblyComponents;}
-
-    public List<AssemblyComponent> getAssemblyId(){return assemblyId;}
-    public void setAssemblyId(List<AssemblyComponent> assemblyId){this.assemblyId = assemblyId;}
-
-    public List<AssemblerTask> getAssemblyParcels(){return assemblyParcels;}
-    public void setAssemblyParcels(List<AssemblerTask> assemblyParcels){this.assemblyParcels = assemblyParcels;}
-
-    public List<AssemblerTask> getAssemblyOrders(){return assemblyOrders;}
-    public void setAssemblyOrders(List<AssemblerTask> assemblyOrders){this.assemblyOrders = assemblyOrders;}
+    public List<AssemblerTask> getTasks(){return tasks;}
+    public void setTasks(List<AssemblerTask> assemblyParcels){this.tasks = assemblyParcels;}
 
     public Order getOrder(){
         return this.order;
