@@ -3,7 +3,7 @@ package by.bsuir.mpp.computershop.entity;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-//@Entity
+@Entity
 @Table(name = "export")
 public class Export extends BaseEntity<Long>{
 

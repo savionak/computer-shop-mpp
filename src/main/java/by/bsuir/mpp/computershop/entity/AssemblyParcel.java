@@ -1,34 +1,50 @@
 package by.bsuir.mpp.computershop.entity;
 
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
-//@Entity
+@Entity
 @Table(name = "assembly_parcel")
-public class AssemblyParcel extends BaseEntity<Long> {
+public class AssemblyParcel extends BaseEntity<Long> implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Column(name="order_id", insertable=false, updatable=false)
+    private long orderId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id", nullable = false)
+    @PrimaryKeyJoinColumn(name = "order_id")
     private Order order;
 
     @Column(name = "cost",nullable = false)
-    private int cost;
+    private long cost;
 
     @Column(name = "count",nullable = false)
-    private int count;
+    private long count;
 
     @Column(name = "done_count",nullable = false, columnDefinition = "int default 0")
-    private int doneCount;
+    private long doneCount;
 
-    @Column(name = "canceled", nullable = false, columnDefinition = "bool default false")
-    private boolean canceled;
+    @Column(name = "canceled", nullable = false,
+            columnDefinition = "BIT", length = 1)
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    private boolean canceled = false;
 
-    @OneToMany(mappedBy = "assemblyParcel", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "assemblyComponents", cascade = CascadeType.ALL, orphanRemoval = true)
+     public List<AssemblyComponent>  assemblyOrders;
+
+    public List<AssemblyComponent> getAssemblyOrder(){return assemblyOrders;}
+     public void setAssemblyOrder(List<AssemblyComponent> assemblyOrders){this.assemblyOrders = assemblyOrders;}
+
+    @OneToMany(mappedBy = "tasks",targetEntity = AssemblerTask.class,fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<AssemblerTask> tasks;
 
     public List<AssemblerTask> getTasks(){return tasks;}
-    public void setTasks(List<AssemblerTask> assemblyParcels){this.tasks = assemblyParcels;}
+    public void setTasks(List<AssemblerTask> tasks){this.tasks = tasks;}
 
     public Order getOrder(){
         return this.order;
@@ -37,24 +53,24 @@ public class AssemblyParcel extends BaseEntity<Long> {
         this.order = order;
     }
 
-    public int getCost(){
+    public long getCost(){
         return this.cost;
     }
-    public void setCost(int cost) {
+    public void setCost(long cost) {
         this.cost = cost;
     }
 
-    public int getCount(){
+    public long getCount(){
         return this.count;
     }
-    public void setCount(int count) {
+    public void setCount(long count) {
         this.count = count;
     }
 
-    public int getDoneCount(){
+    public long getDoneCount(){
         return this.doneCount;
     }
-    public void setDoneCount(int doneCount) {
+    public void setDoneCount(long doneCount) {
         this.doneCount = doneCount;
     }
 

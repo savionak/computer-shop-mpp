@@ -1,22 +1,37 @@
 package by.bsuir.mpp.computershop.entity;
 
-
 import javax.persistence.*;
+import java.io.Serializable;
 
-//@Entity
+@Entity
 @Table(name = "assembly_component")
-public class AssemblyComponent extends BaseEntity<Long>{
 
-    @ManyToOne
-    @JoinColumn(name = "component_id")
-    private ComponentStore componentId;
+ public class AssemblyComponent implements Serializable {
 
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(name = "order_id"),
-            @JoinColumn(name = "assembly_id")}
-    )
-    private AssemblyParcel parcel;
+@Id
+   @ManyToOne
+@JoinColumns({
+        @JoinColumn(name = "assembly_id",referencedColumnName = "id", nullable = false),
+        @JoinColumn(name = "order_id",referencedColumnName = "order_id", nullable = false)}
+) private AssemblyParcel assemblyComponents;
+
+@Id
+  @ManyToOne
+    @JoinColumn(name = "component_id",nullable = false)
+    private ComponentStore assemblyComponent;
+
+    public AssemblyParcel getAssemblyComponents(){
+        return assemblyComponents;
+    }
+    public void setAssemblyComponents(AssemblyParcel assemblyComponents) {
+        this.assemblyComponents= assemblyComponents;
+    }
+    public ComponentStore getAssemblyComponent(){
+            return assemblyComponent;
+        }
+    public void setAssemblyComponent(ComponentStore assemblyOrder) {
+        this.assemblyComponent= assemblyComponent;
+            }
 
     @Column(name = "count",nullable = false)
     private long count;
@@ -28,19 +43,4 @@ public class AssemblyComponent extends BaseEntity<Long>{
         this.count = count;
     }
 
-    public ComponentStore getComponentId() {
-        return componentId;
-    }
-
-    public void setComponentId(ComponentStore componentId) {
-        this.componentId = componentId;
-    }
-
-    public AssemblyParcel getParcel() {
-        return parcel;
-    }
-
-    public void setParcel(AssemblyParcel parcelId) {
-        this.parcel = parcelId;
-    }
 }

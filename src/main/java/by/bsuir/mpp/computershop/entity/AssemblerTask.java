@@ -3,16 +3,16 @@ package by.bsuir.mpp.computershop.entity;
 import javax.persistence.*;
 import java.sql.Date;
 
-//@Entity
+@Entity
 @Table(name = "assembler_task")
 
 public class AssemblerTask extends BaseEntity<Long> {
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumns({
-            @JoinColumn(name = "assembly_parcel_id", nullable = false),
-            @JoinColumn(name = "order_id", nullable = false)
-    })
-    private AssemblyParcel assemblyParcel;
+            @JoinColumn(name = "assembly_parcel_id",referencedColumnName = "id", nullable = false),
+            @JoinColumn(name = "order_id",referencedColumnName = "order_id", nullable = false)}
+    ) private AssemblyParcel tasks;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "assembler_id", nullable = false)
@@ -31,11 +31,11 @@ public class AssemblerTask extends BaseEntity<Long> {
     @Column(name = "task_type", columnDefinition = "ENUM ('ASSEMBLE', 'DISASSEMBLE')", nullable = false)
     private TaskType taskType;
 
-    public AssemblyParcel getAssemblyParcel(){
-        return this.assemblyParcel;
+    public AssemblyParcel getTasks(){
+        return this.tasks;
     }
-    public void setAssemblyParcel(AssemblyParcel assemblyParcel) {
-        this.assemblyParcel = assemblyParcel;
+    public void setTasks(AssemblyParcel task) {
+        this.tasks = tasks;
     }
 
     public EmployeeAuth getAssembler(){

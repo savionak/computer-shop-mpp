@@ -3,7 +3,7 @@ package by.bsuir.mpp.computershop.entity;
 import javax.persistence.*;
 import java.util.List;
 
-//@Entity
+@Entity
 @Table(name = "customer")
 public class Customer extends BaseEntity<Long>{
     @Column(name = "name",unique = true, nullable = false)

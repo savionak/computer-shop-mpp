@@ -16,6 +16,17 @@ public class ComponentStore extends BaseEntity<Long>{
 
     @Column(name = "count",nullable = false)
     private int count;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "assemblyComponent", cascade = CascadeType.ALL, orphanRemoval = true)
+    public List<AssemblyComponent> assemblyComponents;
+
+     public List<AssemblyComponent> getAssemblyComponents(){return assemblyComponents;}
+     public void setAssemblyComponents(List<AssemblyComponent> assemblyComponents){this.assemblyComponents = assemblyComponents;}
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "orderComponent", cascade = CascadeType.ALL, orphanRemoval = true)
+    public List<OrderComponent> orderComponents;
+
+    public List<OrderComponent> getOrderComponents(){return orderComponents;}
+    public void setOrderComponents(List<OrderComponent> orderComponents){this.orderComponents = orderComponents;}
 
     public ComponentModel getComponentModel(){
         return this.model;

@@ -1,7 +1,8 @@
 package by.bsuir.mpp.computershop.entity;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -16,13 +17,13 @@ public class ComponentType extends BaseEntity<Long> {
 
     @Column(name = "description",columnDefinition = "text")
     private String description;
-
-    @OneToMany(mappedBy = "type", cascade = CascadeType.ALL)
-    private List<ComponentModel> componentModels;
-
-    public List<ComponentModel> getComponentModels(){return componentModels;}
-
-    public void setComponentModels(List<ComponentModel> componentModels){this.componentModels = componentModels;}
+//
+//    @OneToMany(mappedBy = "type", cascade = CascadeType.ALL)
+//    private List<ComponentModel> componentModels;
+//
+//    public List<ComponentModel> getComponentModels(){return componentModels;}
+//
+//    public void setComponentModels(List<ComponentModel> componentModels){this.componentModels = componentModels;}
 
     public String getName(){
         return this.name;

@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 public class EmployeeInfo extends BaseEntity<Long>{
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "auth_id", nullable = false)
     private EmployeeAuth auth;
 

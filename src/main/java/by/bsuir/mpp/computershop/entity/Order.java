@@ -1,11 +1,11 @@
 package by.bsuir.mpp.computershop.entity;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 
-//@Entity
+@Entity
 @Table(name = "order")
 public class Order extends BaseEntity<Long> {
 
@@ -17,10 +17,11 @@ public class Order extends BaseEntity<Long> {
     private int cost;
 
     @Column(name = "ord_date",nullable = false)
-    private Date ordDate;
+    private Timestamp ordDate;
 
-    @Column(name = "status",nullable = false)
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status",nullable = false,
+            columnDefinition = "ENUM ('GOING', 'READY','COMPLETED','CANCELLED')")
     private Status statusId;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.ALL)
@@ -48,10 +49,10 @@ public class Order extends BaseEntity<Long> {
         this.customer = customer;
     }
 
-    public Date getOrdDate() {
+    public Timestamp getOrdDate() {
         return ordDate;
     }
-    public void setOrdDate(Date ordDate) {
+    public void setOrdDate(Timestamp ordDate) {
         this.ordDate = ordDate;
     }
 

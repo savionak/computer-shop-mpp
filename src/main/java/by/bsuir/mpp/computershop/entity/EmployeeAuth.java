@@ -1,6 +1,7 @@
 package by.bsuir.mpp.computershop.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "employee_auth")
@@ -8,7 +9,7 @@ import javax.persistence.*;
 public class EmployeeAuth extends BaseEntity<Long> {
 
     @Enumerated(EnumType.STRING)
-    @Column(name ="role ", columnDefinition = "ENUM ('RECEIVER', 'ASSEMBLER', 'MANAGER', 'DIRECTOR', 'ADMIN')", nullable = false)
+    @Column(name ="role", columnDefinition = "ENUM ('RECEIVER', 'ASSEMBLER', 'MANAGER', 'DIRECTOR', 'ADMIN')", nullable = false)
     private Role role;
 
     @Column(name = "pass_hash", unique = true, nullable = false)
@@ -23,6 +24,11 @@ public class EmployeeAuth extends BaseEntity<Long> {
     @OneToOne(mappedBy = "auth", cascade = CascadeType.ALL)
     private EmployeeInfo employeeInfo;
 
+    @OneToMany(mappedBy = "assembler", cascade = CascadeType.ALL)
+    private List<AssemblerTask> assemblerTask;
+
+    public List<AssemblerTask> getAssemblerTask(){return assemblerTask;}
+   public void setAssemblerTask(List<AssemblerTask> assemblerTask){this.assemblerTask = assemblerTask;}
     public EmployeeInfo getEmployeeInfo(){return employeeInfo;}
     public void setEmployeeInfo(EmployeeInfo employeeInfo){this.employeeInfo = employeeInfo;}
 
