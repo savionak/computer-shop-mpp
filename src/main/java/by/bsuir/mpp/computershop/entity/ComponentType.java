@@ -1,9 +1,8 @@
 package by.bsuir.mpp.computershop.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.List;
 @Table(name = "component_type")
 public class ComponentType extends BaseEntity<Long> {
 
-    @NotNull(message = "Component name cannot be null")
+    @NotNull(message = "Name cannot be null")
     @Pattern(regexp = "^(?!\\s*$).+", message = "Component name cannot be empty")
     @Column(name = "name", unique = true, nullable = false)
     private String name;
@@ -20,6 +19,7 @@ public class ComponentType extends BaseEntity<Long> {
     @Column(name = "description", columnDefinition = "text")
     private String description;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "type")
     private List<ComponentModel> componentModels;
 
