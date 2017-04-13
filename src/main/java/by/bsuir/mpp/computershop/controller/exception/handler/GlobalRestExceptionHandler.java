@@ -34,6 +34,13 @@ public class GlobalRestExceptionHandler {
     }
 
     @Order(20)
+    @ExceptionHandler(value = IllegalArgumentException.class)
+    protected ResponseEntity<ErrorResponse> handleIllegalArgument(IllegalArgumentException ex) {
+        ErrorResponse responseBody = new ErrorResponse(ex.getMessage());
+        return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+    }
+
+    @Order(20)
     @ExceptionHandler(value = MethodArgumentTypeMismatchException.class)
     protected ResponseEntity<ErrorResponse> handleArgumentTypeMismatch(MethodArgumentTypeMismatchException ex) {
         ErrorResponse responseBody = new ErrorResponse("Invalid type for " + ex.getName() + " argument");
