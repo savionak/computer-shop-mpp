@@ -9,16 +9,16 @@ import java.util.List;
 public class EmployeeAuth extends BaseEntity<Long> {
 
     @Enumerated(EnumType.STRING)
-    @Column(name ="role", columnDefinition = "ENUM ('RECEIVER', 'ASSEMBLER', 'MANAGER', 'DIRECTOR', 'ADMIN')", nullable = false)
+    @Column(name = "role", columnDefinition = "ENUM ('RECEIVER', 'ASSEMBLER', 'MANAGER', 'DIRECTOR', 'ADMIN')", nullable = false)
     private Role role;
 
     @Column(name = "pass_hash", unique = true, nullable = false)
     private String passHash;
 
-    @Column(name ="blocked", columnDefinition = "bit", nullable = false)
+    @Column(name = "blocked", columnDefinition = "bit", nullable = false)
     private Boolean blocked;
 
-    @Column(name ="deleted", columnDefinition = "bit", nullable = false)
+    @Column(name = "deleted", columnDefinition = "bit", nullable = false)
     private Boolean deleted;
 
     @OneToOne(mappedBy = "auth", cascade = CascadeType.ALL)
@@ -27,63 +27,81 @@ public class EmployeeAuth extends BaseEntity<Long> {
     @OneToMany(mappedBy = "assembler", cascade = CascadeType.ALL)
     private List<AssemblerTask> assemblerTask;
 
-    public List<AssemblerTask> getAssemblerTask(){return assemblerTask;}
-   public void setAssemblerTask(List<AssemblerTask> assemblerTask){this.assemblerTask = assemblerTask;}
-    public EmployeeInfo getEmployeeInfo(){return employeeInfo;}
-    public void setEmployeeInfo(EmployeeInfo employeeInfo){this.employeeInfo = employeeInfo;}
+    public List<AssemblerTask> getAssemblerTask() {
+        return assemblerTask;
+    }
 
-    public String getPassHash(){
+    public void setAssemblerTask(List<AssemblerTask> assemblerTask) {
+        this.assemblerTask = assemblerTask;
+    }
+
+    public EmployeeInfo getEmployeeInfo() {
+        return employeeInfo;
+    }
+
+    public void setEmployeeInfo(EmployeeInfo employeeInfo) {
+        this.employeeInfo = employeeInfo;
+    }
+
+    public String getPassHash() {
         return this.passHash;
     }
-    public void setPassHash(String passHash) {this.passHash = passHash;    }
 
-    public Boolean getStatus(){
+    public void setPassHash(String passHash) {
+        this.passHash = passHash;
+    }
+
+    public Boolean getStatus() {
         return this.blocked;
     }
+
     public void setStatus(Boolean blocked) {
-        this.blocked =blocked;
+        this.blocked = blocked;
     }
 
-    public Boolean getDeleted(){
+    public Boolean getDeleted() {
         return this.deleted;
     }
+
     public void setDeleted(Boolean deleted) {
-        this.deleted =deleted;
+        this.deleted = deleted;
     }
 
-    public Role getRole(){
+    public Role getRole() {
         return this.role;
     }
+
     public void setRole(Role role) {
-        this.role =role;
+        this.role = role;
     }
 
     public enum Role {
-        RECEIVER{
+        RECEIVER {
             public String toString() {
                 return "Приемщик";
             }
         },
-        ASSEMBLER{
+        ASSEMBLER {
             public String toString() {
                 return "Сборщик ПК";
             }
         },
-        MANAGER{
+        MANAGER {
             public String toString() {
                 return "Менеджер";
             }
         },
-        DIRECTOR{
+        DIRECTOR {
             public String toString() {
                 return "Директор";
             }
         },
-        ADMIN{
+        ADMIN {
             public String toString() {
                 return "Администратор";
             }
         };
+
         public abstract String toString();
     }
 }

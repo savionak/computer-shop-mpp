@@ -12,21 +12,25 @@ import java.util.List;
 public class AssemblyParcel extends BaseEntity<Long> implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "assemblyComponents", cascade = CascadeType.ALL, orphanRemoval = true)
+    public List<AssemblyComponent> assemblyOrders;
+
     @Id
-    @Column(name="order_id", insertable=false, updatable=false)
+    @Column(name = "order_id", insertable = false, updatable = false)
     private long orderId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn(name = "order_id")
     private Order order;
 
-    @Column(name = "cost",nullable = false)
+    @Column(name = "cost", nullable = false)
     private long cost;
 
-    @Column(name = "count",nullable = false)
+    @Column(name = "count", nullable = false)
     private long count;
 
-    @Column(name = "done_count",nullable = false, columnDefinition = "int default 0")
+    @Column(name = "done_count", nullable = false, columnDefinition = "int default 0")
     private long doneCount;
 
     @Column(name = "canceled", nullable = false,
@@ -34,49 +38,61 @@ public class AssemblyParcel extends BaseEntity<Long> implements Serializable {
     @Type(type = "org.hibernate.type.NumericBooleanType")
     private boolean canceled = false;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "assemblyComponents", cascade = CascadeType.ALL, orphanRemoval = true)
-     public List<AssemblyComponent>  assemblyOrders;
-
-    public List<AssemblyComponent> getAssemblyOrder(){return assemblyOrders;}
-     public void setAssemblyOrder(List<AssemblyComponent> assemblyOrders){this.assemblyOrders = assemblyOrders;}
-
-    @OneToMany(mappedBy = "tasks",targetEntity = AssemblerTask.class,fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "tasks", targetEntity = AssemblerTask.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<AssemblerTask> tasks;
 
-    public List<AssemblerTask> getTasks(){return tasks;}
-    public void setTasks(List<AssemblerTask> tasks){this.tasks = tasks;}
+    public List<AssemblyComponent> getAssemblyOrder() {
+        return assemblyOrders;
+    }
 
-    public Order getOrder(){
+    public void setAssemblyOrder(List<AssemblyComponent> assemblyOrders) {
+        this.assemblyOrders = assemblyOrders;
+    }
+
+    public List<AssemblerTask> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<AssemblerTask> tasks) {
+        this.tasks = tasks;
+    }
+
+    public Order getOrder() {
         return this.order;
     }
+
     public void setOrder(Order order) {
         this.order = order;
     }
 
-    public long getCost(){
+    public long getCost() {
         return this.cost;
     }
+
     public void setCost(long cost) {
         this.cost = cost;
     }
 
-    public long getCount(){
+    public long getCount() {
         return this.count;
     }
+
     public void setCount(long count) {
         this.count = count;
     }
 
-    public long getDoneCount(){
+    public long getDoneCount() {
         return this.doneCount;
     }
+
     public void setDoneCount(long doneCount) {
         this.doneCount = doneCount;
     }
 
-    public boolean getCanceled(){
+    public boolean getCanceled() {
         return this.canceled;
     }
+
     public void setCanceled(boolean canceled) {
         this.canceled = canceled;
     }
