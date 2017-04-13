@@ -13,7 +13,6 @@
     <!-- <property name="hbm2ddl.auto">update</property> -->
       <mapping class="by.bsuir.mpp.computershop.entity.AssemblerTask" />
       <mapping class="by.bsuir.mpp.computershop.entity.AssemblyComponent" />
-      <mapping class="by.bsuir.mpp.computershop.entity.AssemblyComponentPK" />
       <mapping class="by.bsuir.mpp.computershop.entity.AssemblyParcel" />
       <mapping class="by.bsuir.mpp.computershop.entity.ComponentModel" />
       <mapping class="by.bsuir.mpp.computershop.entity.ComponentStore" />
