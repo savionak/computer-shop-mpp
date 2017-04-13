@@ -87,7 +87,7 @@ public abstract class AbstractCrudService<E extends BaseEntity<ID>, ID extends S
         }
     }
 
-    private String idNotFoundMessage(ID id) {
+    String idNotFoundMessage(ID id) {
         return String.format(ID_NOT_FOUND_FORMAT_STRING, idToString(id));
     }
 
