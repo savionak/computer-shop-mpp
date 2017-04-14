@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 @Entity
@@ -15,29 +16,38 @@ public class Import extends BaseEntity<Long> {
     @JoinColumn(name = "provider_id", nullable = false)
     private Provider provider;
 
-    @Column(name = "date_time", nullable = false)
-    private Timestamp dateTime;
-
-    @Column(name = "count", nullable = false)
-    private int count;
-
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "model_id", nullable = false)
     private ComponentModel model;
 
+    @NotNull
+    @Column(name = "count", nullable = false)
+    private int count;
+
+    @NotNull
     @Column(name = "purchase_price", nullable = false)
     private int purchasePrice;
 
     @Column(name = "price")
     private int price;
 
+    @NotNull
+    @Column(name = "date_time", nullable = false)
+    private Timestamp dateTime;
+
+    @NotNull
     @Column(name = "status", columnDefinition = "ENUM ('REGISTERED', 'FINISHED')", nullable = false)
     @Enumerated(EnumType.STRING)
     private ImportStatus status;
 
+    @JsonIgnore
     @Transient
     private Long newProviderId;
+
+    @JsonIgnore
+    @Transient
+    private Long newModelId;
 
     @JsonProperty(value = "providerId")
     public Long getProviderId() {
@@ -49,9 +59,27 @@ public class Import extends BaseEntity<Long> {
         newProviderId = id;
     }
 
+    @JsonProperty(value = "providerName")
+    public String getProviderName() {
+        return provider.getName();
+    }
+
     @JsonProperty(value = "modelId")
     public Long getModelId() {
         return model.getId();
+    }
+
+    public Long getNewProviderId() {
+        return newProviderId;
+    }
+
+    @JsonProperty(value = "modelId")
+    public void setModelId(Long id) {
+        newModelId = id;
+    }
+
+    public Long getNewModelId() {
+        return newModelId;
     }
 
     public Timestamp getDateTime() {
@@ -100,6 +128,10 @@ public class Import extends BaseEntity<Long> {
 
     public void setStatus(ImportStatus status) {
         this.status = status;
+    }
+
+    public void setProvider(Provider provider) {
+        this.provider = provider;
     }
 
     public enum ImportStatus {
