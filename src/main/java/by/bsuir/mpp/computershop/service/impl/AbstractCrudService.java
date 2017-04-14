@@ -23,7 +23,15 @@ public abstract class AbstractCrudService<E extends BaseEntity<ID>, ID extends S
         entity.setId(null); // to avoid update existing entities
         E result;
         try {
+            if (checkKeys(entity)) {
+                updateReferences(entity);
+            } else {
+                throw new EntityNotFoundException("Referenced entities not found");
+            }
             result = repository.save(entity);
+            if (result == null) {
+                throw new ServiceException("Can't add entity.");
+            }
         } catch (DataAccessException e) {
             throw new ServiceException(e);
         }
@@ -35,11 +43,13 @@ public abstract class AbstractCrudService<E extends BaseEntity<ID>, ID extends S
         ID id = entity.getId();
         E result;
         try {
-            if (id != null && repository.exists(id)) {
-                result = repository.save(entity);
+            if (id != null && repository.exists(id)
+                    && checkKeys(entity)) {
+                updateReferences(entity);
             } else {
                 throw new EntityNotFoundException(idNotFoundMessage(id));
             }
+            result = repository.save(entity);
             if (result == null) {
                 throw new ServiceException("Can't update entity.");
             }
@@ -89,7 +99,15 @@ public abstract class AbstractCrudService<E extends BaseEntity<ID>, ID extends S
         }
     }
 
-    String idNotFoundMessage(ID id) {
+    protected boolean checkKeys(E entity) {
+        return true;    // check foreign keys before insert/update
+    }
+
+    protected void updateReferences(E entity) {
+        // assign entity references
+    }
+
+    private String idNotFoundMessage(ID id) {
         return String.format(ID_NOT_FOUND_FORMAT_STRING, idToString(id));
     }
 
