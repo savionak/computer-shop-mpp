@@ -12,7 +12,7 @@ import java.util.List;
 public class ComponentType extends BaseEntity<Long> {
 
     @NotNull(message = "Name cannot be null")
-    @Pattern(regexp = "^(?!\\s*$).+", message = "Component name cannot be empty")
+    @Pattern(regexp = "^(?!\\s*$).+", message = "Component type name cannot be empty")
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
@@ -20,7 +20,7 @@ public class ComponentType extends BaseEntity<Long> {
     private String description;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "type")
+    @OneToMany(mappedBy = "type", fetch = FetchType.LAZY)
     private List<ComponentModel> componentModels;
 
     public List<ComponentModel> getComponentModels() {

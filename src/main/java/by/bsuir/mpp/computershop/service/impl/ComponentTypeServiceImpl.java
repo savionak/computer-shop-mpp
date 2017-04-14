@@ -13,7 +13,7 @@ public class ComponentTypeServiceImpl extends AbstractCrudService<ComponentType,
 
     @Autowired
     public ComponentTypeServiceImpl(ComponentTypeRepository typeRepository) {
-        super(typeRepository);  // for general use
+        super(typeRepository);
     }
 
     @Override

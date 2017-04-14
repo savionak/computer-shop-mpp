@@ -28,18 +28,19 @@ public class ComponentModelServiceImpl extends AbstractCrudService<ComponentMode
     public ComponentModel add(ComponentModel entity) throws ServiceException {
         entity.setId(null); // to avoid update existing entities
         Long typeId = entity.getNewTypeId();
+        ComponentModel result;
         try {
             if (typeId != null && typeRepository.exists(typeId)) {
                 ComponentType newType = typeRepository.findOne(typeId);
                 entity.setType(newType);
-                modelRepository.save(entity);
             } else {
                 throw new EntityNotFoundException(idNotFoundMessage(typeId));
             }
-            return modelRepository.save(entity);
+            result = modelRepository.save(entity);
         } catch (DataAccessException e) {
             throw new ServiceException(e);
         }
+        return result;
     }
 
     @Override

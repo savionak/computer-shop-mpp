@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.List;
 
 @Entity
 @Table(name = "component_model")
@@ -25,6 +26,7 @@ public class ComponentModel extends BaseEntity<Long> {
     @JoinColumn(name = "type_id", unique = true, nullable = false)
     private ComponentType type;
 
+    @JsonIgnore
     @Transient
     private Long newTypeId;
 
@@ -38,7 +40,7 @@ public class ComponentModel extends BaseEntity<Long> {
         newTypeId = id;
     }
 
-    @JsonProperty(value = "type")
+    @JsonProperty(value = "typeName")
     private String getTypeName() {
         return type.getName();
     }
@@ -50,14 +52,15 @@ public class ComponentModel extends BaseEntity<Long> {
 
 //    @OneToMany(mappedBy = "model", cascade = CascadeType.ALL)
 //    private List<ComponentStore> storedComponent;
-//
-//    @OneToMany(mappedBy = "model", cascade = CascadeType.ALL)
-//    private List<Import> imports;
-//
-//    public List<Import> getImports() {
-//        return imports;
-//    }
-//
+
+    @Transient
+    @OneToMany(mappedBy = "model", cascade = CascadeType.ALL)
+    private List<Import> imports;
+
+    public List<Import> getImports() {
+        return imports;
+    }
+
 //    public void setImports(List<Import> imports) {
 //        this.imports = imports;
 //    }

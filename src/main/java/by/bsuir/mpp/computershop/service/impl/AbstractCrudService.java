@@ -21,11 +21,13 @@ public abstract class AbstractCrudService<E extends BaseEntity<ID>, ID extends S
     @Override
     public E add(E entity) throws ServiceException {
         entity.setId(null); // to avoid update existing entities
+        E result;
         try {
-            return repository.save(entity);
+            result = repository.save(entity);
         } catch (DataAccessException e) {
             throw new ServiceException(e);
         }
+        return result;
     }
 
     @Override
