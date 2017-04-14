@@ -2,16 +2,15 @@ package by.bsuir.mpp.computershop.controller.impl;
 
 import by.bsuir.mpp.computershop.controller.ComponentModelController;
 import by.bsuir.mpp.computershop.controller.exception.ControllerException;
-import by.bsuir.mpp.computershop.controller.exception.ResourceNotFoundException;
 import by.bsuir.mpp.computershop.entity.ComponentModel;
 import by.bsuir.mpp.computershop.entity.Import;
 import by.bsuir.mpp.computershop.service.ComponentModelService;
-import by.bsuir.mpp.computershop.service.exception.EntityNotFoundException;
-import by.bsuir.mpp.computershop.service.exception.ServiceException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+
+import static by.bsuir.mpp.computershop.controller.exception.wrapper.ServiceCallWrapper.wrapServiceCall;
 
 @RestController
 public class ComponentModelControllerImpl extends AbstractCrudController<ComponentModel, Long> implements ComponentModelController {
@@ -28,14 +27,6 @@ public class ComponentModelControllerImpl extends AbstractCrudController<Compone
     @Override
     public Iterable<Import> getImports(@PathVariable Long id) throws ControllerException {
         logger.info(String.format("GET LIST of imports by Provider with id = [%s]", id));
-        try {
-            return service.getImports(id);
-        } catch (EntityNotFoundException e) {
-            logger.warn(e);
-            throw new ResourceNotFoundException(e);
-        } catch (ServiceException e) {
-            logger.warn(e);
-            throw new ControllerException(e);
-        }
+        return wrapServiceCall(() -> service.getImports(id), logger);
     }
 }
