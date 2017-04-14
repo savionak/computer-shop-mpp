@@ -17,7 +17,6 @@ public class ComponentModel extends BaseEntity<Long> {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @NotNull(message = "Description cannot be null")
     @Column(name = "description", columnDefinition = "text")
     private String description;
 

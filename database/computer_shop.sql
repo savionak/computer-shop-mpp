@@ -49,7 +49,7 @@ CREATE TABLE `component_model`
 	`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT ,
 	`type_id` BIGINT UNSIGNED NOT NULL,
 	`name` VARCHAR(255) NOT NULL,
-	`description` TEXT NOT NULL,
+	`description` TEXT,
 	CONSTRAINT `PK_component` PRIMARY KEY (`id`)
 )
 ;
@@ -99,7 +99,7 @@ CREATE TABLE `employee_info`
 	`id` BIGINT UNSIGNED NOT NULL,
 	`auth_id` BIGINT UNSIGNED NOT NULL,
 	`first_name` VARCHAR(255) NOT NULL,
-	`last_name` VARCHAR(255),
+	`last_name` VARCHAR(255) NOT NULL,
 	`patronymic` VARCHAR(255),
 	`phone` VARCHAR(50),
 	CONSTRAINT `PK_employee_info` PRIMARY KEY (`id`)
@@ -123,7 +123,7 @@ CREATE TABLE `import`
 	`count` INT UNSIGNED NOT NULL,
 	`model_id` BIGINT UNSIGNED NOT NULL,
 	`purchase_price` INT UNSIGNED NOT NULL,
-	`price` INT UNSIGNED,
+	`price` INT UNSIGNED NOT NULL DEFAULT 0,
 	`status` ENUM ('REGISTERED', 'FINISHED') NOT NULL,
 	CONSTRAINT `PK_import` PRIMARY KEY (`id`)
 )
@@ -133,7 +133,7 @@ CREATE TABLE `inventory`
 (
 	`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT ,
 	`st_date` DATETIME(0) NOT NULL,
-	`saldo` BIGINT NOT NULL,
+	`saldo` BIGINT NOT NULL DEFAULT 0,
 	CONSTRAINT `PK_stocktaking` PRIMARY KEY (`id`)
 )
 ;
@@ -143,7 +143,8 @@ CREATE TABLE `inventory_item`
 	`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT ,
 	`stocktaking_id` BIGINT UNSIGNED NOT NULL,
 	`component_id` BIGINT UNSIGNED NOT NULL,
-	`real_count` INT UNSIGNED NOT NULL,
+	`real_count` INT UNSIGNED NOT NULL DEFAULT 0,
+-- TODO: `formal_count` INT UNSIGNED NOT NULL -- copied from component_store table record
 	CONSTRAINT `PK_inventory_item` PRIMARY KEY (`id`)
 )
 ;
