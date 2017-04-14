@@ -2,6 +2,7 @@ package by.bsuir.mpp.computershop.service.impl;
 
 import by.bsuir.mpp.computershop.entity.ComponentModel;
 import by.bsuir.mpp.computershop.entity.ComponentType;
+import by.bsuir.mpp.computershop.entity.Import;
 import by.bsuir.mpp.computershop.repository.ComponentModelRepository;
 import by.bsuir.mpp.computershop.repository.ComponentTypeRepository;
 import by.bsuir.mpp.computershop.service.ComponentModelService;
@@ -66,4 +67,8 @@ public class ComponentModelServiceImpl extends AbstractCrudService<ComponentMode
         return result;
     }
 
+    @Override
+    public Iterable<Import> getImports(Long id) throws ServiceException {
+        return getOne(id).getImports();
+    }
 }

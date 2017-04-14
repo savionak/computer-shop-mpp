@@ -50,10 +50,11 @@ public class ComponentModel extends BaseEntity<Long> {
         return newTypeId;
     }
 
-//    @OneToMany(mappedBy = "model", cascade = CascadeType.ALL)
-//    private List<ComponentStore> storedComponent;
+    @JsonIgnore
+    @OneToMany(mappedBy = "model", cascade = CascadeType.ALL)
+    private List<ComponentStore> storedComponents;
 
-    @Transient
+    @JsonIgnore
     @OneToMany(mappedBy = "model", cascade = CascadeType.ALL)
     private List<Import> imports;
 
@@ -61,17 +62,9 @@ public class ComponentModel extends BaseEntity<Long> {
         return imports;
     }
 
-//    public void setImports(List<Import> imports) {
-//        this.imports = imports;
-//    }
-
-//    public List<ComponentStore> getStoredComponent() {
-//        return storedComponent;
-//    }
-//
-//    public void setStoredComponent(List<ComponentStore> storedComponent) {
-//        this.storedComponent = storedComponent;
-//    }
+    public List<ComponentStore> getStoredComponents() {
+        return storedComponents;
+    }
 
     public ComponentType getType() {
         return this.type;
