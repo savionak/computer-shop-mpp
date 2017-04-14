@@ -3,6 +3,7 @@ package by.bsuir.mpp.computershop.controller.impl;
 import by.bsuir.mpp.computershop.controller.ComponentModelController;
 import by.bsuir.mpp.computershop.controller.exception.ControllerException;
 import by.bsuir.mpp.computershop.entity.ComponentModel;
+import by.bsuir.mpp.computershop.entity.ComponentStore;
 import by.bsuir.mpp.computershop.entity.Import;
 import by.bsuir.mpp.computershop.service.ComponentModelService;
 import org.apache.log4j.Logger;
@@ -26,7 +27,13 @@ public class ComponentModelControllerImpl extends AbstractCrudController<Compone
 
     @Override
     public Iterable<Import> getImports(@PathVariable Long id) throws ControllerException {
-        logger.info(String.format("GET LIST of imports by Provider with id = [%s]", id));
+        logger.info(String.format("GET LIST of imports by id = [%s]", id));
         return wrapServiceCall(() -> service.getImports(id), logger);
+    }
+
+    @Override
+    public Iterable<ComponentStore> getStoredItems(@PathVariable Long id) throws ControllerException {
+        logger.info(String.format("GET LIST of stored items by id = [%s]", id));
+        return wrapServiceCall(() -> service.getStored(id), logger);
     }
 }
