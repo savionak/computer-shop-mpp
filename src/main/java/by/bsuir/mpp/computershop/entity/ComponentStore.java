@@ -1,19 +1,16 @@
 package by.bsuir.mpp.computershop.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "component_store")
 public class ComponentStore extends BaseEntity<Long> {
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "assemblyComponent", cascade = CascadeType.ALL, orphanRemoval = true)
-    public List<AssemblyComponent> assemblyComponents;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "orderComponent", cascade = CascadeType.ALL, orphanRemoval = true)
-    public List<OrderComponent> orderComponents;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ManyToOne
     @JoinColumn(name = "model_id", nullable = false)
     private ComponentModel model;
 
@@ -23,24 +20,22 @@ public class ComponentStore extends BaseEntity<Long> {
     @Column(name = "count", nullable = false)
     private int count;
 
-    public List<AssemblyComponent> getAssemblyComponents() {
-        return assemblyComponents;
+    @JsonIgnore
+    @Transient
+    private Long newModelId;
+
+    @JsonProperty(value = "modelId")
+    public Long getModelId() {
+        return this.model.getId();
     }
 
-    public void setAssemblyComponents(List<AssemblyComponent> assemblyComponents) {
-        this.assemblyComponents = assemblyComponents;
+    @JsonProperty(value = "modelId")
+    public void setModelId(Long id) {
+        this.newModelId = id;
     }
 
-    public List<OrderComponent> getOrderComponents() {
-        return orderComponents;
-    }
-
-    public void setOrderComponents(List<OrderComponent> orderComponents) {
-        this.orderComponents = orderComponents;
-    }
-
-    public ComponentModel getComponentModel() {
-        return this.model;
+    public Long getNewModelId() {
+        return this.newModelId;
     }
 
     public void setComponentModel(ComponentModel componentModel) {
