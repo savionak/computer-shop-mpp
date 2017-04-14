@@ -123,7 +123,7 @@ CREATE TABLE `import`
 	`count` INT UNSIGNED NOT NULL,
 	`model_id` BIGINT UNSIGNED NOT NULL,
 	`purchase_price` INT UNSIGNED NOT NULL,
-	`price` INT UNSIGNED NOT NULL,
+	`price` INT UNSIGNED,
 	`status` ENUM ('REGISTERED', 'FINISHED') NOT NULL,
 	CONSTRAINT `PK_import` PRIMARY KEY (`id`)
 )
@@ -191,6 +191,10 @@ ALTER TABLE `assembly_component`
 
 ALTER TABLE `employee_auth` 
  ADD CONSTRAINT `UQ_email` UNIQUE (`email`)
+;
+
+ALTER TABLE `component_model`
+ ADD CONSTRAINT `UQ_name` UNIQUE (`name`)
 ;
 
 ALTER TABLE `employee_info` 
