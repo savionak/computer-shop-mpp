@@ -1,5 +1,8 @@
 package by.bsuir.mpp.computershop.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -7,6 +10,7 @@ import java.sql.Timestamp;
 @Table(name = "import")
 public class Import extends BaseEntity<Long> {
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "provider_id", nullable = false)
     private Provider provider;
@@ -17,6 +21,7 @@ public class Import extends BaseEntity<Long> {
     @Column(name = "count", nullable = false)
     private int count;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "model_id", nullable = false)
     private ComponentModel model;
@@ -24,19 +29,29 @@ public class Import extends BaseEntity<Long> {
     @Column(name = "purchase_price", nullable = false)
     private int purchasePrice;
 
-    @Column(name = "price", nullable = false)
+    @Column(name = "price")
     private int price;
 
-    @Column(columnDefinition = "ENUM ('REGISTERED', 'FINISHED')", name = "status", nullable = false)
+    @Column(name = "status", columnDefinition = "ENUM ('REGISTERED', 'FINISHED')", nullable = false)
     @Enumerated(EnumType.STRING)
     private ImportStatus status;
 
-    public Provider getProvider() {
-        return this.provider;
+    @Transient
+    private Long newProviderId;
+
+    @JsonProperty(value = "providerId")
+    public Long getProviderId() {
+        return provider.getId();
     }
 
-    public void setProvider(Provider provider) {
-        this.provider = provider;
+    @JsonProperty(value = "providerId")
+    public void setProviderId(Long id) {
+        newProviderId = id;
+    }
+
+    @JsonProperty(value = "modelId")
+    public Long getModelId() {
+        return model.getId();
     }
 
     public Timestamp getDateTime() {
@@ -90,12 +105,12 @@ public class Import extends BaseEntity<Long> {
     public enum ImportStatus {
         REGISTERED {
             public String toString() {
-                return "зарегистрирован";
+                return "Зарегистрирован";
             }
         },
         FINISHED {
             public String toString() {
-                return "принят";
+                return "Принят";
             }
         };
 
