@@ -279,6 +279,92 @@ SET FOREIGN_KEY_CHECKS=1
 
 
 /*********************************************
+		TRIGGERS
+*********************************************/
+
+DELIMITER //
+
+CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`import_AFTER_INSERT` AFTER INSERT ON `import` FOR EACH ROW
+BEGIN
+	DECLARE store_id INT UNSIGNED DEFAULT NULL;
+	
+	SELECT `id`
+    INTO store_id
+    FROM `component_store`
+    WHERE `model_id` = NEW.`model_id`
+		AND `price` = NEW.`price`;
+	
+    IF (NOT store_id IS NULL) THEN
+		UPDATE `component_store`
+        SET `count` = `count` + NEW.`count`
+        WHERE `id` = store_id;
+    ELSE
+		INSERT INTO `component_store`
+        (`model_id`, `price`, `count`)
+        VALUE
+        (NEW.`model_id`, NEW.`price`, NEW.`count`);
+    END IF;
+END //
+
+
+CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`import_BEFORE_UPDATE` BEFORE UPDATE ON `import` FOR EACH ROW
+BEGIN
+	DECLARE store_id INT UNSIGNED DEFAULT NULL;
+	DECLARE store_count INT UNSIGNED DEFAULT 0;
+    
+	IF (NEW.`count` != OLD.`count`) THEN
+		SELECT `id`, `count`
+		INTO store_id, store_count
+		FROM `component_store`
+		WHERE `model_id` = NEW.`model_id`
+			AND `price` = NEW.`price`;
+		
+		IF (NOT store_id IS NULL) THEN
+			IF (NEW.`count` > OLD.`count`) OR (store_count >= OLD.`count` - NEW.`count`) THEN
+				UPDATE `component_store`
+				SET `count` = `count` + NEW.`count` - OLD.`count`
+				WHERE `id` = store_id;
+			ELSE
+				SIGNAL SQLSTATE '45000'
+					SET MESSAGE_TEXT = "Can't decrease count - components are already in use";
+			END IF;
+		ELSE
+			INSERT INTO `component_store`
+			(`model_id`, `price`, `count`)
+			VALUE
+			(NEW.`model_id`, NEW.`price`, NEW.`count`);
+		END IF;
+    END IF;
+END //
+
+
+CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`import_BEFORE_DELETE` BEFORE DELETE ON `import` FOR EACH ROW
+BEGIN
+	DECLARE store_id INT UNSIGNED DEFAULT 0;
+	DECLARE store_count INT UNSIGNED DEFAULT 0;
+	
+	SELECT `id`, `count`
+    INTO store_id, store_count
+    FROM `component_store`
+    WHERE `model_id` = OLD.`model_id`
+		AND `price` = OLD.`price`;
+	
+    IF (ROW_COUNT() != 0) THEN
+		IF (store_count >= OLD.`count`) THEN
+			UPDATE `component_store`
+			SET `count` = `count` - OLD.`count`
+			WHERE `id` = store_id;
+		ELSE
+			SIGNAL SQLSTATE '45000'
+				SET MESSAGE_TEXT = "Can't remove import - components are already in use";
+        END IF;
+    END IF;
+END
+
+DELIMITER ;
+
+
+/*********************************************
 		USER
 *********************************************/
 
