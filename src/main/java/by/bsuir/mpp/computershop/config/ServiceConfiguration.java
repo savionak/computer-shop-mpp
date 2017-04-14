@@ -13,9 +13,8 @@ import org.springframework.context.annotation.Configuration;
 public class ServiceConfiguration {
 
     @Bean
-    ComponentTypeService componentTypeService(ComponentTypeRepository componentTypeRepository,
-                                              ComponentModelRepository componentModelRepository) {
-        return new ComponentTypeServiceImpl(componentTypeRepository, componentModelRepository);
+    ComponentTypeService componentTypeService(ComponentTypeRepository componentTypeRepository) {
+        return new ComponentTypeServiceImpl(componentTypeRepository);
     }
 
     @Bean
