@@ -7,7 +7,7 @@ import by.bsuir.mpp.computershop.entity.Import;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping("api/componentModel")
+@RequestMapping("api/component/model")
 public interface ComponentModelController extends CrudController<ComponentModel, Long> {
 
     @RequestMapping(path = "{id}/imports")
