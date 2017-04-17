@@ -292,6 +292,35 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 
 /*********************************************
+		OAuth2 tables
+*********************************************/
+
+DROP TABLE IF EXISTS `oauth_access_token`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `oauth_access_token` (
+  `token_id`          VARCHAR(256) DEFAULT NULL,
+  `token`             BLOB,
+  `authentication_id` VARCHAR(256) DEFAULT NULL,
+  `user_name`         VARCHAR(256) DEFAULT NULL,
+  `client_id`         VARCHAR(256) DEFAULT NULL,
+  `authentication`    BLOB,
+  `refresh_token`     VARCHAR(256) DEFAULT NULL
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
+DROP TABLE IF EXISTS `oauth_refresh_token`;
+CREATE TABLE `oauth_refresh_token` (
+  `token_id`       VARCHAR(256) DEFAULT NULL,
+  `token`          BLOB,
+  `authentication` BLOB
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
+
+/*********************************************
 		TRIGGERS
 *********************************************/
 
