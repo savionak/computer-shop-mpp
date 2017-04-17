@@ -1,45 +1,15 @@
 package by.bsuir.mpp.computershop.controller;
 
+import by.bsuir.mpp.computershop.controller.exception.ControllerException;
+import by.bsuir.mpp.computershop.entity.ComponentModel;
 import by.bsuir.mpp.computershop.entity.ComponentType;
-import by.bsuir.mpp.computershop.service.ComponentTypeService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-@RestController
 @RequestMapping("api/componentType")
-public class ComponentTypeController {
+public interface ComponentTypeController extends CrudController<ComponentType, Long> {
 
-    private final ComponentTypeService componentTypeService;
-
-    @Autowired
-    public ComponentTypeController(ComponentTypeService componentTypeService) {
-        this.componentTypeService = componentTypeService;
-    }
-
-    @RequestMapping(path = "", method = RequestMethod.GET)
-    public Iterable<ComponentType> getAllComponentTypes() {
-        return componentTypeService.getAll();
-    }
-
-    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    public ComponentType getComponentTypeById(@PathVariable("id") Long id) {
-        return componentTypeService.getOne(id);
-    }
-
-    @RequestMapping(path = "add", method = RequestMethod.POST)
-    public ComponentType addComponentType(@RequestBody ComponentType newType) {
-        return componentTypeService.add(newType);
-    }
-
-    @RequestMapping(path = "/update", method = RequestMethod.PUT)
-    public ComponentType updateComponentType(
-            @RequestBody ComponentType type) {
-        return componentTypeService.update(type);
-    }
-
-    @RequestMapping(path = "/delete/{id}", method = RequestMethod.DELETE)
-    public void deleteComponentTypeById(@PathVariable("id") Long id) {
-        componentTypeService.delete(id);
-    }
-
+    @RequestMapping(path = "{id}/models", method = RequestMethod.GET)
+    Iterable<ComponentModel> getModels(@PathVariable Long id) throws ControllerException;
 }

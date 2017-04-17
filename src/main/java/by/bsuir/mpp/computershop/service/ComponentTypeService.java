@@ -1,11 +1,10 @@
 package by.bsuir.mpp.computershop.service;
 
+import by.bsuir.mpp.computershop.entity.ComponentModel;
 import by.bsuir.mpp.computershop.entity.ComponentType;
+import by.bsuir.mpp.computershop.service.exception.ServiceException;
 
-public interface ComponentTypeService {
-    ComponentType add(ComponentType type);
-    Iterable<ComponentType> getAll();
-    ComponentType getOne(Long id);
-    void delete(Long id);
-    ComponentType update(ComponentType type);
+public interface ComponentTypeService extends CrudService<ComponentType, Long> {
+
+    Iterable<ComponentModel> getModels(Long id) throws ServiceException;
 }

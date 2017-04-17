@@ -3,16 +3,12 @@ package by.bsuir.mpp.computershop.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @Entity
-@Table(name = "component_type")
-public class ComponentType extends BaseEntity<Long> {
+@Table(name = "provider")
+public class Provider extends BaseEntity<Long> {
 
-    @NotNull(message = "Name cannot be null")
-    @Pattern(regexp = "^(?!\\s*$).+", message = "Component type name cannot be empty")
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
@@ -20,15 +16,11 @@ public class ComponentType extends BaseEntity<Long> {
     private String description;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "type", fetch = FetchType.LAZY)
-    private List<ComponentModel> componentModels;
+    @OneToMany(mappedBy = "provider", cascade = CascadeType.ALL)
+    private List<Import> imports;
 
-    public List<ComponentModel> getComponentModels() {
-        return componentModels;
-    }
-
-    public void setComponentModels(List<ComponentModel> componentModels) {
-        this.componentModels = componentModels;
+    public List<Import> getImports() {
+        return imports;
     }
 
     public String getName() {
