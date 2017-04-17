@@ -1,5 +1,6 @@
 package by.bsuir.mpp.computershop.config;
 
+import by.bsuir.mpp.computershop.config.security.SecurityConfiguration;
 import by.bsuir.mpp.computershop.controller.exception.handler.GlobalRestExceptionHandler;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -12,9 +13,15 @@ import org.springframework.context.annotation.Import;
 @Import({
         PersistenceConfiguration.class,
         ServiceConfiguration.class,
-        ControllerConfiguration.class
+        ControllerConfiguration.class,
+        SecurityConfiguration.class
 })
-@EnableAutoConfiguration
+@EnableAutoConfiguration(exclude = {
+        org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration.class,
+        org.springframework.boot.autoconfigure.security.SecurityFilterAutoConfiguration.class,
+        org.springframework.boot.autoconfigure.security.FallbackWebSecurityAutoConfiguration.class,
+        org.springframework.boot.autoconfigure.security.oauth2.OAuth2AutoConfiguration.class
+})
 public class PrimaryConfiguration extends SpringBootServletInitializer {
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
