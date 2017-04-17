@@ -5,6 +5,7 @@ import by.bsuir.mpp.computershop.controller.impl.*;
 import by.bsuir.mpp.computershop.service.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 
 @Configuration
 public class ControllerConfiguration {
@@ -33,4 +34,10 @@ public class ControllerConfiguration {
     public ComponentStoreController componentStoreController(ComponentStoreService storeService) {
         return new ComponentStoreControllerImpl(storeService);
     }
+
+    @Bean
+    public LogoutController logoutController(DefaultTokenServices tokenServices) {
+        return new LogoutControllerImpl(tokenServices);
+    }
+
 }
