@@ -4,6 +4,7 @@ public class ResourceNotFoundException extends ControllerException {
     private static final long serialVersionUID = 101L;
 
     public ResourceNotFoundException(){
+        super();
     }
 
     public ResourceNotFoundException(Exception e){

@@ -8,6 +8,9 @@ import java.util.List;
 
 public class EmployeeAuth extends BaseEntity<Long> {
 
+    @Column(name = "email")
+    private String email;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "role", columnDefinition = "ENUM ('RECEIVER', 'ASSEMBLER', 'MANAGER', 'DIRECTOR', 'ADMIN')", nullable = false)
     private Role role;
@@ -24,8 +27,21 @@ public class EmployeeAuth extends BaseEntity<Long> {
     @OneToOne(mappedBy = "auth", cascade = CascadeType.ALL)
     private EmployeeInfo employeeInfo;
 
-    @OneToMany(mappedBy = "assembler", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "assembler")
     private List<AssemblerTask> assemblerTask;
+
+    public EmployeeAuth() {
+
+    }
+
+    public EmployeeAuth(EmployeeAuth employeeAuth) {
+        email = employeeAuth.email;
+        role = employeeAuth.role;
+        passHash = employeeAuth.passHash;
+        blocked = employeeAuth.blocked;
+        deleted = employeeAuth.deleted;
+        employeeInfo = employeeAuth.employeeInfo;
+    }
 
     public List<AssemblerTask> getAssemblerTask() {
         return assemblerTask;
@@ -73,6 +89,14 @@ public class EmployeeAuth extends BaseEntity<Long> {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public enum Role {
