@@ -6,6 +6,7 @@ import by.bsuir.mpp.computershop.service.exception.EntityNotFoundException;
 import by.bsuir.mpp.computershop.service.exception.ServiceException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 
@@ -19,6 +20,7 @@ public abstract class AbstractCrudService<E extends BaseEntity<ID>, ID extends S
     }
 
     @Override
+    @Transactional
     public E add(E entity) throws ServiceException {
         entity.setId(null); // to avoid update existing entities
         E result;
@@ -39,6 +41,7 @@ public abstract class AbstractCrudService<E extends BaseEntity<ID>, ID extends S
     }
 
     @Override
+    @Transactional
     public E update(E entity) throws ServiceException {
         ID id = entity.getId();
         E result;
@@ -100,7 +103,8 @@ public abstract class AbstractCrudService<E extends BaseEntity<ID>, ID extends S
     }
 
     protected boolean checkKeys(E entity) {
-        return true;    // check foreign keys before insert/update
+        // check foreign keys before insert/update
+        return true;
     }
 
     protected void updateReferences(E entity) {
