@@ -20,10 +20,10 @@ public class EmployeeAuth extends BaseEntity<Long> {
     private String passHash;
 
     @Column(name = "blocked", columnDefinition = "bit", nullable = false)
-    private Boolean blocked;
+    private boolean blocked = false;
 
     @Column(name = "deleted", columnDefinition = "bit", nullable = false)
-    private Boolean deleted;
+    private boolean deleted = false;
 
     @OneToOne(mappedBy = "auth", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private EmployeeInfo employeeInfo;
@@ -68,15 +68,7 @@ public class EmployeeAuth extends BaseEntity<Long> {
         this.passHash = passHash;
     }
 
-    public Boolean getStatus() {
-        return this.blocked;
-    }
-
-    public void setStatus(Boolean blocked) {
-        this.blocked = blocked;
-    }
-
-    public Boolean getDeleted() {
+    public Boolean isDeleted() {
         return this.deleted;
     }
 
@@ -98,6 +90,14 @@ public class EmployeeAuth extends BaseEntity<Long> {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
     }
 
     public enum Role {

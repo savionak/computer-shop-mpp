@@ -38,7 +38,7 @@ public class UserAuthDetails extends EmployeeAuth implements UserDetails, Serial
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return !isBlocked();
     }
 
     @Override
@@ -48,6 +48,6 @@ public class UserAuthDetails extends EmployeeAuth implements UserDetails, Serial
 
     @Override
     public boolean isEnabled() {
-        return !getDeleted();
+        return !isDeleted();
     }
 }

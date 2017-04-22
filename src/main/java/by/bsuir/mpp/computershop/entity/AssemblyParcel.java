@@ -68,14 +68,6 @@ public class AssemblyParcel extends BaseEntity<Long> implements Serializable {
         this.doneCount = doneCount;
     }
 
-    public boolean getCanceled() {
-        return this.canceled;
-    }
-
-    public void setCanceled(boolean canceled) {
-        this.canceled = canceled;
-    }
-
     public List<AssemblyComponent> getComponents() {
         return components;
     }
@@ -90,5 +82,13 @@ public class AssemblyParcel extends BaseEntity<Long> implements Serializable {
 
     public void setTasks(List<AssemblerTask> tasks) {
         this.tasks = tasks;
+    }
+
+    public boolean isCanceled() {
+        return canceled;
+    }
+
+    public void setCanceled(boolean canceled) {
+        this.canceled = canceled;
     }
 }
