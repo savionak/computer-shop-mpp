@@ -8,10 +8,13 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @Import({
         PersistenceConfiguration.class,
+        EntityManagerFactoriesConfiguration.class,
+        TransactionManagerConfiguration.class,
         ServiceConfiguration.class,
         ControllerConfiguration.class,
         SecurityConfiguration.class
@@ -22,6 +25,7 @@ import org.springframework.context.annotation.Import;
         org.springframework.boot.autoconfigure.security.FallbackWebSecurityAutoConfiguration.class,
         org.springframework.boot.autoconfigure.security.oauth2.OAuth2AutoConfiguration.class
 })
+@EnableTransactionManagement
 public class PrimaryConfiguration extends SpringBootServletInitializer {
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
