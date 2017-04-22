@@ -22,7 +22,7 @@ public class Order extends BaseEntity<Long> {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false,
             columnDefinition = "ENUM ('GOING', 'READY','COMPLETED','CANCELLED')")
-    private Status statusId;
+    private Status status;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.ALL)
     private List<Export> exports;
@@ -30,7 +30,7 @@ public class Order extends BaseEntity<Long> {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.ALL)
     private List<AssemblyParcel> assemblyParcels;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "orderOrder", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderComponent> orderComponents;
 
     public List<OrderComponent> getOrderComponents() {
@@ -61,7 +61,7 @@ public class Order extends BaseEntity<Long> {
         return this.customer;
     }
 
-    public void setCustomer(Customer customerId) {
+    public void setCustomer(Customer customer) {
         this.customer = customer;
     }
 
@@ -81,12 +81,12 @@ public class Order extends BaseEntity<Long> {
         this.cost = cost;
     }
 
-    public Status getOrderId() {
-        return this.statusId;
+    public Status getStatus() {
+        return this.status;
     }
 
-    public void setOrderId(Status statusId) {
-        this.statusId = statusId;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public enum Status {

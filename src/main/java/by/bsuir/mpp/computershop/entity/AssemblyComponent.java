@@ -13,30 +13,30 @@ public class AssemblyComponent implements Serializable {
             @JoinColumn(name = "assembly_id", referencedColumnName = "id", nullable = false),
             @JoinColumn(name = "order_id", referencedColumnName = "order_id", nullable = false)}
     )
-    private AssemblyParcel assemblyComponents;
+    private AssemblyParcel parcel;
 
     @Id
     @ManyToOne
     @JoinColumn(name = "component_id", nullable = false)
-    private ComponentStore assemblyComponent;
+    private ComponentStore component;
 
     @Column(name = "count", nullable = false)
     private long count;
 
-    public AssemblyParcel getAssemblyComponents() {
-        return assemblyComponents;
+    public AssemblyParcel getParcel() {
+        return parcel;
     }
 
-    public void setAssemblyComponents(AssemblyParcel assemblyComponents) {
-        this.assemblyComponents = assemblyComponents;
+    public void setParcel(AssemblyParcel assemblyComponents) {
+        this.parcel = assemblyComponents;
     }
 
-    public ComponentStore getAssemblyComponent() {
-        return assemblyComponent;
+    public ComponentStore getComponent() {
+        return component;
     }
 
-    public void setAssemblyComponent(ComponentStore assemblyOrder) {
-        this.assemblyComponent = assemblyComponent;
+    public void setComponent(ComponentStore component) {
+        this.component = component;
     }
 
     public long getCount() {

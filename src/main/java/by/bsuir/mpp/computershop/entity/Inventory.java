@@ -15,14 +15,14 @@ public class Inventory extends BaseEntity<Long> {
     private long saldo;
 
     @OneToMany(mappedBy = "stocktaking", cascade = CascadeType.ALL)
-    private List<InventoryItem> inventoryItems;
+    private List<InventoryItem> items;
 
-    public List<InventoryItem> getInventoryItems() {
-        return inventoryItems;
+    public List<InventoryItem> getItems() {
+        return items;
     }
 
-    public void setInventoryItems(List<InventoryItem> inventoryItems) {
-        this.inventoryItems = inventoryItems;
+    public void setItems(List<InventoryItem> inventoryItems) {
+        this.items = inventoryItems;
     }
 
     public Timestamp getStDate() {

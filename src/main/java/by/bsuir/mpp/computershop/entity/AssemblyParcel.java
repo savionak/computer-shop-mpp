@@ -1,8 +1,5 @@
 package by.bsuir.mpp.computershop.entity;
 
-
-import org.hibernate.annotations.Type;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -12,9 +9,6 @@ import java.util.List;
 public class AssemblyParcel extends BaseEntity<Long> implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "assemblyComponents", cascade = CascadeType.ALL, orphanRemoval = true)
-    public List<AssemblyComponent> assemblyOrders;
 
     @Id
     @Column(name = "order_id", insertable = false, updatable = false)
@@ -33,29 +27,14 @@ public class AssemblyParcel extends BaseEntity<Long> implements Serializable {
     @Column(name = "done_count", nullable = false, columnDefinition = "int default 0")
     private long doneCount;
 
-    @Column(name = "canceled", nullable = false,
-            columnDefinition = "BIT", length = 1)
-    @Type(type = "org.hibernate.type.NumericBooleanType")
+    @Column(name = "canceled", columnDefinition = "BIT", nullable = false)
     private boolean canceled = false;
 
-    @OneToMany(mappedBy = "tasks", targetEntity = AssemblerTask.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "parcel", cascade = CascadeType.ALL)
+    private List<AssemblyComponent> components;
+
+    @OneToMany(mappedBy = "parcel", targetEntity = AssemblerTask.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<AssemblerTask> tasks;
-
-    public List<AssemblyComponent> getAssemblyOrder() {
-        return assemblyOrders;
-    }
-
-    public void setAssemblyOrder(List<AssemblyComponent> assemblyOrders) {
-        this.assemblyOrders = assemblyOrders;
-    }
-
-    public List<AssemblerTask> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(List<AssemblerTask> tasks) {
-        this.tasks = tasks;
-    }
 
     public Order getOrder() {
         return this.order;
@@ -95,5 +74,21 @@ public class AssemblyParcel extends BaseEntity<Long> implements Serializable {
 
     public void setCanceled(boolean canceled) {
         this.canceled = canceled;
+    }
+
+    public List<AssemblyComponent> getComponents() {
+        return components;
+    }
+
+    public void setComponents(List<AssemblyComponent> components) {
+        this.components = components;
+    }
+
+    public List<AssemblerTask> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<AssemblerTask> tasks) {
+        this.tasks = tasks;
     }
 }

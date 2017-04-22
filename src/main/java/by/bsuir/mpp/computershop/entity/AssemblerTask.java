@@ -9,10 +9,10 @@ public class AssemblerTask extends BaseEntity<Long> {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumns({
-            @JoinColumn(name = "assembly_parcel_id", referencedColumnName = "id", nullable = false),
+            @JoinColumn(name = "parcel_id", referencedColumnName = "id", nullable = false),
             @JoinColumn(name = "order_id", referencedColumnName = "order_id", nullable = false)}
     )
-    private AssemblyParcel tasks;
+    private AssemblyParcel parcel;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "assembler_id", nullable = false)
@@ -24,19 +24,20 @@ public class AssemblerTask extends BaseEntity<Long> {
     @Column(name = "done_count", nullable = false)
     private long doneCount;
 
-    @Column(name = "done_date", nullable = false)
+    @Column(name = "done_date")
     private Date doneDate;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "task_type", columnDefinition = "ENUM ('ASSEMBLE', 'DISASSEMBLE')", nullable = false)
+    @Column(name = "task_type", nullable = false,
+            columnDefinition = "ENUM ('ASSEMBLE', 'DISASSEMBLE')")
     private TaskType taskType;
 
-    public AssemblyParcel getTasks() {
-        return this.tasks;
+    public AssemblyParcel getParcel() {
+        return this.parcel;
     }
 
-    public void setTasks(AssemblyParcel task) {
-        this.tasks = tasks;
+    public void setParcel(AssemblyParcel parcel) {
+        this.parcel = parcel;
     }
 
     public EmployeeAuth getAssembler() {

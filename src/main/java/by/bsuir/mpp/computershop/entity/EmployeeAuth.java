@@ -12,7 +12,8 @@ public class EmployeeAuth extends BaseEntity<Long> {
     private String email;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "role", columnDefinition = "ENUM ('RECEIVER', 'ASSEMBLER', 'MANAGER', 'DIRECTOR', 'ADMIN')", nullable = false)
+    @Column(name = "role", nullable = false,
+            columnDefinition = "ENUM ('RECEIVER', 'ASSEMBLER', 'MANAGER', 'DIRECTOR', 'ADMIN')")
     private Role role;
 
     @Column(name = "pass_hash", unique = true, nullable = false)
@@ -24,7 +25,7 @@ public class EmployeeAuth extends BaseEntity<Long> {
     @Column(name = "deleted", columnDefinition = "bit", nullable = false)
     private Boolean deleted;
 
-    @OneToOne(mappedBy = "auth", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "auth", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private EmployeeInfo employeeInfo;
 
     @OneToMany(mappedBy = "assembler")

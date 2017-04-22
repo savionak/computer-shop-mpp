@@ -37,7 +37,8 @@ public class Import extends BaseEntity<Long> {
     private Timestamp dateTime;
 
     @NotNull
-    @Column(name = "status", columnDefinition = "ENUM ('REGISTERED', 'FINISHED')", nullable = false)
+    @Column(name = "status", nullable = false,
+            columnDefinition = "ENUM ('REGISTERED', 'FINISHED')")
     @Enumerated(EnumType.STRING)
     private ImportStatus status;
 

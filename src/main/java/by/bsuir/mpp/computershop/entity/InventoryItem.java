@@ -1,11 +1,9 @@
 package by.bsuir.mpp.computershop.entity;
 
-
 import javax.persistence.*;
 
 @Entity
 @Table(name = "inventory_item")
-
 public class InventoryItem extends BaseEntity<Long> {
 
     @ManyToOne(fetch = FetchType.LAZY)

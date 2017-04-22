@@ -10,30 +10,30 @@ public class OrderComponent implements Serializable {
     @Id
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
-    private Order orderOrder;
+    private Order order;
 
     @Id
     @ManyToOne
     @JoinColumn(name = "component_id", nullable = false)
-    private ComponentStore orderComponent;
+    private ComponentStore component;
 
     @Column(name = "count", nullable = false)
     private int count;
 
     public Order getOrder() {
-        return orderOrder;
+        return order;
     }
 
-    public void setOrder(Order orderOrder) {
-        this.orderOrder = orderOrder;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public ComponentStore getComponent() {
-        return orderComponent;
+        return component;
     }
 
-    public void setComponent(ComponentStore orderComponent) {
-        this.orderComponent = orderComponent;
+    public void setComponent(ComponentStore component) {
+        this.component = component;
     }
 
     public int getCount() {
