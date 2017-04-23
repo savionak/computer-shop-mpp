@@ -11,7 +11,7 @@ public class Inventory extends BaseEntity<Long> {
     @Column(name = "st_date", nullable = false)
     private Timestamp stDate;
 
-    @Column(name = "saldo", nullable = false)
+    @Column(name = "saldo")
     private long saldo;
 
     @OneToMany(mappedBy = "stocktaking", cascade = CascadeType.ALL)

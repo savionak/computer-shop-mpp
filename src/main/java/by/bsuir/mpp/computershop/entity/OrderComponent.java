@@ -20,6 +20,9 @@ public class OrderComponent implements Serializable {
     @Column(name = "count", nullable = false)
     private int count;
 
+    @Column(name = "canceled", nullable = false)
+    private boolean canceled = false;
+
     public Order getOrder() {
         return order;
     }
@@ -42,5 +45,13 @@ public class OrderComponent implements Serializable {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public boolean isCanceled() {
+        return canceled;
+    }
+
+    public void setCanceled(boolean canceled) {
+        this.canceled = canceled;
     }
 }

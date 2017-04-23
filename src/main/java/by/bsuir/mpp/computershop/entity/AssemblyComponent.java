@@ -9,10 +9,7 @@ public class AssemblyComponent implements Serializable {
 
     @Id
     @ManyToOne
-    @JoinColumns({
-            @JoinColumn(name = "assembly_id", referencedColumnName = "id", nullable = false),
-            @JoinColumn(name = "order_id", referencedColumnName = "order_id", nullable = false)}
-    )
+    @JoinColumn(name = "assembly_id", nullable = false)
     private AssemblyParcel parcel;
 
     @Id

@@ -6,28 +6,42 @@ import java.util.List;
 
 @Entity
 @Table(name = "assembly_parcel")
+@NamedStoredProcedureQueries({
+        @NamedStoredProcedureQuery(
+                name = "get_parcel_cost",
+                procedureName = "get_parcel_cost",
+                parameters = {
+                        @StoredProcedureParameter(mode = ParameterMode.IN, name = "parcel_id", type = Long.class),
+                        @StoredProcedureParameter(mode = ParameterMode.OUT, name = "result", type = Long.class)
+                }),
+        @NamedStoredProcedureQuery(
+                name = "remove_parcel_tasks",
+                procedureName = "remove_parcel_tasks",
+                parameters = {
+                        @StoredProcedureParameter(mode = ParameterMode.IN, name = "parcel_id", type = Long.class)
+                })
+})
 public class AssemblyParcel extends BaseEntity<Long> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @Column(name = "order_id", insertable = false, updatable = false)
-    private long orderId;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn(name = "order_id")
+    @JoinColumn(name = "order_id")
     private Order order;
 
-    @Column(name = "cost", nullable = false)
+    @Transient
     private long cost;
 
     @Column(name = "count", nullable = false)
     private long count;
 
+    @Column(name = "free_count", nullable = false)
+    private long freeCount;
+
     @Column(name = "done_count", nullable = false, columnDefinition = "int default 0")
     private long doneCount;
 
-    @Column(name = "canceled", columnDefinition = "BIT", nullable = false)
+    @Column(name = "canceled", nullable = false)
     private boolean canceled = false;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "parcel", cascade = CascadeType.ALL)
@@ -90,5 +104,13 @@ public class AssemblyParcel extends BaseEntity<Long> implements Serializable {
 
     public void setCanceled(boolean canceled) {
         this.canceled = canceled;
+    }
+
+    public long getFreeCount() {
+        return freeCount;
+    }
+
+    public void setFreeCount(long freeCount) {
+        this.freeCount = freeCount;
     }
 }

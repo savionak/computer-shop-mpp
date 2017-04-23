@@ -5,13 +5,18 @@ import java.sql.Date;
 
 @Entity
 @Table(name = "assembler_task")
+@NamedStoredProcedureQueries({
+        @NamedStoredProcedureQuery(
+                name = "remove_task",
+                procedureName = "remove_task",
+                parameters = {
+                        @StoredProcedureParameter(mode = ParameterMode.IN, name = "task_id", type = Long.class)
+                })
+})
 public class AssemblerTask extends BaseEntity<Long> {
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumns({
-            @JoinColumn(name = "parcel_id", referencedColumnName = "id", nullable = false),
-            @JoinColumn(name = "order_id", referencedColumnName = "order_id", nullable = false)}
-    )
+    @JoinColumn(name = "parcel_id", nullable = false)
     private AssemblyParcel parcel;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -31,9 +36,6 @@ public class AssemblerTask extends BaseEntity<Long> {
     @Column(name = "task_type", nullable = false,
             columnDefinition = "ENUM ('ASSEMBLE', 'DISASSEMBLE')")
     private TaskType taskType;
-
-    @Column(name = "canceled", columnDefinition = "BIT", nullable = false)
-    private boolean canceled = false;
 
     public AssemblyParcel getParcel() {
         return this.parcel;
@@ -81,14 +83,6 @@ public class AssemblerTask extends BaseEntity<Long> {
 
     public void setTaskType(TaskType taskType) {
         this.taskType = taskType;
-    }
-
-    public boolean isCanceled() {
-        return canceled;
-    }
-
-    public void setCanceled(boolean canceled) {
-        this.canceled = canceled;
     }
 
     public enum TaskType {

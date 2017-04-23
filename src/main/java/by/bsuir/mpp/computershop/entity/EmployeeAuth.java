@@ -19,10 +19,10 @@ public class EmployeeAuth extends BaseEntity<Long> {
     @Column(name = "pass_hash", unique = true, nullable = false)
     private String passHash;
 
-    @Column(name = "blocked", columnDefinition = "bit", nullable = false)
+    @Column(name = "blocked", nullable = false)
     private boolean blocked = false;
 
-    @Column(name = "deleted", columnDefinition = "bit", nullable = false)
+    @Column(name = "deleted", nullable = false)
     private boolean deleted = false;
 
     @OneToOne(mappedBy = "auth", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

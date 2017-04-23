@@ -1,5 +1,7 @@
 package by.bsuir.mpp.computershop.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -13,6 +15,7 @@ public class Customer extends BaseEntity<Long> {
     @Column(name = "description", columnDefinition = "text")
     private String description;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Order> orders;
 

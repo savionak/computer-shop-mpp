@@ -29,7 +29,7 @@ public class Import extends BaseEntity<Long> {
     @Column(name = "purchase_price", nullable = false)
     private int purchasePrice;
 
-    @Column(name = "price")
+    @Column(name = "price", nullable = false)
     private int price;
 
     @NotNull

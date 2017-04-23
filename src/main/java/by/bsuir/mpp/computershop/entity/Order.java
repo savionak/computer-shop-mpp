@@ -7,13 +7,22 @@ import java.util.List;
 
 @Entity
 @Table(name = "order")
+@NamedStoredProcedureQueries({
+        @NamedStoredProcedureQuery(
+                name = "get_order_cost",
+                procedureName = "get_order_cost",
+                parameters = {
+                        @StoredProcedureParameter(mode = ParameterMode.IN, name = "order_id", type = Long.class),
+                        @StoredProcedureParameter(mode = ParameterMode.OUT, name = "result", type = Long.class)
+                })
+})
 public class Order extends BaseEntity<Long> {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    @Column(name = "cost", nullable = false)
+    @Transient
     private int cost;
 
     @Column(name = "ord_date", nullable = false)
