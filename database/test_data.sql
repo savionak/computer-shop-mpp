@@ -1,5 +1,6 @@
 USE `computer_shop`;
 
+
 INSERT INTO `component_type`
 (`id`, `name`)
 VALUES
@@ -17,25 +18,38 @@ VALUES
   ('3', '1', 'AMD X5', 'Another proc'),
   ('4', '1', 'AMD X10', '');
 
+
 INSERT INTO `computer_shop`.`provider`
 (`id`, `name`, `description`)
 VALUES
   ('1', 'MMGroup', NULL),
   ('2', 'TerraStore', NULL);
 
-/* Imports - trigger component_store */
-
 INSERT INTO `computer_shop`.`import`
-(`id`,
- `provider_id`,
- `date_time`,
- `count`,
- `model_id`,
- `purchase_price`,
- `price`,
- `status`)
+(`id`, `provider_id`, `date_time`, `count`, `model_id`, `purchase_price`, `price`)
 VALUES
-  ('1', '1', '2017-04-14 11:43:33', '10', '1', '40', '5', 'FINISHED'),
-  ('2', '1', '2017-04-14 13:26:49', '20', '1', '30', '0', 'REGISTERED'),
-  ('3', '2', '2017-04-14 15:23:01', '50', '2', '25', '30', 'FINISHED');
+  ('1', '1', '2017-04-14 11:43:33', '10', '1', '40', '5'),
+  ('2', '1', '2017-04-14 13:26:49', '20', '1', '30', '0'),
+  ('3', '2', '2017-04-14 15:23:01', '50', '2', '25', '30');
 
+
+INSERT INTO `computer_shop`.`customer`
+(`id`, `name`, `description`)
+VALUES
+  ('1', 'First customer', 'Test data');
+  
+INSERT INTO `computer_shop`.`order`
+(`id`, `customer_id`)
+VALUES
+  ('1', '1');
+
+INSERT INTO `computer_shop`.`assembly`
+(`id`, `order_id`, `count`)
+VALUES
+  ('1', '1', '2');
+
+INSERT INTO `computer_shop`.`assembly_component`
+(`assembly_id`, `component_id`, `count`)
+VALUES
+  ('1', '1', '3'),
+  ('1', '3', '1');
