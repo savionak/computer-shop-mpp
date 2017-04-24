@@ -1,28 +1,27 @@
 package by.bsuir.mpp.computershop.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 
 
 @Entity
-@Table(name = "order")
-@NamedStoredProcedureQueries({
-        @NamedStoredProcedureQuery(
-                name = "get_order_cost",
-                procedureName = "get_order_cost",
-                parameters = {
-                        @StoredProcedureParameter(mode = ParameterMode.IN, name = "order_id", type = Long.class),
-                        @StoredProcedureParameter(mode = ParameterMode.OUT, name = "result", type = Long.class)
-                })
-})
+@Table(name = "`order`")
 public class Order extends BaseEntity<Long> {
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
+    @JsonIgnore
     @Transient
+    private Long newCustomerId = null;
+
+    @Column(name = "cost", nullable = false)
     private int cost;
 
     @Column(name = "ord_date", nullable = false)
@@ -30,48 +29,49 @@ public class Order extends BaseEntity<Long> {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false,
-            columnDefinition = "ENUM ('GOING', 'READY','COMPLETED','CANCELLED')")
+            columnDefinition = "ENUM('IN_PROGRESS', 'READY', 'FINISHED', 'CANCELED')")
     private Status status;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.ALL)
     private List<Export> exports;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.ALL)
     private List<AssemblyParcel> assemblyParcels;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderComponent> orderComponents;
 
-    public List<OrderComponent> getOrderComponents() {
-        return orderComponents;
-    }
-
-    public void setOrderComponents(List<OrderComponent> orderComponents) {
-        this.orderComponents = orderComponents;
-    }
-
-    public List<AssemblyParcel> getAssemblyParcels() {
-        return assemblyParcels;
-    }
-
-    public void setAssemblyParcels(List<AssemblyParcel> assemblyParcels) {
-        this.assemblyParcels = assemblyParcels;
-    }
-
-    public List<Export> getExports() {
-        return exports;
-    }
-
-    public void setExports(List<Export> exports) {
-        this.exports = exports;
-    }
-
     public Customer getCustomer() {
-        return this.customer;
+        return customer;
     }
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    @JsonProperty("customer_id")
+    public Long getCustomerId() {
+        return this.customer.getId();
+    }
+
+    @JsonProperty("customer_id")
+    public void setCustomerId(Long id) {
+        this.newCustomerId = id;
+    }
+
+    public Long getNewCustomerId() {
+        return newCustomerId;
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
     }
 
     public Timestamp getOrdDate() {
@@ -82,24 +82,40 @@ public class Order extends BaseEntity<Long> {
         this.ordDate = ordDate;
     }
 
-    public int getCost() {
-        return this.cost;
-    }
-
-    public void setCost(int cost) {
-        this.cost = cost;
-    }
-
     public Status getStatus() {
-        return this.status;
+        return status;
     }
 
     public void setStatus(Status status) {
         this.status = status;
     }
 
+    public List<Export> getExports() {
+        return exports;
+    }
+
+    public void setExports(List<Export> exports) {
+        this.exports = exports;
+    }
+
+    public List<AssemblyParcel> getAssemblyParcels() {
+        return assemblyParcels;
+    }
+
+    public void setAssemblyParcels(List<AssemblyParcel> assemblyParcels) {
+        this.assemblyParcels = assemblyParcels;
+    }
+
+    public List<OrderComponent> getOrderComponents() {
+        return orderComponents;
+    }
+
+    public void setOrderComponents(List<OrderComponent> orderComponents) {
+        this.orderComponents = orderComponents;
+    }
+
     public enum Status {
-        GOING {
+        IN_PROGRESS {
             public String toString() {
                 return "собирается";
             }
@@ -109,7 +125,7 @@ public class Order extends BaseEntity<Long> {
                 return "готов  сборке";
             }
         },
-        COMPLETED {
+        FINISHED {
             public String toString() {
                 return "завершен";
             }

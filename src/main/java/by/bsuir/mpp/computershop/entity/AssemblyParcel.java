@@ -8,13 +8,6 @@ import java.util.List;
 @Table(name = "assembly_parcel")
 @NamedStoredProcedureQueries({
         @NamedStoredProcedureQuery(
-                name = "get_parcel_cost",
-                procedureName = "get_parcel_cost",
-                parameters = {
-                        @StoredProcedureParameter(mode = ParameterMode.IN, name = "parcel_id", type = Long.class),
-                        @StoredProcedureParameter(mode = ParameterMode.OUT, name = "result", type = Long.class)
-                }),
-        @NamedStoredProcedureQuery(
                 name = "remove_parcel_tasks",
                 procedureName = "remove_parcel_tasks",
                 parameters = {
@@ -29,7 +22,7 @@ public class AssemblyParcel extends BaseEntity<Long> implements Serializable {
     @JoinColumn(name = "order_id")
     private Order order;
 
-    @Transient
+    @Column(name = "cost", nullable = false)
     private long cost;
 
     @Column(name = "count", nullable = false)
