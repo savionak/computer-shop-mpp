@@ -38,4 +38,8 @@ public class ServiceConfiguration {
         return new ComponentStoreServiceImpl(storeRepository, modelRepository);
     }
 
+    @Bean
+    OrderService orderService(OrderRepository orderRepository) {
+        return new OrderServiceImpl(orderRepository);
+    }
 }

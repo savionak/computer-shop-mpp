@@ -40,4 +40,8 @@ public class ControllerConfiguration {
         return new LogoutControllerImpl(tokenServices);
     }
 
+    @Bean
+    public OrderController orderController(OrderService orderService) {
+        return new OrderControllerImpl(orderService);
+    }
 }
