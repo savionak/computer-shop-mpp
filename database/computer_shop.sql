@@ -431,3 +431,19 @@ CREATE USER `cs_admin`@'localhost'
   IDENTIFIED BY 'passwd';
 GRANT SELECT, INSERT, UPDATE, DELETE ON `computer_shop`.* TO `cs_admin`@'localhost';
 FLUSH PRIVILEGES;
+
+/*********************************************
+		TEST DATA
+*********************************************/
+
+
+USE `computer_shop`;
+
+INSERT INTO `component_type`
+(`id`, `name`)
+VALUES
+  ('1', 'Процессор'),
+  ('2', 'Материнская плата'),
+  ('3', 'Оперативная память'),
+  ('4', 'Видеокарта'),
+  ('5', 'Сетевая плата');
