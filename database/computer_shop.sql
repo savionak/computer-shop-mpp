@@ -174,9 +174,9 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `computer_shop`.`employee_auth` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `role` ENUM('MANAGER', 'DIRECTOR', 'ADMIN') NOT NULL,
   `email` VARCHAR(255) NOT NULL,
   `pass_hash` VARCHAR(60) NOT NULL,
+  `role` ENUM('MANAGER', 'DIRECTOR', 'ADMIN') NOT NULL,
   `blocked` TINYINT(1) NOT NULL DEFAULT FALSE,
   `deleted` TINYINT(1) NOT NULL DEFAULT FALSE,
   PRIMARY KEY (`id`))
@@ -591,34 +591,46 @@ BEFORE INSERT ON `assembly_component`
 FOR EACH ROW
 BEGIN
 	DECLARE asm_count INT UNSIGNED DEFAULT 0;
-	DECLARE s_price INT UNSIGNED DEFAULT 0;
+    DECLARE order_canceled BOOLEAN DEFAULT TRUE;
+	DECLARE s_price INT UNSIGNED DEFAULT NULL;
 	DECLARE stored_count INT UNSIGNED DEFAULT 0;
 	DECLARE new_count INT UNSIGNED DEFAULT 0;
 
-    SELECT `count`, `price`
-    INTO stored_count, s_price
-    FROM `component_store`
-    WHERE `id` = NEW.`component_id`;
-    
-    SELECT `count`
-	INTO asm_count
+	SELECT `count`, `canceled`
+	INTO asm_count, order_canceled
 	FROM `assembly`
-	WHERE `id` = NEW.`assembly_id`;
-
-	SET new_count = asm_count * NEW.`count`;
-
-	IF (stored_count >= new_count)
-	THEN
-		UPDATE `component_store`
-		SET `count` = stored_count - new_count
-		WHERE `id` = NEW.`component_id`;
-		
-		UPDATE `assembly`
-		SET `cost` = `cost` + (s_price * NEW.`count`)
-		WHERE `id` = NEW.`assembly_id`;
-	ELSE
+    JOIN `order`
+		ON `order`.`id` = `assembly`.`order_id`
+	WHERE `assembly`.`id` = NEW.`assembly_id`;
+	
+    SELECT `count`, `price`
+	INTO stored_count, s_price
+	FROM `component_store`
+	WHERE `id` = NEW.`component_id`;
+	
+    IF (s_price IS NULL)
+    THEN
 		SIGNAL SQLSTATE '45000'
-			SET MESSAGE_TEXT = 'Not enough components available';
+			SET MESSAGE_TEXT = 'Cannot use components without price';
+    END IF;
+    
+	IF (NOT order_canceled)
+	THEN
+		SET new_count = asm_count * NEW.`count`;
+
+		IF (stored_count >= new_count)
+		THEN
+			UPDATE `component_store`
+			SET `count` = stored_count - new_count
+			WHERE `id` = NEW.`component_id`;
+			
+			UPDATE `assembly`
+			SET `cost` = `cost` + (s_price * NEW.`count`)
+			WHERE `id` = NEW.`assembly_id`;
+		ELSE
+			SIGNAL SQLSTATE '45000'
+				SET MESSAGE_TEXT = 'Not enough components available';
+		END IF;
 	END IF;
 END$$
 
@@ -633,16 +645,19 @@ BEGIN
     DECLARE asm_count INT UNSIGNED DEFAULT 0;
     DECLARE old_count INT UNSIGNED DEFAULT 0;
     DECLARE new_count INT UNSIGNED DEFAULT 0;
+	DECLARE order_canceled BOOLEAN DEFAULT TRUE;
     
+	SELECT `count`, `canceled`
+	INTO asm_count, order_canceled
+	FROM `assembly`
+    JOIN `order`
+		ON `order`.`id` = `assembly`.`order_id`
+	WHERE `assembly`.`id` = OLD.`assembly_id`;
+	
 	SELECT `count`, `price`
 	INTO stored_count, s_price
 	FROM `component_store`
 	WHERE `id` = NEW.`component_id`;
-	
-	SELECT `count`
-	INTO asm_count
-	FROM `assembly`
-	WHERE `id` = NEW.`assembly_id`;
 
 	IF (NOT @updating_assembly_count
 		OR @updating_assembly_count IS NULL)
@@ -655,15 +670,18 @@ BEGIN
 	SET temp_stored_count = stored_count + old_count;
 	SET new_count = @new_asm_count * NEW.`count`;
 
-	IF (temp_stored_count >= new_count)
+	IF (NOT order_canceled)
 	THEN
-		UPDATE `component_store`
-		SET `count` = temp_stored_count - new_count
-		WHERE `id` = NEW.`component_id`;
-	ELSE
-		SIGNAL SQLSTATE '45000'
-			SET MESSAGE_TEXT = 'Not enough components available';
-	END IF;
+		IF (temp_stored_count >= new_count)
+		THEN
+			UPDATE `component_store`
+			SET `count` = temp_stored_count - new_count
+			WHERE `id` = NEW.`component_id`;
+		ELSE
+			SIGNAL SQLSTATE '45000'
+				SET MESSAGE_TEXT = 'Not enough components available';
+		END IF;
+    END IF;
 	
 	IF (NOT @updating_assembly_count
 		OR @updating_assembly_count IS NULL)
@@ -787,7 +805,7 @@ BEGIN
                 SET new_store_count = store_count + NEW.`count` - OLD.`count`;
 			ELSE
 				SIGNAL SQLSTATE '45000'
-					SET MESSAGE_TEXT = "Can't decrease import count - components are already in use";
+					SET MESSAGE_TEXT = 'Cannot decrease import count - components are already in use';
 			END IF;
 		END IF;
         
@@ -797,7 +815,7 @@ BEGIN
         END IF;
 	ELSE
         SIGNAL SQLSTATE '45000'
-			SET MESSAGE_TEXT = "Cannot update import count - components are changed";
+			SET MESSAGE_TEXT = 'Cannot update import count - components are changed';
     END IF;
 END$$
 
@@ -824,11 +842,11 @@ BEGIN
 			WHERE `id` = store_id;
 		ELSE
 			SIGNAL SQLSTATE '45000'
-				SET MESSAGE_TEXT = "Can't delete import - components are already in use";
+				SET MESSAGE_TEXT = 'Cannot delete import - components are already in use';
 		END IF;
 	ELSE
 		SIGNAL SQLSTATE '45000'
-			SET MESSAGE_TEXT = "Can't delete import - components are changed";
+			SET MESSAGE_TEXT = 'Cannot delete import - components are changed';
 	END IF;
 END$$
 
@@ -838,7 +856,7 @@ DELIMITER ;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
--- begin attached script 'db user'
+-- begin attached script 'db_user'
 DROP USER IF EXISTS `cs_admin`@'localhost';
 CREATE USER `cs_admin`@'localhost'
 	IDENTIFIED BY 'passwd';
@@ -849,22 +867,22 @@ TO `cs_admin`@'localhost';
 
 FLUSH PRIVILEGES;
 
--- end attached script 'db user'
--- begin attached script 'sys admin'
+-- end attached script 'db_user'
+-- begin attached script 'system_users'
 INSERT INTO `computer_shop`.`employee_auth`
 (`id`, `role`, `email`, `pass_hash`)
-VALUES -- password = "123"
-('1', 'ADMIN', 'mail@mail.com', '$2a$12$uGYKKxqsTq1lCk0AhL97T.WGcMErxKoJ4GKtRhkxcnPiEy3KF81W6');
--- end attached script 'sys admin'
+VALUES
+-- password = '123'
+('1', 'ADMIN', 'mail@mail.com', '$2a$12$uGYKKxqsTq1lCk0AhL97T.WGcMErxKoJ4GKtRhkxcnPiEy3KF81W6'),
 
-/*********************************************
-		TEST DATA
-*********************************************/
+-- password = 'pass'
+('2', 'MANAGER', 'man@mail.com', '$2a$12$oCKg9j.hGvce4yxMnJ4RpuEE6/NrGzYq8pgCQ7ZbFx2o3r0KgHKKO');
 
+-- password = 'qwerty' => '$2a$12$aGHrSX8E1z/I1nnot6j8/Ogfp6hRlcWx58BdsN4n2FEzS2kcEwrau'
 
-USE `computer_shop`;
-
-INSERT INTO `component_type`
+-- end attached script 'system_users'
+-- begin attached script 'test_data'
+INSERT INTO `computer_shop`.`component_type`
 (`id`, `name`)
 VALUES
   ('1', 'Процессор'),
@@ -872,3 +890,50 @@ VALUES
   ('3', 'Оперативная память'),
   ('4', 'Видеокарта'),
   ('5', 'Сетевая плата');
+
+INSERT INTO `computer_shop`.`component_model`
+(`id`, `type_id`, `name`, `description`)
+VALUES
+  ('1', '1', 'Intel Core i7', 'Cool thing!'),
+  ('2', '2', 'Gigabit M3', 'Cool mother!'),
+  ('3', '1', 'AMD X5', 'Another proc');
+
+
+INSERT INTO `computer_shop`.`provider`
+(`id`, `name`, `description`)
+VALUES
+  ('1', 'MMGroup', NULL),
+  ('2', 'TerraStore', NULL);
+
+INSERT INTO `computer_shop`.`import`
+(`id`, `provider_id`, `date_time`, `count`, `model_id`, `purchase_price`, `price`)
+VALUES
+  ('1', '1', '2017-04-14 11:43:33', '10', '1', '40', '5'),
+  ('2', '1', '2017-04-15 13:26:49', '20', '1', '30', '0'),
+  ('3', '2', '2017-04-19 15:23:01', '50', '2', '25', '30');
+
+
+INSERT INTO `computer_shop`.`customer`
+(`id`, `name`, `description`)
+VALUES
+  ('1', 'First', ''),
+  ('2', 'Second', ''),
+  ('3', 'Third', '');
+  
+INSERT INTO `computer_shop`.`order`
+(`id`, `customer_id`)
+VALUES
+  ('1', '1');
+
+INSERT INTO `computer_shop`.`assembly`
+(`id`, `order_id`, `count`)
+VALUES
+  ('1', '1', '2');
+
+INSERT INTO `computer_shop`.`assembly_component`
+(`assembly_id`, `component_id`, `count`)
+VALUES
+  ('1', '1', '3'),
+  ('1', '3', '1');
+
+-- end attached script 'test_data'
