@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `computer_shop`.`order` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `customer_id` BIGINT UNSIGNED NOT NULL,
   `cost` INT UNSIGNED NOT NULL DEFAULT 0,
-  `ord_date` DATETIME NOT NULL DEFAULT NOW(),
+  `order_date` DATETIME NOT NULL DEFAULT NOW(),
   `status` ENUM('IN_PROGRESS', 'FINISHED') NOT NULL DEFAULT 'IN_PROGRESS',
   `canceled` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
@@ -174,9 +174,9 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `computer_shop`.`employee_auth` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `role` ENUM('MANAGER', 'DIRECTOR', 'ADMIN') NOT NULL,
   `email` VARCHAR(255) NOT NULL,
   `pass_hash` VARCHAR(60) NOT NULL,
+  `role` ENUM('MANAGER', 'DIRECTOR', 'ADMIN') NOT NULL,
   `blocked` TINYINT(1) NOT NULL DEFAULT FALSE,
   `deleted` TINYINT(1) NOT NULL DEFAULT FALSE,
   PRIMARY KEY (`id`))
@@ -205,7 +205,7 @@ CREATE TABLE IF NOT EXISTS `computer_shop`.`employee_info` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-CREATE UNIQUE INDEX `UQ_auth` ON `computer_shop`.`employee_info` (`auth_id` ASC);
+CREATE UNIQUE INDEX `auth_id_UNIQUE` ON `computer_shop`.`employee_info` (`auth_id` ASC);
 
 
 -- -----------------------------------------------------
@@ -246,10 +246,10 @@ CREATE TABLE IF NOT EXISTS `computer_shop`.`import` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `provider_id` BIGINT UNSIGNED NOT NULL,
   `model_id` BIGINT UNSIGNED NOT NULL,
-  `date_time` DATETIME NOT NULL,
+  `import_date` DATETIME NOT NULL,
   `count` INT UNSIGNED NOT NULL,
   `purchase_price` INT UNSIGNED NOT NULL,
-  `price` INT UNSIGNED NOT NULL,
+  `price` INT UNSIGNED NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `FK_import_component_model`
     FOREIGN KEY (`model_id`)
@@ -417,52 +417,25 @@ CREATE PROCEDURE update_store_price(
     IN new_count INT UNSIGNED
 )
 BEGIN
-/*	DECLARE in_assembly BOOLEAN DEFAULT FALSE; */
 	DECLARE s_model_id BIGINT UNSIGNED DEFAULT NULL;
 	DECLARE s_count INT UNSIGNED DEFAULT 0;
-	DECLARE left_count INT UNSIGNED DEFAULT 0;
-	DECLARE target_id BIGINT UNSIGNED DEFAULT NULL;
-    /*
-	SELECT EXISTS (
-		SELECT 1 FROM `assembly_component`
-		WHERE `component_id` = store_id
-	)
-	INTO in_assembly;
-    */
+
     SELECT `model_id`, `count`
     INTO s_model_id, s_count
     FROM `component_store`
     WHERE `id` = store_id;
     
-    SELECT `id`
-    INTO target_id
-    FROM `component_store`
-    WHERE `price` = new_price
-		AND `model_id` = s_model_id;
-    
-    IF (new_count > s_count)
+	IF (new_count > s_count)
     THEN
 		SIGNAL SQLSTATE '45000'
 			SET MESSAGE_TEXT = 'Cannot update price: not enough components';
     END IF;
-    
-    SET left_count = s_count - new_count;
-    
-    IF (target_id IS NULL)
-    THEN
-		INSERT INTO `component_store`
-		(`model_id`, `price`, `count`)
-		VALUE
-		(s_model_id, new_price, new_count);
-    ELSE	-- has target
-		UPDATE `component_store`
-		SET `count` = `count` + new_count
-		WHERE `id` = target_id;
-	END IF;
-    
-    UPDATE `component_store`
-	SET `count` = left_count
-	WHERE `id` = store_id;
+
+	UPDATE `component_store`
+    SET `count` = `count` - new_count
+    WHERE `id` = store_id;
+
+    CALL add_store_record(s_model_id, new_price, new_count);
 END$$
 
 DELIMITER ;
@@ -519,6 +492,41 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure add_store_record
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE add_store_record(
+	IN s_model_id BIGINT UNSIGNED,
+    IN s_price INT UNSIGNED,
+    IN s_count INT UNSIGNED
+)
+BEGIN
+	DECLARE target_id BIGINT UNSIGNED DEFAULT NULL;
+	
+	SELECT `id`
+    INTO target_id
+    FROM `component_store`
+    WHERE `model_id` = s_model_id
+		AND `price` = s_price;
+	
+    IF (target_id IS NULL)
+    THEN
+		INSERT INTO `component_store`
+        (`model_id`, `price`, `count`)
+        VALUE
+        (s_model_id, s_price, s_count);
+    ELSE
+		UPDATE `component_store`
+        SET `count` = `count` + s_count
+        WHERE `id` = target_id;
+    END IF;
+END$$
+
+DELIMITER ;
 USE `computer_shop`;
 
 DELIMITER $$
@@ -530,7 +538,7 @@ BEGIN
 	IF (NEW.`status` = 'CANCELED')
     THEN
 		SIGNAL SQLSTATE '45000'
-			SET MESSAGE_TEXT = 'Cannot insert canceled order';
+			SET MESSAGE_TEXT = 'FORBIDDEN: Insert canceled order.';
     END IF;
 END$$
 
@@ -547,10 +555,10 @@ BEGIN
     WHERE `id` = NEW.`order_id`;
     
 	IF (order_canceled)
-    THEN
-		SIGNAL SQLSTATE '45000'
-			SET MESSAGE_TEXT = 'Cannot add assembly to canceled order';
-    END IF;
+	THEN
+		SIGNAL SQLSTATE '01000'
+			SET MESSAGE_TEXT = 'NOT RECOMMENDED: Update canceled order.';
+	END IF;
 END$$
 
 USE `computer_shop`$$
@@ -560,6 +568,12 @@ FOR EACH ROW
 BEGIN
 	DECLARE order_canceled BOOLEAN DEFAULT TRUE;
     
+    IF (NEW.`order_id` != OLD.`order_id`)
+    THEN
+		SIGNAL SQLSTATE '45000'
+			SET MESSAGE_TEXT = 'FORBIDDEN: Move assembly to different order.';
+    END IF;
+    
     SELECT `canceled`
     INTO order_canceled
     FROM `order`
@@ -568,7 +582,7 @@ BEGIN
 	IF (order_canceled)
 	THEN
 		SIGNAL SQLSTATE '01000'
-			SET MESSAGE_TEXT = 'Updating assembly of canceled order is not recommended.';
+			SET MESSAGE_TEXT = 'NOT RECOMMENDED: Update canceled order.';
 	END IF;
     
 	IF (OLD.`count` != NEW.`count`)
@@ -577,12 +591,8 @@ BEGIN
 	END IF;
     
     UPDATE `order`
-	SET `cost` = `cost` - (OLD.`count` * OLD.`cost`)
-	WHERE `id` = OLD.`order_id`;
-    
-    UPDATE `order`
-	SET `cost` = `cost` + (NEW.`count` * NEW.`cost`)
-	WHERE `id` = NEW.`order_id`;    
+	SET `cost` = `cost` - (OLD.`count` * OLD.`cost`) + (NEW.`count` * NEW.`cost`)
+	WHERE `id` = NEW.`order_id`;  
 END$$
 
 USE `computer_shop`$$
@@ -591,35 +601,47 @@ BEFORE INSERT ON `assembly_component`
 FOR EACH ROW
 BEGIN
 	DECLARE asm_count INT UNSIGNED DEFAULT 0;
-	DECLARE s_price INT UNSIGNED DEFAULT 0;
+    DECLARE order_canceled BOOLEAN DEFAULT TRUE;
+	DECLARE s_price INT UNSIGNED DEFAULT NULL;
 	DECLARE stored_count INT UNSIGNED DEFAULT 0;
 	DECLARE new_count INT UNSIGNED DEFAULT 0;
 
-    SELECT `count`, `price`
-    INTO stored_count, s_price
-    FROM `component_store`
-    WHERE `id` = NEW.`component_id`;
-    
-    SELECT `count`
-	INTO asm_count
+	SELECT `count`, `canceled`
+	INTO asm_count, order_canceled
 	FROM `assembly`
-	WHERE `id` = NEW.`assembly_id`;
-
-	SET new_count = asm_count * NEW.`count`;
-
-	IF (stored_count >= new_count)
-	THEN
-		UPDATE `component_store`
-		SET `count` = stored_count - new_count
-		WHERE `id` = NEW.`component_id`;
-		
-		UPDATE `assembly`
-		SET `cost` = `cost` + (s_price * NEW.`count`)
-		WHERE `id` = NEW.`assembly_id`;
-	ELSE
+    JOIN `order`
+		ON `order`.`id` = `assembly`.`order_id`
+	WHERE `assembly`.`id` = NEW.`assembly_id`;
+	
+    SELECT `count`, `price`
+	INTO stored_count, s_price
+	FROM `component_store`
+	WHERE `id` = NEW.`component_id`;
+	
+    IF (s_price IS NULL)
+    THEN
 		SIGNAL SQLSTATE '45000'
-			SET MESSAGE_TEXT = 'Not enough components available';
+			SET MESSAGE_TEXT = 'FORBIDDEN: Use components without price.';
+    END IF;
+    
+	IF (NOT order_canceled)
+	THEN
+		SET new_count = asm_count * NEW.`count`;
+
+		IF (stored_count >= new_count)
+		THEN
+			UPDATE `component_store`
+			SET `count` = stored_count - new_count
+			WHERE `id` = NEW.`component_id`;
+		ELSE
+			SIGNAL SQLSTATE '45000'
+				SET MESSAGE_TEXT = 'Not enough components available';
+		END IF;
 	END IF;
+    
+	UPDATE `assembly`
+	SET `cost` = `cost` + (s_price * NEW.`count`)
+	WHERE `id` = NEW.`assembly_id`;
 END$$
 
 USE `computer_shop`$$
@@ -627,43 +649,79 @@ CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`assembly_component_BEFORE
 BEFORE UPDATE ON `assembly_component`
 FOR EACH ROW
 BEGIN
-	DECLARE stored_count INT UNSIGNED DEFAULT 0;
-	DECLARE s_price INT UNSIGNED DEFAULT 0;
-    DECLARE temp_stored_count INT UNSIGNED DEFAULT 0;
-    DECLARE asm_count INT UNSIGNED DEFAULT 0;
+    DECLARE old_asm_count INT UNSIGNED DEFAULT 0;
+	DECLARE old_order_canceled BOOLEAN DEFAULT TRUE;
+    DECLARE new_asm_count INT UNSIGNED DEFAULT 0;
+	DECLARE new_order_canceled BOOLEAN DEFAULT TRUE;
+    
     DECLARE old_count INT UNSIGNED DEFAULT 0;
     DECLARE new_count INT UNSIGNED DEFAULT 0;
     
-	SELECT `count`, `price`
-	INTO stored_count, s_price
-	FROM `component_store`
-	WHERE `id` = NEW.`component_id`;
-	
-	SELECT `count`
-	INTO asm_count
+	DECLARE old_stored_count INT UNSIGNED DEFAULT 0;
+	DECLARE old_price INT UNSIGNED DEFAULT 0;
+	DECLARE new_stored_count INT UNSIGNED DEFAULT 0;
+	DECLARE new_price INT UNSIGNED DEFAULT 0;
+    
+	SELECT `count`, `canceled`
+	INTO old_asm_count, old_order_canceled
 	FROM `assembly`
-	WHERE `id` = NEW.`assembly_id`;
+    JOIN `order`
+		ON `order`.`id` = `assembly`.`order_id`
+	WHERE `assembly`.`id` = OLD.`assembly_id`;
+
+	SELECT `count`, `canceled`
+	INTO new_asm_count, new_order_canceled
+	FROM `assembly`
+    JOIN `order`
+		ON `order`.`id` = `assembly`.`order_id`
+	WHERE `assembly`.`id` = NEW.`assembly_id`;
 
 	IF (NOT @updating_assembly_count
 		OR @updating_assembly_count IS NULL)
 	THEN
-		SET @old_asm_count = asm_count;
-		SET @new_asm_count = asm_count;
+		SET @old_asm_count = old_asm_count;
+		SET @new_asm_count = new_asm_count;
 	END IF;
-	
+    
 	SET old_count = @old_asm_count * OLD.`count`;
-	SET temp_stored_count = stored_count + old_count;
-	SET new_count = @new_asm_count * NEW.`count`;
 
-	IF (temp_stored_count >= new_count)
+	SELECT `count`, `price`
+	INTO old_stored_count, old_price
+	FROM `component_store`
+	WHERE `id` = OLD.`component_id`;
+
+	IF (NOT old_order_canceled)
 	THEN
 		UPDATE `component_store`
-		SET `count` = temp_stored_count - new_count
-		WHERE `id` = NEW.`component_id`;
-	ELSE
+		SET `count` = `count` + old_count
+		WHERE `id` = OLD.`component_id`;
+    END IF;
+
+	SET new_count = @new_asm_count * NEW.`count`;
+
+	SELECT `count`, `price`
+	INTO new_stored_count, new_price
+	FROM `component_store`
+	WHERE `id` = NEW.`component_id`;
+    
+	IF (new_price IS NULL)
+    THEN
 		SIGNAL SQLSTATE '45000'
-			SET MESSAGE_TEXT = 'Not enough components available';
-	END IF;
+			SET MESSAGE_TEXT = 'FORBIDDEN: Use components without price';
+    END IF;
+    
+	IF (NOT new_order_canceled)
+	THEN
+		IF (new_stored_count >= new_count)
+		THEN
+			UPDATE `component_store`
+			SET `count` = `count` - new_count
+			WHERE `id` = NEW.`component_id`;
+		ELSE
+			SIGNAL SQLSTATE '45000'
+				SET MESSAGE_TEXT = 'Not enough components available';
+		END IF;
+    END IF;
 	
 	IF (NOT @updating_assembly_count
 		OR @updating_assembly_count IS NULL)
@@ -672,7 +730,12 @@ BEGIN
 		SET @old_asm_count = NULL;
 		
 		UPDATE `assembly`
-		SET `cost` = `cost` + (s_price * NEW.`count`) - (s_price * OLD.`count`);
+		SET `cost` = `cost` - (old_price * OLD.`count`)
+        WHERE `id` = OLD.`assembly_id`;
+        
+		UPDATE `assembly`
+		SET `cost` = `cost` + (new_price * NEW.`count`)
+        WHERE `id` = NEW.`assembly_id`;
 	END IF;
 END$$
 
@@ -732,25 +795,7 @@ CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`import_AFTER_INSERT`
 AFTER INSERT ON `computer_shop`.`import`
 FOR EACH ROW
 BEGIN
-	DECLARE store_id BIGINT UNSIGNED DEFAULT NULL;
-	
-	SELECT `id`
-    INTO store_id
-    FROM `component_store`
-    WHERE `model_id` = NEW.`model_id`
-		AND `price` = NEW.`price`;
-	
-    IF (NOT store_id IS NULL)
-    THEN
-		UPDATE `component_store`
-        SET `count` = `count` + NEW.`count`
-        WHERE `id` = store_id;
-    ELSE
-		INSERT INTO `component_store`
-        (`model_id`, `price`, `count`)
-        VALUE
-        (NEW.`model_id`, NEW.`price`, NEW.`count`);
-    END IF;
+	CALL add_store_record(NEW.`model_id`, NEW.`price`, NEW.`count`);
 END$$
 
 USE `computer_shop`$$
@@ -760,12 +805,11 @@ FOR EACH ROW
 BEGIN
 	DECLARE store_id BIGINT UNSIGNED DEFAULT NULL;
 	DECLARE store_count INT UNSIGNED DEFAULT 0;
-	DECLARE new_store_count INT UNSIGNED DEFAULT 0;
     
     IF (NEW.`model_id` != OLD.`model_id`)
     THEN
 		SIGNAL SQLSTATE '45000'
-			SET MESSAGE_TEXT = 'Cannot change import model. Delete current and insert new import instead.';
+			SET MESSAGE_TEXT = 'FORBIDDEN: Change import model => Delete current import and insert new instead.';
     END IF;
     
     SELECT `id`, `count`
@@ -774,31 +818,29 @@ BEGIN
 	WHERE `model_id` = NEW.`model_id`
 		AND `price` = OLD.`price`;
 	
-	IF (NOT store_id IS NULL)
+	IF (store_id IS NULL)
 	THEN
-		IF (NEW.`count` != OLD.`count`)
+		SIGNAL SQLSTATE '45000'
+			SET MESSAGE_TEXT = 'Cannot update import count: components are changed';
+	END IF;
+
+	IF (NEW.`count` != OLD.`count`)
+	THEN
+		IF (store_count + NEW.`count` >= OLD.`count`)
 		THEN
-			IF (store_count + NEW.`count` >= OLD.`count`)
-            THEN
-				UPDATE `component_store`
-				SET `count` = `count` + NEW.`count` - OLD.`count`
-				WHERE `id` = store_id;
-                
-                SET new_store_count = store_count + NEW.`count` - OLD.`count`;
-			ELSE
-				SIGNAL SQLSTATE '45000'
-					SET MESSAGE_TEXT = "Can't decrease import count - components are already in use";
-			END IF;
+			UPDATE `component_store`
+			SET `count` = `count` + NEW.`count` - OLD.`count`
+			WHERE `id` = store_id;
+		ELSE
+			SIGNAL SQLSTATE '45000'
+				SET MESSAGE_TEXT = 'Cannot decrease import count: components are already in use';
 		END IF;
-        
-        IF (NEW.`price` != OLD.`price`)
-        THEN
-			CALL update_store_price(store_id, NEW.`price`, NEW.`count`);
-        END IF;
-	ELSE
-        SIGNAL SQLSTATE '45000'
-			SET MESSAGE_TEXT = "Cannot update import count - components are changed";
-    END IF;
+	END IF;
+	
+	IF (NEW.`price` != OLD.`price`)
+	THEN
+		CALL update_store_price(store_id, NEW.`price`, NEW.`count`);
+	END IF;
 END$$
 
 USE `computer_shop`$$
@@ -815,20 +857,20 @@ BEGIN
 	WHERE `model_id` = OLD.`model_id`
 		AND `price` = OLD.`price`;
 	
-	IF (NOT store_id IS NULL)
+	IF (store_id IS NULL)
 	THEN
-		IF (store_count >= OLD.`count`)
-		THEN
-			UPDATE `component_store`
-			SET `count` = `count` - OLD.`count`
-			WHERE `id` = store_id;
-		ELSE
-			SIGNAL SQLSTATE '45000'
-				SET MESSAGE_TEXT = "Can't delete import - components are already in use";
-		END IF;
+		SIGNAL SQLSTATE '45000'
+			SET MESSAGE_TEXT = 'Cannot delete import: components are changed';
+    END IF;
+
+	IF (store_count >= OLD.`count`)
+	THEN
+		UPDATE `component_store`
+		SET `count` = `count` - OLD.`count`
+		WHERE `id` = store_id;
 	ELSE
 		SIGNAL SQLSTATE '45000'
-			SET MESSAGE_TEXT = "Can't delete import - components are changed";
+			SET MESSAGE_TEXT = 'Cannot delete import: components are already in use';
 	END IF;
 END$$
 
@@ -838,33 +880,37 @@ DELIMITER ;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
--- begin attached script 'db user'
+-- begin attached script 'db_user'
 DROP USER IF EXISTS `cs_admin`@'localhost';
 CREATE USER `cs_admin`@'localhost'
 	IDENTIFIED BY 'passwd';
 
-GRANT SELECT, INSERT, UPDATE, DELETE
+GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE
 ON `computer_shop`.*
 TO `cs_admin`@'localhost';
 
 FLUSH PRIVILEGES;
 
--- end attached script 'db user'
--- begin attached script 'sys admin'
+-- end attached script 'db_user'
+-- begin attached script 'system_admin'
 INSERT INTO `computer_shop`.`employee_auth`
 (`id`, `role`, `email`, `pass_hash`)
-VALUES -- password = "123"
+VALUES
+-- password = '123'
 ('1', 'ADMIN', 'mail@mail.com', '$2a$12$uGYKKxqsTq1lCk0AhL97T.WGcMErxKoJ4GKtRhkxcnPiEy3KF81W6');
--- end attached script 'sys admin'
 
-/*********************************************
-		TEST DATA
-*********************************************/
+-- end attached script 'system_admin'
+-- begin attached script 'test_data'
+INSERT INTO `computer_shop`.`employee_auth`
+(`id`, `role`, `email`, `pass_hash`)
+VALUES
+-- password = 'pass'
+('2', 'MANAGER', 'man@mail.com', '$2a$12$oCKg9j.hGvce4yxMnJ4RpuEE6/NrGzYq8pgCQ7ZbFx2o3r0KgHKKO');
+
+-- password = 'qwerty' => '$2a$12$aGHrSX8E1z/I1nnot6j8/Ogfp6hRlcWx58BdsN4n2FEzS2kcEwrau'
 
 
-USE `computer_shop`;
-
-INSERT INTO `component_type`
+INSERT INTO `computer_shop`.`component_type`
 (`id`, `name`)
 VALUES
   ('1', 'Процессор'),
@@ -872,3 +918,52 @@ VALUES
   ('3', 'Оперативная память'),
   ('4', 'Видеокарта'),
   ('5', 'Сетевая плата');
+
+INSERT INTO `computer_shop`.`component_model`
+(`id`, `type_id`, `name`, `description`)
+VALUES
+  ('1', '1', 'Intel Core i7', 'Cool thing!'),
+  ('2', '2', 'Gigabit M3', 'Cool mother!'),
+  ('3', '1', 'AMD X5', 'Another proc');
+
+
+INSERT INTO `computer_shop`.`provider`
+(`id`, `name`, `description`)
+VALUES
+  ('1', 'MMGroup', NULL),
+  ('2', 'TerraStore', NULL);
+
+INSERT INTO `computer_shop`.`import`
+(`id`, `provider_id`, `import_date`, `count`, `model_id`, `purchase_price`, `price`)
+VALUES
+  ('1', '1', '2017-04-14 11:43:33', '10', '1', '40', '5'),
+  ('2', '1', '2017-04-15 13:26:49', '20', '1', '30', '10'),
+  ('3', '2', '2017-04-19 15:23:01', '50', '2', '25', '30');
+
+
+INSERT INTO `computer_shop`.`customer`
+(`id`, `name`, `description`)
+VALUES
+  ('1', 'First', ''),
+  ('2', 'Second', ''),
+  ('3', 'Third', '');
+  
+INSERT INTO `computer_shop`.`order`
+(`id`, `customer_id`)
+VALUES
+  ('1', '1');
+
+INSERT INTO `computer_shop`.`assembly`
+(`id`, `order_id`, `count`)
+VALUES
+  ('1', '1', '2'),
+  ('2', '1', '1');
+
+INSERT INTO `computer_shop`.`assembly_component`
+(`assembly_id`, `component_id`, `count`)
+VALUES
+  ('1', '1', '3'),
+  ('1', '3', '1'),
+  ('2', '2', '2');
+
+-- end attached script 'test_data'
