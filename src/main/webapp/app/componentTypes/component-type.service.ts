@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Http, Response} from "@angular/http";
+import {Headers, Http, RequestOptions, Response} from "@angular/http";
 import {Observable} from "rxjs/Observable";
 
 import {ComponentTypeModel} from "./component-type-model";
@@ -13,35 +13,46 @@ export class ComponentTypeService {
     constructor(private http: Http) {
 
     }
-    //
-    // add(type: ComponentTypeModel): void {
-    //
-    // }
-    //
-    // remove(type: ComponentTypeModel): void {
-    //
-    // }
-    //
-    // update(index: number, type: ComponentTypeModel): void {
-    //
-    // }
 
     getList(): Observable<ComponentTypeModel[]> {
         return this.http.get(this.url)
-            .map(this.extractData)
-            .catch(this.handleError);
+            .map(ComponentTypeService.extractData)
+            .catch(ComponentTypeService.handleError);
     }
 
-    // indexOf(type: ComponentTypeModel): number {
-    //
-    // }
+    add(type: ComponentTypeModel): Observable<ComponentTypeModel> {
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
 
-    private extractData(res: Response) {
-        let body = res.json();
-        return body || [ ]; //body.data || { };
+        return this.http.post(this.url + '/add', JSON.stringify(type), options)
+            .map(ComponentTypeService.extractData)
+            .catch(ComponentTypeService.handleError);
     }
 
-    private handleError (error: Response | any) {
+    remove(id: number): Observable<ComponentTypeModel> {
+        return this.http.delete(this.url + '/delete/' + id)
+            .map(ComponentTypeService.extractData)
+            .catch(ComponentTypeService.handleError);
+    }
+
+    update(type: ComponentTypeModel): Observable<ComponentTypeModel> {
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.put(this.url + '/update', JSON.stringify(type), options)
+            .map(ComponentTypeService.extractData)
+            .catch(ComponentTypeService.handleError);
+    }
+
+    private static extractData(res: Response) {
+        let body;
+        if (res.text()) {
+            body = res.json();
+        }
+        return body || {};
+    }
+
+    private static handleError (error: Response | any) {
         let errMsg: string;
         if (error instanceof Response) {
             const body = error.json() || '';
