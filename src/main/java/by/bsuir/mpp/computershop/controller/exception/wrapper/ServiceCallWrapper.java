@@ -2,10 +2,10 @@ package by.bsuir.mpp.computershop.controller.exception.wrapper;
 
 import by.bsuir.mpp.computershop.controller.exception.ControllerException;
 import by.bsuir.mpp.computershop.controller.exception.ResourceNotFoundException;
-import by.bsuir.mpp.computershop.utils.WrappedFunctions.Function;
-import by.bsuir.mpp.computershop.utils.WrappedFunctions.VoidFunction;
 import by.bsuir.mpp.computershop.service.exception.EntityNotFoundException;
 import by.bsuir.mpp.computershop.service.exception.ServiceException;
+import by.bsuir.mpp.computershop.utils.WrappedFunctions.Function;
+import by.bsuir.mpp.computershop.utils.WrappedFunctions.VoidFunction;
 import org.apache.log4j.Logger;
 
 public class ServiceCallWrapper {
@@ -24,6 +24,9 @@ public class ServiceCallWrapper {
     }
 
     public static void wrapServiceCall(VoidFunction func, Logger logger) throws ControllerException {
-        wrapServiceCall(() -> func, logger);
+        wrapServiceCall(() -> {
+            func.call();
+            return null;
+        }, logger);
     }
 }
