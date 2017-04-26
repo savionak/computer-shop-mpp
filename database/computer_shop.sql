@@ -678,3 +678,19 @@ INSERT INTO `computer_shop`.`employee_auth`
 VALUES
   ('1', 'ADMIN', 'mail@mail.com', '$2a$12$uGYKKxqsTq1lCk0AhL97T.WGcMErxKoJ4GKtRhkxcnPiEy3KF81W6');
 -- end attached script 'sys admin'
+
+/*********************************************
+		TEST DATA
+*********************************************/
+
+
+USE `computer_shop`;
+
+INSERT INTO `component_type`
+(`id`, `name`)
+VALUES
+  ('1', 'Процессор'),
+  ('2', 'Материнская плата'),
+  ('3', 'Оперативная память'),
+  ('4', 'Видеокарта'),
+  ('5', 'Сетевая плата');
