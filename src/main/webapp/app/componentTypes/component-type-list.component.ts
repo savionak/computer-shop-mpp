@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 
-import {ComponentTypeModel} from "./component-type-model";
+import {ComponentTypeModel, EmptyComponentTypeModel} from "./component-type-model";
 import {ComponentTypeService} from "./component-type.service";
 
 @Component({
@@ -12,7 +12,7 @@ import {ComponentTypeService} from "./component-type.service";
 })
 export class ComponentTypesListComponent  {
 
-    newType: ComponentTypeModel = {};
+    newType: ComponentTypeModel = EmptyComponentTypeModel;
     editingIndex: number;
     editingTypeCopy: ComponentTypeModel;
 
@@ -22,11 +22,11 @@ export class ComponentTypesListComponent  {
 
     onAdd(): void {
         this.componentTypeService.add(this.newType);
-        this.newType = {};
+        this.newType = EmptyComponentTypeModel;
     }
 
     onDelete(type: ComponentTypeModel): void {
-        this.componentTypeService.delete(type);
+        this.componentTypeService.remove(type);
     }
 
     onEdit(type: ComponentTypeModel): void {

@@ -1,23 +1,23 @@
-import {Injectable} from '@angular/core'
+import {Injectable} from "@angular/core";
 
-import {ComponentTypeModel} from './component-type-model'
+import {ComponentTypeModel} from "./component-type-model";
 
 @Injectable()
 export class ComponentTypeService {
 
     componentTypes: ComponentTypeModel[] = [
         { id: 1, name: 'Processor', description: 'Very important thing!' },
-        { id: 2, name: 'Motherboard' },
-        { id: 3, name: 'HDD' },
-        { id: 4, name: 'RAM' },
-        { id: 5, name: 'Mouse' },
-    ]
+        { id: 2, name: 'Motherboard', description: null },
+        { id: 3, name: 'HDD', description: null },
+        { id: 4, name: 'RAM', description: null },
+        { id: 5, name: 'Mouse', description: null },
+    ];
 
     add(type: ComponentTypeModel): void {
         this.componentTypes.push(type);
     }
 
-    delete(type: ComponentTypeModel): void {
+    remove(type: ComponentTypeModel): void {
         this.componentTypes = this.componentTypes.filter((x) => { return x != type; });
     }
 
