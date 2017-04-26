@@ -43,7 +43,7 @@
         <th>Description</th>
         <th></th>
     </tr>
-    <tr *ngFor="let type of componentTypes">
+    <tr *ngFor="let type of componentTypeService.getList()">
         <td>{{type.id}}</td>
         <td>{{type.name}}</td>
         <td>{{type.description}}</td>
