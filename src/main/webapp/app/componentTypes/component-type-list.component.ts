@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 
-import {ComponentTypeModel, EmptyComponentTypeModel} from "./component-type-model";
+import {ComponentTypeModel} from "./component-type-model";
 import {ComponentTypeService} from "./component-type.service";
 
 @Component({
@@ -11,40 +11,53 @@ import {ComponentTypeService} from "./component-type.service";
     ]
 })
 export class ComponentTypesListComponent  {
-
-    newType: ComponentTypeModel = EmptyComponentTypeModel;
-    editingIndex: number;
-    editingTypeCopy: ComponentTypeModel;
+    componentTypesList: ComponentTypeModel[];
+    error: string;
+    // newType: ComponentTypeModel = EmptyComponentTypeModel;
+    // editingIndex: number;
+    // editingTypeCopy: ComponentTypeModel;
 
     constructor(private componentTypeService: ComponentTypeService) {
         
     }
 
-    onAdd(): void {
-        this.componentTypeService.add(this.newType);
-        this.newType = EmptyComponentTypeModel;
+    ngOnInit() {
+        this.getList();
     }
 
-    onDelete(type: ComponentTypeModel): void {
-        this.componentTypeService.remove(type);
+    getList() {
+        this.componentTypeService.getList()
+            .subscribe(
+                (list) => { this.componentTypesList = list },
+                (error) => { this.error = error}
+            )
     }
 
-    onEdit(type: ComponentTypeModel): void {
-        this.editingIndex = this.componentTypeService.indexOf(type);
-        this.editingTypeCopy = JSON.parse(JSON.stringify(type));
-    }
-
-    onSave(): void {
-        this.componentTypeService.update(this.editingIndex, this.editingTypeCopy);
-        this.endEditing();
-    }
-
-    onCancel(): void {
-        this.endEditing();
-    }
-
-    endEditing(): void {
-        this.editingTypeCopy = null;
-        this.editingIndex = null;
-    }
+    // onAdd(): void {
+    //     this.componentTypeService.add(this.newType);
+    //     this.newType = EmptyComponentTypeModel;
+    // }
+    //
+    // onDelete(type: ComponentTypeModel): void {
+    //     this.componentTypeService.remove(type);
+    // }
+    //
+    // onEdit(type: ComponentTypeModel): void {
+    //     this.editingIndex = this.componentTypeService.indexOf(type);
+    //     this.editingTypeCopy = JSON.parse(JSON.stringify(type));
+    // }
+    //
+    // onSave(): void {
+    //     this.componentTypeService.update(this.editingIndex, this.editingTypeCopy);
+    //     this.endEditing();
+    // }
+    //
+    // onCancel(): void {
+    //     this.endEditing();
+    // }
+    //
+    // endEditing(): void {
+    //     this.editingTypeCopy = null;
+    //     this.editingIndex = null;
+    // }
 }

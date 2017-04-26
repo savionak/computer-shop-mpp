@@ -1,41 +1,42 @@
-<div>
-    <h2>Add type:</h2>
-    <table>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th></th>
-            <th></th>
-        </tr>
-        <tr>
-            <td><input [(ngModel)]="newType.id" placeholder="id" /></td>
-            <td><input [(ngModel)]="newType.name" placeholder="Component name" /></td>
-            <td><input [(ngModel)]="newType.description" placeholder="Component description" /></td>
-        </tr>
-    </table>
-    <td><button type="button" (click)="onAdd()">Add</button></td>
-</div>
-<div *ngIf="editingTypeCopy">
-    <h2>Edit type:</h2>
-    <table>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th></th>
-            <th></th>
-        </tr>
-        <tr>
-            <td><input [(ngModel)]="editingTypeCopy.id" placeholder="id" /></td>
-            <td><input [(ngModel)]="editingTypeCopy.name" placeholder="Component name" /></td>
-            <td><input [(ngModel)]="editingTypeCopy.description" placeholder="Component description" /></td>
-        </tr>
-    </table>
-    <td><button type="button" (click)="onSave()">Save</button></td>
-    <td><button type="button" (click)="onCancel()">Cancel</button></td>
-</div>
+<!--<div>-->
+    <!--<h2>Add type:</h2>-->
+    <!--<table>-->
+        <!--<tr>-->
+            <!--<th>Id</th>-->
+            <!--<th>Name</th>-->
+            <!--<th>Description</th>-->
+            <!--<th></th>-->
+            <!--<th></th>-->
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td><input [(ngModel)]="newType.id" placeholder="id" /></td>-->
+            <!--<td><input [(ngModel)]="newType.name" placeholder="Component name" /></td>-->
+            <!--<td><input [(ngModel)]="newType.description" placeholder="Component description" /></td>-->
+        <!--</tr>-->
+    <!--</table>-->
+    <!--<td><button type="button" (click)="onAdd()">Add</button></td>-->
+<!--</div>-->
+<!--<div *ngIf="editingTypeCopy">-->
+    <!--<h2>Edit type:</h2>-->
+    <!--<table>-->
+        <!--<tr>-->
+            <!--<th>Id</th>-->
+            <!--<th>Name</th>-->
+            <!--<th>Description</th>-->
+            <!--<th></th>-->
+            <!--<th></th>-->
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td><input [(ngModel)]="editingTypeCopy.id" placeholder="id" /></td>-->
+            <!--<td><input [(ngModel)]="editingTypeCopy.name" placeholder="Component name" /></td>-->
+            <!--<td><input [(ngModel)]="editingTypeCopy.description" placeholder="Component description" /></td>-->
+        <!--</tr>-->
+    <!--</table>-->
+    <!--<td><button type="button" (click)="onSave()">Save</button></td>-->
+    <!--<td><button type="button" (click)="onCancel()">Cancel</button></td>-->
+<!--</div>-->
 <hr/>
+<div  *ngIf="error" class="error">{{error}}</div>
 <table>
     <tr>
         <th>Id</th>
@@ -43,11 +44,11 @@
         <th>Description</th>
         <th></th>
     </tr>
-    <tr *ngFor="let type of componentTypeService.getList()">
+    <tr *ngFor="let type of componentTypesList">
         <td>{{type.id}}</td>
         <td>{{type.name}}</td>
         <td>{{type.description}}</td>
-        <td><button type="button" (click)="onEdit(type)">Edit</button></td>
-        <td><button type="button" (click)="onDelete(type)">Delete</button></td>
+        <!--<td><button type="button" (click)="onEdit(type)">Edit</button></td>-->
+        <!--<td><button type="button" (click)="onDelete(type)">Delete</button></td>-->
     </tr>
 </table>

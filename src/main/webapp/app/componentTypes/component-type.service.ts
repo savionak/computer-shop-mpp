@@ -1,39 +1,56 @@
 import {Injectable} from "@angular/core";
+import {Http, Response} from "@angular/http";
+import {Observable} from "rxjs/Observable";
 
 import {ComponentTypeModel} from "./component-type-model";
+import "rxjs/add/operator/catch";
+import "rxjs/add/operator/map";
 
 @Injectable()
 export class ComponentTypeService {
+    private url: string = 'api/component/type';
 
-    componentTypes: ComponentTypeModel[] = [
-        { id: 1, name: 'Processor', description: 'Very important thing!' },
-        { id: 2, name: 'Motherboard', description: null },
-        { id: 3, name: 'HDD', description: null },
-        { id: 4, name: 'RAM', description: null },
-        { id: 5, name: 'Mouse', description: null },
-    ];
+    constructor(private http: Http) {
 
-    add(type: ComponentTypeModel): void {
-        this.componentTypes.push(type);
+    }
+    //
+    // add(type: ComponentTypeModel): void {
+    //
+    // }
+    //
+    // remove(type: ComponentTypeModel): void {
+    //
+    // }
+    //
+    // update(index: number, type: ComponentTypeModel): void {
+    //
+    // }
+
+    getList(): Observable<ComponentTypeModel[]> {
+        return this.http.get(this.url)
+            .map(this.extractData)
+            .catch(this.handleError);
     }
 
-    remove(type: ComponentTypeModel): void {
-        this.componentTypes = this.componentTypes.filter((x) => { return x != type; });
+    // indexOf(type: ComponentTypeModel): number {
+    //
+    // }
+
+    private extractData(res: Response) {
+        let body = res.json();
+        return body || [ ]; //body.data || { };
     }
 
-    update(index: number, type: ComponentTypeModel): void {
-        this.componentTypes[index] = type;
-    }
-
-    getList(): ComponentTypeModel[] {
-        return this.componentTypes;
-    }
-
-    get(index: number): ComponentTypeModel {
-        return this.componentTypes[index];
-    }
-
-    indexOf(type: ComponentTypeModel): number {
-        return this.componentTypes.indexOf(type);
+    private handleError (error: Response | any) {
+        let errMsg: string;
+        if (error instanceof Response) {
+            const body = error.json() || '';
+            const err = body.error || JSON.stringify(body);
+            errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+        } else {
+            errMsg = error.message ? error.message : error.toString();
+        }
+        console.error(errMsg);
+        return Observable.throw(errMsg);
     }
 }
