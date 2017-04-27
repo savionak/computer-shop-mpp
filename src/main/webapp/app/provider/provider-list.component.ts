@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 
-import {ProviderModel, EmptyProviderModel} from "./provider-model";
+import {ProviderModel} from "./provider-model";
 import {ProviderService} from "./provider.service";
 
 @Component({
@@ -13,7 +13,7 @@ import {ProviderService} from "./provider.service";
 export class ProviderListComponent  {
     providerList: ProviderModel[];
     error: string;
-    newProvider: ProviderModel = EmptyProviderModel;
+    newProvider: ProviderModel = ProviderModel.empty();
     editingIndex: number;
     editingProviderCopy: ProviderModel;
 
@@ -47,7 +47,7 @@ export class ProviderListComponent  {
                 (res) => { this.getList() },
                 (error) => { this.error = error}
             );
-        this.newProvider = EmptyProviderModel;
+        this.newProvider = ProviderModel.empty();
     }
     onDelete(provider: ProviderModel): void {
         this.providerService.remove(provider.id)
