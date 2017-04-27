@@ -1,10 +1,9 @@
-package by.bsuir.mpp.computershop.config.security;
+package by.bsuir.mpp.computershop.config.security.UserDetails;
 
-import by.bsuir.mpp.computershop.entity.EmployeeAuth;
-import by.bsuir.mpp.computershop.repository.EmployeeAuthRepository;
+import by.bsuir.mpp.computershop.entity.UserAuth;
+import by.bsuir.mpp.computershop.repository.UserAuthRepository;
 import org.slf4j.Logger;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.io.UnsupportedEncodingException;
@@ -12,13 +11,13 @@ import java.net.URLDecoder;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
-public class JdbcUserDetailsService implements UserDetailsService {
+public class UserAuthDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
 
-    private static final Logger logger = getLogger(JdbcUserDetailsService.class);
+    private static final Logger logger = getLogger(UserAuthDetailsService.class);
     private static final String ENCODING = "UTF-8";
-    private final EmployeeAuthRepository authRepository;
+    private final UserAuthRepository authRepository;
 
-    JdbcUserDetailsService(EmployeeAuthRepository authRepository) {
+    public UserAuthDetailsService(UserAuthRepository authRepository) {
         this.authRepository = authRepository;
     }
 
@@ -31,7 +30,7 @@ public class JdbcUserDetailsService implements UserDetailsService {
             logger.info("Unsupported encoding for username [" + username + "]");
             throw new UsernameNotFoundException("Unsupported encoding");
         }
-        EmployeeAuth user = authRepository.findByEmail(username);
+        UserAuth user = authRepository.findByEmail(username);
         if (user == null) {
             logger.info("User [" + username + "] not found");
             throw new UsernameNotFoundException("User [" + username + "] not found");

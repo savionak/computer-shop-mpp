@@ -1,7 +1,6 @@
 package by.bsuir.mpp.computershop.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,6 +11,10 @@ import java.util.List;
 @Table(name = "component_model")
 public class ComponentModel extends BaseEntity<Long> {
 
+    @ManyToOne
+    @JoinColumn(name = "type_id", unique = true, nullable = false)
+    private ComponentType type;
+
     @NotNull(message = "Name cannot be null")
     @Pattern(regexp = "^(?!\\s*$).+", message = "Model name cannot be empty")
     @Column(name = "name", nullable = false)
@@ -20,49 +23,17 @@ public class ComponentModel extends BaseEntity<Long> {
     @Column(name = "description", columnDefinition = "text")
     private String description;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "type_id", unique = true, nullable = false)
-    private ComponentType type;
+    @NotNull(message = "Removed property cannot be null")
+    @Column(name = "removed", nullable = false)
+    private boolean removed;
 
     @JsonIgnore
-    @Transient
-    private Long newTypeId;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "model", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "model")
     private List<ComponentStore> storedComponents;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "model", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "model")
     private List<Import> imports;
-
-    @JsonProperty(value = "typeId")
-    public Long getTypeId() {
-        return type.getId();
-    }
-
-    @JsonProperty(value = "typeId")
-    public void setTypeId(Long id) {
-        newTypeId = id;
-    }
-
-    @JsonProperty(value = "typeName")
-    public String getTypeName() {
-        return type.getName();
-    }
-
-    public Long getNewTypeId() {
-        return newTypeId;
-    }
-
-    public List<Import> getImports() {
-        return imports;
-    }
-
-    public List<ComponentStore> getStoredComponents() {
-        return storedComponents;
-    }
 
     public ComponentType getType() {
         return this.type;
@@ -86,5 +57,29 @@ public class ComponentModel extends BaseEntity<Long> {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isRemoved() {
+        return removed;
+    }
+
+    public void setRemoved(boolean removed) {
+        this.removed = removed;
+    }
+
+    public List<ComponentStore> getStoredComponents() {
+        return storedComponents;
+    }
+
+    public void setStoredComponents(List<ComponentStore> storedComponents) {
+        this.storedComponents = storedComponents;
+    }
+
+    public List<Import> getImports() {
+        return imports;
+    }
+
+    public void setImports(List<Import> imports) {
+        this.imports = imports;
     }
 }

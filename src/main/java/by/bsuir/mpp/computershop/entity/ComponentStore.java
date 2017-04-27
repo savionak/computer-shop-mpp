@@ -1,28 +1,25 @@
 package by.bsuir.mpp.computershop.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 
 @Entity
 @Table(name = "component_store")
 public class ComponentStore extends BaseEntity<Long> {
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "model_id", nullable = false)
     private ComponentModel model;
 
+    @Min(value = 0, message = "Price cannot be negative")
     @Column(name = "price", nullable = false)
     private int price;
 
+    @Min(value = 0, message = "Count cannot be negative")
     @Column(name = "count", nullable = false)
     private int count;
-
-    @JsonIgnore
-    @Transient
-    private Long newModelId;
 
     @JsonProperty(value = "modelId")
     public Long getModelId() {
@@ -31,15 +28,15 @@ public class ComponentStore extends BaseEntity<Long> {
 
     @JsonProperty(value = "modelId")
     public void setModelId(Long id) {
-        this.newModelId = id;
+        this.model.setId(id);
     }
 
-    public Long getNewModelId() {
-        return this.newModelId;
+    public ComponentModel getModel() {
+        return this.model;
     }
 
-    public void setComponentModel(ComponentModel componentModel) {
-        this.model = componentModel;
+    public void setModel(ComponentModel model) {
+        this.model = model;
     }
 
     public int getPrice() {

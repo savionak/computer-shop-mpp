@@ -1,5 +1,7 @@
 package by.bsuir.mpp.computershop.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -7,12 +9,13 @@ import java.sql.Timestamp;
 @Table(name = "export")
 public class Export extends BaseEntity<Long> {
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
-    @Column(name = "exp_date", nullable = false)
-    private Timestamp expDate;
+    @Column(name = "export_date", nullable = false)
+    private Timestamp exportDate;
 
     public Order getOrder() {
         return this.order;
@@ -22,11 +25,11 @@ public class Export extends BaseEntity<Long> {
         this.order = order;
     }
 
-    public Timestamp getExpDate() {
-        return expDate;
+    public Timestamp getExportDate() {
+        return exportDate;
     }
 
-    public void setExpDate(Timestamp expDate) {
-        this.expDate = expDate;
+    public void setExportDate(Timestamp expDate) {
+        this.exportDate = expDate;
     }
 }

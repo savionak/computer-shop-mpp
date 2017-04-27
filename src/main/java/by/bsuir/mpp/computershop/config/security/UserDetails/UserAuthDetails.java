@@ -1,6 +1,6 @@
-package by.bsuir.mpp.computershop.config.security;
+package by.bsuir.mpp.computershop.config.security.UserDetails;
 
-import by.bsuir.mpp.computershop.entity.EmployeeAuth;
+import by.bsuir.mpp.computershop.entity.UserAuth;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,9 +8,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.io.Serializable;
 import java.util.Collection;
 
-public class UserAuthDetails extends EmployeeAuth implements UserDetails, Serializable {
+public class UserAuthDetails extends UserAuth implements UserDetails, Serializable {
 
-    UserAuthDetails(EmployeeAuth user) {
+    UserAuthDetails(UserAuth user) {
         super(user);
     }
 
@@ -48,6 +48,6 @@ public class UserAuthDetails extends EmployeeAuth implements UserDetails, Serial
 
     @Override
     public boolean isEnabled() {
-        return !isDeleted();
+        return !isRemoved();
     }
 }
