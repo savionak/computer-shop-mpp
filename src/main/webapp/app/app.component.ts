@@ -4,7 +4,8 @@ import {Component} from "@angular/core";
     selector: 'app',
     template:
     `
-        <comp-type-list></comp-type-list>
+        <provider-list></provider-list>
+        <!--<comp-type-list></comp-type-list>-->
     `
 })
 export class AppComponent {
