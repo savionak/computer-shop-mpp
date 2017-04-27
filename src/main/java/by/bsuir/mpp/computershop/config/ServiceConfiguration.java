@@ -15,9 +15,8 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    ComponentModelService componentModelService(ComponentModelRepository componentModelRepository,
-                                                ComponentTypeRepository typeRepository) {
-        return new ComponentModelServiceImpl(componentModelRepository, typeRepository);
+    ComponentModelService componentModelService(ComponentModelRepository componentModelRepository) {
+        return new ComponentModelServiceImpl(componentModelRepository);
     }
 
     @Bean
@@ -26,16 +25,13 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    ImportService importService(ImportRepository importRepository,
-                                ProviderRepository providerRepository,
-                                ComponentModelRepository modelRepository) {
-        return new ImportServiceImpl(importRepository, providerRepository, modelRepository);
+    ImportService importService(ImportRepository importRepository) {
+        return new ImportServiceImpl(importRepository);
     }
 
     @Bean
-    ComponentStoreService componentStoreService(ComponentStoreRepository storeRepository,
-                                ComponentModelRepository modelRepository) {
-        return new ComponentStoreServiceImpl(storeRepository, modelRepository);
+    ComponentStoreService componentStoreService(ComponentStoreRepository storeRepository) {
+        return new ComponentStoreServiceImpl(storeRepository);
     }
 
     @Bean

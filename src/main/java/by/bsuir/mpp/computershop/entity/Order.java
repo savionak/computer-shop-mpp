@@ -1,9 +1,9 @@
 package by.bsuir.mpp.computershop.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -12,37 +12,32 @@ import java.util.List;
 @Table(name = "`order`")
 public class Order extends BaseEntity<Long> {
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    @JsonIgnore
-    @Transient
-    private Long newCustomerId = null;
-
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(name = "cost", nullable = false)
-    private int cost;
+    private long cost;
 
-    @Column(name = "ord_date", nullable = false)
-    private Timestamp ordDate;
+    @NotNull(message = "Cannot be null")
+    @Column(name = "order_date", nullable = false)
+    private Timestamp orderDate;
 
     @Enumerated(EnumType.STRING)
+    @NotNull(message = "Cannot be null")
     @Column(name = "status", nullable = false,
-            columnDefinition = "ENUM('IN_PROGRESS', 'READY', 'FINISHED', 'CANCELED')")
+            columnDefinition = "ENUM ('IN_PROGRESS', 'FINISHED')")
     private Status status;
 
-    @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.ALL)
+    @Column(name = "canceled", nullable = false)
+    private boolean canceled = false;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
     private List<Export> exports;
 
-    @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.ALL)
-    private List<AssemblyParcel> assemblyParcels;
-
-    @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderComponent> orderComponents;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<Assembly> assemblies;
 
     public Customer getCustomer() {
         return customer;
@@ -52,34 +47,20 @@ public class Order extends BaseEntity<Long> {
         this.customer = customer;
     }
 
-    @JsonProperty("customer_id")
-    public Long getCustomerId() {
-        return this.customer.getId();
-    }
-
-    @JsonProperty("customer_id")
-    public void setCustomerId(Long id) {
-        this.newCustomerId = id;
-    }
-
-    public Long getNewCustomerId() {
-        return newCustomerId;
-    }
-
-    public int getCost() {
+    public long getCost() {
         return cost;
     }
 
-    public void setCost(int cost) {
+    public void setCost(long cost) {
         this.cost = cost;
     }
 
-    public Timestamp getOrdDate() {
-        return ordDate;
+    public Timestamp getOrderDate() {
+        return orderDate;
     }
 
-    public void setOrdDate(Timestamp ordDate) {
-        this.ordDate = ordDate;
+    public void setOrderDate(Timestamp ordDate) {
+        this.orderDate = ordDate;
     }
 
     public Status getStatus() {
@@ -90,6 +71,14 @@ public class Order extends BaseEntity<Long> {
         this.status = status;
     }
 
+    public boolean isCanceled() {
+        return canceled;
+    }
+
+    public void setCanceled(boolean canceled) {
+        this.canceled = canceled;
+    }
+
     public List<Export> getExports() {
         return exports;
     }
@@ -98,20 +87,12 @@ public class Order extends BaseEntity<Long> {
         this.exports = exports;
     }
 
-    public List<AssemblyParcel> getAssemblyParcels() {
-        return assemblyParcels;
+    public List<Assembly> getAssemblies() {
+        return assemblies;
     }
 
-    public void setAssemblyParcels(List<AssemblyParcel> assemblyParcels) {
-        this.assemblyParcels = assemblyParcels;
-    }
-
-    public List<OrderComponent> getOrderComponents() {
-        return orderComponents;
-    }
-
-    public void setOrderComponents(List<OrderComponent> orderComponents) {
-        this.orderComponents = orderComponents;
+    public void setAssemblies(List<Assembly> assemblyParcels) {
+        this.assemblies = assemblyParcels;
     }
 
     public enum Status {

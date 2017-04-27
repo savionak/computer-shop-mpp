@@ -19,17 +19,13 @@ public class ComponentType extends BaseEntity<Long> {
     @Column(name = "description", columnDefinition = "text")
     private String description;
 
+    @NotNull(message = "Removed property cannot be null")
+    @Column(name = "removed", nullable = false)
+    private boolean removed;
+
     @JsonIgnore
     @OneToMany(mappedBy = "type", fetch = FetchType.LAZY)
     private List<ComponentModel> componentModels;
-
-    public List<ComponentModel> getComponentModels() {
-        return componentModels;
-    }
-
-    public void setComponentModels(List<ComponentModel> componentModels) {
-        this.componentModels = componentModels;
-    }
 
     public String getName() {
         return this.name;
@@ -45,5 +41,21 @@ public class ComponentType extends BaseEntity<Long> {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isRemoved() {
+        return removed;
+    }
+
+    public void setRemoved(boolean removed) {
+        this.removed = removed;
+    }
+
+    public List<ComponentModel> getComponentModels() {
+        return componentModels;
+    }
+
+    public void setComponentModels(List<ComponentModel> componentModels) {
+        this.componentModels = componentModels;
     }
 }
