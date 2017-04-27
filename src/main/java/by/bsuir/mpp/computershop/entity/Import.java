@@ -1,9 +1,7 @@
 package by.bsuir.mpp.computershop.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
@@ -11,92 +9,36 @@ import java.sql.Timestamp;
 @Table(name = "import")
 public class Import extends BaseEntity<Long> {
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "provider_id", nullable = false)
     private Provider provider;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "model_id", nullable = false)
     private ComponentModel model;
 
-    @NotNull
+    @NotNull(message = "Cannot be null")
+    @Column(name = "import_date", nullable = false)
+    private Timestamp importDate;
+
+    @NotNull(message = "Cannot be null")
+    @Min(value = 0, message = "Count cannot be negative")
     @Column(name = "count", nullable = false)
-    private int count;
+    private long count;
 
-    @NotNull
+    @NotNull(message = "Cannot be null")
     @Column(name = "purchase_price", nullable = false)
-    private int purchasePrice;
+    private long purchasePrice;
 
-    @Column(name = "price", nullable = false)
-    private int price;
+    @Column(name = "price")
+    private long price;
 
-    @NotNull
-    @Column(name = "date_time", nullable = false)
-    private Timestamp dateTime;
-
-    @NotNull
-    @Column(name = "status", nullable = false,
-            columnDefinition = "ENUM ('REGISTERED', 'FINISHED')")
-    @Enumerated(EnumType.STRING)
-    private ImportStatus status;
-
-    @JsonIgnore
-    @Transient
-    private Long newProviderId;
-
-    @JsonIgnore
-    @Transient
-    private Long newModelId;
-
-    @JsonProperty(value = "providerId")
-    public Long getProviderId() {
-        return provider.getId();
+    public Provider getProvider() {
+        return this.provider;
     }
 
-    @JsonProperty(value = "providerId")
-    public void setProviderId(Long id) {
-        newProviderId = id;
-    }
-
-    @JsonProperty(value = "providerName")
-    public String getProviderName() {
-        return provider.getName();
-    }
-
-    @JsonProperty(value = "modelId")
-    public Long getModelId() {
-        return model.getId();
-    }
-
-    public Long getNewProviderId() {
-        return newProviderId;
-    }
-
-    @JsonProperty(value = "modelId")
-    public void setModelId(Long id) {
-        newModelId = id;
-    }
-
-    public Long getNewModelId() {
-        return newModelId;
-    }
-
-    public Timestamp getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(Timestamp dateTime) {
-        this.dateTime = dateTime;
-    }
-
-    public int getCount() {
-        return this.count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
+    public void setProvider(Provider provider) {
+        this.provider = provider;
     }
 
     public ComponentModel getModel() {
@@ -107,32 +49,36 @@ public class Import extends BaseEntity<Long> {
         this.model = model;
     }
 
-    public int getPurchasePrice() {
+    public Timestamp getImportDate() {
+        return importDate;
+    }
+
+    public void setImportDate(Timestamp importDate) {
+        this.importDate = importDate;
+    }
+
+    public long getCount() {
+        return this.count;
+    }
+
+    public void setCount(long count) {
+        this.count = count;
+    }
+
+    public long getPurchasePrice() {
         return this.purchasePrice;
     }
 
-    public void setPurchasePrice(int purchasePrice) {
+    public void setPurchasePrice(long purchasePrice) {
         this.purchasePrice = purchasePrice;
     }
 
-    public int getPrice() {
+    public long getPrice() {
         return this.price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(long price) {
         this.price = price;
-    }
-
-    public ImportStatus getStatus() {
-        return this.status;
-    }
-
-    public void setStatus(ImportStatus status) {
-        this.status = status;
-    }
-
-    public void setProvider(Provider provider) {
-        this.provider = provider;
     }
 
     public enum ImportStatus {
