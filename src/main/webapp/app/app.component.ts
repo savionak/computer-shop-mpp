@@ -6,7 +6,7 @@ import {HttpOAuthService} from "./shared/oauth-http-client/http-oauth.service";
     template:
     `
         <provider-list></provider-list>
-        <!--<comp-type-list></comp-type-list>-->
+        <comp-type-list></comp-type-list>
     `,
     providers:[HttpOAuthService]
 })

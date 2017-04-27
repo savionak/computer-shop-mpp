@@ -4,7 +4,7 @@ import {FormsModule} from "@angular/forms";
 import {HttpModule, JsonpModule} from "@angular/http";
 
 import {AppComponent} from './app.component';
-// import {ComponentTypesListComponent} from "./componentTypes/component-type-list.component";
+import {ComponentTypesListComponent} from "./componentTypes/component-type-list.component";
 import {ProviderListComponent} from './provider/provider-list.component';
 
 @NgModule({
@@ -16,7 +16,7 @@ import {ProviderListComponent} from './provider/provider-list.component';
     ],
     declarations: [
         AppComponent,
-        // ComponentTypesListComponent,
+        ComponentTypesListComponent,
         ProviderListComponent
     ],
     bootstrap: [
