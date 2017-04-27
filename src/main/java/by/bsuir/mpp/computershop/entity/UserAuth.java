@@ -33,7 +33,7 @@ public class UserAuth extends BaseEntity<Long> {
     @Column(name = "removed", nullable = false)
     private boolean removed = false;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "userAuth", fetch = FetchType.LAZY)
     private UserInfo userInfo;
 
     public UserAuth() {
