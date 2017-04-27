@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS `computer_shop`.`customer` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
   `description` TEXT NULL DEFAULT NULL,
+  `removed` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -76,9 +77,12 @@ CREATE TABLE IF NOT EXISTS `computer_shop`.`component_type` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
   `description` TEXT NULL DEFAULT NULL,
+  `removed` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
+
+CREATE UNIQUE INDEX `name_UNIQUE` ON `computer_shop`.`component_type` (`name` ASC);
 
 
 -- -----------------------------------------------------
@@ -89,6 +93,7 @@ CREATE TABLE IF NOT EXISTS `computer_shop`.`component_model` (
   `type_id` BIGINT UNSIGNED NOT NULL,
   `name` VARCHAR(255) NOT NULL,
   `description` TEXT NULL DEFAULT NULL,
+  `removed` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   CONSTRAINT `FK_component_component_type`
     FOREIGN KEY (`type_id`)
@@ -98,9 +103,9 @@ CREATE TABLE IF NOT EXISTS `computer_shop`.`component_model` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-CREATE UNIQUE INDEX `UQ_name` ON `computer_shop`.`component_model` (`name` ASC);
-
 CREATE INDEX `FK_component_component_type` ON `computer_shop`.`component_model` (`type_id` ASC);
+
+CREATE UNIQUE INDEX `name_type_id_UNIQUE` ON `computer_shop`.`component_model` (`name` ASC, `type_id` ASC);
 
 
 -- -----------------------------------------------------
@@ -170,26 +175,26 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `computer_shop`.`employee_auth`
+-- Table `computer_shop`.`user_auth`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `computer_shop`.`employee_auth` (
+CREATE TABLE IF NOT EXISTS `computer_shop`.`user_auth` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(255) NOT NULL,
   `pass_hash` VARCHAR(60) NOT NULL,
   `role` ENUM('MANAGER', 'DIRECTOR', 'ADMIN') NOT NULL,
   `blocked` TINYINT(1) NOT NULL DEFAULT FALSE,
-  `deleted` TINYINT(1) NOT NULL DEFAULT FALSE,
+  `removed` TINYINT(1) NOT NULL DEFAULT FALSE,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-CREATE UNIQUE INDEX `UQ_email` ON `computer_shop`.`employee_auth` (`email` ASC);
+CREATE UNIQUE INDEX `email_UNIQUE` ON `computer_shop`.`user_auth` (`email` ASC);
 
 
 -- -----------------------------------------------------
--- Table `computer_shop`.`employee_info`
+-- Table `computer_shop`.`user_info`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `computer_shop`.`employee_info` (
+CREATE TABLE IF NOT EXISTS `computer_shop`.`user_info` (
   `id` BIGINT UNSIGNED NOT NULL,
   `auth_id` BIGINT UNSIGNED NOT NULL,
   `first_name` VARCHAR(255) NOT NULL,
@@ -199,13 +204,13 @@ CREATE TABLE IF NOT EXISTS `computer_shop`.`employee_info` (
   PRIMARY KEY (`id`),
   CONSTRAINT `FK_employee_info_employee_auth`
     FOREIGN KEY (`auth_id`)
-    REFERENCES `computer_shop`.`employee_auth` (`id`)
+    REFERENCES `computer_shop`.`user_auth` (`id`)
     ON DELETE CASCADE
     ON UPDATE RESTRICT)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-CREATE UNIQUE INDEX `auth_id_UNIQUE` ON `computer_shop`.`employee_info` (`auth_id` ASC);
+CREATE UNIQUE INDEX `auth_id_UNIQUE` ON `computer_shop`.`user_info` (`auth_id` ASC);
 
 
 -- -----------------------------------------------------
@@ -214,7 +219,7 @@ CREATE UNIQUE INDEX `auth_id_UNIQUE` ON `computer_shop`.`employee_info` (`auth_i
 CREATE TABLE IF NOT EXISTS `computer_shop`.`export` (
   `id` BIGINT NOT NULL,
   `order_id` BIGINT UNSIGNED NOT NULL,
-  `exp_date` DATETIME NOT NULL,
+  `export_date` DATETIME NOT NULL DEFAULT NOW(),
   PRIMARY KEY (`id`),
   CONSTRAINT `FK_export_order`
     FOREIGN KEY (`order_id`)
@@ -234,9 +239,12 @@ CREATE TABLE IF NOT EXISTS `computer_shop`.`provider` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
   `description` TEXT NULL DEFAULT NULL,
+  `removed` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
+
+CREATE UNIQUE INDEX `name_UNIQUE` ON `computer_shop`.`provider` (`name` ASC);
 
 
 -- -----------------------------------------------------
@@ -246,7 +254,7 @@ CREATE TABLE IF NOT EXISTS `computer_shop`.`import` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `provider_id` BIGINT UNSIGNED NOT NULL,
   `model_id` BIGINT UNSIGNED NOT NULL,
-  `import_date` DATETIME NOT NULL,
+  `import_date` DATETIME NOT NULL DEFAULT NOW(),
   `count` INT UNSIGNED NOT NULL,
   `purchase_price` INT UNSIGNED NOT NULL,
   `price` INT UNSIGNED NULL,
@@ -487,6 +495,9 @@ BEGIN
     END WHILE;
     CLOSE asm_cur;
     
+    DELETE FROM `export`
+	WHERE `order_id` = ord_id;
+    
     DELETE FROM `order`
 	WHERE `id` = ord_id;
 END$$
@@ -635,7 +646,7 @@ BEGIN
 			WHERE `id` = NEW.`component_id`;
 		ELSE
 			SIGNAL SQLSTATE '45000'
-				SET MESSAGE_TEXT = 'Not enough components available';
+				SET MESSAGE_TEXT = 'Not enough components available.';
 		END IF;
 	END IF;
     
@@ -707,7 +718,7 @@ BEGIN
 	IF (new_price IS NULL)
     THEN
 		SIGNAL SQLSTATE '45000'
-			SET MESSAGE_TEXT = 'FORBIDDEN: Use components without price';
+			SET MESSAGE_TEXT = 'FORBIDDEN: Use components without price.';
     END IF;
     
 	IF (NOT new_order_canceled)
@@ -719,7 +730,7 @@ BEGIN
 			WHERE `id` = NEW.`component_id`;
 		ELSE
 			SIGNAL SQLSTATE '45000'
-				SET MESSAGE_TEXT = 'Not enough components available';
+				SET MESSAGE_TEXT = 'Not enough components available.';
 		END IF;
     END IF;
 	
@@ -776,17 +787,19 @@ BEGIN
 END$$
 
 USE `computer_shop`$$
-CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`employee_auth_AFTER_DELETE` AFTER DELETE ON `employee_auth` FOR EACH ROW
+CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`user_auth_AFTER_DELETE`
+AFTER DELETE ON `user_auth`
+FOR EACH ROW
 BEGIN
 	IF (
-    (
-		SELECT COUNT(1)
-		FROM `employee_auth`
-		WHERE `role` = 'ADMIN'
-	) = 0)
+		(
+			SELECT COUNT(1)
+			FROM `user_auth`
+			WHERE `role` = 'ADMIN'
+		) = 0)
     THEN
 		SIGNAL SQLSTATE '45000'
-			SET MESSAGE_TEXT = 'Cannot remove last ADMIN';
+			SET MESSAGE_TEXT = 'FORBIDDEN: Remove last ADMIN.';
     END IF;
 END$$
 
@@ -821,7 +834,7 @@ BEGIN
 	IF (store_id IS NULL)
 	THEN
 		SIGNAL SQLSTATE '45000'
-			SET MESSAGE_TEXT = 'Cannot update import count: components are changed';
+			SET MESSAGE_TEXT = 'Cannot update import count: components are changed.';
 	END IF;
 
 	IF (NEW.`count` != OLD.`count`)
@@ -833,7 +846,7 @@ BEGIN
 			WHERE `id` = store_id;
 		ELSE
 			SIGNAL SQLSTATE '45000'
-				SET MESSAGE_TEXT = 'Cannot decrease import count: components are already in use';
+				SET MESSAGE_TEXT = 'Cannot decrease import count: components are already in use.';
 		END IF;
 	END IF;
 	
@@ -860,7 +873,7 @@ BEGIN
 	IF (store_id IS NULL)
 	THEN
 		SIGNAL SQLSTATE '45000'
-			SET MESSAGE_TEXT = 'Cannot delete import: components are changed';
+			SET MESSAGE_TEXT = 'Cannot delete import: components are changed.';
     END IF;
 
 	IF (store_count >= OLD.`count`)
@@ -870,7 +883,7 @@ BEGIN
 		WHERE `id` = store_id;
 	ELSE
 		SIGNAL SQLSTATE '45000'
-			SET MESSAGE_TEXT = 'Cannot delete import: components are already in use';
+			SET MESSAGE_TEXT = 'Cannot delete import: components are already in use.';
 	END IF;
 END$$
 
@@ -893,7 +906,7 @@ FLUSH PRIVILEGES;
 
 -- end attached script 'db_user'
 -- begin attached script 'system_admin'
-INSERT INTO `computer_shop`.`employee_auth`
+INSERT INTO `computer_shop`.`user_auth`
 (`id`, `role`, `email`, `pass_hash`)
 VALUES
 -- password = '123'
@@ -901,7 +914,7 @@ VALUES
 
 -- end attached script 'system_admin'
 -- begin attached script 'test_data'
-INSERT INTO `computer_shop`.`employee_auth`
+INSERT INTO `computer_shop`.`user_auth`
 (`id`, `role`, `email`, `pass_hash`)
 VALUES
 -- password = 'pass'
