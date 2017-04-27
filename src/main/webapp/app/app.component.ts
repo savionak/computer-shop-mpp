@@ -1,4 +1,5 @@
 import {Component} from "@angular/core";
+import {HttpOAuthService} from "./shared/oauth-http-client/http-oauth.service";
 
 @Component({
     selector: 'app',
@@ -6,7 +7,8 @@ import {Component} from "@angular/core";
     `
         <provider-list></provider-list>
         <!--<comp-type-list></comp-type-list>-->
-    `
+    `,
+    providers:[HttpOAuthService]
 })
 export class AppComponent {
 

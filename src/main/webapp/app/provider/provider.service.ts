@@ -6,6 +6,7 @@ import {Observable} from "rxjs/Observable";
 import {ProviderModel} from "./provider-model";
 import "rxjs/add/operator/catch";
 import "rxjs/add/operator/map";
+import {HttpOAuthService} from "../shared/oauth-http-client/http-oauth.service";
 
 
 
@@ -13,7 +14,7 @@ import "rxjs/add/operator/map";
 export class ProviderService {
     private url: string = 'api/provider';
 
-    constructor(private http: Http) {
+    constructor(private http: HttpOAuthService) {
 
     }
 

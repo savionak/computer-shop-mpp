@@ -1,16 +1,18 @@
 import {Injectable} from "@angular/core";
-import {Headers, Http, RequestOptions, Response} from "@angular/http";
+import {Headers, RequestOptions, Response} from "@angular/http";
 import {Observable} from "rxjs/Observable";
 
-import {ComponentTypeModel} from "./component-type-model";
 import "rxjs/add/operator/catch";
 import "rxjs/add/operator/map";
+
+import {HttpOAuthService} from "../shared/oauth-http-client/http-oauth.service";
+import {ComponentTypeModel} from "./component-type-model";
 
 @Injectable()
 export class ComponentTypeService {
     private url: string = 'api/component/type';
 
-    constructor(private http: Http) {
+    constructor(private http: HttpOAuthService) {
 
     }
 
