@@ -40,9 +40,6 @@ public class AssemblyParcel extends BaseEntity<Long> implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "parcel", cascade = CascadeType.ALL)
     private List<AssemblyComponent> components;
 
-    @OneToMany(mappedBy = "parcel", targetEntity = AssemblerTask.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<AssemblerTask> tasks;
-
     public Order getOrder() {
         return this.order;
     }
@@ -81,14 +78,6 @@ public class AssemblyParcel extends BaseEntity<Long> implements Serializable {
 
     public void setComponents(List<AssemblyComponent> components) {
         this.components = components;
-    }
-
-    public List<AssemblerTask> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(List<AssemblerTask> tasks) {
-        this.tasks = tasks;
     }
 
     public boolean isCanceled() {
