@@ -20,9 +20,8 @@ public class ComponentType extends BaseEntity<Long> {
     @Column(name = "description", columnDefinition = "text")
     private String description;
 
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @Column(name = "removed", nullable = false)
-    private boolean removed;
+    private Boolean removed;
 
     @JsonIgnore
     @OneToMany(mappedBy = "type", fetch = FetchType.LAZY)
@@ -44,11 +43,11 @@ public class ComponentType extends BaseEntity<Long> {
         this.description = description;
     }
 
-    public boolean isRemoved() {
+    public Boolean isRemoved() {
         return removed;
     }
 
-    public void setRemoved(boolean removed) {
+    public void setRemoved(Boolean removed) {
         this.removed = removed;
     }
 

@@ -19,20 +19,18 @@ public class Order extends BaseEntity<Long> {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(name = "cost", nullable = false)
-    private long cost;
+    private Long cost;
 
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @Column(name = "order_date", nullable = false)
     private Timestamp orderDate;
 
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false,
             columnDefinition = Status.TYPE_DEFINITION)
     private Status status;
 
     @Column(name = "canceled", nullable = false)
-    private boolean canceled = false;
+    private Boolean canceled = false;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
     private List<Export> exports;
@@ -48,11 +46,11 @@ public class Order extends BaseEntity<Long> {
         this.customer = customer;
     }
 
-    public long getCost() {
+    public Long getCost() {
         return cost;
     }
 
-    public void setCost(long cost) {
+    public void setCost(Long cost) {
         this.cost = cost;
     }
 
@@ -72,11 +70,11 @@ public class Order extends BaseEntity<Long> {
         this.status = status;
     }
 
-    public boolean isCanceled() {
+    public Boolean isCanceled() {
         return canceled;
     }
 
-    public void setCanceled(boolean canceled) {
+    public void setCanceled(Boolean canceled) {
         this.canceled = canceled;
     }
 

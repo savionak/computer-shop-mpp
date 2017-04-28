@@ -5,11 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NEGATIVE_MESSAGE;
-import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
 
 @Entity
 @Table(name = "assembly")
@@ -21,12 +19,11 @@ public class Assembly extends BaseEntity<Long> {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(name = "cost", nullable = false)
-    private long cost;
+    private Long cost;
 
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @Min(value = 0, message = CANNOT_BE_NEGATIVE_MESSAGE)
     @Column(name = "count", nullable = false)
-    private long count;
+    private Long count;
 
     @OneToMany(mappedBy = "assembly", cascade = CascadeType.ALL)
     private List<AssemblyComponent> components;
@@ -39,19 +36,19 @@ public class Assembly extends BaseEntity<Long> {
         this.order = order;
     }
 
-    public long getCost() {
+    public Long getCost() {
         return this.cost;
     }
 
-    public void setCost(long cost) {
+    public void setCost(Long cost) {
         this.cost = cost;
     }
 
-    public long getCount() {
+    public Long getCount() {
         return this.count;
     }
 
-    public void setCount(long count) {
+    public void setCount(Long count) {
         this.count = count;
     }
 

@@ -26,13 +26,11 @@ public class UserAuth extends BaseEntity<Long> {
             columnDefinition = Role.TYPE_DEFINITION)
     private Role role;
 
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @Column(name = "blocked", nullable = false)
-    private boolean blocked = false;
+    private Boolean blocked = false;
 
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @Column(name = "removed", nullable = false)
-    private boolean removed = false;
+    private Boolean removed = false;
 
     @OneToOne(mappedBy = "userAuth", fetch = FetchType.LAZY)
     private UserInfo userInfo;
@@ -74,11 +72,11 @@ public class UserAuth extends BaseEntity<Long> {
         this.role = role;
     }
 
-    public boolean isBlocked() {
+    public Boolean isBlocked() {
         return blocked;
     }
 
-    public void setBlocked(boolean blocked) {
+    public void setBlocked(Boolean blocked) {
         this.blocked = blocked;
     }
 

@@ -20,9 +20,8 @@ public class Provider extends BaseEntity<Long> {
     @Column(name = "description", columnDefinition = "text")
     private String description;
 
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @Column(name = "removed", nullable = false)
-    private boolean removed;
+    private Boolean removed;
 
     @JsonIgnore
     @OneToMany(mappedBy = "provider", cascade = CascadeType.ALL)
@@ -52,11 +51,11 @@ public class Provider extends BaseEntity<Long> {
         this.imports = imports;
     }
 
-    public boolean isRemoved() {
+    public Boolean isRemoved() {
         return removed;
     }
 
-    public void setRemoved(boolean removed) {
+    public void setRemoved(Boolean removed) {
         this.removed = removed;
     }
 }

@@ -28,7 +28,7 @@ public class AssemblyComponent implements Serializable {
     @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @Min(value = 0, message = CANNOT_BE_NEGATIVE_MESSAGE)
     @Column(name = "count", nullable = false)
-    private long count;
+    private Long count;
 
     public Assembly getAssembly() {
         return assembly;
@@ -46,11 +46,11 @@ public class AssemblyComponent implements Serializable {
         this.component = component;
     }
 
-    public long getCount() {
+    public Long getCount() {
         return this.count;
     }
 
-    public void setCount(long count) {
+    public void setCount(Long count) {
         this.count = count;
     }
 }

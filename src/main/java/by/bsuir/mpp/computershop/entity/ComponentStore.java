@@ -17,12 +17,12 @@ public class ComponentStore extends BaseEntity<Long> {
 
     @Min(value = 0, message = CANNOT_BE_NEGATIVE_MESSAGE)
     @Column(name = "price")
-    private int price;
+    private Long price;
 
     @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @Min(value = 0, message = CANNOT_BE_NEGATIVE_MESSAGE)
     @Column(name = "count")
-    private int count;
+    private Long count;
 
     public ComponentModel getModel() {
         return this.model;
@@ -32,19 +32,19 @@ public class ComponentStore extends BaseEntity<Long> {
         this.model = model;
     }
 
-    public int getPrice() {
+    public Long getPrice() {
         return this.price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 
-    public int getCount() {
+    public Long getCount() {
         return this.count;
     }
 
-    public void setCount(int count) {
+    public void setCount(Long count) {
         this.count = count;
     }
 }
