@@ -5,7 +5,7 @@ import javax.validation.constraints.Pattern;
 
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.*;
 
-public class UserInfoDto extends BaseDto<Long> {
+public class UserInfoDto extends BaseDto {
     private UserAuthDto userAuth;
 
     @NotNull(message = CANNOT_BE_NULL_MESSAGE)

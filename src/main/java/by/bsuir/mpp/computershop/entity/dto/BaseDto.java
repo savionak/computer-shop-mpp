@@ -1,15 +1,13 @@
 package by.bsuir.mpp.computershop.entity.dto;
 
-import java.io.Serializable;
+public abstract class BaseDto {
+    private Long id;
 
-public abstract class BaseDto<ID extends Serializable> {
-    private ID id;
-
-    public ID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(ID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 }

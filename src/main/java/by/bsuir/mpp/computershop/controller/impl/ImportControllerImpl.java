@@ -8,7 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class ImportControllerImpl extends AbstractCrudController<Import, Long> implements ImportController {
+public class ImportControllerImpl extends AbstractCrudController<Import, Long>
+        implements ImportController {
 
     private static final Logger logger = Logger.getLogger(ImportControllerImpl.class);
 

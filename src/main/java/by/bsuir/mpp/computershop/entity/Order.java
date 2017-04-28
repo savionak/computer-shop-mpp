@@ -1,5 +1,6 @@
 package by.bsuir.mpp.computershop.entity;
 
+import by.bsuir.mpp.computershop.entity.dto.OrderDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -8,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.List;
 
+import static by.bsuir.mpp.computershop.config.ModelMapperConfiguration.modelMapper;
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
 
 @Entity
@@ -94,6 +96,11 @@ public class Order extends BaseEntity<Long> {
 
     public void setAssemblies(List<Assembly> assemblyParcels) {
         this.assemblies = assemblyParcels;
+    }
+
+    @Override
+    public OrderDto toDto() {
+        return modelMapper.map(this, OrderDto.class);
     }
 
     public enum Status {

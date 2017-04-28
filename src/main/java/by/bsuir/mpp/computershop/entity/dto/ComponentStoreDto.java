@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NEGATIVE_MESSAGE;
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
 
-public class ComponentStoreDto extends BaseDto<Long> {
+public class ComponentStoreDto extends BaseDto {
     @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     private ComponentModelDto model;
 

@@ -1,5 +1,6 @@
 package by.bsuir.mpp.computershop.entity;
 
+import by.bsuir.mpp.computershop.entity.dto.ComponentTypeDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -8,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.List;
 
+import static by.bsuir.mpp.computershop.config.ModelMapperConfiguration.modelMapper;
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.*;
 
 @Entity
@@ -59,5 +61,10 @@ public class ComponentType extends BaseEntity<Long> {
 
     public void setComponentModels(List<ComponentModel> componentModels) {
         this.componentModels = componentModels;
+    }
+
+    @Override
+    public ComponentTypeDto toDto() {
+        return modelMapper.map(this, ComponentTypeDto.class);
     }
 }

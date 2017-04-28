@@ -8,7 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class OrderControllerImpl extends AbstractCrudController<Order, Long> implements OrderController {
+public class OrderControllerImpl extends AbstractCrudController<Order, Long>
+        implements OrderController {
 
     private static final Logger logger = Logger.getLogger(OrderControllerImpl.class);
 

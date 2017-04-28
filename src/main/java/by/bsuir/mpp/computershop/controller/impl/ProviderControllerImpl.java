@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import static by.bsuir.mpp.computershop.controller.exception.wrapper.ServiceCallWrapper.wrapServiceCall;
 
 @RestController
-public class ProviderControllerImpl extends AbstractCrudController<Provider, Long> implements ProviderController {
+public class ProviderControllerImpl extends AbstractCrudController<Provider, Long>
+        implements ProviderController {
 
     private static final Logger logger = Logger.getLogger(ProviderControllerImpl.class);
     private final ProviderService service;

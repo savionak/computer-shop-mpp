@@ -5,7 +5,7 @@ import javax.validation.constraints.Pattern;
 
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.*;
 
-public class ComponentModelDto extends BaseDto<Long> {
+public class ComponentModelDto extends BaseDto {
     @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     private ComponentTypeDto type;
 

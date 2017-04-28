@@ -2,7 +2,7 @@ package by.bsuir.mpp.computershop.entity.dto;
 
 import java.sql.Timestamp;
 
-public class ExportDto extends BaseDto<Long> {
+public class ExportDto extends BaseDto {
     private OrderDto order;
 
     private Timestamp exportDate;

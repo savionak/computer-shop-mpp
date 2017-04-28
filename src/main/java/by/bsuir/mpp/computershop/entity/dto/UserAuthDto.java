@@ -7,7 +7,7 @@ import javax.validation.constraints.Pattern;
 
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.*;
 
-public class UserAuthDto extends BaseDto<Long> {
+public class UserAuthDto extends BaseDto {
     @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @Pattern(regexp = EMAIL_REGEX, message = INVALID_VALUE_MESSAGE)
     private String email;

@@ -2,7 +2,11 @@ package by.bsuir.mpp.computershop.controller;
 
 import by.bsuir.mpp.computershop.controller.exception.ControllerException;
 import by.bsuir.mpp.computershop.entity.BaseEntity;
-import org.springframework.web.bind.annotation.*;
+import by.bsuir.mpp.computershop.entity.dto.BaseDto;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
 import java.io.Serializable;
@@ -19,7 +23,7 @@ public interface CrudController<E extends BaseEntity<ID>, ID extends Serializabl
     E getById(@PathVariable ID id) throws ControllerException;
 
     @RequestMapping(method = RequestMethod.GET)
-    Iterable<E> getAll() throws ControllerException;
+    Iterable<BaseDto> getAll() throws ControllerException;
 
     @RequestMapping(path = "delete/{id}", method = RequestMethod.DELETE)
     void delete(@PathVariable ID id) throws ControllerException;

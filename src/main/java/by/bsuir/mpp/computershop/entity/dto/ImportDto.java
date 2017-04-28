@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NEGATIVE_MESSAGE;
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
 
-public class ImportDto extends BaseDto<Long> {
+public class ImportDto extends BaseDto {
     @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     private ProviderDto provider;
 

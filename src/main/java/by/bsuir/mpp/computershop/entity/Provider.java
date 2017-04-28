@@ -1,5 +1,6 @@
 package by.bsuir.mpp.computershop.entity;
 
+import by.bsuir.mpp.computershop.entity.dto.ProviderDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -8,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.List;
 
+import static by.bsuir.mpp.computershop.config.ModelMapperConfiguration.modelMapper;
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.*;
 
 @Entity
@@ -59,5 +61,10 @@ public class Provider extends BaseEntity<Long> {
 
     public void setRemoved(Boolean removed) {
         this.removed = removed;
+    }
+
+    @Override
+    public ProviderDto toDto() {
+        return modelMapper.map(this, ProviderDto.class);
     }
 }
