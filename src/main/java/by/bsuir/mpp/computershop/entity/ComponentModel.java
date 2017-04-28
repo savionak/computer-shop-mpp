@@ -1,6 +1,6 @@
 package by.bsuir.mpp.computershop.entity;
 
-import by.bsuir.mpp.computershop.entity.dto.ComponentModelDto;
+import by.bsuir.mpp.computershop.dto.ComponentModelDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.DynamicInsert;
 

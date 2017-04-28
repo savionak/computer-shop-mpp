@@ -1,4 +1,4 @@
-package by.bsuir.mpp.computershop.entity.dto;
+package by.bsuir.mpp.computershop.dto;
 
 import by.bsuir.mpp.computershop.entity.Order.Status;
 import com.fasterxml.jackson.annotation.JsonProperty;

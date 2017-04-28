@@ -1,4 +1,4 @@
-package by.bsuir.mpp.computershop.entity.dto;
+package by.bsuir.mpp.computershop.dto;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;

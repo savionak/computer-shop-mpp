@@ -1,6 +1,6 @@
 package by.bsuir.mpp.computershop.entity;
 
-import by.bsuir.mpp.computershop.entity.dto.BaseDto;
+import by.bsuir.mpp.computershop.dto.BaseDto;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

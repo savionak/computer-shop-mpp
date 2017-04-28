@@ -1,4 +1,4 @@
-package by.bsuir.mpp.computershop.entity.dto;
+package by.bsuir.mpp.computershop.dto;
 
 import java.sql.Timestamp;
 

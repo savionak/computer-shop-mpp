@@ -1,8 +1,8 @@
 package by.bsuir.mpp.computershop.controller;
 
 import by.bsuir.mpp.computershop.controller.exception.ControllerException;
+import by.bsuir.mpp.computershop.dto.BaseDto;
 import by.bsuir.mpp.computershop.entity.BaseEntity;
-import by.bsuir.mpp.computershop.entity.dto.BaseDto;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

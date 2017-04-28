@@ -2,8 +2,8 @@ package by.bsuir.mpp.computershop.controller.impl;
 
 import by.bsuir.mpp.computershop.controller.CrudController;
 import by.bsuir.mpp.computershop.controller.exception.ControllerException;
+import by.bsuir.mpp.computershop.dto.BaseDto;
 import by.bsuir.mpp.computershop.entity.BaseEntity;
-import by.bsuir.mpp.computershop.entity.dto.BaseDto;
 import by.bsuir.mpp.computershop.service.CrudService;
 import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.PathVariable;

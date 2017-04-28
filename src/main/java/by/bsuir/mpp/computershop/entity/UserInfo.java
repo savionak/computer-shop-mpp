@@ -1,6 +1,6 @@
 package by.bsuir.mpp.computershop.entity;
 
-import by.bsuir.mpp.computershop.entity.dto.UserInfoDto;
+import by.bsuir.mpp.computershop.dto.UserInfoDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;

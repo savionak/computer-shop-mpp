@@ -2,10 +2,10 @@ package by.bsuir.mpp.computershop.controller.impl;
 
 import by.bsuir.mpp.computershop.controller.ComponentModelController;
 import by.bsuir.mpp.computershop.controller.exception.ControllerException;
+import by.bsuir.mpp.computershop.dto.ImportDto;
 import by.bsuir.mpp.computershop.entity.ComponentModel;
 import by.bsuir.mpp.computershop.entity.ComponentStore;
 import by.bsuir.mpp.computershop.entity.Import;
-import by.bsuir.mpp.computershop.entity.dto.ImportDto;
 import by.bsuir.mpp.computershop.service.ComponentModelService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

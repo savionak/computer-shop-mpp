@@ -1,6 +1,6 @@
 package by.bsuir.mpp.computershop.entity;
 
-import by.bsuir.mpp.computershop.entity.dto.ComponentStoreDto;
+import by.bsuir.mpp.computershop.dto.ComponentStoreDto;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
