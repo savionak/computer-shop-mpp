@@ -3,9 +3,9 @@ import {BrowserModule} from "@angular/platform-browser";
 import {FormsModule} from "@angular/forms";
 import {HttpModule, JsonpModule} from "@angular/http";
 
-import {AppComponent} from './app.component';
-import {ComponentTypesListComponent} from "./componentTypes/component-type-list.component";
-import {ProviderListComponent} from './provider/provider-list.component';
+import {AppComponent} from "./app.component";
+import {ComponentTypesListComponent} from "./component-types/component-type-list.component";
+import {ProviderListComponent} from "./provider/provider-list.component";
 
 @NgModule({
     imports: [
@@ -23,4 +23,5 @@ import {ProviderListComponent} from './provider/provider-list.component';
         AppComponent
     ]
 })
-export class AppModule { }
+export class AppModule {
+}

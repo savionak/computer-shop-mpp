@@ -10,7 +10,7 @@ import {ProviderService} from "./provider.service";
         ProviderService
     ]
 })
-export class ProviderListComponent  {
+export class ProviderListComponent {
     providerList: ProviderModel[];
     error: string;
     newProvider: ProviderModel = ProviderModel.empty();
@@ -32,8 +32,12 @@ export class ProviderListComponent  {
     getList() {
         this.providerService.getList()
             .subscribe(
-                (list) => { this.providerList = list },
-                (error) => { this.error = error}
+                (list) => {
+                    this.providerList = list
+                },
+                (error) => {
+                    this.error = error
+                }
             )
     }
 
@@ -44,16 +48,25 @@ export class ProviderListComponent  {
     onAdd(): void {
         this.providerService.add(this.newProvider)
             .subscribe(
-                (res) => { this.getList() },
-                (error) => { this.error = error}
+                (res) => {
+                    this.getList()
+                },
+                (error) => {
+                    this.error = error
+                }
             );
         this.newProvider = ProviderModel.empty();
     }
+
     onDelete(provider: ProviderModel): void {
         this.providerService.remove(provider.id)
             .subscribe(
-                (res) => { this.getList() },
-                (error) => { this.error = error}
+                (res) => {
+                    this.getList()
+                },
+                (error) => {
+                    this.error = error
+                }
             );
     }
 
@@ -68,7 +81,9 @@ export class ProviderListComponent  {
                     this.endEditing();
                     this.getList();
                 },
-                (error) => { this.error = error}
+                (error) => {
+                    this.error = error
+                }
             );
     }
 

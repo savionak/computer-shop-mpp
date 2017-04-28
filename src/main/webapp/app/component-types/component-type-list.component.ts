@@ -10,7 +10,7 @@ import {ComponentTypeService} from "./component-type.service";
         ComponentTypeService
     ]
 })
-export class ComponentTypesListComponent  {
+export class ComponentTypesListComponent {
     componentTypesList: ComponentTypeModel[];
     error: string;
     newType: ComponentTypeModel = ComponentTypeModel.empty();
@@ -18,7 +18,7 @@ export class ComponentTypesListComponent  {
     editingTypeCopy: ComponentTypeModel;
 
     constructor(private componentTypeService: ComponentTypeService) {
-        
+
     }
 
     onCloseError() {
@@ -32,8 +32,12 @@ export class ComponentTypesListComponent  {
     getList() {
         this.componentTypeService.getList()
             .subscribe(
-                (list) => { this.componentTypesList = list },
-                (error) => { this.error = error}
+                (list) => {
+                    this.componentTypesList = list
+                },
+                (error) => {
+                    this.error = error
+                }
             )
     }
 
@@ -44,16 +48,25 @@ export class ComponentTypesListComponent  {
     onAdd(): void {
         this.componentTypeService.add(this.newType)
             .subscribe(
-                (res) => { this.getList() },
-                (error) => { this.error = error}
+                (res) => {
+                    this.getList()
+                },
+                (error) => {
+                    this.error = error
+                }
             );
         this.newType = ComponentTypeModel.empty();
     }
+
     onDelete(type: ComponentTypeModel): void {
         this.componentTypeService.remove(type.id)
             .subscribe(
-                (res) => { this.getList() },
-                (error) => { this.error = error}
+                (res) => {
+                    this.getList()
+                },
+                (error) => {
+                    this.error = error
+                }
             );
     }
 
@@ -68,7 +81,9 @@ export class ComponentTypesListComponent  {
                     this.endEditing();
                     this.getList();
                 },
-                (error) => { this.error = error}
+                (error) => {
+                    this.error = error
+                }
             );
     }
 
