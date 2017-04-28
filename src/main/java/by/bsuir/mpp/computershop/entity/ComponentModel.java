@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.List;
 
-import static by.bsuir.mpp.computershop.config.ModelMapperConfiguration.modelMapper;
+import static by.bsuir.mpp.computershop.config.ModelMapperConfiguration.mapper;
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.*;
 
 @Entity
@@ -90,6 +90,6 @@ public class ComponentModel extends BaseEntity<Long> {
 
     @Override
     public ComponentModelDto toDto() {
-        return modelMapper.map(this, ComponentModelDto.class);
+        return mapper.map(this, ComponentModelDto.class);
     }
 }

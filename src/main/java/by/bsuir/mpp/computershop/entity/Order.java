@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.List;
 
-import static by.bsuir.mpp.computershop.config.ModelMapperConfiguration.modelMapper;
+import static by.bsuir.mpp.computershop.config.ModelMapperConfiguration.mapper;
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
 
 @Entity
@@ -100,7 +100,7 @@ public class Order extends BaseEntity<Long> {
 
     @Override
     public OrderDto toDto() {
-        return modelMapper.map(this, OrderDto.class);
+        return mapper.map(this, OrderDto.class);
     }
 
     public enum Status {

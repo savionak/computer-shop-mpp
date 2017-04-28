@@ -8,7 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-import static by.bsuir.mpp.computershop.config.ModelMapperConfiguration.modelMapper;
+import static by.bsuir.mpp.computershop.config.ModelMapperConfiguration.mapper;
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.*;
 
 @Entity
@@ -102,7 +102,7 @@ public class UserAuth extends BaseEntity<Long> {
 
     @Override
     public UserAuthDto toDto() {
-        return modelMapper.map(this, UserAuthDto.class);
+        return mapper.map(this, UserAuthDto.class);
     }
 
     public enum Role {
