@@ -1,34 +1,22 @@
 package by.bsuir.mpp.computershop.dto;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
-import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NEGATIVE_MESSAGE;
-import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
-
 public class ImportDto extends BaseDto {
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     private ProviderDto provider;
 
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     private ComponentModelDto model;
 
     private Timestamp importDate;
 
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
-    @Min(value = 0, message = CANNOT_BE_NEGATIVE_MESSAGE)
     private Long count;
 
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
-    @Min(value = 0, message = CANNOT_BE_NEGATIVE_MESSAGE)
     private Long purchasePrice;
 
-    @Min(value = 0, message = CANNOT_BE_NEGATIVE_MESSAGE)
     private Long price;
 
     public ProviderDto getProvider() {
-        return this.provider;
+        return provider;
     }
 
     public void setProvider(ProviderDto provider) {
@@ -36,7 +24,7 @@ public class ImportDto extends BaseDto {
     }
 
     public ComponentModelDto getModel() {
-        return this.model;
+        return model;
     }
 
     public void setModel(ComponentModelDto model) {
@@ -52,7 +40,7 @@ public class ImportDto extends BaseDto {
     }
 
     public Long getCount() {
-        return this.count;
+        return count;
     }
 
     public void setCount(Long count) {
@@ -60,7 +48,7 @@ public class ImportDto extends BaseDto {
     }
 
     public Long getPurchasePrice() {
-        return this.purchasePrice;
+        return purchasePrice;
     }
 
     public void setPurchasePrice(Long purchasePrice) {
@@ -68,7 +56,7 @@ public class ImportDto extends BaseDto {
     }
 
     public Long getPrice() {
-        return this.price;
+        return price;
     }
 
     public void setPrice(Long price) {

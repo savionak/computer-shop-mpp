@@ -1,13 +1,11 @@
 package by.bsuir.mpp.computershop.entity;
 
-import by.bsuir.mpp.computershop.dto.ComponentStoreDto;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-import static by.bsuir.mpp.computershop.config.ModelMapperConfiguration.mapper;
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NEGATIVE_MESSAGE;
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
 
@@ -51,10 +49,5 @@ public class ComponentStore extends BaseEntity<Long> {
 
     public void setCount(Long count) {
         this.count = count;
-    }
-
-    @Override
-    public ComponentStoreDto toDto() {
-        return mapper.map(this, ComponentStoreDto.class);
     }
 }

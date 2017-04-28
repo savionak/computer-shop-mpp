@@ -1,6 +1,5 @@
 package by.bsuir.mpp.computershop.entity;
 
-import by.bsuir.mpp.computershop.dto.CustomerDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -12,7 +11,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.List;
 
-import static by.bsuir.mpp.computershop.config.ModelMapperConfiguration.mapper;
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.*;
 
 @Entity
@@ -64,10 +62,5 @@ public class Customer extends BaseEntity<Long> {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
-    }
-
-    @Override
-    public CustomerDto toDto() {
-        return mapper.map(this, CustomerDto.class);
     }
 }

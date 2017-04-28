@@ -1,6 +1,5 @@
 package by.bsuir.mpp.computershop.entity;
 
-import by.bsuir.mpp.computershop.dto.ComponentModelDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -9,7 +8,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.List;
 
-import static by.bsuir.mpp.computershop.config.ModelMapperConfiguration.mapper;
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.*;
 
 @Entity
@@ -86,10 +84,5 @@ public class ComponentModel extends BaseEntity<Long> {
 
     public void setImports(List<Import> imports) {
         this.imports = imports;
-    }
-
-    @Override
-    public ComponentModelDto toDto() {
-        return mapper.map(this, ComponentModelDto.class);
     }
 }

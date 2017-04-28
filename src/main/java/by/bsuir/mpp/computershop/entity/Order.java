@@ -1,6 +1,5 @@
 package by.bsuir.mpp.computershop.entity;
 
-import by.bsuir.mpp.computershop.dto.OrderDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -9,7 +8,6 @@ import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.List;
 
-import static by.bsuir.mpp.computershop.config.ModelMapperConfiguration.mapper;
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
 
 @Entity
@@ -98,11 +96,6 @@ public class Order extends BaseEntity<Long> {
         this.assemblies = assemblyParcels;
     }
 
-    @Override
-    public OrderDto toDto() {
-        return mapper.map(this, OrderDto.class);
-    }
-
     public enum Status {
         IN_PROGRESS {
             public String toString() {
@@ -126,6 +119,7 @@ public class Order extends BaseEntity<Long> {
         };
 
         public static final String TYPE_DEFINITION = "ENUM ('IN_PROGRESS', 'FINISHED')";
+
         public abstract String toString();
     }
 }

@@ -1,6 +1,5 @@
 package by.bsuir.mpp.computershop.entity;
 
-import by.bsuir.mpp.computershop.dto.AssemblyDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.DynamicInsert;
@@ -9,7 +8,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import java.util.List;
 
-import static by.bsuir.mpp.computershop.config.ModelMapperConfiguration.mapper;
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NEGATIVE_MESSAGE;
 
 @Entity
@@ -62,10 +60,5 @@ public class Assembly extends BaseEntity<Long> {
 
     public void setComponents(List<AssemblyComponent> components) {
         this.components = components;
-    }
-
-    @Override
-    public AssemblyDto toDto() {
-        return mapper.map(this, AssemblyDto.class);
     }
 }

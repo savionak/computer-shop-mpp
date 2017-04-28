@@ -3,23 +3,23 @@ package by.bsuir.mpp.computershop.dto;
 import java.sql.Timestamp;
 
 public class ExportDto extends BaseDto {
-    private OrderDto order;
+    private Long orderId;
 
     private Timestamp exportDate;
 
-    public OrderDto getOrder() {
-        return this.order;
+    public Long getOrderId() {
+        return orderId;
     }
 
-    public void setOrder(OrderDto order) {
-        this.order = order;
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 
     public Timestamp getExportDate() {
         return exportDate;
     }
 
-    public void setExportDate(Timestamp expDate) {
-        this.exportDate = expDate;
+    public void setExportDate(Timestamp exportDate) {
+        this.exportDate = exportDate;
     }
 }

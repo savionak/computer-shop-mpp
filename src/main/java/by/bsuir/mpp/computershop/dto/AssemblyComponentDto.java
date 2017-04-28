@@ -1,31 +1,30 @@
 package by.bsuir.mpp.computershop.dto;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
+public class AssemblyComponentDto {
+    private Long assemblyId;
 
-import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NEGATIVE_MESSAGE;
-import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
+    private Long componentId;
 
-public class AssemblyComponentDto implements Serializable {
-
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
-    private ComponentStoreDto component;
-
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
-    @Min(value = 0, message = CANNOT_BE_NEGATIVE_MESSAGE)
     private Long count;
 
-    public ComponentStoreDto getComponent() {
-        return component;
+    public Long getAssemblyId() {
+        return assemblyId;
     }
 
-    public void setComponent(ComponentStoreDto component) {
-        this.component = component;
+    public void setAssemblyId(Long assemblyId) {
+        this.assemblyId = assemblyId;
+    }
+
+    public Long getComponentId() {
+        return componentId;
+    }
+
+    public void setComponentId(Long componentId) {
+        this.componentId = componentId;
     }
 
     public Long getCount() {
-        return this.count;
+        return count;
     }
 
     public void setCount(Long count) {

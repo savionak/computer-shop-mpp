@@ -1,13 +1,11 @@
 package by.bsuir.mpp.computershop.entity;
 
-import by.bsuir.mpp.computershop.dto.UserInfoDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-import static by.bsuir.mpp.computershop.config.ModelMapperConfiguration.mapper;
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.*;
 
 @Entity
@@ -74,10 +72,5 @@ public class UserInfo extends BaseEntity<Long> {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    @Override
-    public UserInfoDto toDto() {
-        return mapper.map(this, UserInfoDto.class);
     }
 }

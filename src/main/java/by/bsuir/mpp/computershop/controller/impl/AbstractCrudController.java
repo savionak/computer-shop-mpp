@@ -5,6 +5,7 @@ import by.bsuir.mpp.computershop.controller.exception.ControllerException;
 import by.bsuir.mpp.computershop.dto.BaseDto;
 import by.bsuir.mpp.computershop.entity.BaseEntity;
 import by.bsuir.mpp.computershop.service.CrudService;
+import ma.glasnost.orika.MapperFacade;
 import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,11 +19,16 @@ import static by.bsuir.mpp.computershop.controller.exception.wrapper.ServiceCall
 
 public abstract class AbstractCrudController<E extends BaseEntity<ID>, ID extends Serializable>
         implements CrudController<E, ID> {
+
     private final CrudService<E, ID> service;
+    private MapperFacade mapper;
+    private Class<? extends BaseDto> dtoClass;
     private final Logger logger;
 
-    AbstractCrudController(CrudService<E, ID> service, Logger logger) {
+    AbstractCrudController(CrudService<E, ID> service, MapperFacade mapper, Class<? extends BaseDto> dtoClass, Logger logger) {
         this.service = service;
+        this.mapper = mapper;
+        this.dtoClass = dtoClass;
         this.logger = logger;
     }
 
@@ -49,7 +55,7 @@ public abstract class AbstractCrudController<E extends BaseEntity<ID>, ID extend
         logger.info("GET ALL entities.");
         Iterable<E> all = wrapServiceCall(service::getAll, logger);
         return StreamSupport.stream(all.spliterator(), false)
-                .map(BaseEntity::toDto)
+                .map(i -> mapper.map(i, dtoClass))
                 .collect(Collectors.toList());
     }
 

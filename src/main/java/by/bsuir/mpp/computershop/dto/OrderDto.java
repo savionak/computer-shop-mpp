@@ -1,30 +1,19 @@
 package by.bsuir.mpp.computershop.dto;
 
 import by.bsuir.mpp.computershop.entity.Order.Status;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
-import java.util.List;
-
-import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
 
 public class OrderDto extends BaseDto {
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     private CustomerDto customer;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long cost;
 
     private Timestamp orderDate;
 
     private Status status;
 
-    private Boolean canceled = false;
-
-    private List<ExportDto> exports;
-
-    private List<AssemblyDto> assemblies;
+    private Boolean canceled;
 
     public CustomerDto getCustomer() {
         return customer;
@@ -64,21 +53,5 @@ public class OrderDto extends BaseDto {
 
     public void setCanceled(Boolean canceled) {
         this.canceled = canceled;
-    }
-
-    public List<ExportDto> getExports() {
-        return exports;
-    }
-
-    public void setExports(List<ExportDto> exports) {
-        this.exports = exports;
-    }
-
-    public List<AssemblyDto> getAssemblies() {
-        return assemblies;
-    }
-
-    public void setAssemblies(List<AssemblyDto> assemblyParcels) {
-        this.assemblies = assemblyParcels;
     }
 }

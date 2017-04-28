@@ -1,18 +1,18 @@
 package by.bsuir.mpp.computershop.dto;
 
 public class AssemblyDto extends BaseDto {
-    private OrderDto order;
+    private Long orderId;
 
     private Long cost;
 
     private Long count;
 
-    public OrderDto getOrder() {
-        return this.order;
+    public Long getOrderId() {
+        return orderId;
     }
 
-    public void setOrder(OrderDto order) {
-        this.order = order;
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 
     public Long getCost() {
