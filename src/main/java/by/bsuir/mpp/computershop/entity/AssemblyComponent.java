@@ -7,32 +7,35 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
+import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NEGATIVE_MESSAGE;
+import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
+
 @Entity
 @Table(name = "assembly_component")
 public class AssemblyComponent implements Serializable {
-
     @JsonIgnore
     @Id
     @ManyToOne
     @JoinColumn(name = "assembly_id", nullable = false)
-    private Assembly parcel;
+    private Assembly assembly;
 
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @Id
     @ManyToOne
     @JoinColumn(name = "component_id", nullable = false)
     private ComponentStore component;
 
-    @NotNull(message = "Cannot be null")
-    @Min(value = 0, message = "Count cannot be negative")
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
+    @Min(value = 0, message = CANNOT_BE_NEGATIVE_MESSAGE)
     @Column(name = "count", nullable = false)
     private long count;
 
-    public Assembly getParcel() {
-        return parcel;
+    public Assembly getAssembly() {
+        return assembly;
     }
 
-    public void setParcel(Assembly assemblyComponents) {
-        this.parcel = assemblyComponents;
+    public void setAssembly(Assembly assemblyComponents) {
+        this.assembly = assemblyComponents;
     }
 
     public ComponentStore getComponent() {
@@ -50,5 +53,4 @@ public class AssemblyComponent implements Serializable {
     public void setCount(long count) {
         this.count = count;
     }
-
 }

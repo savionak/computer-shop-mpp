@@ -6,15 +6,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.util.List;
+
+import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NEGATIVE_MESSAGE;
+import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
 
 @Entity
 @Table(name = "assembly")
-public class Assembly extends BaseEntity<Long> implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
+public class Assembly extends BaseEntity<Long> {
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
@@ -24,12 +23,12 @@ public class Assembly extends BaseEntity<Long> implements Serializable {
     @Column(name = "cost", nullable = false)
     private long cost;
 
-    @NotNull(message = "Cannot be null")
-    @Min(value = 0, message = "Count cannot be negative")
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
+    @Min(value = 0, message = CANNOT_BE_NEGATIVE_MESSAGE)
     @Column(name = "count", nullable = false)
     private long count;
 
-    @OneToMany(mappedBy = "parcel", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "assembly", cascade = CascadeType.ALL)
     private List<AssemblyComponent> components;
 
     public Order getOrder() {
@@ -63,5 +62,4 @@ public class Assembly extends BaseEntity<Long> implements Serializable {
     public void setComponents(List<AssemblyComponent> components) {
         this.components = components;
     }
-
 }
