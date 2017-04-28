@@ -1,24 +1,24 @@
 import {Component} from "@angular/core";
 
-import {ComponentTypeModel} from "./component-type-model";
-import {ComponentTypeService} from "./component-type.service";
+import {ProviderModel} from "./provider-model";
+import {ProviderService} from "./provider.service";
 
 @Component({
-    selector: 'comp-type-list',
-    templateUrl: './component-type-list.component.html',
+    selector: 'provider-list',
+    templateUrl: './provider-list.component.html',
     providers: [    // local provider -- created for each component
-        ComponentTypeService
+        ProviderService
     ]
 })
-export class ComponentTypesListComponent  {
-    componentTypesList: ComponentTypeModel[];
+export class ProviderListComponent  {
+    providerList: ProviderModel[];
     error: string;
-    newType: ComponentTypeModel = ComponentTypeModel.empty();
+    newProvider: ProviderModel = ProviderModel.empty();
     editingIndex: number;
-    editingTypeCopy: ComponentTypeModel;
+    editingProviderCopy: ProviderModel;
 
-    constructor(private componentTypeService: ComponentTypeService) {
-        
+    constructor(private providerService: ProviderService) {
+
     }
 
     onCloseError() {
@@ -30,9 +30,9 @@ export class ComponentTypesListComponent  {
     }
 
     getList() {
-        this.componentTypeService.getList()
+        this.providerService.getList()
             .subscribe(
-                (list) => { this.componentTypesList = list },
+                (list) => { this.providerList = list },
                 (error) => { this.error = error}
             )
     }
@@ -42,27 +42,27 @@ export class ComponentTypesListComponent  {
     }
 
     onAdd(): void {
-        this.componentTypeService.add(this.newType)
+        this.providerService.add(this.newProvider)
             .subscribe(
                 (res) => { this.getList() },
                 (error) => { this.error = error}
             );
-        this.newType = ComponentTypeModel.empty();
+        this.newProvider = ProviderModel.empty();
     }
-    onDelete(type: ComponentTypeModel): void {
-        this.componentTypeService.remove(type.id)
+    onDelete(provider: ProviderModel): void {
+        this.providerService.remove(provider.id)
             .subscribe(
                 (res) => { this.getList() },
                 (error) => { this.error = error}
             );
     }
 
-    onEdit(type: ComponentTypeModel): void {
-        this.editingTypeCopy = JSON.parse(JSON.stringify(type));
+    onEdit(provider: ProviderModel): void {
+        this.editingProviderCopy = JSON.parse(JSON.stringify(provider));
     }
 
     onSave(): void {
-        this.componentTypeService.update(this.editingTypeCopy)
+        this.providerService.update(this.editingProviderCopy)
             .subscribe(
                 (res) => {
                     this.endEditing();
@@ -77,7 +77,7 @@ export class ComponentTypesListComponent  {
     }
 
     endEditing(): void {
-        this.editingTypeCopy = null;
+        this.editingProviderCopy = null;
         this.editingIndex = null;
     }
 }

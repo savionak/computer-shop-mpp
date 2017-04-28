@@ -1,0 +1,54 @@
+<div>
+    <h2>Add provider:</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <td><input [(ngModel)]="newProvider.name" placeholder="Provider name" /></td>
+            <td><input [(ngModel)]="newProvider.description" placeholder="Provider description" /></td>
+        </tr>
+    </table>
+    <td><button type="button" (click)="onAdd()">Add</button></td>
+</div>
+<div *ngIf="editingProviderCopy">
+    <h2>Edit provider:</h2>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <td>{{editingProviderCopy.id}}</td>
+            <td><input [(ngModel)]="editingProviderCopy.name" placeholder="Provider name" /></td>
+            <td><input [(ngModel)]="editingProviderCopy.description" placeholder="Provider description" /></td>
+        </tr>
+    </table>
+    <td><button type="button" (click)="onSave()">Save</button></td>
+    <td><button type="button" (click)="onCancel()">Cancel</button></td>
+</div>
+<hr/>
+<div  *ngIf="error" class="error">{{error}} <button (click)="onCloseError()">X</button> </div>
+<button type="button" (click)="onRefresh()">Update</button>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr *ngFor="let provider of providerList">
+        <td>{{provider.id}}</td>
+        <td>{{provider.name}}</td>
+        <td>{{provider.description}}</td>
+        <td><button type="button" (click)="onEdit(provider)">Edit</button></td>
+        <td><button type="button" (click)="onDelete(provider)">Delete</button></td>
+    </tr>
+</table>
