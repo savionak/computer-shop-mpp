@@ -6,30 +6,31 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import static by.bsuir.mpp.computershop.utils.ValidationConstants.*;
+
 @Entity
 @Table(name = "user_info")
 public class UserInfo extends BaseEntity<Long> {
-
     @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "auth_id", unique = true, nullable = false)
     private UserAuth userAuth;
 
-    @NotNull(message = "First name cannot be null")
-    @Pattern(regexp = "^(?!\\s*$).+", message = "First name cannot be empty")
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
+    @Pattern(regexp = NON_EMPTY_STRING_REGEX, message = CANNOT_BE_EMPTY_MESSAGE)
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @NotNull(message = "Last name cannot be null")
-    @Pattern(regexp = "^(?!\\s*$).+", message = "Last name cannot be empty")
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
+    @Pattern(regexp = NON_EMPTY_STRING_REGEX, message = CANNOT_BE_EMPTY_MESSAGE)
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
     @Column(name = "patronymic")
     private String patronymic;
 
-    @NotNull(message = "Phone cannot be null")
-    @Pattern(regexp = "^(?!\\s*$).+", message = "Phone cannot be empty")
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
+    @Pattern(regexp = NON_EMPTY_STRING_REGEX, message = CANNOT_BE_EMPTY_MESSAGE)
     @Column(name = "phone", nullable = false)
     private String phone;
 

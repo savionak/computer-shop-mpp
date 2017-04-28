@@ -6,12 +6,13 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import static by.bsuir.mpp.computershop.utils.ValidationConstants.*;
+
 @Entity
 @Table(name = "user_auth")
 public class UserAuth extends BaseEntity<Long> {
-
-    @NotNull(message = "Email cannot be null")
-    @Pattern(regexp = "^(?!\\s*$).+", message = "Invalid email")
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
+    @Pattern(regexp = EMAIL_REGEX, message = INVALID_VALUE_MESSAGE)
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
@@ -19,17 +20,17 @@ public class UserAuth extends BaseEntity<Long> {
     @Column(name = "pass_hash", nullable = false)
     private String passHash;
 
-    @NotNull(message = "Role cannot be null")
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false,
-            columnDefinition = "ENUM ('MANAGER', 'DIRECTOR', 'ADMIN')")
+            columnDefinition = Role.TYPE_DEFINITION)
     private Role role;
 
-    @NotNull(message = "Blocked property cannot be null")
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @Column(name = "blocked", nullable = false)
     private boolean blocked = false;
 
-    @NotNull(message = "Removed property cannot be null")
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @Column(name = "removed", nullable = false)
     private boolean removed = false;
 
@@ -114,6 +115,7 @@ public class UserAuth extends BaseEntity<Long> {
             }
         };
 
+        public static final String TYPE_DEFINITION = "ENUM ('MANAGER', 'DIRECTOR', 'ADMIN')";
         public abstract String toString();
     }
 }

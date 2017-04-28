@@ -1,35 +1,28 @@
 package by.bsuir.mpp.computershop.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import javax.persistence.*;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NEGATIVE_MESSAGE;
+import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
 
 @Entity
 @Table(name = "component_store")
 public class ComponentStore extends BaseEntity<Long> {
-
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @ManyToOne
     @JoinColumn(name = "model_id", nullable = false)
     private ComponentModel model;
 
-    @Min(value = 0, message = "Price cannot be negative")
-    @Column(name = "price", nullable = false)
+    @Min(value = 0, message = CANNOT_BE_NEGATIVE_MESSAGE)
+    @Column(name = "price")
     private int price;
 
-    @Min(value = 0, message = "Count cannot be negative")
-    @Column(name = "count", nullable = false)
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
+    @Min(value = 0, message = CANNOT_BE_NEGATIVE_MESSAGE)
+    @Column(name = "count")
     private int count;
-
-    @JsonProperty(value = "modelId")
-    public Long getModelId() {
-        return this.model.getId();
-    }
-
-    @JsonProperty(value = "modelId")
-    public void setModelId(Long id) {
-        this.model.setId(id);
-    }
 
     public ComponentModel getModel() {
         return this.model;

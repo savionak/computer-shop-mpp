@@ -7,23 +7,25 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.List;
 
+import static by.bsuir.mpp.computershop.utils.ValidationConstants.*;
+
 @Entity
 @Table(name = "component_model")
 public class ComponentModel extends BaseEntity<Long> {
-
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @ManyToOne
     @JoinColumn(name = "type_id", unique = true, nullable = false)
     private ComponentType type;
 
-    @NotNull(message = "Name cannot be null")
-    @Pattern(regexp = "^(?!\\s*$).+", message = "Model name cannot be empty")
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
+    @Pattern(regexp = NON_EMPTY_STRING_REGEX, message = CANNOT_BE_EMPTY_MESSAGE)
     @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "description", columnDefinition = "text")
     private String description;
 
-    @NotNull(message = "Removed property cannot be null")
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @Column(name = "removed", nullable = false)
     private boolean removed;
 
