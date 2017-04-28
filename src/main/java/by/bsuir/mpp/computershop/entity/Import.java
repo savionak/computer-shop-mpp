@@ -1,5 +1,7 @@
 package by.bsuir.mpp.computershop.entity;
 
+import org.hibernate.annotations.DynamicInsert;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -10,6 +12,7 @@ import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL
 
 @Entity
 @Table(name = "import")
+@DynamicInsert
 public class Import extends BaseEntity<Long> {
     @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @ManyToOne

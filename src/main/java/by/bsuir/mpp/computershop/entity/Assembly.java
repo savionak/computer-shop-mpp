@@ -2,6 +2,7 @@ package by.bsuir.mpp.computershop.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -11,6 +12,7 @@ import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NEGA
 
 @Entity
 @Table(name = "assembly")
+@DynamicInsert
 public class Assembly extends BaseEntity<Long> {
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)

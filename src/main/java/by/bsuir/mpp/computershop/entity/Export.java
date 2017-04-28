@@ -1,12 +1,14 @@
 package by.bsuir.mpp.computershop.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
 @Table(name = "export")
+@DynamicInsert
 public class Export extends BaseEntity<Long> {
     @JsonIgnore
     @ManyToOne

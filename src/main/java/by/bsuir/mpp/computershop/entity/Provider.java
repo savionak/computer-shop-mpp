@@ -1,6 +1,7 @@
 package by.bsuir.mpp.computershop.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,6 +12,7 @@ import static by.bsuir.mpp.computershop.utils.ValidationConstants.*;
 
 @Entity
 @Table(name = "provider")
+@DynamicInsert
 public class Provider extends BaseEntity<Long> {
     @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @Pattern(regexp = NON_EMPTY_STRING_REGEX, message = CANNOT_BE_EMPTY_MESSAGE)

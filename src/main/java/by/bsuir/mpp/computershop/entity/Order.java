@@ -1,6 +1,7 @@
 package by.bsuir.mpp.computershop.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,6 +12,7 @@ import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL
 
 @Entity
 @Table(name = "`order`")
+@DynamicInsert
 public class Order extends BaseEntity<Long> {
     @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @ManyToOne
