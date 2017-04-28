@@ -1,4 +1,4 @@
-package by.bsuir.mpp.computershop.config.security.UserDetails;
+package by.bsuir.mpp.computershop.config.security.userdetails;
 
 import by.bsuir.mpp.computershop.entity.UserAuth;
 import org.springframework.security.core.GrantedAuthority;

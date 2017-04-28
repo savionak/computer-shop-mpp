@@ -1,4 +1,4 @@
-package by.bsuir.mpp.computershop.config.security.UserDetails;
+package by.bsuir.mpp.computershop.config.security.userdetails;
 
 import by.bsuir.mpp.computershop.entity.UserAuth;
 import by.bsuir.mpp.computershop.repository.UserAuthRepository;
@@ -23,18 +23,19 @@ public class UserAuthDetailsService implements org.springframework.security.core
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        logger.info("User with username = [" + username + "] is trying to log in");
+        logger.info("LOG IN TRY [" + username + "]");
         try {
             username = URLDecoder.decode(username, ENCODING);
         } catch (UnsupportedEncodingException e) {
-            logger.info("Unsupported encoding for username [" + username + "]");
+            logger.info("LOG IN ERROR [" + username + "]: unsupported encoding for username");
             throw new UsernameNotFoundException("Unsupported encoding");
         }
         UserAuth user = authRepository.findByEmail(username);
         if (user == null) {
-            logger.info("User [" + username + "] not found");
+            logger.info("LOG IN ERROR [" + username + "]: not found");
             throw new UsernameNotFoundException("User [" + username + "] not found");
         }
+        logger.info("LOG IN SUCCESS [" + username + "]");
         return new UserAuthDetails(user);
     }
 
