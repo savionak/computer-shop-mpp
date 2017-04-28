@@ -7,11 +7,12 @@ import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.List;
 
+import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
 
 @Entity
 @Table(name = "`order`")
 public class Order extends BaseEntity<Long> {
-
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
@@ -20,14 +21,14 @@ public class Order extends BaseEntity<Long> {
     @Column(name = "cost", nullable = false)
     private long cost;
 
-    @NotNull(message = "Cannot be null")
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @Column(name = "order_date", nullable = false)
     private Timestamp orderDate;
 
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @Enumerated(EnumType.STRING)
-    @NotNull(message = "Cannot be null")
     @Column(name = "status", nullable = false,
-            columnDefinition = "ENUM ('IN_PROGRESS', 'FINISHED')")
+            columnDefinition = Status.TYPE_DEFINITION)
     private Status status;
 
     @Column(name = "canceled", nullable = false)
@@ -117,6 +118,7 @@ public class Order extends BaseEntity<Long> {
             }
         };
 
+        public static final String TYPE_DEFINITION = "ENUM ('IN_PROGRESS', 'FINISHED')";
         public abstract String toString();
     }
 }

@@ -5,31 +5,37 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
+import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NEGATIVE_MESSAGE;
+import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
+
 @Entity
 @Table(name = "import")
 public class Import extends BaseEntity<Long> {
-
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @ManyToOne
     @JoinColumn(name = "provider_id", nullable = false)
     private Provider provider;
 
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @ManyToOne
     @JoinColumn(name = "model_id", nullable = false)
     private ComponentModel model;
 
-    @NotNull(message = "Cannot be null")
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @Column(name = "import_date", nullable = false)
     private Timestamp importDate;
 
-    @NotNull(message = "Cannot be null")
-    @Min(value = 0, message = "Count cannot be negative")
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
+    @Min(value = 0, message = CANNOT_BE_NEGATIVE_MESSAGE)
     @Column(name = "count", nullable = false)
     private long count;
 
-    @NotNull(message = "Cannot be null")
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
+    @Min(value = 0, message = CANNOT_BE_NEGATIVE_MESSAGE)
     @Column(name = "purchase_price", nullable = false)
     private long purchasePrice;
 
+    @Min(value = 0, message = CANNOT_BE_NEGATIVE_MESSAGE)
     @Column(name = "price")
     private long price;
 
@@ -79,20 +85,5 @@ public class Import extends BaseEntity<Long> {
 
     public void setPrice(long price) {
         this.price = price;
-    }
-
-    public enum ImportStatus {
-        REGISTERED {
-            public String toString() {
-                return "Зарегистрирован";
-            }
-        },
-        FINISHED {
-            public String toString() {
-                return "Принят";
-            }
-        };
-
-        public abstract String toString();
     }
 }
