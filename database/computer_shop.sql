@@ -521,6 +521,11 @@ CREATE PROCEDURE add_store_record(
 BEGIN
 	DECLARE target_id BIGINT UNSIGNED DEFAULT NULL;
 	
+    IF (s_price = 0)
+    THEN
+		SET s_price = NULL;
+    END IF;
+    
 	SELECT `id`
     INTO target_id
     FROM `component_store`
@@ -607,6 +612,25 @@ BEGIN
     UPDATE `order`
 	SET `cost` = `cost` - (OLD.`count` * OLD.`cost`) + (NEW.`count` * NEW.`cost`)
 	WHERE `id` = NEW.`order_id`;  
+END$$
+
+USE `computer_shop`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`component_store_BEFORE_INSERT` BEFORE INSERT ON `component_store` FOR EACH ROW
+BEGIN
+	IF (NEW.`price` = 0)
+    THEN
+		SET NEW.`price` = NULL;
+    END IF;
+END$$
+
+USE `computer_shop`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`component_store_BEFORE_UPDATE` BEFORE UPDATE ON `component_store` FOR EACH ROW
+BEGIN
+	IF (NEW.`price` != OLD.`price`)
+    THEN
+		SIGNAL SQLSTATE '45000'
+			SET MESSAGE_TEXT = 'FORBIDDEN: Explicit change store price => Use update_store_price instead.';
+    END IF;
 END$$
 
 USE `computer_shop`$$
