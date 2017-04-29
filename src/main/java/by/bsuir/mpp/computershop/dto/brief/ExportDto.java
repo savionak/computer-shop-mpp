@@ -1,8 +1,8 @@
-package by.bsuir.mpp.computershop.dto;
+package by.bsuir.mpp.computershop.dto.brief;
 
 import java.sql.Timestamp;
 
-public class ExportDto extends BaseDto {
+public class ExportDto extends BaseBriefDto {
     private Long orderId;
 
     private Timestamp exportDate;

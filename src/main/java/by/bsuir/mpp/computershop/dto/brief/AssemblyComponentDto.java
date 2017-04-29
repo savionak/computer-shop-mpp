@@ -1,6 +1,6 @@
-package by.bsuir.mpp.computershop.dto;
+package by.bsuir.mpp.computershop.dto.brief;
 
-public class AssemblyComponentDto {
+public class AssemblyComponentDto extends BaseBriefDto {
     private Long assemblyId;
 
     private Long componentId;

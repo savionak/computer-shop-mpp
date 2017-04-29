@@ -2,8 +2,8 @@ package by.bsuir.mpp.computershop.controller.impl;
 
 import by.bsuir.mpp.computershop.controller.ComponentModelController;
 import by.bsuir.mpp.computershop.controller.exception.ControllerException;
-import by.bsuir.mpp.computershop.dto.ComponentModelDto;
-import by.bsuir.mpp.computershop.dto.ImportDto;
+import by.bsuir.mpp.computershop.dto.brief.ComponentModelDto;
+import by.bsuir.mpp.computershop.dto.brief.ImportDto;
 import by.bsuir.mpp.computershop.entity.ComponentModel;
 import by.bsuir.mpp.computershop.entity.ComponentStore;
 import by.bsuir.mpp.computershop.entity.Import;
@@ -24,8 +24,8 @@ public class ComponentModelControllerImpl extends AbstractCrudController<Compone
         implements ComponentModelController {
 
     private static final Logger logger = Logger.getLogger(ComponentModelControllerImpl.class);
-    private ComponentModelService service;
-    private MapperFacade mapper;
+    private final ComponentModelService service;
+    private final MapperFacade mapper;
 
     @Autowired
     public ComponentModelControllerImpl(ComponentModelService componentModelService, MapperFacade mapper) {

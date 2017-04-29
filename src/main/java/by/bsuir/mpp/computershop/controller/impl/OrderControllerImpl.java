@@ -1,7 +1,7 @@
 package by.bsuir.mpp.computershop.controller.impl;
 
 import by.bsuir.mpp.computershop.controller.OrderController;
-import by.bsuir.mpp.computershop.dto.OrderDto;
+import by.bsuir.mpp.computershop.dto.brief.OrderDto;
 import by.bsuir.mpp.computershop.entity.Order;
 import by.bsuir.mpp.computershop.service.OrderService;
 import ma.glasnost.orika.MapperFacade;

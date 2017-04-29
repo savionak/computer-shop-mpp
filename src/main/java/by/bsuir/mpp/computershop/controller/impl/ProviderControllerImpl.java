@@ -2,8 +2,8 @@ package by.bsuir.mpp.computershop.controller.impl;
 
 import by.bsuir.mpp.computershop.controller.ProviderController;
 import by.bsuir.mpp.computershop.controller.exception.ControllerException;
-import by.bsuir.mpp.computershop.dto.ImportDto;
-import by.bsuir.mpp.computershop.dto.ProviderDto;
+import by.bsuir.mpp.computershop.dto.brief.ImportDto;
+import by.bsuir.mpp.computershop.dto.brief.ProviderDto;
 import by.bsuir.mpp.computershop.entity.Provider;
 import by.bsuir.mpp.computershop.service.ProviderService;
 import ma.glasnost.orika.MapperFacade;
@@ -23,7 +23,7 @@ public class ProviderControllerImpl extends AbstractCrudController<Provider, Lon
 
     private static final Logger logger = Logger.getLogger(ProviderControllerImpl.class);
     private final ProviderService service;
-    private MapperFacade mapper;
+    private final MapperFacade mapper;
 
     @Autowired
     public ProviderControllerImpl(ProviderService providerService, MapperFacade mapper) {

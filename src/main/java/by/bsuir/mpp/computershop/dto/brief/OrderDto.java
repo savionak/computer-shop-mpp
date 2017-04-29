@@ -1,10 +1,10 @@
-package by.bsuir.mpp.computershop.dto;
+package by.bsuir.mpp.computershop.dto.brief;
 
 import by.bsuir.mpp.computershop.entity.Order.Status;
 
 import java.sql.Timestamp;
 
-public class OrderDto extends BaseDto {
+public class OrderDto extends BaseBriefDto {
     private CustomerDto customer;
 
     private Long cost;

@@ -1,8 +1,8 @@
-package by.bsuir.mpp.computershop.dto;
+package by.bsuir.mpp.computershop.dto.brief;
 
 import java.sql.Timestamp;
 
-public class ImportDto extends BaseDto {
+public class ImportDto extends BaseBriefDto {
     private ProviderDto provider;
 
     private ComponentModelDto model;

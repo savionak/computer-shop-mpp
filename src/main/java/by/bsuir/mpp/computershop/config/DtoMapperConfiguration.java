@@ -1,6 +1,6 @@
 package by.bsuir.mpp.computershop.config;
 
-import by.bsuir.mpp.computershop.dto.*;
+import by.bsuir.mpp.computershop.dto.brief.*;
 import by.bsuir.mpp.computershop.entity.*;
 import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.MapperFactory;
@@ -12,11 +12,6 @@ import org.springframework.context.annotation.Configuration;
 public class DtoMapperConfiguration {
 
     private static MapperFactory mapperFactory;
-
-    @Bean
-    public MapperFacade modelMapper() {
-        return mapperFactory.getMapperFacade();
-    }
 
     static {
         mapperFactory = new DefaultMapperFactory.Builder().build();
@@ -41,5 +36,10 @@ public class DtoMapperConfiguration {
                 .field("userAuth.id", "authId")
                 .byDefault()
                 .register();
+    }
+
+    @Bean
+    public MapperFacade modelMapper() {
+        return mapperFactory.getMapperFacade();
     }
 }

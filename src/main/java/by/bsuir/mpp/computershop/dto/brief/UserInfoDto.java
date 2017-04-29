@@ -1,6 +1,6 @@
-package by.bsuir.mpp.computershop.dto;
+package by.bsuir.mpp.computershop.dto.brief;
 
-public class UserInfoDto extends BaseDto {
+public class UserInfoDto extends BaseBriefDto {
     private String firstName;
 
     private String lastName;

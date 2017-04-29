@@ -1,10 +1,10 @@
-package by.bsuir.mpp.computershop.dto;
+package by.bsuir.mpp.computershop.dto.brief;
 
-public class ComponentTypeDto extends BaseDto {
+public class ComponentTypeDto extends BaseBriefDto {
     private String name;
-    
+
     private String description;
-    
+
     private Boolean removed;
 
     public String getName() {

@@ -1,6 +1,6 @@
-package by.bsuir.mpp.computershop.dto;
+package by.bsuir.mpp.computershop.dto.brief;
 
-public class ProviderDto extends BaseDto {
+public class ProviderDto extends BaseBriefDto {
     private String name;
 
     private String description;

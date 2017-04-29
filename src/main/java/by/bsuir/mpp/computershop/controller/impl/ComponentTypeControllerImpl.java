@@ -2,8 +2,8 @@ package by.bsuir.mpp.computershop.controller.impl;
 
 import by.bsuir.mpp.computershop.controller.ComponentTypeController;
 import by.bsuir.mpp.computershop.controller.exception.ControllerException;
-import by.bsuir.mpp.computershop.dto.ComponentModelDto;
-import by.bsuir.mpp.computershop.dto.ComponentTypeDto;
+import by.bsuir.mpp.computershop.dto.brief.ComponentModelDto;
+import by.bsuir.mpp.computershop.dto.brief.ComponentTypeDto;
 import by.bsuir.mpp.computershop.entity.ComponentType;
 import by.bsuir.mpp.computershop.service.ComponentTypeService;
 import ma.glasnost.orika.MapperFacade;
@@ -23,7 +23,7 @@ public class ComponentTypeControllerImpl extends AbstractCrudController<Componen
 
     private static final Logger logger = Logger.getLogger(ComponentTypeControllerImpl.class);
     private final ComponentTypeService service;
-    private MapperFacade mapper;
+    private final MapperFacade mapper;
 
     @Autowired
     public ComponentTypeControllerImpl(ComponentTypeService componentTypeService, MapperFacade mapper) {

@@ -3,6 +3,7 @@ package by.bsuir.mpp.computershop.controller.impl;
 import by.bsuir.mpp.computershop.controller.CrudController;
 import by.bsuir.mpp.computershop.controller.exception.ControllerException;
 import by.bsuir.mpp.computershop.dto.BaseDto;
+import by.bsuir.mpp.computershop.dto.brief.BaseBriefDto;
 import by.bsuir.mpp.computershop.entity.BaseEntity;
 import by.bsuir.mpp.computershop.service.CrudService;
 import ma.glasnost.orika.MapperFacade;
@@ -21,14 +22,17 @@ public abstract class AbstractCrudController<E extends BaseEntity<ID>, ID extend
         implements CrudController<E, ID> {
 
     private final CrudService<E, ID> service;
-    private MapperFacade mapper;
-    private Class<? extends BaseDto> dtoClass;
     private final Logger logger;
+    private final MapperFacade mapper;
+    private final Class<? extends BaseBriefDto> briefDtoClass;
 
-    AbstractCrudController(CrudService<E, ID> service, MapperFacade mapper, Class<? extends BaseDto> dtoClass, Logger logger) {
+    AbstractCrudController(CrudService<E, ID> service,
+                           MapperFacade mapper,
+                           Class<? extends BaseBriefDto> briefDtoClass,
+                           Logger logger) {
         this.service = service;
         this.mapper = mapper;
-        this.dtoClass = dtoClass;
+        this.briefDtoClass = briefDtoClass;
         this.logger = logger;
     }
 
@@ -55,7 +59,7 @@ public abstract class AbstractCrudController<E extends BaseEntity<ID>, ID extend
         logger.info("GET ALL entities.");
         Iterable<E> all = wrapServiceCall(service::getAll, logger);
         return StreamSupport.stream(all.spliterator(), false)
-                .map(i -> mapper.map(i, dtoClass))
+                .map(i -> mapper.map(i, briefDtoClass))
                 .collect(Collectors.toList());
     }
 

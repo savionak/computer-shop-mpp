@@ -1,8 +1,8 @@
-package by.bsuir.mpp.computershop.dto;
+package by.bsuir.mpp.computershop.dto.brief;
 
 import by.bsuir.mpp.computershop.entity.UserAuth.Role;
 
-public class UserAuthDto extends BaseDto {
+public class UserAuthDto extends BaseBriefDto {
     private String email;
 
     private String passHash;
