@@ -18,6 +18,9 @@ public class Export extends BaseEntity<Long> {
     @Column(name = "export_date", nullable = false)
     private Timestamp exportDate;
 
+    @Column(name = "address", nullable = false)
+    private String address;
+
     public Order getOrder() {
         return this.order;
     }
@@ -32,5 +35,13 @@ public class Export extends BaseEntity<Long> {
 
     public void setExportDate(Timestamp expDate) {
         this.exportDate = expDate;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

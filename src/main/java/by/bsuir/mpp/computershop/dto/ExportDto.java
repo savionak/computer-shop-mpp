@@ -7,6 +7,8 @@ public class ExportDto extends BaseDto {
 
     private Timestamp exportDate;
 
+    private String address;
+
     public Long getOrderId() {
         return orderId;
     }
@@ -21,5 +23,13 @@ public class ExportDto extends BaseDto {
 
     public void setExportDate(Timestamp exportDate) {
         this.exportDate = exportDate;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

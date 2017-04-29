@@ -220,6 +220,7 @@ CREATE TABLE IF NOT EXISTS `computer_shop`.`export` (
   `id` BIGINT NOT NULL,
   `order_id` BIGINT UNSIGNED NOT NULL,
   `export_date` DATETIME NOT NULL DEFAULT NOW(),
+  `address` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `FK_export_order`
     FOREIGN KEY (`order_id`)
@@ -230,6 +231,8 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 CREATE INDEX `FK_export_order` ON `computer_shop`.`export` (`order_id` ASC);
+
+CREATE UNIQUE INDEX `order_id_UNIQUE` ON `computer_shop`.`export` (`order_id` ASC);
 
 
 -- -----------------------------------------------------
