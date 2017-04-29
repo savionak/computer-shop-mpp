@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 
 import {ProviderModel} from "./provider-model";
 import {ProviderService} from "./provider.service";
@@ -10,7 +10,7 @@ import {ProviderService} from "./provider.service";
         ProviderService
     ]
 })
-export class ProviderListComponent {
+export class ProviderListComponent implements OnInit {
     providerList: ProviderModel[];
     error: string;
     newProvider: ProviderModel = ProviderModel.empty();

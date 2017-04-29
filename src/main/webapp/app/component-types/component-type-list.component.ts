@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 
 import {ComponentTypeModel} from "./component-type-model";
 import {ComponentTypeService} from "./component-type.service";
@@ -10,7 +10,7 @@ import {ComponentTypeService} from "./component-type.service";
         ComponentTypeService
     ]
 })
-export class ComponentTypesListComponent {
+export class ComponentTypesListComponent implements OnInit {
     componentTypesList: ComponentTypeModel[];
     error: string;
     newType: ComponentTypeModel = ComponentTypeModel.empty();
