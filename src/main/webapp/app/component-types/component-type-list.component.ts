@@ -49,13 +49,13 @@ export class ComponentTypesListComponent implements OnInit {
         this.componentTypeService.add(this.newType)
             .subscribe(
                 (res) => {
-                    this.getList()
+                    this.getList();
+                    this.newType = ComponentTypeModel.empty();
                 },
                 (error) => {
                     this.error = error
                 }
             );
-        this.newType = ComponentTypeModel.empty();
     }
 
     onDelete(type: ComponentTypeModel): void {

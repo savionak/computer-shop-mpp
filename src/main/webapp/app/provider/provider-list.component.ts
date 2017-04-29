@@ -49,13 +49,13 @@ export class ProviderListComponent implements OnInit {
         this.providerService.add(this.newProvider)
             .subscribe(
                 (res) => {
-                    this.getList()
+                    this.getList();
+                    this.newProvider = ProviderModel.empty();
                 },
                 (error) => {
                     this.error = error
                 }
             );
-        this.newProvider = ProviderModel.empty();
     }
 
     onDelete(provider: ProviderModel): void {
