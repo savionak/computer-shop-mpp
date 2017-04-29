@@ -4,6 +4,7 @@ import by.bsuir.mpp.computershop.controller.CrudController;
 import by.bsuir.mpp.computershop.controller.exception.ControllerException;
 import by.bsuir.mpp.computershop.dto.BaseDto;
 import by.bsuir.mpp.computershop.dto.brief.BaseBriefDto;
+import by.bsuir.mpp.computershop.dto.full.BaseFullDto;
 import by.bsuir.mpp.computershop.entity.BaseEntity;
 import by.bsuir.mpp.computershop.service.CrudService;
 import ma.glasnost.orika.MapperFacade;
@@ -25,33 +26,44 @@ public abstract class AbstractCrudController<E extends BaseEntity<ID>, ID extend
     private final Logger logger;
     private final MapperFacade mapper;
     private final Class<? extends BaseBriefDto> briefDtoClass;
+    private final Class<? extends BaseFullDto> fullDtoClass;
+    private Class<E> entityClass;
 
     AbstractCrudController(CrudService<E, ID> service,
                            MapperFacade mapper,
                            Class<? extends BaseBriefDto> briefDtoClass,
+                           Class<? extends BaseFullDto> fullDtoClass,
+                           Class<E> entityClass,
                            Logger logger) {
         this.service = service;
         this.mapper = mapper;
         this.briefDtoClass = briefDtoClass;
+        this.fullDtoClass = fullDtoClass;
+        this.entityClass = entityClass;
         this.logger = logger;
     }
 
     @Override
-    public E add(@Valid @RequestBody E entity) throws ControllerException {
-        logger.info(String.format("ADD new %s entity", entity.getClass()));
-        return wrapServiceCall(() -> service.add(entity), logger);
+    public BaseDto add(@Valid @RequestBody BaseDto dto) throws ControllerException {
+        logger.info(String.format("ADD new %s entity", dto.getClass()));
+        E entity = mapper.map(dto, entityClass);
+        E resultEntity = wrapServiceCall(() -> service.add(entity), logger);
+        return mapper.map(resultEntity, fullDtoClass);
     }
 
     @Override
-    public E update(@Valid @RequestBody E entity) throws ControllerException {
-        logger.info(String.format("UPDATE entity with id = [%s]", entity.getId()));
-        return wrapServiceCall(() -> service.update(entity), logger);
+    public BaseDto update(@Valid @RequestBody BaseDto dto) throws ControllerException {
+        logger.info(String.format("UPDATE entity with id = [%s]", dto.getId()));
+        E entity = mapper.map(dto, entityClass);
+        E resultEntity = wrapServiceCall(() -> service.update(entity), logger);
+        return mapper.map(resultEntity, fullDtoClass);
     }
 
     @Override
-    public E getById(@PathVariable ID id) throws ControllerException {
+    public BaseDto getById(@PathVariable ID id) throws ControllerException {
         logger.info(String.format("GET entity with id = [%s]", id.toString()));
-        return wrapServiceCall(() -> service.getOne(id), logger);
+        E resultEntity = wrapServiceCall(() -> service.getOne(id), logger);
+        return mapper.map(resultEntity, fullDtoClass);
     }
 
     @Override

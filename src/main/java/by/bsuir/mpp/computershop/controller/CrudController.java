@@ -14,13 +14,13 @@ import java.io.Serializable;
 public interface CrudController<E extends BaseEntity<ID>, ID extends Serializable> {
 
     @RequestMapping(path = "add", method = RequestMethod.POST)
-    E add(@Valid @RequestBody E entity) throws ControllerException;
+    BaseDto add(@Valid @RequestBody BaseDto dto) throws ControllerException;
 
     @RequestMapping(path = "update", method = RequestMethod.PUT)
-    E update(@Valid @RequestBody E entity) throws ControllerException;
+    BaseDto update(@Valid @RequestBody BaseDto entity) throws ControllerException;
 
     @RequestMapping(path = "{id}", method = RequestMethod.GET)
-    E getById(@PathVariable ID id) throws ControllerException;
+    BaseDto getById(@PathVariable ID id) throws ControllerException;
 
     @RequestMapping(method = RequestMethod.GET)
     Iterable<BaseDto> getAll() throws ControllerException;
