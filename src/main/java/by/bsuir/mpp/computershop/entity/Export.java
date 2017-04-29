@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 @DynamicInsert
 public class Export extends BaseEntity<Long> {
     @JsonIgnore
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 

@@ -35,8 +35,8 @@ public class Order extends BaseEntity<Long> {
     @Column(name = "canceled", nullable = false)
     private Boolean canceled = false;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
-    private List<Export> exports;
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "order")
+    private Export export;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.REMOVE)
     private List<Assembly> assemblies;
@@ -81,20 +81,20 @@ public class Order extends BaseEntity<Long> {
         this.canceled = canceled;
     }
 
-    public List<Export> getExports() {
-        return exports;
-    }
-
-    public void setExports(List<Export> exports) {
-        this.exports = exports;
-    }
-
     public List<Assembly> getAssemblies() {
         return assemblies;
     }
 
     public void setAssemblies(List<Assembly> assemblyParcels) {
         this.assemblies = assemblyParcels;
+    }
+
+    public Export getExport() {
+        return export;
+    }
+
+    public void setExport(Export export) {
+        this.export = export;
     }
 
     public enum Status {
