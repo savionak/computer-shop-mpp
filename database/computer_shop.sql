@@ -263,6 +263,7 @@ CREATE TABLE IF NOT EXISTS `computer_shop`.`import` (
   `count` INT UNSIGNED NOT NULL,
   `purchase_price` INT UNSIGNED NOT NULL,
   `price` INT UNSIGNED NULL,
+  `store_id` BIGINT UNSIGNED NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   CONSTRAINT `FK_import_component_model`
     FOREIGN KEY (`model_id`)
@@ -273,13 +274,20 @@ CREATE TABLE IF NOT EXISTS `computer_shop`.`import` (
     FOREIGN KEY (`provider_id`)
     REFERENCES `computer_shop`.`provider` (`id`)
     ON DELETE RESTRICT
-    ON UPDATE RESTRICT)
+    ON UPDATE RESTRICT,
+  CONSTRAINT `fk_import_component_store1`
+    FOREIGN KEY (`store_id`)
+    REFERENCES `computer_shop`.`component_store` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 CREATE INDEX `FK_import_provider` ON `computer_shop`.`import` (`provider_id` ASC);
 
 CREATE INDEX `FK_import_component_model` ON `computer_shop`.`import` (`model_id` ASC);
+
+CREATE INDEX `fk_import_component_store1_idx` ON `computer_shop`.`import` (`store_id` ASC);
 
 
 -- -----------------------------------------------------
@@ -518,11 +526,10 @@ USE `computer_shop`$$
 CREATE PROCEDURE add_store_record(
 	IN s_model_id BIGINT UNSIGNED,
     IN s_price INT UNSIGNED,
-    IN s_count INT UNSIGNED
+    IN s_count INT UNSIGNED,
+    OUT target_id BIGINT UNSIGNED
 )
 BEGIN
-	DECLARE target_id BIGINT UNSIGNED DEFAULT NULL;
-	
     IF (s_price = 0)
     THEN
 		SET s_price = NULL;
@@ -540,6 +547,8 @@ BEGIN
         (`model_id`, `price`, `count`)
         VALUE
         (s_model_id, s_price, s_count);
+        
+        SET target_id = LAST_INSERT_ID();
     ELSE
 		UPDATE `component_store`
         SET `count` = `count` + s_count
@@ -845,15 +854,15 @@ BEGIN
 END$$
 
 USE `computer_shop`$$
-CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`import_AFTER_INSERT`
-AFTER INSERT ON `computer_shop`.`import`
+CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`import_BEFORE_INSERT`
+BEFORE INSERT ON `import`
 FOR EACH ROW
 BEGIN
 	UPDATE `provider`
     SET `imports_count` = `imports_count` + 1
     WHERE `id` = NEW.`provider_id`;
     
-	CALL add_store_record(NEW.`model_id`, NEW.`price`, NEW.`count`);
+	CALL add_store_record(NEW.`model_id`, NEW.`price`, NEW.`count`, NEW.`store_id`);
 END$$
 
 USE `computer_shop`$$

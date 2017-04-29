@@ -1,5 +1,7 @@
 package by.bsuir.mpp.computershop.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
@@ -40,6 +42,16 @@ public class Import extends BaseEntity<Long> {
     @Min(value = 0, message = CANNOT_BE_NEGATIVE_MESSAGE)
     @Column(name = "price")
     private Long price;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "store_id", nullable = false)
+    private ComponentStore stored;
+
+    @JsonProperty("storedCount")
+    public Long getStoredCount() {
+        return stored.getCount();
+    }
 
     public Provider getProvider() {
         return this.provider;
@@ -87,5 +99,13 @@ public class Import extends BaseEntity<Long> {
 
     public void setPrice(Long price) {
         this.price = price;
+    }
+
+    public ComponentStore getStored() {
+        return stored;
+    }
+
+    public void setStored(ComponentStore stored) {
+        this.stored = stored;
     }
 }

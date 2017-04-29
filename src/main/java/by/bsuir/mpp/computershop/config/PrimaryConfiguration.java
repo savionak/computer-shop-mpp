@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
         ServiceConfiguration.class,
         ControllerConfiguration.class,
         SecurityConfiguration.class,
-        ModelMapperConfiguration.class
+        DtoMapperConfiguration.class
 })
 @EnableAutoConfiguration(exclude = {
         org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration.class,

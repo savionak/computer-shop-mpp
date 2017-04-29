@@ -15,6 +15,8 @@ public class ImportDto extends BaseDto {
 
     private Long price;
 
+    private Long storedCount;
+
     public ProviderDto getProvider() {
         return provider;
     }
@@ -61,5 +63,13 @@ public class ImportDto extends BaseDto {
 
     public void setPrice(Long price) {
         this.price = price;
+    }
+
+    public Long getStoredCount() {
+        return storedCount;
+    }
+
+    public void setStoredCount(Long storedCount) {
+        this.storedCount = storedCount;
     }
 }

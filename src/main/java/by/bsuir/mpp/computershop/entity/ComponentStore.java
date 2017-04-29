@@ -1,10 +1,12 @@
 package by.bsuir.mpp.computershop.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NEGATIVE_MESSAGE;
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
@@ -26,6 +28,10 @@ public class ComponentStore extends BaseEntity<Long> {
     @Min(value = 0, message = CANNOT_BE_NEGATIVE_MESSAGE)
     @Column(name = "count")
     private Long count;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "stored")
+    private List<Import> imports;
 
     public ComponentModel getModel() {
         return this.model;
@@ -49,5 +55,13 @@ public class ComponentStore extends BaseEntity<Long> {
 
     public void setCount(Long count) {
         this.count = count;
+    }
+
+    public List<Import> getImports() {
+        return imports;
+    }
+
+    public void setImports(List<Import> imports) {
+        this.imports = imports;
     }
 }
