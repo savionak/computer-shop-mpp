@@ -1,11 +1,10 @@
 package by.bsuir.mpp.computershop.dto.brief;
 
-public class ProviderDto extends BaseBriefDto {
+public class ProviderBriefDto extends BaseBriefDto {
+
     private String name;
 
     private String description;
-
-    private Boolean removed;
 
     private Integer importsCount;
 
@@ -23,14 +22,6 @@ public class ProviderDto extends BaseBriefDto {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Boolean isRemoved() {
-        return removed;
-    }
-
-    public void setRemoved(Boolean removed) {
-        this.removed = removed;
     }
 
     public Integer getImportsCount() {
