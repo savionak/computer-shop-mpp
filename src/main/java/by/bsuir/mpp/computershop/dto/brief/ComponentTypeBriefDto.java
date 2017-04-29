@@ -1,11 +1,10 @@
 package by.bsuir.mpp.computershop.dto.brief;
 
-public class ComponentTypeDto extends BaseBriefDto {
+public class ComponentTypeBriefDto extends BaseBriefDto {
+
     private String name;
 
     private String description;
-
-    private Boolean removed;
 
     public String getName() {
         return this.name;
@@ -21,13 +20,5 @@ public class ComponentTypeDto extends BaseBriefDto {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Boolean isRemoved() {
-        return removed;
-    }
-
-    public void setRemoved(Boolean removed) {
-        this.removed = removed;
     }
 }
