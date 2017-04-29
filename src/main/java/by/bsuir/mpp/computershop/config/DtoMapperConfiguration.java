@@ -1,9 +1,6 @@
 package by.bsuir.mpp.computershop.config;
 
-import by.bsuir.mpp.computershop.dto.brief.ComponentModelDto;
-import by.bsuir.mpp.computershop.dto.brief.ComponentStoreDto;
-import by.bsuir.mpp.computershop.dto.brief.ExportDto;
-import by.bsuir.mpp.computershop.dto.brief.UserBriefDto;
+import by.bsuir.mpp.computershop.dto.brief.*;
 import by.bsuir.mpp.computershop.dto.full.UserAuthFullDto;
 import by.bsuir.mpp.computershop.entity.*;
 import ma.glasnost.orika.CustomConverter;
@@ -33,8 +30,10 @@ public class DtoMapperConfiguration {
                 .field("model.id", "modelId")
                 .byDefault()
                 .register();
-        mapperFactory.classMap(Import.class, ImportDto.class)
-                .field("stored.count", "storedCount")
+        mapperFactory.classMap(Import.class, ImportBriefDto.class)
+                .field("model.type.name", "typeName")
+                .field("model.name", "modelName")
+                .field("provider.name", "providerName")
                 .byDefault()
                 .register();
         mapperFactory.classMap(Export.class, ExportDto.class)
