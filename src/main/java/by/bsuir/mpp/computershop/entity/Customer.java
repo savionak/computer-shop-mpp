@@ -28,6 +28,9 @@ public class Customer extends BaseEntity<Long> {
     @Column(name = "removed", nullable = false)
     private Boolean removed;
 
+    @Column(name = "orders_count", nullable = false)
+    private Integer ordersCount;
+
     @JsonIgnore
     @OneToMany(mappedBy = "customer")
     private List<Order> orders;
@@ -54,6 +57,14 @@ public class Customer extends BaseEntity<Long> {
 
     public void setRemoved(Boolean removed) {
         this.removed = removed;
+    }
+
+    public Integer getOrdersCount() {
+        return ordersCount;
+    }
+
+    public void setOrdersCount(Integer ordersCount) {
+        this.ordersCount = ordersCount;
     }
 
     public List<Order> getOrders() {

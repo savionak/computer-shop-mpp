@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS `computer_shop`.`customer` (
   `name` VARCHAR(255) NOT NULL,
   `description` TEXT NULL DEFAULT NULL,
   `removed` TINYINT(1) NOT NULL DEFAULT 0,
+  `orders_count` INT UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -560,6 +561,18 @@ BEGIN
 		SIGNAL SQLSTATE '45000'
 			SET MESSAGE_TEXT = 'FORBIDDEN: Insert canceled order.';
     END IF;
+    
+    UPDATE `customer`
+    SET `orders_count` = `orders_count` + 1
+    WHERE `id` = NEW.`customer_id`;
+END$$
+
+USE `computer_shop`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`order_BEFORE_DELETE` BEFORE DELETE ON `order` FOR EACH ROW
+BEGIN
+	UPDATE `customer`
+    SET `orders_count` = `orders_count` - 1
+    WHERE `id` = OLD.`customer_id`;
 END$$
 
 USE `computer_shop`$$
