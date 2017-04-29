@@ -243,6 +243,7 @@ CREATE TABLE IF NOT EXISTS `computer_shop`.`provider` (
   `name` VARCHAR(255) NOT NULL,
   `description` TEXT NULL DEFAULT NULL,
   `removed` TINYINT(1) NOT NULL DEFAULT 0,
+  `imports_count` INT UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -835,6 +836,10 @@ CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`import_AFTER_INSERT`
 AFTER INSERT ON `computer_shop`.`import`
 FOR EACH ROW
 BEGIN
+	UPDATE `provider`
+    SET `imports_count` = `imports_count` + 1
+    WHERE `id` = NEW.`provider_id`;
+    
 	CALL add_store_record(NEW.`model_id`, NEW.`price`, NEW.`count`);
 END$$
 
@@ -912,6 +917,10 @@ BEGIN
 		SIGNAL SQLSTATE '45000'
 			SET MESSAGE_TEXT = 'Cannot delete import: components are already in use.';
 	END IF;
+    
+	UPDATE `provider`
+    SET `imports_count` = `imports_count` - 1
+    WHERE `id` = OLD.`provider_id`;
 END$$
 
 

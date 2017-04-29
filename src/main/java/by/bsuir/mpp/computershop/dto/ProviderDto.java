@@ -7,6 +7,8 @@ public class ProviderDto extends BaseDto {
 
     private Boolean removed;
 
+    private Integer importsCount;
+
     public String getName() {
         return this.name;
     }
@@ -29,5 +31,13 @@ public class ProviderDto extends BaseDto {
 
     public void setRemoved(Boolean removed) {
         this.removed = removed;
+    }
+
+    public Integer getImportsCount() {
+        return importsCount;
+    }
+
+    public void setImportsCount(Integer importsCount) {
+        this.importsCount = importsCount;
     }
 }

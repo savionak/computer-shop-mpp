@@ -1,6 +1,7 @@
 package by.bsuir.mpp.computershop.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
@@ -25,6 +26,10 @@ public class Provider extends BaseEntity<Long> {
     @Column(name = "removed", nullable = false)
     private Boolean removed;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @Column(name = "imports_count", nullable = false)
+    private Integer importsCount;
+
     @JsonIgnore
     @OneToMany(mappedBy = "provider", cascade = CascadeType.ALL)
     private List<Import> imports;
@@ -45,19 +50,27 @@ public class Provider extends BaseEntity<Long> {
         this.description = description;
     }
 
-    public List<Import> getImports() {
-        return imports;
-    }
-
-    public void setImports(List<Import> imports) {
-        this.imports = imports;
-    }
-
     public Boolean isRemoved() {
         return removed;
     }
 
     public void setRemoved(Boolean removed) {
         this.removed = removed;
+    }
+
+    public Integer getImportsCount() {
+        return importsCount;
+    }
+
+    public void setImportsCount(Integer importsCount) {
+        this.importsCount = importsCount;
+    }
+
+    public List<Import> getImports() {
+        return imports;
+    }
+
+    public void setImports(List<Import> imports) {
+        this.imports = imports;
     }
 }
