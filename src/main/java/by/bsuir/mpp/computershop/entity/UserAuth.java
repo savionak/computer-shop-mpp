@@ -1,28 +1,21 @@
 package by.bsuir.mpp.computershop.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-
-import static by.bsuir.mpp.computershop.utils.ValidationConstants.*;
 
 @Entity
 @Table(name = "user_auth")
 @DynamicInsert
+@DynamicUpdate
 public class UserAuth extends BaseEntity<Long> {
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
-    @Pattern(regexp = EMAIL_REGEX, message = INVALID_VALUE_MESSAGE)
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @JsonIgnore
     @Column(name = "pass_hash", nullable = false)
     private String passHash;
 
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false,
             columnDefinition = Role.TYPE_DEFINITION)
@@ -34,7 +27,8 @@ public class UserAuth extends BaseEntity<Long> {
     @Column(name = "removed", nullable = false)
     private Boolean removed = false;
 
-    @OneToOne(mappedBy = "userAuth", fetch = FetchType.LAZY)
+    // TODO: Check cascadeType
+    @OneToOne(mappedBy = "userAuth", optional = false, cascade = CascadeType.MERGE)
     private UserInfo userInfo;
 
     public UserAuth() {

@@ -1,15 +1,25 @@
-package by.bsuir.mpp.computershop.dto.brief;
+package by.bsuir.mpp.computershop.dto.full;
 
-public class UserInfoDto extends BaseBriefDto {
+import by.bsuir.mpp.computershop.dto.brief.BaseBriefDto;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+import static by.bsuir.mpp.computershop.utils.ValidationConstants.*;
+
+public class UserInfoFullDto extends BaseBriefDto {
+
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
+    @Pattern(regexp = NON_EMPTY_STRING_REGEX, message = CANNOT_BE_EMPTY_MESSAGE)
     private String firstName;
 
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
+    @Pattern(regexp = NON_EMPTY_STRING_REGEX, message = CANNOT_BE_EMPTY_MESSAGE)
     private String lastName;
 
     private String patronymic;
 
     private String phone;
-
-    private Long authId;
 
     public String getFirstName() {
         return this.firstName;
@@ -41,13 +51,5 @@ public class UserInfoDto extends BaseBriefDto {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public Long getAuthId() {
-        return authId;
-    }
-
-    public void setAuthId(Long authId) {
-        this.authId = authId;
     }
 }
