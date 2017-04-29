@@ -12,7 +12,7 @@ import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL
 
 @Entity
 @Table(name = "assembly_component")
-public class AssemblyComponent implements Serializable {
+public class AssemblyComponent extends BaseEntity<Long> implements Serializable {
     @JsonIgnore
     @Id
     @ManyToOne

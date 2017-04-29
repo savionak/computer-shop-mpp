@@ -26,6 +26,7 @@ public class Order extends BaseEntity<Long> {
     @Column(name = "order_date", nullable = false)
     private Timestamp orderDate;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false,
             columnDefinition = Status.TYPE_DEFINITION)
@@ -37,7 +38,7 @@ public class Order extends BaseEntity<Long> {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
     private List<Export> exports;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.REMOVE)
     private List<Assembly> assemblies;
 
     public Customer getCustomer() {
@@ -99,26 +100,21 @@ public class Order extends BaseEntity<Long> {
     public enum Status {
         IN_PROGRESS {
             public String toString() {
-                return "собирается";
+                return "В процессе составления";
             }
         },
         READY {
             public String toString() {
-                return "готов  сборке";
+                return "Принят";
             }
         },
         FINISHED {
             public String toString() {
-                return "завершен";
-            }
-        },
-        CANCELLED {
-            public String toString() {
-                return "отменен";
+                return "Завершен";
             }
         };
 
-        public static final String TYPE_DEFINITION = "ENUM ('IN_PROGRESS', 'FINISHED')";
+        public static final String TYPE_DEFINITION = "ENUM ('IN_PROGRESS', 'READY', 'FINISHED')";
 
         public abstract String toString();
     }

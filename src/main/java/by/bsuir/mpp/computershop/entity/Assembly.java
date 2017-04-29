@@ -27,7 +27,7 @@ public class Assembly extends BaseEntity<Long> {
     @Column(name = "count", nullable = false)
     private Long count;
 
-    @OneToMany(mappedBy = "assembly", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "assembly", cascade = CascadeType.REMOVE)
     private List<AssemblyComponent> components;
 
     public Order getOrder() {

@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `computer_shop`.`order` (
   `customer_id` BIGINT UNSIGNED NOT NULL,
   `cost` INT UNSIGNED NOT NULL DEFAULT 0,
   `order_date` DATETIME NOT NULL DEFAULT NOW(),
-  `status` ENUM('IN_PROGRESS', 'FINISHED') NOT NULL DEFAULT 'IN_PROGRESS',
+  `status` ENUM('IN_PROGRESS', 'READY', 'FINISHED') NOT NULL DEFAULT 'IN_PROGRESS',
   `canceled` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   CONSTRAINT `FK_order_customer`
@@ -135,10 +135,11 @@ CREATE UNIQUE INDEX `UQ_price_model` ON `computer_shop`.`component_store` (`pric
 -- Table `computer_shop`.`assembly_component`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `computer_shop`.`assembly_component` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `assembly_id` BIGINT UNSIGNED NOT NULL,
   `component_id` BIGINT UNSIGNED NOT NULL,
   `count` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`assembly_id`, `component_id`),
+  PRIMARY KEY (`id`),
   CONSTRAINT `FK_assembly_component_assembly_parcel`
     FOREIGN KEY (`assembly_id`)
     REFERENCES `computer_shop`.`assembly` (`id`)
@@ -153,6 +154,8 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 CREATE INDEX `IXFK_component_id` ON `computer_shop`.`assembly_component` (`component_id` ASC);
+
+CREATE UNIQUE INDEX `assembly_component_id_UNIQUE` ON `computer_shop`.`assembly_component` (`assembly_id` ASC, `component_id` ASC);
 
 
 -- -----------------------------------------------------
