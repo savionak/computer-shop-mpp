@@ -4,7 +4,11 @@ import java.sql.Timestamp;
 
 public class ExportBriefDto extends BaseBriefDto<Long> {
 
-    private OrderBriefDto order;
+    private Long orderId;
+
+    private String customerName;
+
+    private Long orderCost;
 
     private Timestamp exportDate;
 
@@ -12,12 +16,28 @@ public class ExportBriefDto extends BaseBriefDto<Long> {
 
     private Boolean done;
 
-    public OrderBriefDto getOrder() {
-        return order;
+    public Long getOrderId() {
+        return orderId;
     }
 
-    public void setOrder(OrderBriefDto order) {
-        this.order = order;
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public Long getOrderCost() {
+        return orderCost;
+    }
+
+    public void setOrderCost(Long orderCost) {
+        this.orderCost = orderCost;
     }
 
     public Timestamp getExportDate() {
