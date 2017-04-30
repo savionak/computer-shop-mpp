@@ -3,6 +3,7 @@ package by.bsuir.mpp.computershop.dto.full;
 import by.bsuir.mpp.computershop.dto.brief.ComponentStoreBriefDto;
 import by.bsuir.mpp.computershop.dto.brief.ComponentTypeBriefDto;
 import by.bsuir.mpp.computershop.dto.brief.ImportBriefDto;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -23,10 +24,13 @@ public class ComponentModelFullDto extends BaseFullDto<Long> {
 
     private String description;
 
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     private Boolean removed;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<ComponentStoreBriefDto> storedComponents;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<ImportBriefDto> imports;
 
     public String getName() {

@@ -1,14 +1,10 @@
 package by.bsuir.mpp.computershop.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.DynamicInsert;
-
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "component_model")
-@DynamicInsert
 public class ComponentModel extends BaseEntity<Long> {
 
     @ManyToOne
@@ -24,11 +20,10 @@ public class ComponentModel extends BaseEntity<Long> {
     @Column(name = "removed", nullable = false)
     private Boolean removed;
 
-    @OneToMany(mappedBy = "model")
+    @OneToMany(mappedBy = "model", fetch = FetchType.LAZY)
     private List<ComponentStore> storedComponents;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "model")
+    @OneToMany(mappedBy = "model", fetch = FetchType.LAZY)
     private List<Import> imports;
 
     public ComponentType getType() {
