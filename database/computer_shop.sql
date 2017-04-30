@@ -574,6 +574,42 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure apply_order
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE apply_order(
+	IN ord_id BIGINT UNSIGNED
+)
+BEGIN
+	UPDATE `order`
+    SET `status` = 'READY'
+    WHERE `id` = ord_id
+		AND `status` != 'FINISHED';
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure accept_order
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE accept_order(
+	IN ord_id BIGINT UNSIGNED
+)
+BEGIN
+	UPDATE `order`
+    SET `status` = 'READY'
+    WHERE `id` = ord_id
+		AND `status` != 'FINISHED';
+END$$
+
+DELIMITER ;
 USE `computer_shop`;
 
 DELIMITER $$
