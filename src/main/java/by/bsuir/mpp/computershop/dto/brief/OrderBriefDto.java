@@ -4,8 +4,9 @@ import by.bsuir.mpp.computershop.entity.Order.Status;
 
 import java.sql.Timestamp;
 
-public class OrderDto extends BaseBriefDto {
-    private CustomerDto customer;
+public class OrderBriefDto extends BaseBriefDto {
+
+    private CustomerBriefDto customer;
 
     private Long cost;
 
@@ -13,13 +14,11 @@ public class OrderDto extends BaseBriefDto {
 
     private Status status;
 
-    private Boolean canceled;
-
-    public CustomerDto getCustomer() {
+    public CustomerBriefDto getCustomer() {
         return customer;
     }
 
-    public void setCustomer(CustomerDto customer) {
+    public void setCustomer(CustomerBriefDto customer) {
         this.customer = customer;
     }
 
@@ -45,13 +44,5 @@ public class OrderDto extends BaseBriefDto {
 
     public void setStatus(Status status) {
         this.status = status;
-    }
-
-    public Boolean isCanceled() {
-        return canceled;
-    }
-
-    public void setCanceled(Boolean canceled) {
-        this.canceled = canceled;
     }
 }
