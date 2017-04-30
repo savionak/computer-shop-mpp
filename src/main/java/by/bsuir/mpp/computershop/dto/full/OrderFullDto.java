@@ -12,7 +12,7 @@ import java.util.List;
 
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
 
-public class OrderFullDto extends BaseFullDto {
+public class OrderFullDto extends BaseFullDto<Long> {
 
     @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     private CustomerBriefDto customer;

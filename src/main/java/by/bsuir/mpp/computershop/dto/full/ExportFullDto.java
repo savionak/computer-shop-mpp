@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
 
-public class ExportFullDto extends BaseFullDto {
+public class ExportFullDto extends BaseFullDto<Long> {
 
     @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     private OrderBriefDto order;

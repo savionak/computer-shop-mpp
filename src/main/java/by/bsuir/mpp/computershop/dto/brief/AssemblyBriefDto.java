@@ -1,6 +1,6 @@
 package by.bsuir.mpp.computershop.dto.brief;
 
-public class AssemblyBriefDto extends BaseBriefDto {
+public class AssemblyBriefDto extends BaseBriefDto<Long> {
 
     private Long cost;
 

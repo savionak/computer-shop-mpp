@@ -2,7 +2,7 @@ package by.bsuir.mpp.computershop.dto.brief;
 
 import java.sql.Timestamp;
 
-public class ImportBriefDto extends BaseBriefDto {
+public class ImportBriefDto extends BaseBriefDto<Long> {
 
     private Timestamp importDate;
 

@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NEGATIVE_MESSAGE;
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
 
-public class ImportFullDto extends BaseFullDto {
+public class ImportFullDto extends BaseFullDto<Long> {
 
     private Timestamp importDate;
 

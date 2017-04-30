@@ -5,7 +5,7 @@ import javax.validation.constraints.Pattern;
 
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.*;
 
-public class UserInfoFullDto extends BaseFullDto {
+public class UserInfoFullDto extends BaseFullDto<Long> {
 
     @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @Pattern(regexp = NON_EMPTY_STRING_REGEX, message = CANNOT_BE_EMPTY_MESSAGE)

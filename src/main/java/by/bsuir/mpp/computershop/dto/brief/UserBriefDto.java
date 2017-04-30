@@ -2,7 +2,7 @@ package by.bsuir.mpp.computershop.dto.brief;
 
 import by.bsuir.mpp.computershop.entity.UserAuth.Role;
 
-public class UserBriefDto extends BaseBriefDto {
+public class UserBriefDto extends BaseBriefDto<Long> {
 
     private String email;
 

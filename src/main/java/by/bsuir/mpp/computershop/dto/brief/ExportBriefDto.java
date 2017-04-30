@@ -2,7 +2,7 @@ package by.bsuir.mpp.computershop.dto.brief;
 
 import java.sql.Timestamp;
 
-public class ExportBriefDto extends BaseBriefDto {
+public class ExportBriefDto extends BaseBriefDto<Long> {
 
     private OrderBriefDto order;
 

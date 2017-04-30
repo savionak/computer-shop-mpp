@@ -4,7 +4,7 @@ import by.bsuir.mpp.computershop.entity.Order.Status;
 
 import java.sql.Timestamp;
 
-public class OrderBriefDto extends BaseBriefDto {
+public class OrderBriefDto extends BaseBriefDto<Long> {
 
     private CustomerBriefDto customer;
 

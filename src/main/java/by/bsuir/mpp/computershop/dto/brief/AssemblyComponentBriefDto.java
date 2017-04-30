@@ -1,6 +1,6 @@
 package by.bsuir.mpp.computershop.dto.brief;
 
-public class AssemblyComponentBriefDto extends BaseBriefDto {
+public class AssemblyComponentBriefDto extends BaseBriefDto<Long> {
 
     private String modelName;
 

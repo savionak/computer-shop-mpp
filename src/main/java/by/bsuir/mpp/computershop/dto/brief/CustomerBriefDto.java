@@ -1,6 +1,6 @@
 package by.bsuir.mpp.computershop.dto.brief;
 
-public class CustomerBriefDto extends BaseBriefDto {
+public class CustomerBriefDto extends BaseBriefDto<Long> {
 
     private String name;
 
