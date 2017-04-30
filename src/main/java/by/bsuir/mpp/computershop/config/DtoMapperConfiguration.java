@@ -1,9 +1,6 @@
 package by.bsuir.mpp.computershop.config;
 
-import by.bsuir.mpp.computershop.dto.brief.ComponentModelBriefDto;
-import by.bsuir.mpp.computershop.dto.brief.ComponentStoreDto;
-import by.bsuir.mpp.computershop.dto.brief.ImportBriefDto;
-import by.bsuir.mpp.computershop.dto.brief.UserBriefDto;
+import by.bsuir.mpp.computershop.dto.brief.*;
 import by.bsuir.mpp.computershop.dto.full.ImportFullDto;
 import by.bsuir.mpp.computershop.dto.full.UserAuthFullDto;
 import by.bsuir.mpp.computershop.entity.*;
