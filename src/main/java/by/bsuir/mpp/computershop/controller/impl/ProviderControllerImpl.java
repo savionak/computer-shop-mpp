@@ -19,7 +19,8 @@ import java.util.stream.StreamSupport;
 import static by.bsuir.mpp.computershop.controller.exception.wrapper.ServiceCallWrapper.wrapServiceCall;
 
 @RestController
-public class ProviderControllerImpl extends AbstractCrudController<Provider, Long>
+public class ProviderControllerImpl
+        extends AbstractCrudController<ProviderBriefDto, ProviderFullDto, Provider, Long>
         implements ProviderController {
 
     private static final Logger logger = Logger.getLogger(ProviderControllerImpl.class);

@@ -18,20 +18,21 @@ import java.util.stream.StreamSupport;
 
 import static by.bsuir.mpp.computershop.controller.exception.wrapper.ServiceCallWrapper.wrapServiceCall;
 
-public abstract class AbstractCrudController<E extends BaseEntity<ID>, ID extends Serializable>
-        implements CrudController<E, ID> {
+public abstract class AbstractCrudController
+        <B extends BaseBriefDto<ID>, F extends BaseFullDto<ID>, E extends BaseEntity<ID>, ID extends Serializable>
+        implements CrudController<B, F, ID> {
 
     private final CrudService<E, ID> service;
     private final Logger logger;
     private final MapperFacade mapper;
-    private final Class<? extends BaseBriefDto> briefDtoClass;
-    private final Class<? extends BaseFullDto> fullDtoClass;
-    private Class<E> entityClass;
+    private final Class<B> briefDtoClass;
+    private final Class<F> fullDtoClass;
+    private final Class<E> entityClass;
 
     AbstractCrudController(CrudService<E, ID> service,
                            MapperFacade mapper,
-                           Class<? extends BaseBriefDto> briefDtoClass,
-                           Class<? extends BaseFullDto> fullDtoClass,
+                           Class<B> briefDtoClass,
+                           Class<F> fullDtoClass,
                            Class<E> entityClass,
                            Logger logger) {
         this.service = service;
@@ -43,7 +44,7 @@ public abstract class AbstractCrudController<E extends BaseEntity<ID>, ID extend
     }
 
     @Override
-    public BaseFullDto add(@Valid @RequestBody BaseFullDto dto) throws ControllerException {
+    public F add(@Valid @RequestBody F dto) throws ControllerException {
         logger.info(String.format("ADD new %s entity", dto.getClass()));
         E entity = mapper.map(dto, entityClass);
         E resultEntity = wrapServiceCall(() -> service.add(entity), logger);
@@ -51,7 +52,7 @@ public abstract class AbstractCrudController<E extends BaseEntity<ID>, ID extend
     }
 
     @Override
-    public BaseFullDto update(@Valid @RequestBody BaseFullDto dto) throws ControllerException {
+    public F update(@Valid @RequestBody F dto) throws ControllerException {
         logger.info(String.format("UPDATE entity with id = [%s]", dto.getId()));
         E entity = mapper.map(dto, entityClass);
         E resultEntity = wrapServiceCall(() -> service.update(entity), logger);
@@ -59,14 +60,14 @@ public abstract class AbstractCrudController<E extends BaseEntity<ID>, ID extend
     }
 
     @Override
-    public BaseFullDto getById(@PathVariable ID id) throws ControllerException {
+    public F getById(@PathVariable ID id) throws ControllerException {
         logger.info(String.format("GET entity with id = [%s]", id.toString()));
         E resultEntity = wrapServiceCall(() -> service.getOne(id), logger);
         return mapper.map(resultEntity, fullDtoClass);
     }
 
     @Override
-    public Iterable<BaseBriefDto> getAll() throws ControllerException {
+    public Iterable<B> getAll() throws ControllerException {
         logger.info("GET ALL entities.");
         Iterable<E> all = wrapServiceCall(service::getAll, logger);
         return StreamSupport.stream(all.spliterator(), false)

@@ -19,7 +19,8 @@ import java.util.stream.StreamSupport;
 import static by.bsuir.mpp.computershop.controller.exception.wrapper.ServiceCallWrapper.wrapServiceCall;
 
 @RestController
-public class ComponentTypeControllerImpl extends AbstractCrudController<ComponentType, Long>
+public class ComponentTypeControllerImpl
+        extends AbstractCrudController<ComponentTypeBriefDto, ComponentTypeFullDto, ComponentType, Long>
         implements ComponentTypeController {
 
     private static final Logger logger = Logger.getLogger(ComponentTypeControllerImpl.class);

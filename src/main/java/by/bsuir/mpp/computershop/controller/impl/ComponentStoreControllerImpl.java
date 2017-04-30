@@ -11,7 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class ComponentStoreControllerImpl extends AbstractCrudController<ComponentStore, Long>
+public class ComponentStoreControllerImpl
+        extends AbstractCrudController<ComponentStoreBriefDto, ComponentStoreFullDto, ComponentStore, Long>
         implements ComponentStoreController {
 
     private static final Logger logger = Logger.getLogger(ComponentStoreControllerImpl.class);
