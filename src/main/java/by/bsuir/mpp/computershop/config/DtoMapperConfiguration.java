@@ -31,8 +31,9 @@ public class DtoMapperConfiguration {
                 .byDefault()
                 .register();
 
-        mapperFactory.classMap(ComponentStore.class, ComponentStoreDto.class)
-                .field("model.id", "modelId")
+        mapperFactory.classMap(ComponentStore.class, ComponentStoreBriefDto.class)
+                .field("model.type.name", "typeName")
+                .field("model.name", "modelName")
                 .byDefault()
                 .register();
 
