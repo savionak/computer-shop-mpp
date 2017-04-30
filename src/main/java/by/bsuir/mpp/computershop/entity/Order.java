@@ -1,22 +1,19 @@
 package by.bsuir.mpp.computershop.entity;
 
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
 @Table(name = "`order`")
-@DynamicInsert
-@DynamicUpdate
 public class Order extends BaseEntity<Long> {
+
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    @Column(name = "cost", nullable = false)
+    @Column(name = "cost", nullable = false,
+            insertable = false, updatable = false)
     private Long cost;
 
     @Column(name = "order_date", nullable = false)
@@ -24,16 +21,18 @@ public class Order extends BaseEntity<Long> {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false,
-            columnDefinition = Status.TYPE_DEFINITION)
+            columnDefinition = Status.TYPE_DEFINITION,
+            insertable = false, updatable = false)
     private Status status;
 
     @Column(name = "canceled", nullable = false)
     private Boolean canceled = false;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "order")
+    @OneToOne(mappedBy = "order", fetch = FetchType.LAZY)
     private Export export;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY,
+            cascade = CascadeType.REMOVE)
     private List<Assembly> assemblies;
 
     public Customer getCustomer() {

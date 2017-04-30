@@ -22,9 +22,10 @@ public class OrderFullDto extends BaseFullDto<Long> {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long cost;
 
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     private Timestamp orderDate;
 
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Status status;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
