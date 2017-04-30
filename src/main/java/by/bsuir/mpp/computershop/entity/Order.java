@@ -1,32 +1,27 @@
 package by.bsuir.mpp.computershop.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.List;
-
-import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
 
 @Entity
 @Table(name = "`order`")
 @DynamicInsert
+@DynamicUpdate
 public class Order extends BaseEntity<Long> {
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(name = "cost", nullable = false)
     private Long cost;
 
     @Column(name = "order_date", nullable = false)
     private Timestamp orderDate;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false,
             columnDefinition = Status.TYPE_DEFINITION)
