@@ -366,10 +366,11 @@ CREATE PROCEDURE cancel_order(
 	IN ord_id BIGINT UNSIGNED
 )
 BEGIN
+	DECLARE cust_id BIGINT UNSIGNED DEFAULT NULL;
 	DECLARE order_canceled BOOLEAN DEFAULT TRUE;
     
-    SELECT `canceled`
-    INTO order_canceled
+    SELECT `canceled`, `customer_id`
+    INTO order_canceled, cust_id
     FROM `order`
     WHERE `id` = ord_id;
     
@@ -382,6 +383,10 @@ BEGIN
 			ON comp.`assembly_id` = asm.`id`
 		SET store.`count` = store.`count` + (comp.`count` * asm.`count`)
 		WHERE asm.`order_id` = ord_id;
+        
+        UPDATE `customer`
+        SET `orders_count` = `orders_count` - 1
+        WHERE `id` = cust_id;
         
         UPDATE `order`
 		SET `order`.`canceled` = TRUE
@@ -401,14 +406,15 @@ CREATE PROCEDURE renew_order(
 	IN ord_id BIGINT UNSIGNED
 )
 BEGIN
+	DECLARE cust_id BIGINT UNSIGNED DEFAULT NULL;
 	DECLARE order_canceled BOOLEAN DEFAULT FALSE;
 
 	DECLARE EXIT HANDLER FOR SQLSTATE '22003'	-- `component_store`.`count` out of range: < 0
 		SIGNAL SQLSTATE '45000'
 			SET MESSAGE_TEXT = 'Not enough components available to renew order.';
     
-    SELECT `canceled`
-    INTO order_canceled
+    SELECT `canceled`, `customer_id`
+    INTO order_canceled, cust_id
     FROM `order`
     WHERE `id` = ord_id;
     
@@ -421,6 +427,10 @@ BEGIN
 			ON comp.`assembly_id` = asm.`id`
 		SET store.`count` = store.`count` - (comp.`count` * asm.`count`)
 		WHERE asm.`order_id` = ord_id;
+        
+        UPDATE `customer`
+        SET `orders_count` = `orders_count` + 1
+        WHERE `id` = cust_id;
         
         UPDATE `order`
 		SET `order`.`canceled` = FALSE
