@@ -199,22 +199,21 @@ CREATE UNIQUE INDEX `email_UNIQUE` ON `computer_shop`.`user_auth` (`email` ASC);
 -- Table `computer_shop`.`user_info`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `computer_shop`.`user_info` (
-  `id` BIGINT UNSIGNED NOT NULL,
   `auth_id` BIGINT UNSIGNED NOT NULL,
   `first_name` VARCHAR(255) NOT NULL,
   `last_name` VARCHAR(255) NOT NULL,
   `patronymic` VARCHAR(255) NULL DEFAULT NULL,
   `phone` VARCHAR(50) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `FK_employee_info_employee_auth`
+  PRIMARY KEY (`auth_id`),
+  CONSTRAINT `fk_user_info_user_auth1`
     FOREIGN KEY (`auth_id`)
     REFERENCES `computer_shop`.`user_auth` (`id`)
     ON DELETE CASCADE
-    ON UPDATE RESTRICT)
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-CREATE UNIQUE INDEX `auth_id_UNIQUE` ON `computer_shop`.`user_info` (`auth_id` ASC);
+CREATE INDEX `fk_user_info_user_auth1_idx` ON `computer_shop`.`user_info` (`auth_id` ASC);
 
 
 -- -----------------------------------------------------
@@ -1033,6 +1032,10 @@ VALUES
 -- password = '123'
 ('1', 'ADMIN', 'mail@mail.com', '$2a$12$uGYKKxqsTq1lCk0AhL97T.WGcMErxKoJ4GKtRhkxcnPiEy3KF81W6');
 
+INSERT INTO `computer_shop`.`user_info`
+(`auth_id`, `first_name`, `last_name`)
+VALUES
+('1', 'Admin', 'The Ruller');
 -- end attached script 'system_admin'
 -- begin attached script 'test_data'
 INSERT INTO `computer_shop`.`user_auth`

@@ -4,8 +4,14 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "user_info")
-public class UserInfo extends BaseEntity<Long> {
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+public class UserInfo {
+
+    @Id
+    @Column(name = "auth_id")
+    private Long authId;
+
+    @MapsId
+    @OneToOne
     @JoinColumn(name = "auth_id", unique = true, nullable = false)
     private UserAuth userAuth;
 
@@ -20,6 +26,14 @@ public class UserInfo extends BaseEntity<Long> {
 
     @Column(name = "phone")
     private String phone;
+
+    public Long getAuthId() {
+        return authId;
+    }
+
+    public void setAuthId(Long authId) {
+        this.authId = authId;
+    }
 
     public UserAuth getUserAuth() {
         return userAuth;

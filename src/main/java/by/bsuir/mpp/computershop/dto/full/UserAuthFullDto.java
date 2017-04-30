@@ -22,8 +22,12 @@ public class UserAuthFullDto extends BaseFullDto<Long> {
     @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     private Role role;
 
+    // Separate endpoints to block/unblock user
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Boolean blocked;
 
+    // Separate endpoints to remove/restore user
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Boolean removed;
 
     @Valid

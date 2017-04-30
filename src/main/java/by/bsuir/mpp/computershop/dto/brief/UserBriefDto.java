@@ -12,6 +12,10 @@ public class UserBriefDto extends BaseBriefDto<Long> {
 
     private String lastName;
 
+    private Boolean blocked;
+
+    private Boolean removed;
+
     public String getEmail() {
         return email;
     }
@@ -42,5 +46,21 @@ public class UserBriefDto extends BaseBriefDto<Long> {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Boolean getBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(Boolean blocked) {
+        this.blocked = blocked;
+    }
+
+    public Boolean getRemoved() {
+        return removed;
+    }
+
+    public void setRemoved(Boolean removed) {
+        this.removed = removed;
     }
 }
