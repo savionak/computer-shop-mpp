@@ -1,21 +1,16 @@
 package by.bsuir.mpp.computershop.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.util.List;
-
-import static by.bsuir.mpp.computershop.utils.ValidationConstants.*;
 
 @Entity
 @Table(name = "component_type")
 @DynamicInsert
+@DynamicUpdate
 public class ComponentType extends BaseEntity<Long> {
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
-    @Pattern(regexp = NON_EMPTY_STRING_REGEX, message = CANNOT_BE_EMPTY_MESSAGE)
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
@@ -25,9 +20,8 @@ public class ComponentType extends BaseEntity<Long> {
     @Column(name = "removed", nullable = false)
     private Boolean removed;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "type", fetch = FetchType.LAZY)
-    private List<ComponentModel> componentModels;
+    private List<ComponentModel> models;
 
     public String getName() {
         return this.name;
@@ -53,11 +47,11 @@ public class ComponentType extends BaseEntity<Long> {
         this.removed = removed;
     }
 
-    public List<ComponentModel> getComponentModels() {
-        return componentModels;
+    public List<ComponentModel> getModels() {
+        return models;
     }
 
-    public void setComponentModels(List<ComponentModel> componentModels) {
-        this.componentModels = componentModels;
+    public void setModels(List<ComponentModel> componentModels) {
+        this.models = componentModels;
     }
 }

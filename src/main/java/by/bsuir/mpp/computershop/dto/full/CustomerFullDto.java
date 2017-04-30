@@ -1,31 +1,29 @@
-package by.bsuir.mpp.computershop.entity;
+package by.bsuir.mpp.computershop.dto.full;
 
-import org.hibernate.annotations.DynamicInsert;
+import by.bsuir.mpp.computershop.dto.brief.OrderBriefDto;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 
-@Entity
-@Table(name = "customer")
-@DynamicInsert
-public class Customer extends BaseEntity<Long> {
-    @Column(name = "name", unique = true, nullable = false)
+import static by.bsuir.mpp.computershop.utils.ValidationConstants.*;
+
+public class CustomerFullDto extends BaseFullDto<Long> {
+
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
+    @Pattern(regexp = NON_EMPTY_STRING_REGEX, message = CANNOT_BE_EMPTY_MESSAGE)
     private String name;
 
-    @Column(name = "description", columnDefinition = "text")
     private String description;
 
-    @Column(name = "removed", nullable = false)
     private Boolean removed;
 
-    @Column(name = "orders_count", nullable = false)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Integer ordersCount;
 
-    @OneToMany(mappedBy = "customer")
-    private List<Order> orders;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private List<OrderBriefDto> orders;
 
     public String getName() {
         return this.name;
@@ -59,11 +57,11 @@ public class Customer extends BaseEntity<Long> {
         this.ordersCount = ordersCount;
     }
 
-    public List<Order> getOrders() {
+    public List<OrderBriefDto> getOrders() {
         return orders;
     }
 
-    public void setOrders(List<Order> orders) {
+    public void setOrders(List<OrderBriefDto> orders) {
         this.orders = orders;
     }
 }

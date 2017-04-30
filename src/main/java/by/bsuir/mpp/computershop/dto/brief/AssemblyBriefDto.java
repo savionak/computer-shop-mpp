@@ -1,6 +1,7 @@
-package by.bsuir.mpp.computershop.dto;
+package by.bsuir.mpp.computershop.dto.brief;
 
-public class AssemblyDto extends BaseDto {
+public class AssemblyBriefDto extends BaseBriefDto<Long> {
+
     private Long orderId;
 
     private Long cost;

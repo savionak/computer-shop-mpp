@@ -2,7 +2,8 @@ package by.bsuir.mpp.computershop.controller.impl;
 
 import by.bsuir.mpp.computershop.controller.CrudController;
 import by.bsuir.mpp.computershop.controller.exception.ControllerException;
-import by.bsuir.mpp.computershop.dto.BaseDto;
+import by.bsuir.mpp.computershop.dto.brief.BaseBriefDto;
+import by.bsuir.mpp.computershop.dto.full.BaseFullDto;
 import by.bsuir.mpp.computershop.entity.BaseEntity;
 import by.bsuir.mpp.computershop.service.CrudService;
 import ma.glasnost.orika.MapperFacade;
@@ -17,45 +18,60 @@ import java.util.stream.StreamSupport;
 
 import static by.bsuir.mpp.computershop.controller.exception.wrapper.ServiceCallWrapper.wrapServiceCall;
 
-public abstract class AbstractCrudController<E extends BaseEntity<ID>, ID extends Serializable>
-        implements CrudController<E, ID> {
+public abstract class AbstractCrudController
+        <B extends BaseBriefDto<ID>, F extends BaseFullDto<ID>, E extends BaseEntity<ID>, ID extends Serializable>
+        implements CrudController<B, F, ID> {
 
     private final CrudService<E, ID> service;
-    private MapperFacade mapper;
-    private Class<? extends BaseDto> dtoClass;
     private final Logger logger;
+    private final MapperFacade mapper;
+    private final Class<B> briefDtoClass;
+    private final Class<F> fullDtoClass;
+    private final Class<E> entityClass;
 
-    AbstractCrudController(CrudService<E, ID> service, MapperFacade mapper, Class<? extends BaseDto> dtoClass, Logger logger) {
+    AbstractCrudController(CrudService<E, ID> service,
+                           MapperFacade mapper,
+                           Class<B> briefDtoClass,
+                           Class<F> fullDtoClass,
+                           Class<E> entityClass,
+                           Logger logger) {
         this.service = service;
         this.mapper = mapper;
-        this.dtoClass = dtoClass;
+        this.briefDtoClass = briefDtoClass;
+        this.fullDtoClass = fullDtoClass;
+        this.entityClass = entityClass;
         this.logger = logger;
     }
 
     @Override
-    public E add(@Valid @RequestBody E entity) throws ControllerException {
-        logger.info(String.format("ADD new %s entity", entity.getClass()));
-        return wrapServiceCall(() -> service.add(entity), logger);
+    public F add(@Valid @RequestBody F dto) throws ControllerException {
+        logger.info(String.format("ADD new %s entity", dto.getClass()));
+        E entity = mapper.map(dto, entityClass);
+        E resultEntity = wrapServiceCall(() -> service.add(entity), logger);
+        return mapper.map(resultEntity, fullDtoClass);
     }
 
     @Override
-    public E update(@Valid @RequestBody E entity) throws ControllerException {
-        logger.info(String.format("UPDATE entity with id = [%s]", entity.getId()));
-        return wrapServiceCall(() -> service.update(entity), logger);
+    public F update(@Valid @RequestBody F dto) throws ControllerException {
+        logger.info(String.format("UPDATE entity with id = [%s]", dto.getId()));
+        E entity = mapper.map(dto, entityClass);
+        E resultEntity = wrapServiceCall(() -> service.update(entity), logger);
+        return mapper.map(resultEntity, fullDtoClass);
     }
 
     @Override
-    public E getById(@PathVariable ID id) throws ControllerException {
+    public F getById(@PathVariable ID id) throws ControllerException {
         logger.info(String.format("GET entity with id = [%s]", id.toString()));
-        return wrapServiceCall(() -> service.getOne(id), logger);
+        E resultEntity = wrapServiceCall(() -> service.getOne(id), logger);
+        return mapper.map(resultEntity, fullDtoClass);
     }
 
     @Override
-    public Iterable<BaseDto> getAll() throws ControllerException {
+    public Iterable<B> getAll() throws ControllerException {
         logger.info("GET ALL entities.");
         Iterable<E> all = wrapServiceCall(service::getAll, logger);
         return StreamSupport.stream(all.spliterator(), false)
-                .map(i -> mapper.map(i, dtoClass))
+                .map(i -> mapper.map(i, briefDtoClass))
                 .collect(Collectors.toList());
     }
 

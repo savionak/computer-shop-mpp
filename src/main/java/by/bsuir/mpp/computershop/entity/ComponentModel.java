@@ -4,23 +4,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.util.List;
-
-import static by.bsuir.mpp.computershop.utils.ValidationConstants.*;
 
 @Entity
 @Table(name = "component_model")
 @DynamicInsert
 public class ComponentModel extends BaseEntity<Long> {
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
+
     @ManyToOne
     @JoinColumn(name = "type_id", unique = true, nullable = false)
     private ComponentType type;
 
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
-    @Pattern(regexp = NON_EMPTY_STRING_REGEX, message = CANNOT_BE_EMPTY_MESSAGE)
     @Column(name = "name", nullable = false)
     private String name;
 
@@ -30,7 +24,6 @@ public class ComponentModel extends BaseEntity<Long> {
     @Column(name = "removed", nullable = false)
     private Boolean removed;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "model")
     private List<ComponentStore> storedComponents;
 

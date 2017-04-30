@@ -1,11 +1,12 @@
-package by.bsuir.mpp.computershop.dto;
+package by.bsuir.mpp.computershop.dto.brief;
 
-public class CustomerDto extends BaseDto {
+public class CustomerBriefDto extends BaseBriefDto<Long> {
+
     private String name;
 
     private String description;
 
-    private Boolean removed;
+    private Integer ordersCount;
 
     public String getName() {
         return this.name;
@@ -23,11 +24,11 @@ public class CustomerDto extends BaseDto {
         this.description = description;
     }
 
-    public Boolean isRemoved() {
-        return removed;
+    public Integer getOrdersCount() {
+        return ordersCount;
     }
 
-    public void setRemoved(Boolean removed) {
-        this.removed = removed;
+    public void setOrdersCount(Integer ordersCount) {
+        this.ordersCount = ordersCount;
     }
 }

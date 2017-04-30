@@ -11,7 +11,7 @@ import java.util.Collection;
 public class UserAuthDetails extends UserAuth implements UserDetails, Serializable {
 
     UserAuthDetails(UserAuth user) {
-        super(user);
+        super(user, false);
     }
 
     @Override

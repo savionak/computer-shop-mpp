@@ -1,25 +1,21 @@
 package by.bsuir.mpp.computershop.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.List;
-
-import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
 
 @Entity
 @Table(name = "`order`")
 @DynamicInsert
+@DynamicUpdate
 public class Order extends BaseEntity<Long> {
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(name = "cost", nullable = false)
     private Long cost;
 
@@ -34,10 +30,10 @@ public class Order extends BaseEntity<Long> {
     @Column(name = "canceled", nullable = false)
     private Boolean canceled = false;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
-    private List<Export> exports;
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "order")
+    private Export export;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.REMOVE)
     private List<Assembly> assemblies;
 
     public Customer getCustomer() {
@@ -80,14 +76,6 @@ public class Order extends BaseEntity<Long> {
         this.canceled = canceled;
     }
 
-    public List<Export> getExports() {
-        return exports;
-    }
-
-    public void setExports(List<Export> exports) {
-        this.exports = exports;
-    }
-
     public List<Assembly> getAssemblies() {
         return assemblies;
     }
@@ -96,29 +84,32 @@ public class Order extends BaseEntity<Long> {
         this.assemblies = assemblyParcels;
     }
 
+    public Export getExport() {
+        return export;
+    }
+
+    public void setExport(Export export) {
+        this.export = export;
+    }
+
     public enum Status {
         IN_PROGRESS {
             public String toString() {
-                return "собирается";
+                return "В процессе составления";
             }
         },
         READY {
             public String toString() {
-                return "готов  сборке";
+                return "Принят";
             }
         },
         FINISHED {
             public String toString() {
-                return "завершен";
-            }
-        },
-        CANCELLED {
-            public String toString() {
-                return "отменен";
+                return "Завершен";
             }
         };
 
-        public static final String TYPE_DEFINITION = "ENUM ('IN_PROGRESS', 'FINISHED')";
+        public static final String TYPE_DEFINITION = "ENUM ('IN_PROGRESS', 'READY', 'FINISHED')";
 
         public abstract String toString();
     }

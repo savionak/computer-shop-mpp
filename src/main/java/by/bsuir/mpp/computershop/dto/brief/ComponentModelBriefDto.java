@@ -1,11 +1,10 @@
-package by.bsuir.mpp.computershop.dto;
+package by.bsuir.mpp.computershop.dto.brief;
 
-public class ProviderDto extends BaseDto {
+public class ComponentModelBriefDto extends BaseBriefDto<Long> {
+
     private String name;
 
     private String description;
-
-    private Boolean removed;
 
     public String getName() {
         return this.name;
@@ -21,13 +20,5 @@ public class ProviderDto extends BaseDto {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Boolean isRemoved() {
-        return removed;
-    }
-
-    public void setRemoved(Boolean removed) {
-        this.removed = removed;
     }
 }
