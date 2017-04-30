@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "export")
 public class Export extends BaseEntity<Long> {
+
     @OneToOne
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;

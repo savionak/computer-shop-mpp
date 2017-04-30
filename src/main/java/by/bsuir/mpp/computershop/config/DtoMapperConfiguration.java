@@ -1,6 +1,7 @@
 package by.bsuir.mpp.computershop.config;
 
 import by.bsuir.mpp.computershop.dto.brief.*;
+import by.bsuir.mpp.computershop.dto.full.AssemblyComponentFullDto;
 import by.bsuir.mpp.computershop.dto.full.ImportFullDto;
 import by.bsuir.mpp.computershop.dto.full.UserAuthFullDto;
 import by.bsuir.mpp.computershop.entity.*;
@@ -30,6 +31,10 @@ public class DtoMapperConfiguration {
 
         mapperFactory.classMap(AssemblyComponent.class, AssemblyComponentBriefDto.class)
                 .field("component.model.name", "modelName")
+                .byDefault()
+                .register();
+        mapperFactory.classMap(AssemblyComponent.class, AssemblyComponentFullDto.class)
+                .field("assembly.id", "assemblyId")
                 .byDefault()
                 .register();
 

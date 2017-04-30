@@ -6,12 +6,11 @@ import java.io.Serializable;
 @Entity
 @Table(name = "assembly_component")
 public class AssemblyComponent extends BaseEntity<Long> implements Serializable {
-    @Id
+
     @ManyToOne
     @JoinColumn(name = "assembly_id", nullable = false)
     private Assembly assembly;
 
-    @Id
     @ManyToOne
     @JoinColumn(name = "component_id", nullable = false)
     private ComponentStore component;
