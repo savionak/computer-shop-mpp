@@ -3,6 +3,7 @@ package by.bsuir.mpp.computershop.dto.full;
 import by.bsuir.mpp.computershop.entity.UserAuth.Role;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -25,6 +26,7 @@ public class UserAuthFullDto extends BaseFullDto<Long> {
 
     private Boolean removed;
 
+    @Valid
     private UserInfoFullDto userInfo;
 
     public String getEmail() {

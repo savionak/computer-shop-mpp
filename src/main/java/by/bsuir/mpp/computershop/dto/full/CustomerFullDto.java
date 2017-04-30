@@ -22,6 +22,7 @@ public class CustomerFullDto extends BaseFullDto<Long> {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Integer ordersCount;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<OrderBriefDto> orders;
 
     public String getName() {

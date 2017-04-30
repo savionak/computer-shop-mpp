@@ -4,6 +4,7 @@ import by.bsuir.mpp.computershop.dto.brief.ComponentModelBriefDto;
 import by.bsuir.mpp.computershop.dto.brief.ProviderBriefDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
@@ -15,9 +16,11 @@ public class ImportFullDto extends BaseFullDto<Long> {
 
     private Timestamp importDate;
 
+    @Valid
     @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     private ComponentModelBriefDto model;
 
+    @Valid
     @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     private ProviderBriefDto provider;
 
@@ -29,6 +32,7 @@ public class ImportFullDto extends BaseFullDto<Long> {
     @Min(value = 0, message = CANNOT_BE_NEGATIVE_MESSAGE)
     private Long count;
 
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @Min(value = 0, message = CANNOT_BE_NEGATIVE_MESSAGE)
     private Long price;
 

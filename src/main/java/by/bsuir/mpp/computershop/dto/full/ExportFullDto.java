@@ -2,6 +2,7 @@ package by.bsuir.mpp.computershop.dto.full;
 
 import by.bsuir.mpp.computershop.dto.brief.OrderBriefDto;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
@@ -9,6 +10,7 @@ import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL
 
 public class ExportFullDto extends BaseFullDto<Long> {
 
+    @Valid
     @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     private OrderBriefDto order;
 

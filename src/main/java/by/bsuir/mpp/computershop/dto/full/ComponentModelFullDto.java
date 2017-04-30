@@ -4,6 +4,7 @@ import by.bsuir.mpp.computershop.dto.brief.ComponentStoreBriefDto;
 import by.bsuir.mpp.computershop.dto.brief.ComponentTypeBriefDto;
 import by.bsuir.mpp.computershop.dto.brief.ImportBriefDto;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.List;
@@ -12,6 +13,7 @@ import static by.bsuir.mpp.computershop.utils.ValidationConstants.*;
 
 public class ComponentModelFullDto extends BaseFullDto<Long> {
 
+    @Valid
     @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     private ComponentTypeBriefDto type;
 

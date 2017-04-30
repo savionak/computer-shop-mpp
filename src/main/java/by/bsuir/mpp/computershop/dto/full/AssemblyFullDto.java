@@ -19,6 +19,7 @@ public class AssemblyFullDto extends BaseFullDto<Long> {
     @Min(value = 0, message = CANNOT_BE_NEGATIVE_MESSAGE)
     private Long count;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<AssemblyComponentBriefDto> components;
 
     public Long getCost() {
