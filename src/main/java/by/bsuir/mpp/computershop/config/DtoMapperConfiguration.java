@@ -1,6 +1,7 @@
 package by.bsuir.mpp.computershop.config;
 
 import by.bsuir.mpp.computershop.dto.brief.*;
+import by.bsuir.mpp.computershop.dto.full.ImportFullDto;
 import by.bsuir.mpp.computershop.dto.full.UserAuthFullDto;
 import by.bsuir.mpp.computershop.entity.*;
 import ma.glasnost.orika.CustomConverter;
@@ -26,26 +27,33 @@ public class DtoMapperConfiguration {
                 .field("type.id", "typeId")
                 .byDefault()
                 .register();
+
         mapperFactory.classMap(ComponentStore.class, ComponentStoreDto.class)
                 .field("model.id", "modelId")
                 .byDefault()
                 .register();
+
         mapperFactory.classMap(Import.class, ImportBriefDto.class)
                 .field("model.type.name", "typeName")
                 .field("model.name", "modelName")
                 .field("provider.name", "providerName")
                 .byDefault()
                 .register();
+        mapperFactory.classMap(Import.class, ImportFullDto.class)
+                .field("stored.count", "storedCount")
+                .byDefault()
+                .register();
+
         mapperFactory.classMap(Export.class, ExportDto.class)
                 .field("order.id", "orderId")
                 .byDefault()
                 .register();
+
         mapperFactory.classMap(UserAuth.class, UserBriefDto.class)
                 .field("userInfo.firstName", "firstName")
                 .field("userInfo.lastName", "lastName")
                 .byDefault()
                 .register();
-
         mapperFactory.getConverterFactory().registerConverter(new UserAuthConverter(passwordEncoder));
     }
 
