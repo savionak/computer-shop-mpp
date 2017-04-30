@@ -17,6 +17,7 @@ public class ProviderFullDto extends BaseFullDto<Long> {
 
     private String description;
 
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     private Boolean removed;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)

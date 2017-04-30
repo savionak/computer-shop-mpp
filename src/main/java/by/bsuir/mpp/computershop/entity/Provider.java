@@ -1,14 +1,12 @@
 package by.bsuir.mpp.computershop.entity;
 
-import org.hibernate.annotations.DynamicInsert;
-
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "provider")
-@DynamicInsert
 public class Provider extends BaseEntity<Long> {
+
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
@@ -18,10 +16,11 @@ public class Provider extends BaseEntity<Long> {
     @Column(name = "removed", nullable = false)
     private Boolean removed;
 
-    @Column(name = "imports_count", nullable = false)
+    @Column(name = "imports_count", nullable = false,
+            insertable = false, updatable = false)
     private Integer importsCount;
 
-    @OneToMany(mappedBy = "provider", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "provider", fetch = FetchType.LAZY)
     private List<Import> imports;
 
     public String getName() {
