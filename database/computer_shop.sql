@@ -318,6 +318,15 @@ CREATE TABLE IF NOT EXISTS `computer_shop`.`oauth_refresh_token` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+
+-- -----------------------------------------------------
+-- Table `computer_shop`.`oauth_code`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `computer_shop`.`oauth_code` (
+  `code` VARCHAR(255) NULL DEFAULT NULL,
+  `authentication` BLOB NULL)
+ENGINE = InnoDB;
+
 USE `computer_shop` ;
 
 -- -----------------------------------------------------
