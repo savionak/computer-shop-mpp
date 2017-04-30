@@ -1,17 +1,16 @@
 package by.bsuir.mpp.computershop.entity;
 
-import org.hibernate.annotations.DynamicInsert;
-
 import javax.persistence.*;
 
 @Entity
 @Table(name = "user_auth")
-@DynamicInsert
 public class UserAuth extends BaseEntity<Long> {
+
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @Column(name = "pass_hash", nullable = false)
+    @Column(name = "pass_hash", nullable = false,
+            updatable = false)
     private String passHash;
 
     @Enumerated(EnumType.STRING)
@@ -19,13 +18,15 @@ public class UserAuth extends BaseEntity<Long> {
             columnDefinition = Role.TYPE_DEFINITION)
     private Role role;
 
-    @Column(name = "blocked", nullable = false, updatable = false, insertable = false)
+    @Column(name = "blocked", nullable = false,
+            updatable = false, insertable = false)
     private Boolean blocked;
 
-    @Column(name = "removed", nullable = false, updatable = false, insertable = false)
+    @Column(name = "removed", nullable = false,
+            updatable = false, insertable = false)
     private Boolean removed;
 
-    // TODO: Check cascadeType
+    // TODO: Test cascadeType
     @OneToOne(mappedBy = "userAuth", fetch = FetchType.LAZY,
             optional = false, cascade = CascadeType.MERGE)
     private UserInfo userInfo;

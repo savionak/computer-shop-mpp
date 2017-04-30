@@ -31,6 +31,7 @@ public class UserAuthFullDto extends BaseFullDto<Long> {
     private Boolean removed;
 
     @Valid
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     private UserInfoFullDto userInfo;
 
     public String getEmail() {
