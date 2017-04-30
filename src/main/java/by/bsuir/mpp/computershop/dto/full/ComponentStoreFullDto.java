@@ -15,6 +15,7 @@ public class ComponentStoreFullDto extends BaseFullDto<Long> {
     @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     private ComponentModelBriefDto model;
 
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @Min(value = 0, message = CANNOT_BE_NEGATIVE_MESSAGE)
     private Long price;
 

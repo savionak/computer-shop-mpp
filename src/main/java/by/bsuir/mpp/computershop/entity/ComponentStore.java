@@ -1,23 +1,20 @@
 package by.bsuir.mpp.computershop.entity;
 
-import org.hibernate.annotations.DynamicInsert;
-
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "component_store")
-@DynamicInsert
 public class ComponentStore extends BaseEntity<Long> {
 
     @ManyToOne
     @JoinColumn(name = "model_id", nullable = false)
     private ComponentModel model;
 
-    @Column(name = "price")
+    @Column(name = "price", nullable = false)
     private Long price;
 
-    @Column(name = "count")
+    @Column(name = "count", nullable = false)
     private Long count;
 
     @OneToMany(mappedBy = "stored")

@@ -115,8 +115,8 @@ CREATE UNIQUE INDEX `name_type_id_UNIQUE` ON `computer_shop`.`component_model` (
 CREATE TABLE IF NOT EXISTS `computer_shop`.`component_store` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `model_id` BIGINT UNSIGNED NOT NULL,
-  `price` INT UNSIGNED NULL DEFAULT NULL,
-  `count` INT UNSIGNED NOT NULL,
+  `price` INT UNSIGNED NOT NULL DEFAULT 0,
+  `count` INT UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   CONSTRAINT `FK_product_component`
     FOREIGN KEY (`model_id`)
@@ -265,8 +265,8 @@ CREATE TABLE IF NOT EXISTS `computer_shop`.`import` (
   `import_date` DATETIME NOT NULL DEFAULT NOW(),
   `count` INT UNSIGNED NOT NULL,
   `purchase_price` INT UNSIGNED NOT NULL,
-  `price` INT UNSIGNED NULL,
-  `store_id` BIGINT UNSIGNED NULL DEFAULT 0,
+  `price` INT UNSIGNED NOT NULL DEFAULT 0,
+  `store_id` BIGINT UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   CONSTRAINT `FK_import_component_model`
     FOREIGN KEY (`model_id`)
@@ -552,11 +552,6 @@ CREATE PROCEDURE add_store_record(
     OUT target_id BIGINT UNSIGNED
 )
 BEGIN
-    IF (s_price = 0)
-    THEN
-		SET s_price = NULL;
-    END IF;
-    
 	SELECT `id`
     INTO target_id
     FROM `component_store`
@@ -656,21 +651,12 @@ BEGIN
 END$$
 
 USE `computer_shop`$$
-CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`component_store_BEFORE_INSERT` BEFORE INSERT ON `component_store` FOR EACH ROW
-BEGIN
-	IF (NEW.`price` = 0)
-    THEN
-		SET NEW.`price` = NULL;
-    END IF;
-END$$
-
-USE `computer_shop`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`component_store_BEFORE_UPDATE` BEFORE UPDATE ON `component_store` FOR EACH ROW
 BEGIN
 	IF (NEW.`price` != OLD.`price`)
     THEN
 		SIGNAL SQLSTATE '45000'
-			SET MESSAGE_TEXT = 'FORBIDDEN: Explicit change store price => Use update_store_price instead.';
+			SET MESSAGE_TEXT = 'FORBIDDEN: Explicit change store price => Use `update_store_price` instead.';
     END IF;
 END$$
 
@@ -697,7 +683,7 @@ BEGIN
 	FROM `component_store`
 	WHERE `id` = NEW.`component_id`;
 	
-    IF (s_price IS NULL)
+    IF (s_price = 0)
     THEN
 		SIGNAL SQLSTATE '45000'
 			SET MESSAGE_TEXT = 'FORBIDDEN: Use components without price.';
@@ -783,7 +769,7 @@ BEGIN
 	FROM `component_store`
 	WHERE `id` = NEW.`component_id`;
     
-	IF (new_price IS NULL)
+	IF (new_price = 0)
     THEN
 		SIGNAL SQLSTATE '45000'
 			SET MESSAGE_TEXT = 'FORBIDDEN: Use components without price.';

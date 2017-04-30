@@ -14,23 +14,24 @@ import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL
 
 public class ImportFullDto extends BaseFullDto<Long> {
 
-    private Timestamp importDate;
+    @Valid
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
+    private ProviderBriefDto provider;
 
     @Valid
     @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     private ComponentModelBriefDto model;
 
-    @Valid
     @NotNull(message = CANNOT_BE_NULL_MESSAGE)
-    private ProviderBriefDto provider;
-
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
-    @Min(value = 0, message = CANNOT_BE_NEGATIVE_MESSAGE)
-    private Long purchasePrice;
+    private Timestamp importDate;
 
     @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @Min(value = 0, message = CANNOT_BE_NEGATIVE_MESSAGE)
     private Long count;
+
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
+    @Min(value = 0, message = CANNOT_BE_NEGATIVE_MESSAGE)
+    private Long purchasePrice;
 
     @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @Min(value = 0, message = CANNOT_BE_NEGATIVE_MESSAGE)

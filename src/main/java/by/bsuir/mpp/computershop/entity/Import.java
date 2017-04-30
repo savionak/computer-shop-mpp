@@ -1,15 +1,10 @@
 package by.bsuir.mpp.computershop.entity;
 
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
 @Table(name = "import")
-@DynamicInsert
-@DynamicUpdate
 public class Import extends BaseEntity<Long> {
 
     @ManyToOne
@@ -29,11 +24,12 @@ public class Import extends BaseEntity<Long> {
     @Column(name = "purchase_price", nullable = false)
     private Long purchasePrice;
 
-    @Column(name = "price")
+    @Column(name = "price", nullable = false)
     private Long price;
 
     @ManyToOne
-    @JoinColumn(name = "store_id", nullable = false)
+    @JoinColumn(name = "store_id", nullable = false,
+            insertable = false, updatable = false)
     private ComponentStore stored;
 
     public Provider getProvider() {
