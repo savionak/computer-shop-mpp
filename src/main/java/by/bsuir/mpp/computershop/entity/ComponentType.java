@@ -21,7 +21,7 @@ public class ComponentType extends BaseEntity<Long> {
     private Boolean removed;
 
     @OneToMany(mappedBy = "type", fetch = FetchType.LAZY)
-    private List<ComponentModel> componentModels;
+    private List<ComponentModel> models;
 
     public String getName() {
         return this.name;
@@ -47,11 +47,11 @@ public class ComponentType extends BaseEntity<Long> {
         this.removed = removed;
     }
 
-    public List<ComponentModel> getComponentModels() {
-        return componentModels;
+    public List<ComponentModel> getModels() {
+        return models;
     }
 
-    public void setComponentModels(List<ComponentModel> componentModels) {
-        this.componentModels = componentModels;
+    public void setModels(List<ComponentModel> componentModels) {
+        this.models = componentModels;
     }
 }
