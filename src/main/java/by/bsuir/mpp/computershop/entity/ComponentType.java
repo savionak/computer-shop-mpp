@@ -1,16 +1,12 @@
 package by.bsuir.mpp.computershop.entity;
 
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "component_type")
-@DynamicInsert
-@DynamicUpdate
 public class ComponentType extends BaseEntity<Long> {
+
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 

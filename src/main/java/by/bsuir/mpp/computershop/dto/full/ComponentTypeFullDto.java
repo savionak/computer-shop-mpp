@@ -1,6 +1,7 @@
 package by.bsuir.mpp.computershop.dto.full;
 
 import by.bsuir.mpp.computershop.dto.brief.ComponentModelBriefDto;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -16,8 +17,10 @@ public class ComponentTypeFullDto extends BaseFullDto<Long> {
 
     private String description;
 
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     private Boolean removed;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<ComponentModelBriefDto> models;
 
     public String getName() {
