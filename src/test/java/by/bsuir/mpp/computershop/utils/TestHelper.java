@@ -10,6 +10,7 @@ import java.util.Random;
 public class TestHelper {
 
     public static final Random RANDOM = new Random();
+    public static final String NON_RANDOM_STRING = "some_nonrandom_value";
 
     private static final int BITS_COUNT = 130;
     private static final int RADIX = 32;
