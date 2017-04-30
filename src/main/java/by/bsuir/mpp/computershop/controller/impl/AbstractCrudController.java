@@ -2,7 +2,6 @@ package by.bsuir.mpp.computershop.controller.impl;
 
 import by.bsuir.mpp.computershop.controller.CrudController;
 import by.bsuir.mpp.computershop.controller.exception.ControllerException;
-import by.bsuir.mpp.computershop.dto.BaseDto;
 import by.bsuir.mpp.computershop.dto.brief.BaseBriefDto;
 import by.bsuir.mpp.computershop.dto.full.BaseFullDto;
 import by.bsuir.mpp.computershop.entity.BaseEntity;
@@ -44,7 +43,7 @@ public abstract class AbstractCrudController<E extends BaseEntity<ID>, ID extend
     }
 
     @Override
-    public BaseDto add(@Valid @RequestBody BaseDto dto) throws ControllerException {
+    public BaseFullDto add(@Valid @RequestBody BaseFullDto dto) throws ControllerException {
         logger.info(String.format("ADD new %s entity", dto.getClass()));
         E entity = mapper.map(dto, entityClass);
         E resultEntity = wrapServiceCall(() -> service.add(entity), logger);
@@ -52,7 +51,7 @@ public abstract class AbstractCrudController<E extends BaseEntity<ID>, ID extend
     }
 
     @Override
-    public BaseDto update(@Valid @RequestBody BaseDto dto) throws ControllerException {
+    public BaseFullDto update(@Valid @RequestBody BaseFullDto dto) throws ControllerException {
         logger.info(String.format("UPDATE entity with id = [%s]", dto.getId()));
         E entity = mapper.map(dto, entityClass);
         E resultEntity = wrapServiceCall(() -> service.update(entity), logger);
@@ -60,14 +59,14 @@ public abstract class AbstractCrudController<E extends BaseEntity<ID>, ID extend
     }
 
     @Override
-    public BaseDto getById(@PathVariable ID id) throws ControllerException {
+    public BaseFullDto getById(@PathVariable ID id) throws ControllerException {
         logger.info(String.format("GET entity with id = [%s]", id.toString()));
         E resultEntity = wrapServiceCall(() -> service.getOne(id), logger);
         return mapper.map(resultEntity, fullDtoClass);
     }
 
     @Override
-    public Iterable<BaseDto> getAll() throws ControllerException {
+    public Iterable<BaseBriefDto> getAll() throws ControllerException {
         logger.info("GET ALL entities.");
         Iterable<E> all = wrapServiceCall(service::getAll, logger);
         return StreamSupport.stream(all.spliterator(), false)
