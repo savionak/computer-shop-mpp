@@ -42,7 +42,7 @@ public class UserAuth extends BaseEntity<Long> {
         blocked = userAuth.blocked;
         removed = userAuth.removed;
         if (copyAuth) {
-            userInfo = userAuth.userInfo;
+            setUserInfo(new UserInfo(userAuth.userInfo));
         }
     }
 

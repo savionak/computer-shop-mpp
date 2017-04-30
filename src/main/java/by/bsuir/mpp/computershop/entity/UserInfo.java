@@ -27,6 +27,17 @@ public class UserInfo {
     @Column(name = "phone")
     private String phone;
 
+    public UserInfo() {
+
+    }
+
+    public UserInfo(UserInfo userInfo) {
+        this.firstName = userInfo.firstName;
+        this.lastName = userInfo.lastName;
+        this.patronymic = userInfo.patronymic;
+        this.phone = userInfo.phone;
+    }
+
     public Long getAuthId() {
         return authId;
     }
@@ -41,6 +52,7 @@ public class UserInfo {
 
     public void setUserAuth(UserAuth userAuth) {
         this.userAuth = userAuth;
+        this.authId = userAuth.getId();
     }
 
     public String getFirstName() {
