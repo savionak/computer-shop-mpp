@@ -1,17 +1,12 @@
 package by.bsuir.mpp.computershop.entity;
 
-import org.hibernate.annotations.DynamicInsert;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "customer")
-@DynamicInsert
 public class Customer extends BaseEntity<Long> {
+
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
@@ -21,10 +16,11 @@ public class Customer extends BaseEntity<Long> {
     @Column(name = "removed", nullable = false)
     private Boolean removed;
 
-    @Column(name = "orders_count", nullable = false)
+    @Column(name = "orders_count", nullable = false,
+            insertable = false, updatable = false)
     private Integer ordersCount;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private List<Order> orders;
 
     public String getName() {
