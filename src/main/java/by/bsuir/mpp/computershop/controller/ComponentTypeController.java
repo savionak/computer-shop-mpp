@@ -1,7 +1,7 @@
 package by.bsuir.mpp.computershop.controller;
 
 import by.bsuir.mpp.computershop.controller.exception.ControllerException;
-import by.bsuir.mpp.computershop.dto.brief.ComponentModelDto;
+import by.bsuir.mpp.computershop.dto.brief.ComponentModelBriefDto;
 import by.bsuir.mpp.computershop.entity.ComponentType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,5 +11,5 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public interface ComponentTypeController extends CrudController<ComponentType, Long> {
 
     @RequestMapping(path = "{id}/models", method = RequestMethod.GET)
-    Iterable<ComponentModelDto> getModels(@PathVariable Long id) throws ControllerException;
+    Iterable<ComponentModelBriefDto> getModels(@PathVariable Long id) throws ControllerException;
 }
