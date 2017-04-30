@@ -94,8 +94,6 @@ public class DtoMapperConfiguration {
             result.setRemoved(userAuthFullDto.isRemoved());
 
             UserInfo userInfo = modelMapper().map(userAuthFullDto.getUserInfo(), UserInfo.class);
-            userInfo.setUserAuth(result);
-
             result.setUserInfo(userInfo);
 
             String pass = userAuthFullDto.getPass();

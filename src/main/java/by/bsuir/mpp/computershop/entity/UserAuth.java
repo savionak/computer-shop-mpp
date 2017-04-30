@@ -91,6 +91,7 @@ public class UserAuth extends BaseEntity<Long> {
     }
 
     public void setUserInfo(UserInfo userInfo) {
+        userInfo.setUserAuth(this);
         this.userInfo = userInfo;
     }
 
