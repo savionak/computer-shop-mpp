@@ -1,6 +1,9 @@
 package by.bsuir.mpp.computershop.entity;
 
 import javax.persistence.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 @Entity
 @Table(name = "user_auth")
@@ -113,6 +116,10 @@ public class UserAuth extends BaseEntity<Long> {
         };
 
         public static final String TYPE_DEFINITION = "ENUM ('MANAGER', 'DIRECTOR', 'ADMIN')";
+
+        public static final List<Role> VALUES = Collections.unmodifiableList(Arrays.asList(values()));
+
+        public static final int SIZE = VALUES.size();
 
         public abstract String toString();
     }
