@@ -21,6 +21,9 @@ public class Export extends BaseEntity<Long> {
     @Column(name = "address", nullable = false)
     private String address;
 
+    @Column(name = "done", nullable = false)
+    private Boolean done;
+
     public Order getOrder() {
         return this.order;
     }
@@ -43,5 +46,13 @@ public class Export extends BaseEntity<Long> {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Boolean getDone() {
+        return done;
+    }
+
+    public void setDone(Boolean done) {
+        this.done = done;
     }
 }

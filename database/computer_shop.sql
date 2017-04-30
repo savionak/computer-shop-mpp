@@ -221,10 +221,11 @@ CREATE UNIQUE INDEX `auth_id_UNIQUE` ON `computer_shop`.`user_info` (`auth_id` A
 -- Table `computer_shop`.`export`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `computer_shop`.`export` (
-  `id` BIGINT NOT NULL,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `order_id` BIGINT UNSIGNED NOT NULL,
   `export_date` DATETIME NOT NULL DEFAULT NOW(),
   `address` VARCHAR(255) NOT NULL,
+  `done` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   CONSTRAINT `FK_export_order`
     FOREIGN KEY (`order_id`)
@@ -568,11 +569,7 @@ CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`order_BEFORE_INSERT`
 BEFORE INSERT ON `order`
 FOR EACH ROW
 BEGIN
-	IF (NEW.`status` = 'CANCELED')
-    THEN
-		SIGNAL SQLSTATE '45000'
-			SET MESSAGE_TEXT = 'FORBIDDEN: Insert canceled order.';
-    END IF;
+	SET NEW.`canceled` = FALSE;
     
     UPDATE `customer`
     SET `orders_count` = `orders_count` + 1
@@ -857,6 +854,59 @@ BEGIN
 END$$
 
 USE `computer_shop`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`export_BEFORE_INSERT`
+BEFORE INSERT ON `export`
+FOR EACH ROW
+BEGIN
+	SET NEW.`done` = FALSE;
+END$$
+
+USE `computer_shop`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`export_BEFORE_UPDATE`
+BEFORE UPDATE ON `export`
+FOR EACH ROW
+BEGIN
+	DECLARE order_status ENUM('IN_PROGRESS', 'READY', 'FINISHED');
+    
+	SELECT `status`
+    INTO order_status
+    FROM `order`
+    WHERE `id` = NEW.`order_id`;
+    
+	IF (NEW.`done`)
+    THEN
+		IF (order_status = 'IN_PROGRESS')
+        THEN
+			SET NEW.`done` = FALSE;
+		ELSE
+			UPDATE `order`
+            SET `status` = 'FINISHED'
+            WHERE `id` = NEW.`order_id`;
+        END IF;
+	ELSE
+		IF (order_status = 'FINISHED')
+        THEN
+			UPDATE `order`
+			SET `status` = 'READY'
+			WHERE `id` = NEW.`order_id`;
+		END IF;
+    END IF;
+END$$
+
+USE `computer_shop`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`export_AFTER_DELETE`
+AFTER DELETE ON `export`
+FOR EACH ROW
+BEGIN
+	IF (OLD.`done`)
+    THEN
+		UPDATE `order`
+		SET `status` = 'READY'
+		WHERE `id` = OLD.`order_id`;
+    END IF;
+END$$
+
+USE `computer_shop`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`import_BEFORE_INSERT`
 BEFORE INSERT ON `import`
 FOR EACH ROW
@@ -1039,5 +1089,15 @@ VALUES
   ('1', '1', '3'),
   ('1', '3', '1'),
   ('2', '2', '2');
+
+
+INSERT INTO `computer_shop`.`export`
+(`order_id`, `address`)
+VALUE
+  ('1', 'Some address');
+
+UPDATE `computer_shop`.`order`
+SET `status` = 'READY'
+WHERE `id` = 1;
 
 -- end attached script 'test_data'
