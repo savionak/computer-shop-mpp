@@ -28,20 +28,23 @@ public class UserAuth extends BaseEntity<Long> {
     private Boolean removed = false;
 
     // TODO: Check cascadeType
-    @OneToOne(mappedBy = "userAuth", optional = false, cascade = CascadeType.MERGE)
+    @OneToOne(mappedBy = "userAuth", fetch = FetchType.LAZY,
+            optional = false, cascade = CascadeType.MERGE)
     private UserInfo userInfo;
 
     public UserAuth() {
 
     }
 
-    public UserAuth(UserAuth userAuth) {
+    public UserAuth(UserAuth userAuth, boolean copyAuth) {
         email = userAuth.email;
         role = userAuth.role;
         passHash = userAuth.passHash;
         blocked = userAuth.blocked;
         removed = userAuth.removed;
-        userInfo = userAuth.userInfo;
+        if (copyAuth) {
+            userInfo = userAuth.userInfo;
+        }
     }
 
     public String getEmail() {
