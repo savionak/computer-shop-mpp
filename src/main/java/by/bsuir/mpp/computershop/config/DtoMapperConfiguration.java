@@ -23,6 +23,11 @@ public class DtoMapperConfiguration {
     DtoMapperConfiguration(PasswordEncoder passwordEncoder) {
         mapperFactory = new DefaultMapperFactory.Builder().build();
 
+        mapperFactory.classMap(Assembly.class, AssemblyBriefDto.class)
+                .field("order.id", "orderId")
+                .byDefault()
+                .register();
+
         mapperFactory.classMap(AssemblyComponent.class, AssemblyComponentBriefDto.class)
                 .field("component.model.name", "modelName")
                 .byDefault()

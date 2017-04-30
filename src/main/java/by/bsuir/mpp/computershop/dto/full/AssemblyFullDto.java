@@ -1,8 +1,10 @@
 package by.bsuir.mpp.computershop.dto.full;
 
 import by.bsuir.mpp.computershop.dto.brief.AssemblyComponentBriefDto;
+import by.bsuir.mpp.computershop.dto.brief.OrderBriefDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -11,6 +13,10 @@ import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NEGA
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
 
 public class AssemblyFullDto extends BaseFullDto<Long> {
+
+    @Valid
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private OrderBriefDto order;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long cost;
@@ -21,6 +27,14 @@ public class AssemblyFullDto extends BaseFullDto<Long> {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<AssemblyComponentBriefDto> components;
+
+    public OrderBriefDto getOrder() {
+        return order;
+    }
+
+    public void setOrder(OrderBriefDto order) {
+        this.order = order;
+    }
 
     public Long getCost() {
         return this.cost;
