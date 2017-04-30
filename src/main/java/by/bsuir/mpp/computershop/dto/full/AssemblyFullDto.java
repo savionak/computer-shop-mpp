@@ -15,7 +15,7 @@ import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL
 public class AssemblyFullDto extends BaseFullDto<Long> {
 
     @Valid
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     private OrderBriefDto order;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)

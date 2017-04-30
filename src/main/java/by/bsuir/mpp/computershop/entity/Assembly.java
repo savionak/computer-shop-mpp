@@ -1,27 +1,25 @@
 package by.bsuir.mpp.computershop.entity;
 
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "assembly")
-@DynamicInsert
-@DynamicUpdate
 public class Assembly extends BaseEntity<Long> {
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
 
-    @Column(name = "cost", nullable = false)
+    @Column(name = "cost", nullable = false,
+            insertable = false, updatable = false)
     private Long cost;
 
     @Column(name = "count", nullable = false)
     private Long count;
 
-    @OneToMany(mappedBy = "assembly", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "assembly", fetch = FetchType.LAZY,
+            cascade = CascadeType.REMOVE)
     private List<AssemblyComponent> components;
 
     public Order getOrder() {
