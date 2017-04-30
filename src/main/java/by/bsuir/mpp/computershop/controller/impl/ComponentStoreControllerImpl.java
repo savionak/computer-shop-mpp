@@ -1,7 +1,8 @@
 package by.bsuir.mpp.computershop.controller.impl;
 
 import by.bsuir.mpp.computershop.controller.ComponentStoreController;
-import by.bsuir.mpp.computershop.dto.brief.ComponentStoreDto;
+import by.bsuir.mpp.computershop.dto.brief.ComponentStoreBriefDto;
+import by.bsuir.mpp.computershop.dto.full.ComponentStoreFullDto;
 import by.bsuir.mpp.computershop.entity.ComponentStore;
 import by.bsuir.mpp.computershop.service.ComponentStoreService;
 import ma.glasnost.orika.MapperFacade;
@@ -17,6 +18,6 @@ public class ComponentStoreControllerImpl extends AbstractCrudController<Compone
 
     @Autowired
     public ComponentStoreControllerImpl(ComponentStoreService storeService, MapperFacade mapper) {
-        super(storeService, mapper, ComponentStoreDto.class, logger);
+        super(storeService, mapper, ComponentStoreBriefDto.class, ComponentStoreFullDto.class, ComponentStore.class, logger);
     }
 }
