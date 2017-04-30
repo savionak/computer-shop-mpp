@@ -1,7 +1,6 @@
 package by.bsuir.mpp.computershop.dto.full;
 
 import by.bsuir.mpp.computershop.dto.brief.AssemblyComponentBriefDto;
-import by.bsuir.mpp.computershop.dto.brief.BaseBriefDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.Min;
@@ -11,7 +10,7 @@ import java.util.List;
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NEGATIVE_MESSAGE;
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
 
-public class AssemblyFullDto extends BaseBriefDto {
+public class AssemblyFullDto extends BaseFullDto {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long cost;

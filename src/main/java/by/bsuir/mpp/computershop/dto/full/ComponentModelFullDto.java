@@ -1,6 +1,5 @@
 package by.bsuir.mpp.computershop.dto.full;
 
-import by.bsuir.mpp.computershop.dto.brief.BaseBriefDto;
 import by.bsuir.mpp.computershop.dto.brief.ComponentStoreBriefDto;
 import by.bsuir.mpp.computershop.dto.brief.ComponentTypeBriefDto;
 import by.bsuir.mpp.computershop.dto.brief.ImportBriefDto;
@@ -11,7 +10,7 @@ import java.util.List;
 
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.*;
 
-public class ComponentModelFullDto extends BaseBriefDto {
+public class ComponentModelFullDto extends BaseFullDto {
 
     @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     private ComponentTypeBriefDto type;

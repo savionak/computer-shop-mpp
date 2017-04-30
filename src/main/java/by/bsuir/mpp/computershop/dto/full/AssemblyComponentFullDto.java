@@ -1,6 +1,5 @@
 package by.bsuir.mpp.computershop.dto.full;
 
-import by.bsuir.mpp.computershop.dto.brief.BaseBriefDto;
 import by.bsuir.mpp.computershop.dto.brief.ComponentStoreBriefDto;
 
 import javax.validation.constraints.Min;
@@ -9,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NEGATIVE_MESSAGE;
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
 
-public class AssemblyComponentFullDto extends BaseBriefDto {
+public class AssemblyComponentFullDto extends BaseFullDto {
 
     @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     private ComponentStoreBriefDto component;

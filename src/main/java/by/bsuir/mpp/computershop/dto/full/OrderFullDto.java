@@ -1,7 +1,6 @@
 package by.bsuir.mpp.computershop.dto.full;
 
 import by.bsuir.mpp.computershop.dto.brief.AssemblyBriefDto;
-import by.bsuir.mpp.computershop.dto.brief.BaseBriefDto;
 import by.bsuir.mpp.computershop.dto.brief.CustomerBriefDto;
 import by.bsuir.mpp.computershop.dto.brief.ExportBriefDto;
 import by.bsuir.mpp.computershop.entity.Order.Status;
@@ -13,7 +12,7 @@ import java.util.List;
 
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
 
-public class OrderFullDto extends BaseBriefDto {
+public class OrderFullDto extends BaseFullDto {
 
     @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     private CustomerBriefDto customer;

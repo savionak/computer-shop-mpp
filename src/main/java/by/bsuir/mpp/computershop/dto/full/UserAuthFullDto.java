@@ -1,6 +1,5 @@
 package by.bsuir.mpp.computershop.dto.full;
 
-import by.bsuir.mpp.computershop.dto.brief.BaseBriefDto;
 import by.bsuir.mpp.computershop.entity.UserAuth.Role;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -9,7 +8,7 @@ import javax.validation.constraints.Pattern;
 
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.*;
 
-public class UserAuthFullDto extends BaseBriefDto {
+public class UserAuthFullDto extends BaseFullDto {
 
     @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @Pattern(regexp = EMAIL_REGEX, message = INVALID_VALUE_MESSAGE)

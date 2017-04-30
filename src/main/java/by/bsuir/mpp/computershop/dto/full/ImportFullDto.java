@@ -1,6 +1,5 @@
 package by.bsuir.mpp.computershop.dto.full;
 
-import by.bsuir.mpp.computershop.dto.brief.BaseBriefDto;
 import by.bsuir.mpp.computershop.dto.brief.ComponentModelBriefDto;
 import by.bsuir.mpp.computershop.dto.brief.ProviderBriefDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,7 +11,7 @@ import java.sql.Timestamp;
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NEGATIVE_MESSAGE;
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
 
-public class ImportFullDto extends BaseBriefDto {
+public class ImportFullDto extends BaseFullDto {
 
     private Timestamp importDate;
 

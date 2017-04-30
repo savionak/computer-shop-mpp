@@ -1,6 +1,5 @@
 package by.bsuir.mpp.computershop.dto.full;
 
-import by.bsuir.mpp.computershop.dto.brief.BaseBriefDto;
 import by.bsuir.mpp.computershop.dto.brief.OrderBriefDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -10,7 +9,7 @@ import java.util.List;
 
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.*;
 
-public class CustomerFullDto extends BaseBriefDto {
+public class CustomerFullDto extends BaseFullDto {
 
     @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @Pattern(regexp = NON_EMPTY_STRING_REGEX, message = CANNOT_BE_EMPTY_MESSAGE)
