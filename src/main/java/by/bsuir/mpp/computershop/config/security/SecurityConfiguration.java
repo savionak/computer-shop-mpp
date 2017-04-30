@@ -1,6 +1,6 @@
 package by.bsuir.mpp.computershop.config.security;
 
-import by.bsuir.mpp.computershop.config.security.UserDetails.UserAuthDetailsService;
+import by.bsuir.mpp.computershop.config.security.userdetails.UserAuthDetailsService;
 import by.bsuir.mpp.computershop.repository.UserAuthRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

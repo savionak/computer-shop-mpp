@@ -1,53 +1,49 @@
 package by.bsuir.mpp.computershop.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-
-import static by.bsuir.mpp.computershop.utils.ValidationConstants.*;
 
 @Entity
 @Table(name = "user_auth")
 public class UserAuth extends BaseEntity<Long> {
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
-    @Pattern(regexp = EMAIL_REGEX, message = INVALID_VALUE_MESSAGE)
+
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @JsonIgnore
-    @Column(name = "pass_hash", nullable = false)
+    @Column(name = "pass_hash", nullable = false,
+            updatable = false)
     private String passHash;
 
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false,
             columnDefinition = Role.TYPE_DEFINITION)
     private Role role;
 
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
-    @Column(name = "blocked", nullable = false)
-    private boolean blocked = false;
+    @Column(name = "blocked", nullable = false,
+            updatable = false, insertable = false)
+    private Boolean blocked;
 
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
-    @Column(name = "removed", nullable = false)
-    private boolean removed = false;
+    @Column(name = "removed", nullable = false,
+            updatable = false, insertable = false)
+    private Boolean removed;
 
-    @OneToOne(mappedBy = "userAuth", fetch = FetchType.LAZY)
+    // TODO: Test cascadeType
+    @OneToOne(mappedBy = "userAuth", fetch = FetchType.LAZY,
+            optional = false, cascade = CascadeType.MERGE)
     private UserInfo userInfo;
 
     public UserAuth() {
 
     }
 
-    public UserAuth(UserAuth userAuth) {
+    public UserAuth(UserAuth userAuth, boolean copyAuth) {
         email = userAuth.email;
         role = userAuth.role;
         passHash = userAuth.passHash;
         blocked = userAuth.blocked;
         removed = userAuth.removed;
-        userInfo = userAuth.userInfo;
+        if (copyAuth) {
+            setUserInfo(new UserInfo(userAuth.userInfo));
+        }
     }
 
     public String getEmail() {
@@ -74,11 +70,11 @@ public class UserAuth extends BaseEntity<Long> {
         this.role = role;
     }
 
-    public boolean isBlocked() {
+    public Boolean isBlocked() {
         return blocked;
     }
 
-    public void setBlocked(boolean blocked) {
+    public void setBlocked(Boolean blocked) {
         this.blocked = blocked;
     }
 
@@ -95,6 +91,7 @@ public class UserAuth extends BaseEntity<Long> {
     }
 
     public void setUserInfo(UserInfo userInfo) {
+        userInfo.setUserAuth(this);
         this.userInfo = userInfo;
     }
 
@@ -116,6 +113,7 @@ public class UserAuth extends BaseEntity<Long> {
         };
 
         public static final String TYPE_DEFINITION = "ENUM ('MANAGER', 'DIRECTOR', 'ADMIN')";
+
         public abstract String toString();
     }
 }

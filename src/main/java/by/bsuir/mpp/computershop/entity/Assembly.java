@@ -1,34 +1,25 @@
 package by.bsuir.mpp.computershop.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import java.util.List;
-
-import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NEGATIVE_MESSAGE;
-import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
 
 @Entity
 @Table(name = "assembly")
 public class Assembly extends BaseEntity<Long> {
-    @JsonIgnore
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    @Column(name = "cost", nullable = false)
-    private long cost;
+    @Column(name = "cost", nullable = false,
+            insertable = false, updatable = false)
+    private Long cost;
 
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
-    @Min(value = 0, message = CANNOT_BE_NEGATIVE_MESSAGE)
     @Column(name = "count", nullable = false)
-    private long count;
+    private Long count;
 
-    @OneToMany(mappedBy = "assembly", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "assembly", fetch = FetchType.LAZY,
+            cascade = CascadeType.REMOVE)
     private List<AssemblyComponent> components;
 
     public Order getOrder() {
@@ -39,19 +30,19 @@ public class Assembly extends BaseEntity<Long> {
         this.order = order;
     }
 
-    public long getCost() {
+    public Long getCost() {
         return this.cost;
     }
 
-    public void setCost(long cost) {
+    public void setCost(Long cost) {
         this.cost = cost;
     }
 
-    public long getCount() {
+    public Long getCount() {
         return this.count;
     }
 
-    public void setCount(long count) {
+    public void setCount(Long count) {
         this.count = count;
     }
 

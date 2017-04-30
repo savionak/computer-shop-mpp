@@ -1,43 +1,38 @@
 package by.bsuir.mpp.computershop.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.List;
-
-import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
 
 @Entity
 @Table(name = "`order`")
 public class Order extends BaseEntity<Long> {
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
+
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    @Column(name = "cost", nullable = false)
-    private long cost;
+    @Column(name = "cost", nullable = false,
+            insertable = false, updatable = false)
+    private Long cost;
 
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @Column(name = "order_date", nullable = false)
     private Timestamp orderDate;
 
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false,
-            columnDefinition = Status.TYPE_DEFINITION)
+            columnDefinition = Status.TYPE_DEFINITION,
+            insertable = false, updatable = false)
     private Status status;
 
     @Column(name = "canceled", nullable = false)
-    private boolean canceled = false;
+    private Boolean canceled = false;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
-    private List<Export> exports;
+    @OneToOne(mappedBy = "order", fetch = FetchType.LAZY)
+    private Export export;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY,
+            cascade = CascadeType.REMOVE)
     private List<Assembly> assemblies;
 
     public Customer getCustomer() {
@@ -48,11 +43,11 @@ public class Order extends BaseEntity<Long> {
         this.customer = customer;
     }
 
-    public long getCost() {
+    public Long getCost() {
         return cost;
     }
 
-    public void setCost(long cost) {
+    public void setCost(Long cost) {
         this.cost = cost;
     }
 
@@ -72,20 +67,12 @@ public class Order extends BaseEntity<Long> {
         this.status = status;
     }
 
-    public boolean isCanceled() {
+    public Boolean isCanceled() {
         return canceled;
     }
 
-    public void setCanceled(boolean canceled) {
+    public void setCanceled(Boolean canceled) {
         this.canceled = canceled;
-    }
-
-    public List<Export> getExports() {
-        return exports;
-    }
-
-    public void setExports(List<Export> exports) {
-        this.exports = exports;
     }
 
     public List<Assembly> getAssemblies() {
@@ -96,29 +83,33 @@ public class Order extends BaseEntity<Long> {
         this.assemblies = assemblyParcels;
     }
 
+    public Export getExport() {
+        return export;
+    }
+
+    public void setExport(Export export) {
+        this.export = export;
+    }
+
     public enum Status {
         IN_PROGRESS {
             public String toString() {
-                return "собирается";
+                return "В процессе составления";
             }
         },
         READY {
             public String toString() {
-                return "готов  сборке";
+                return "Принят";
             }
         },
         FINISHED {
             public String toString() {
-                return "завершен";
-            }
-        },
-        CANCELLED {
-            public String toString() {
-                return "отменен";
+                return "Завершен";
             }
         };
 
-        public static final String TYPE_DEFINITION = "ENUM ('IN_PROGRESS', 'FINISHED')";
+        public static final String TYPE_DEFINITION = "ENUM ('IN_PROGRESS', 'READY', 'FINISHED')";
+
         public abstract String toString();
     }
 }

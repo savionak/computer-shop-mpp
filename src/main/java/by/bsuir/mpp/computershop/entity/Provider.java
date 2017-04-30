@@ -1,31 +1,26 @@
 package by.bsuir.mpp.computershop.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.util.List;
-
-import static by.bsuir.mpp.computershop.utils.ValidationConstants.*;
 
 @Entity
 @Table(name = "provider")
 public class Provider extends BaseEntity<Long> {
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
-    @Pattern(regexp = NON_EMPTY_STRING_REGEX, message = CANNOT_BE_EMPTY_MESSAGE)
+
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
     @Column(name = "description", columnDefinition = "text")
     private String description;
 
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @Column(name = "removed", nullable = false)
-    private boolean removed;
+    private Boolean removed;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "provider", cascade = CascadeType.ALL)
+    @Column(name = "imports_count", nullable = false,
+            insertable = false, updatable = false)
+    private Integer importsCount;
+
+    @OneToMany(mappedBy = "provider", fetch = FetchType.LAZY)
     private List<Import> imports;
 
     public String getName() {
@@ -44,19 +39,27 @@ public class Provider extends BaseEntity<Long> {
         this.description = description;
     }
 
+    public Boolean isRemoved() {
+        return removed;
+    }
+
+    public void setRemoved(Boolean removed) {
+        this.removed = removed;
+    }
+
+    public Integer getImportsCount() {
+        return importsCount;
+    }
+
+    public void setImportsCount(Integer importsCount) {
+        this.importsCount = importsCount;
+    }
+
     public List<Import> getImports() {
         return imports;
     }
 
     public void setImports(List<Import> imports) {
         this.imports = imports;
-    }
-
-    public boolean isRemoved() {
-        return removed;
-    }
-
-    public void setRemoved(boolean removed) {
-        this.removed = removed;
     }
 }

@@ -3,6 +3,7 @@ package by.bsuir.mpp.computershop.config;
 import by.bsuir.mpp.computershop.controller.*;
 import by.bsuir.mpp.computershop.controller.impl.*;
 import by.bsuir.mpp.computershop.service.*;
+import ma.glasnost.orika.MapperFacade;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
@@ -11,28 +12,28 @@ import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 public class ControllerConfiguration {
 
     @Bean
-    public ComponentTypeController componentTypeController(ComponentTypeService componentTypeService) {
-        return new ComponentTypeControllerImpl(componentTypeService);
+    public ComponentTypeController componentTypeController(ComponentTypeService componentTypeService, MapperFacade mapperFacade) {
+        return new ComponentTypeControllerImpl(componentTypeService, mapperFacade);
     }
 
     @Bean
-    public ComponentModelController componentModelController(ComponentModelService componentModelService) {
-        return new ComponentModelControllerImpl(componentModelService);
+    public ComponentModelController componentModelController(ComponentModelService componentModelService, MapperFacade mapperFacade) {
+        return new ComponentModelControllerImpl(componentModelService, mapperFacade);
     }
 
     @Bean
-    public ProviderController providerController(ProviderService providerService) {
-        return new ProviderControllerImpl(providerService);
+    public ProviderController providerController(ProviderService providerService, MapperFacade mapperFacade) {
+        return new ProviderControllerImpl(providerService, mapperFacade);
     }
 
     @Bean
-    public ImportController importController(ImportService importService) {
-        return new ImportControllerImpl(importService);
+    public ImportController importController(ImportService importService, MapperFacade mapperFacade) {
+        return new ImportControllerImpl(importService, mapperFacade);
     }
 
     @Bean
-    public ComponentStoreController componentStoreController(ComponentStoreService storeService) {
-        return new ComponentStoreControllerImpl(storeService);
+    public ComponentStoreController componentStoreController(ComponentStoreService storeService, MapperFacade mapperFacade) {
+        return new ComponentStoreControllerImpl(storeService, mapperFacade);
     }
 
     @Bean
@@ -41,7 +42,7 @@ public class ControllerConfiguration {
     }
 
     @Bean
-    public OrderController orderController(OrderService orderService) {
-        return new OrderControllerImpl(orderService);
+    public OrderController orderController(OrderService orderService, MapperFacade mapperFacade) {
+        return new OrderControllerImpl(orderService, mapperFacade);
     }
 }

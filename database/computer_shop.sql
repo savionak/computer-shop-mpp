@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS `computer_shop`.`customer` (
   `name` VARCHAR(255) NOT NULL,
   `description` TEXT NULL DEFAULT NULL,
   `removed` TINYINT(1) NOT NULL DEFAULT 0,
+  `orders_count` INT UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -36,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `computer_shop`.`order` (
   `customer_id` BIGINT UNSIGNED NOT NULL,
   `cost` INT UNSIGNED NOT NULL DEFAULT 0,
   `order_date` DATETIME NOT NULL DEFAULT NOW(),
-  `status` ENUM('IN_PROGRESS', 'FINISHED') NOT NULL DEFAULT 'IN_PROGRESS',
+  `status` ENUM('IN_PROGRESS', 'READY', 'FINISHED') NOT NULL DEFAULT 'IN_PROGRESS',
   `canceled` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   CONSTRAINT `FK_order_customer`
@@ -114,8 +115,8 @@ CREATE UNIQUE INDEX `name_type_id_UNIQUE` ON `computer_shop`.`component_model` (
 CREATE TABLE IF NOT EXISTS `computer_shop`.`component_store` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `model_id` BIGINT UNSIGNED NOT NULL,
-  `price` INT UNSIGNED NULL DEFAULT NULL,
-  `count` INT UNSIGNED NOT NULL,
+  `price` INT UNSIGNED NOT NULL DEFAULT 0,
+  `count` INT UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   CONSTRAINT `FK_product_component`
     FOREIGN KEY (`model_id`)
@@ -134,10 +135,11 @@ CREATE UNIQUE INDEX `UQ_price_model` ON `computer_shop`.`component_store` (`pric
 -- Table `computer_shop`.`assembly_component`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `computer_shop`.`assembly_component` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `assembly_id` BIGINT UNSIGNED NOT NULL,
   `component_id` BIGINT UNSIGNED NOT NULL,
   `count` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`assembly_id`, `component_id`),
+  PRIMARY KEY (`id`),
   CONSTRAINT `FK_assembly_component_assembly_parcel`
     FOREIGN KEY (`assembly_id`)
     REFERENCES `computer_shop`.`assembly` (`id`)
@@ -152,6 +154,8 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 CREATE INDEX `IXFK_component_id` ON `computer_shop`.`assembly_component` (`component_id` ASC);
+
+CREATE UNIQUE INDEX `assembly_component_id_UNIQUE` ON `computer_shop`.`assembly_component` (`assembly_id` ASC, `component_id` ASC);
 
 
 -- -----------------------------------------------------
@@ -195,31 +199,32 @@ CREATE UNIQUE INDEX `email_UNIQUE` ON `computer_shop`.`user_auth` (`email` ASC);
 -- Table `computer_shop`.`user_info`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `computer_shop`.`user_info` (
-  `id` BIGINT UNSIGNED NOT NULL,
   `auth_id` BIGINT UNSIGNED NOT NULL,
   `first_name` VARCHAR(255) NOT NULL,
   `last_name` VARCHAR(255) NOT NULL,
   `patronymic` VARCHAR(255) NULL DEFAULT NULL,
   `phone` VARCHAR(50) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `FK_employee_info_employee_auth`
+  PRIMARY KEY (`auth_id`),
+  CONSTRAINT `fk_user_info_user_auth1`
     FOREIGN KEY (`auth_id`)
     REFERENCES `computer_shop`.`user_auth` (`id`)
     ON DELETE CASCADE
-    ON UPDATE RESTRICT)
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-CREATE UNIQUE INDEX `auth_id_UNIQUE` ON `computer_shop`.`user_info` (`auth_id` ASC);
+CREATE INDEX `fk_user_info_user_auth1_idx` ON `computer_shop`.`user_info` (`auth_id` ASC);
 
 
 -- -----------------------------------------------------
 -- Table `computer_shop`.`export`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `computer_shop`.`export` (
-  `id` BIGINT NOT NULL,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `order_id` BIGINT UNSIGNED NOT NULL,
   `export_date` DATETIME NOT NULL DEFAULT NOW(),
+  `address` VARCHAR(255) NOT NULL,
+  `done` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   CONSTRAINT `FK_export_order`
     FOREIGN KEY (`order_id`)
@@ -231,6 +236,8 @@ DEFAULT CHARACTER SET = utf8;
 
 CREATE INDEX `FK_export_order` ON `computer_shop`.`export` (`order_id` ASC);
 
+CREATE UNIQUE INDEX `order_id_UNIQUE` ON `computer_shop`.`export` (`order_id` ASC);
+
 
 -- -----------------------------------------------------
 -- Table `computer_shop`.`provider`
@@ -240,6 +247,7 @@ CREATE TABLE IF NOT EXISTS `computer_shop`.`provider` (
   `name` VARCHAR(255) NOT NULL,
   `description` TEXT NULL DEFAULT NULL,
   `removed` TINYINT(1) NOT NULL DEFAULT 0,
+  `imports_count` INT UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -257,7 +265,8 @@ CREATE TABLE IF NOT EXISTS `computer_shop`.`import` (
   `import_date` DATETIME NOT NULL DEFAULT NOW(),
   `count` INT UNSIGNED NOT NULL,
   `purchase_price` INT UNSIGNED NOT NULL,
-  `price` INT UNSIGNED NULL,
+  `price` INT UNSIGNED NOT NULL DEFAULT 0,
+  `store_id` BIGINT UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   CONSTRAINT `FK_import_component_model`
     FOREIGN KEY (`model_id`)
@@ -268,13 +277,20 @@ CREATE TABLE IF NOT EXISTS `computer_shop`.`import` (
     FOREIGN KEY (`provider_id`)
     REFERENCES `computer_shop`.`provider` (`id`)
     ON DELETE RESTRICT
-    ON UPDATE RESTRICT)
+    ON UPDATE RESTRICT,
+  CONSTRAINT `fk_import_component_store1`
+    FOREIGN KEY (`store_id`)
+    REFERENCES `computer_shop`.`component_store` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 CREATE INDEX `FK_import_provider` ON `computer_shop`.`import` (`provider_id` ASC);
 
 CREATE INDEX `FK_import_component_model` ON `computer_shop`.`import` (`model_id` ASC);
+
+CREATE INDEX `fk_import_component_store1_idx` ON `computer_shop`.`import` (`store_id` ASC);
 
 
 -- -----------------------------------------------------
@@ -301,6 +317,15 @@ CREATE TABLE IF NOT EXISTS `computer_shop`.`oauth_refresh_token` (
   `authentication` BLOB NULL DEFAULT NULL)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `computer_shop`.`oauth_code`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `computer_shop`.`oauth_code` (
+  `code` VARCHAR(255) NULL DEFAULT NULL,
+  `authentication` BLOB NULL)
+ENGINE = InnoDB;
 
 USE `computer_shop` ;
 
@@ -349,10 +374,11 @@ CREATE PROCEDURE cancel_order(
 	IN ord_id BIGINT UNSIGNED
 )
 BEGIN
+	DECLARE cust_id BIGINT UNSIGNED DEFAULT NULL;
 	DECLARE order_canceled BOOLEAN DEFAULT TRUE;
     
-    SELECT `canceled`
-    INTO order_canceled
+    SELECT `canceled`, `customer_id`
+    INTO order_canceled, cust_id
     FROM `order`
     WHERE `id` = ord_id;
     
@@ -365,6 +391,10 @@ BEGIN
 			ON comp.`assembly_id` = asm.`id`
 		SET store.`count` = store.`count` + (comp.`count` * asm.`count`)
 		WHERE asm.`order_id` = ord_id;
+        
+        UPDATE `customer`
+        SET `orders_count` = `orders_count` - 1
+        WHERE `id` = cust_id;
         
         UPDATE `order`
 		SET `order`.`canceled` = TRUE
@@ -384,14 +414,15 @@ CREATE PROCEDURE renew_order(
 	IN ord_id BIGINT UNSIGNED
 )
 BEGIN
+	DECLARE cust_id BIGINT UNSIGNED DEFAULT NULL;
 	DECLARE order_canceled BOOLEAN DEFAULT FALSE;
 
 	DECLARE EXIT HANDLER FOR SQLSTATE '22003'	-- `component_store`.`count` out of range: < 0
 		SIGNAL SQLSTATE '45000'
 			SET MESSAGE_TEXT = 'Not enough components available to renew order.';
     
-    SELECT `canceled`
-    INTO order_canceled
+    SELECT `canceled`, `customer_id`
+    INTO order_canceled, cust_id
     FROM `order`
     WHERE `id` = ord_id;
     
@@ -404,6 +435,10 @@ BEGIN
 			ON comp.`assembly_id` = asm.`id`
 		SET store.`count` = store.`count` - (comp.`count` * asm.`count`)
 		WHERE asm.`order_id` = ord_id;
+        
+        UPDATE `customer`
+        SET `orders_count` = `orders_count` + 1
+        WHERE `id` = cust_id;
         
         UPDATE `order`
 		SET `order`.`canceled` = FALSE
@@ -513,11 +548,10 @@ USE `computer_shop`$$
 CREATE PROCEDURE add_store_record(
 	IN s_model_id BIGINT UNSIGNED,
     IN s_price INT UNSIGNED,
-    IN s_count INT UNSIGNED
+    IN s_count INT UNSIGNED,
+    OUT target_id BIGINT UNSIGNED
 )
 BEGIN
-	DECLARE target_id BIGINT UNSIGNED DEFAULT NULL;
-	
 	SELECT `id`
     INTO target_id
     FROM `component_store`
@@ -530,11 +564,49 @@ BEGIN
         (`model_id`, `price`, `count`)
         VALUE
         (s_model_id, s_price, s_count);
+        
+        SET target_id = LAST_INSERT_ID();
     ELSE
 		UPDATE `component_store`
         SET `count` = `count` + s_count
         WHERE `id` = target_id;
     END IF;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure apply_order
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE apply_order(
+	IN ord_id BIGINT UNSIGNED
+)
+BEGIN
+	UPDATE `order`
+    SET `status` = 'READY'
+    WHERE `id` = ord_id
+		AND `status` != 'FINISHED';
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure accept_order
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE accept_order(
+	IN ord_id BIGINT UNSIGNED
+)
+BEGIN
+	UPDATE `order`
+    SET `status` = 'READY'
+    WHERE `id` = ord_id
+		AND `status` != 'FINISHED';
 END$$
 
 DELIMITER ;
@@ -546,11 +618,19 @@ CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`order_BEFORE_INSERT`
 BEFORE INSERT ON `order`
 FOR EACH ROW
 BEGIN
-	IF (NEW.`status` = 'CANCELED')
-    THEN
-		SIGNAL SQLSTATE '45000'
-			SET MESSAGE_TEXT = 'FORBIDDEN: Insert canceled order.';
-    END IF;
+	SET NEW.`canceled` = FALSE;
+    
+    UPDATE `customer`
+    SET `orders_count` = `orders_count` + 1
+    WHERE `id` = NEW.`customer_id`;
+END$$
+
+USE `computer_shop`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`order_BEFORE_DELETE` BEFORE DELETE ON `order` FOR EACH ROW
+BEGIN
+	UPDATE `customer`
+    SET `orders_count` = `orders_count` - 1
+    WHERE `id` = OLD.`customer_id`;
 END$$
 
 USE `computer_shop`$$
@@ -607,6 +687,16 @@ BEGIN
 END$$
 
 USE `computer_shop`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`component_store_BEFORE_UPDATE` BEFORE UPDATE ON `component_store` FOR EACH ROW
+BEGIN
+	IF (NEW.`price` != OLD.`price`)
+    THEN
+		SIGNAL SQLSTATE '45000'
+			SET MESSAGE_TEXT = 'FORBIDDEN: Explicit change store price => Use `update_store_price` instead.';
+    END IF;
+END$$
+
+USE `computer_shop`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`assembly_component_BEFORE_INSERT`
 BEFORE INSERT ON `assembly_component`
 FOR EACH ROW
@@ -629,7 +719,7 @@ BEGIN
 	FROM `component_store`
 	WHERE `id` = NEW.`component_id`;
 	
-    IF (s_price IS NULL)
+    IF (s_price = 0)
     THEN
 		SIGNAL SQLSTATE '45000'
 			SET MESSAGE_TEXT = 'FORBIDDEN: Use components without price.';
@@ -715,7 +805,7 @@ BEGIN
 	FROM `component_store`
 	WHERE `id` = NEW.`component_id`;
     
-	IF (new_price IS NULL)
+	IF (new_price = 0)
     THEN
 		SIGNAL SQLSTATE '45000'
 			SET MESSAGE_TEXT = 'FORBIDDEN: Use components without price.';
@@ -804,11 +894,68 @@ BEGIN
 END$$
 
 USE `computer_shop`$$
-CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`import_AFTER_INSERT`
-AFTER INSERT ON `computer_shop`.`import`
+CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`export_BEFORE_INSERT`
+BEFORE INSERT ON `export`
 FOR EACH ROW
 BEGIN
-	CALL add_store_record(NEW.`model_id`, NEW.`price`, NEW.`count`);
+	SET NEW.`done` = FALSE;
+END$$
+
+USE `computer_shop`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`export_BEFORE_UPDATE`
+BEFORE UPDATE ON `export`
+FOR EACH ROW
+BEGIN
+	DECLARE order_status ENUM('IN_PROGRESS', 'READY', 'FINISHED');
+    
+	SELECT `status`
+    INTO order_status
+    FROM `order`
+    WHERE `id` = NEW.`order_id`;
+    
+	IF (NEW.`done`)
+    THEN
+		IF (order_status = 'IN_PROGRESS')
+        THEN
+			SET NEW.`done` = FALSE;
+		ELSE
+			UPDATE `order`
+            SET `status` = 'FINISHED'
+            WHERE `id` = NEW.`order_id`;
+        END IF;
+	ELSE
+		IF (order_status = 'FINISHED')
+        THEN
+			UPDATE `order`
+			SET `status` = 'READY'
+			WHERE `id` = NEW.`order_id`;
+		END IF;
+    END IF;
+END$$
+
+USE `computer_shop`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`export_AFTER_DELETE`
+AFTER DELETE ON `export`
+FOR EACH ROW
+BEGIN
+	IF (OLD.`done`)
+    THEN
+		UPDATE `order`
+		SET `status` = 'READY'
+		WHERE `id` = OLD.`order_id`;
+    END IF;
+END$$
+
+USE `computer_shop`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`import_BEFORE_INSERT`
+BEFORE INSERT ON `import`
+FOR EACH ROW
+BEGIN
+	UPDATE `provider`
+    SET `imports_count` = `imports_count` + 1
+    WHERE `id` = NEW.`provider_id`;
+    
+	CALL add_store_record(NEW.`model_id`, NEW.`price`, NEW.`count`, NEW.`store_id`);
 END$$
 
 USE `computer_shop`$$
@@ -885,6 +1032,10 @@ BEGIN
 		SIGNAL SQLSTATE '45000'
 			SET MESSAGE_TEXT = 'Cannot delete import: components are already in use.';
 	END IF;
+    
+	UPDATE `provider`
+    SET `imports_count` = `imports_count` - 1
+    WHERE `id` = OLD.`provider_id`;
 END$$
 
 
@@ -912,6 +1063,10 @@ VALUES
 -- password = '123'
 ('1', 'ADMIN', 'mail@mail.com', '$2a$12$uGYKKxqsTq1lCk0AhL97T.WGcMErxKoJ4GKtRhkxcnPiEy3KF81W6');
 
+INSERT INTO `computer_shop`.`user_info`
+(`auth_id`, `first_name`, `last_name`)
+VALUES
+('1', 'Admin', 'The Ruller');
 -- end attached script 'system_admin'
 -- begin attached script 'test_data'
 INSERT INTO `computer_shop`.`user_auth`
@@ -978,5 +1133,15 @@ VALUES
   ('1', '1', '3'),
   ('1', '3', '1'),
   ('2', '2', '2');
+
+
+INSERT INTO `computer_shop`.`export`
+(`order_id`, `address`)
+VALUE
+  ('1', 'Some address');
+
+UPDATE `computer_shop`.`order`
+SET `status` = 'READY'
+WHERE `id` = 1;
 
 -- end attached script 'test_data'

@@ -1,40 +1,29 @@
 package by.bsuir.mpp.computershop.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.util.List;
-
-import static by.bsuir.mpp.computershop.utils.ValidationConstants.*;
 
 @Entity
 @Table(name = "component_model")
 public class ComponentModel extends BaseEntity<Long> {
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
+
     @ManyToOne
     @JoinColumn(name = "type_id", unique = true, nullable = false)
     private ComponentType type;
 
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
-    @Pattern(regexp = NON_EMPTY_STRING_REGEX, message = CANNOT_BE_EMPTY_MESSAGE)
     @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "description", columnDefinition = "text")
     private String description;
 
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @Column(name = "removed", nullable = false)
-    private boolean removed;
+    private Boolean removed;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "model")
+    @OneToMany(mappedBy = "model", fetch = FetchType.LAZY)
     private List<ComponentStore> storedComponents;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "model")
+    @OneToMany(mappedBy = "model", fetch = FetchType.LAZY)
     private List<Import> imports;
 
     public ComponentType getType() {
@@ -61,11 +50,11 @@ public class ComponentModel extends BaseEntity<Long> {
         this.description = description;
     }
 
-    public boolean isRemoved() {
+    public Boolean isRemoved() {
         return removed;
     }
 
-    public void setRemoved(boolean removed) {
+    public void setRemoved(Boolean removed) {
         this.removed = removed;
     }
 

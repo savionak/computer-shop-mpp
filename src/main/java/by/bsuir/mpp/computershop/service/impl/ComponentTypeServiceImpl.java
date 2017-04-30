@@ -18,6 +18,6 @@ public class ComponentTypeServiceImpl extends AbstractCrudService<ComponentType,
 
     @Override
     public Iterable<ComponentModel> getModels(Long id) throws ServiceException {
-        return getOne(id).getComponentModels();
+        return getOne(id).getModels();
     }
 }

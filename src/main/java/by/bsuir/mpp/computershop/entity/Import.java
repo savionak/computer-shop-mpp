@@ -1,43 +1,36 @@
 package by.bsuir.mpp.computershop.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
-
-import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NEGATIVE_MESSAGE;
-import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
 
 @Entity
 @Table(name = "import")
 public class Import extends BaseEntity<Long> {
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
+
     @ManyToOne
     @JoinColumn(name = "provider_id", nullable = false)
     private Provider provider;
 
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @ManyToOne
     @JoinColumn(name = "model_id", nullable = false)
     private ComponentModel model;
 
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @Column(name = "import_date", nullable = false)
     private Timestamp importDate;
 
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
-    @Min(value = 0, message = CANNOT_BE_NEGATIVE_MESSAGE)
     @Column(name = "count", nullable = false)
-    private long count;
+    private Long count;
 
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
-    @Min(value = 0, message = CANNOT_BE_NEGATIVE_MESSAGE)
     @Column(name = "purchase_price", nullable = false)
-    private long purchasePrice;
+    private Long purchasePrice;
 
-    @Min(value = 0, message = CANNOT_BE_NEGATIVE_MESSAGE)
-    @Column(name = "price")
-    private long price;
+    @Column(name = "price", nullable = false)
+    private Long price;
+
+    @ManyToOne
+    @JoinColumn(name = "store_id", nullable = false,
+            insertable = false, updatable = false)
+    private ComponentStore stored;
 
     public Provider getProvider() {
         return this.provider;
@@ -63,27 +56,35 @@ public class Import extends BaseEntity<Long> {
         this.importDate = importDate;
     }
 
-    public long getCount() {
+    public Long getCount() {
         return this.count;
     }
 
-    public void setCount(long count) {
+    public void setCount(Long count) {
         this.count = count;
     }
 
-    public long getPurchasePrice() {
+    public Long getPurchasePrice() {
         return this.purchasePrice;
     }
 
-    public void setPurchasePrice(long purchasePrice) {
+    public void setPurchasePrice(Long purchasePrice) {
         this.purchasePrice = purchasePrice;
     }
 
-    public long getPrice() {
+    public Long getPrice() {
         return this.price;
     }
 
-    public void setPrice(long price) {
+    public void setPrice(Long price) {
         this.price = price;
+    }
+
+    public ComponentStore getStored() {
+        return stored;
+    }
+
+    public void setStored(ComponentStore stored) {
+        this.stored = stored;
     }
 }

@@ -1,28 +1,24 @@
 package by.bsuir.mpp.computershop.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-
-import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NEGATIVE_MESSAGE;
-import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
+import java.util.List;
 
 @Entity
 @Table(name = "component_store")
 public class ComponentStore extends BaseEntity<Long> {
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
+
     @ManyToOne
     @JoinColumn(name = "model_id", nullable = false)
     private ComponentModel model;
 
-    @Min(value = 0, message = CANNOT_BE_NEGATIVE_MESSAGE)
-    @Column(name = "price")
-    private int price;
+    @Column(name = "price", nullable = false)
+    private Long price;
 
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
-    @Min(value = 0, message = CANNOT_BE_NEGATIVE_MESSAGE)
-    @Column(name = "count")
-    private int count;
+    @Column(name = "count", nullable = false)
+    private Long count;
+
+    @OneToMany(mappedBy = "stored")
+    private List<Import> imports;
 
     public ComponentModel getModel() {
         return this.model;
@@ -32,19 +28,27 @@ public class ComponentStore extends BaseEntity<Long> {
         this.model = model;
     }
 
-    public int getPrice() {
+    public Long getPrice() {
         return this.price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 
-    public int getCount() {
+    public Long getCount() {
         return this.count;
     }
 
-    public void setCount(int count) {
+    public void setCount(Long count) {
         this.count = count;
+    }
+
+    public List<Import> getImports() {
+        return imports;
+    }
+
+    public void setImports(List<Import> imports) {
+        this.imports = imports;
     }
 }
