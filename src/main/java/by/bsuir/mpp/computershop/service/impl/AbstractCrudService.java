@@ -8,7 +8,6 @@ import by.bsuir.mpp.computershop.service.exception.ServiceException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 
@@ -24,7 +23,6 @@ public abstract class AbstractCrudService<E extends BaseEntity<ID>, ID extends S
     }
 
     @Override
-    @Transactional
     public E add(E entity) throws ServiceException {
         if (!validateAdd(entity)) {
             throw new BadEntityException();
@@ -40,7 +38,6 @@ public abstract class AbstractCrudService<E extends BaseEntity<ID>, ID extends S
     }
 
     @Override
-    @Transactional
     public E update(E entity) throws ServiceException {
         ID id = entity.getId();
         if (id == null || !repository.exists(id) || !validateUpdate(entity)) {
