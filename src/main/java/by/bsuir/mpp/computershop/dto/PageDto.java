@@ -1,4 +1,4 @@
-package by.bsuir.mpp.computershop.dto.brief.pages;
+package by.bsuir.mpp.computershop.dto;
 
 public class PageDto {
 

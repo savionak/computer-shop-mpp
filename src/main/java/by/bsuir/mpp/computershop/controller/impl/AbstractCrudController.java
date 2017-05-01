@@ -2,8 +2,8 @@ package by.bsuir.mpp.computershop.controller.impl;
 
 import by.bsuir.mpp.computershop.controller.CrudController;
 import by.bsuir.mpp.computershop.controller.exception.ControllerException;
+import by.bsuir.mpp.computershop.dto.PageDto;
 import by.bsuir.mpp.computershop.dto.brief.BaseBriefDto;
-import by.bsuir.mpp.computershop.dto.brief.pages.PageDto;
 import by.bsuir.mpp.computershop.dto.full.BaseFullDto;
 import by.bsuir.mpp.computershop.entity.BaseEntity;
 import by.bsuir.mpp.computershop.service.CrudService;

@@ -1,7 +1,7 @@
 package by.bsuir.mpp.computershop.config;
 
+import by.bsuir.mpp.computershop.dto.PageDto;
 import by.bsuir.mpp.computershop.dto.brief.*;
-import by.bsuir.mpp.computershop.dto.brief.pages.PageDto;
 import by.bsuir.mpp.computershop.dto.full.AssemblyComponentFullDto;
 import by.bsuir.mpp.computershop.dto.full.ImportFullDto;
 import by.bsuir.mpp.computershop.dto.full.UserAuthFullDto;

@@ -1,8 +1,8 @@
 package by.bsuir.mpp.computershop.controller;
 
 import by.bsuir.mpp.computershop.controller.exception.ControllerException;
+import by.bsuir.mpp.computershop.dto.PageDto;
 import by.bsuir.mpp.computershop.dto.brief.BaseBriefDto;
-import by.bsuir.mpp.computershop.dto.brief.pages.PageDto;
 import by.bsuir.mpp.computershop.dto.full.BaseFullDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.PathVariable;
