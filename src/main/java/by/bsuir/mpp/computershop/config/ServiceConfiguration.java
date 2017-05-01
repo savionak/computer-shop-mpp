@@ -10,8 +10,13 @@ import org.springframework.context.annotation.Configuration;
 public class ServiceConfiguration {
 
     @Bean
-    ComponentTypeService componentTypeService(ComponentTypeRepository componentTypeRepository) {
-        return new ComponentTypeServiceImpl(componentTypeRepository);
+    AssemblyComponentService assemblyComponentService(AssemblyComponentRepository assemblyComponentRepository) {
+        return new AssemblyComponentServiceImpl(assemblyComponentRepository);
+    }
+
+    @Bean
+    AssemblyService assemblyService(AssemblyRepository assemblyRepository) {
+        return new AssemblyServiceImpl(assemblyRepository);
     }
 
     @Bean
@@ -20,8 +25,23 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    ProviderService providerService(ProviderRepository providerRepository) {
-        return new ProviderServiceImpl(providerRepository);
+    ComponentStoreService componentStoreService(ComponentStoreRepository storeRepository) {
+        return new ComponentStoreServiceImpl(storeRepository);
+    }
+
+    @Bean
+    ComponentTypeService componentTypeService(ComponentTypeRepository componentTypeRepository) {
+        return new ComponentTypeServiceImpl(componentTypeRepository);
+    }
+
+    @Bean
+    CustomerService customerService(CustomerRepository customerRepository) {
+        return new CustomerServiceImpl(customerRepository);
+    }
+
+    @Bean
+    ExportService exportService(ExportRepository exportRepository) {
+        return new ExportServiceImpl(exportRepository);
     }
 
     @Bean
@@ -30,12 +50,17 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    ComponentStoreService componentStoreService(ComponentStoreRepository storeRepository) {
-        return new ComponentStoreServiceImpl(storeRepository);
+    OrderService orderService(OrderRepository orderRepository) {
+        return new OrderServiceImpl(orderRepository);
     }
 
     @Bean
-    OrderService orderService(OrderRepository orderRepository) {
-        return new OrderServiceImpl(orderRepository);
+    ProviderService providerService(ProviderRepository providerRepository) {
+        return new ProviderServiceImpl(providerRepository);
+    }
+
+    @Bean
+    UserAuthService userAuthService(UserAuthRepository userAuthRepository) {
+        return new UserAuthServiceImpl(userAuthRepository);
     }
 }
