@@ -69,7 +69,6 @@ public abstract class CrudServiceTest<E extends BaseEntity<ID>, ID extends Seria
 
         Page<E> databasePage = getEntitySupplier().getPage(content);
         Pageable pageable = new PageRequest(0, Integer.MAX_VALUE);
-
         when(getCrudRepository().findAll(pageable)).thenReturn(databasePage);
 
         Page<E> result = getCrudService().getAll(pageable);
@@ -78,6 +77,18 @@ public abstract class CrudServiceTest<E extends BaseEntity<ID>, ID extends Seria
         Assert.assertEquals(content.size(), result.getTotalElements());
     }
 
+    @Test
+    public void findAllEntitiesEmptyTest() throws Exception {
+        Page<E> databasePage = getEntitySupplier().getPage(new ArrayList<E>());
+
+        Pageable pageable = new PageRequest(0, 10);
+        when(getCrudRepository().findAll(pageable)).thenReturn(databasePage);
+
+        Page<E> result = getCrudService().getAll(pageable);
+
+        verify(getCrudRepository(), times(1)).findAll(Matchers.<Pageable>any());
+        Assert.assertEquals(0, result.getTotalElements());
+    }
 
     @Test(expected = EntityNotFoundException.class)
     public void findNotExistingEntityTest() throws Exception {
