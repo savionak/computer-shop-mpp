@@ -8,6 +8,7 @@ import by.bsuir.mpp.computershop.entity.BaseEntity;
 import by.bsuir.mpp.computershop.service.CrudService;
 import ma.glasnost.orika.MapperFacade;
 import org.apache.log4j.Logger;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -67,9 +68,9 @@ public abstract class AbstractCrudController
     }
 
     @Override
-    public Iterable<B> getAll() throws ControllerException {
+    public Iterable<B> getAll(Pageable pageable) throws ControllerException {
         logger.info("GET ALL entities.");
-        Iterable<E> all = wrapServiceCall(service::getAll, logger);
+        Iterable<E> all = wrapServiceCall(() -> service.getAll(pageable), logger);
         return StreamSupport.stream(all.spliterator(), false)
                 .map(i -> mapper.map(i, briefDtoClass))
                 .collect(Collectors.toList());
