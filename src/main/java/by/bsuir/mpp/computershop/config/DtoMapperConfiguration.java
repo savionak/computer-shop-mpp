@@ -1,6 +1,7 @@
 package by.bsuir.mpp.computershop.config;
 
 import by.bsuir.mpp.computershop.dto.brief.*;
+import by.bsuir.mpp.computershop.dto.brief.pages.PageDto;
 import by.bsuir.mpp.computershop.dto.full.AssemblyComponentFullDto;
 import by.bsuir.mpp.computershop.dto.full.ImportFullDto;
 import by.bsuir.mpp.computershop.dto.full.UserAuthFullDto;
@@ -13,6 +14,7 @@ import ma.glasnost.orika.metadata.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
@@ -68,6 +70,8 @@ public class DtoMapperConfiguration {
                 .byDefault()
                 .register();
         mapperFactory.getConverterFactory().registerConverter(new UserAuthConverter(passwordEncoder));
+
+        mapperFactory.getConverterFactory().registerConverter(new PageInfoConverter());
     }
 
     @Bean
@@ -100,6 +104,28 @@ public class DtoMapperConfiguration {
             if (pass != null) {
                 result.setPassHash(passwordEncoder.encode(pass));
             }
+            return result;
+        }
+    }
+
+    private class PageInfoConverter extends CustomConverter<Page, PageDto.PageInfo> {
+
+        @Override
+        public PageDto.PageInfo convert(Page page, Type<? extends PageDto.PageInfo> type) {
+            PageDto.PageInfo result = new PageDto.PageInfo();
+
+            result.setTotalPages(page.getTotalPages());
+            result.setNumber(page.getNumber());
+
+            result.setFirst(page.isFirst());
+            result.setLast(page.isLast());
+            result.setHasNext(page.hasNext());
+            result.setHasPrevious(page.hasPrevious());
+
+            result.setSize(page.getSize());
+            result.setTotalElements(page.getTotalElements());
+            result.setNumberOfElements(page.getNumberOfElements());
+
             return result;
         }
     }

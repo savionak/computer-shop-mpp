@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
 import java.io.Serializable;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import static by.bsuir.mpp.computershop.controller.exception.wrapper.ServiceCallWrapper.wrapServiceCall;
 
@@ -71,13 +73,26 @@ public abstract class AbstractCrudController
     public PageDto getAll(Pageable pageable) throws ControllerException {
         logger.info("GET ALL entities.");
         Page<E> all = wrapServiceCall(() -> service.getAll(pageable), logger);
-        return mapper.map(all, PageDto.class);
+        return asPageDto(all);
     }
 
     @Override
     public void delete(@PathVariable ID id) throws ControllerException {
         logger.info(String.format("DELETE entity with id = [%s]", id.toString()));
         wrapServiceCall(() -> service.delete(id), logger);
+    }
+
+    protected final PageDto asPageDto(Page<E> page) {
+        PageDto.PageInfo info = mapper.map(page, PageDto.PageInfo.class);
+        Iterable<B> content = StreamSupport.stream(page.spliterator(), false)
+                .map(i -> mapper.map(i, briefDtoClass))
+                .collect(Collectors.toList());
+
+        PageDto result = new PageDto();
+        result.setInfo(info);
+        result.setContent(content);
+
+        return result;
     }
 
 }
