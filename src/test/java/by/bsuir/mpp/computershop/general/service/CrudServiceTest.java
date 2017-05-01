@@ -15,6 +15,7 @@ import org.mockito.Captor;
 import org.mockito.Matchers;
 import org.mockito.MockitoAnnotations;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.repository.CrudRepository;
 
 import java.io.Serializable;
@@ -68,8 +69,6 @@ public abstract class CrudServiceTest<E extends BaseEntity<ID>, ID extends Seria
         when(getCrudRepository().exists(any())).thenReturn(true);
 
         getCrudService().update(entity);
-
-        verify(getCrudRepository(), times(1)).save(Matchers.<E>any());
     }
 
     @Test(expected = EntityNotFoundException.class)
@@ -80,5 +79,17 @@ public abstract class CrudServiceTest<E extends BaseEntity<ID>, ID extends Seria
         when(getCrudRepository().findOne(parameterId)).thenReturn(null);
 
         E actualResult = getCrudService().update(entity);
+    }
+
+    @Test(expected = EntityNotFoundException.class)
+    public void deleteExistingEntityTest() throws Exception {
+        getCrudService().delete(getEntitySupplier().getAnyId());
+    }
+
+    @Test(expected = EntityNotFoundException.class)
+    public void deleteNotExistingEntityTest() throws Exception {
+        doThrow(new EmptyResultDataAccessException(1)).when(getCrudRepository()).delete(Matchers.<ID>any());
+
+        getCrudService().delete(getEntitySupplier().getAnyId());
     }
 }
