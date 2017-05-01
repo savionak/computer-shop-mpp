@@ -1,16 +1,16 @@
-package by.bsuir.mpp.computershop.utils;
+package by.bsuir.mpp.computershop.controller.exception.wrapper;
 
 import by.bsuir.mpp.computershop.service.exception.ServiceException;
 
-public class WrappedFunctions {
+public class WrappedServiceFunctions {
 
     @FunctionalInterface
-    public interface Function<T> {
+    public interface ServiceFunction<T> {
         T call() throws ServiceException;
     }
 
     @FunctionalInterface
-    public interface VoidFunction {
+    public interface VoidServiceFunction {
         void call() throws ServiceException;
     }
 }

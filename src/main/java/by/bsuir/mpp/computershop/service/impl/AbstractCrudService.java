@@ -2,15 +2,16 @@ package by.bsuir.mpp.computershop.service.impl;
 
 import by.bsuir.mpp.computershop.entity.BaseEntity;
 import by.bsuir.mpp.computershop.service.CrudService;
+import by.bsuir.mpp.computershop.service.exception.BadEntityException;
 import by.bsuir.mpp.computershop.service.exception.EntityNotFoundException;
 import by.bsuir.mpp.computershop.service.exception.ServiceException;
-import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
+
+import static by.bsuir.mpp.computershop.service.exception.wrapper.RepositoryCallWrapper.wrapRepositoryCall;
 
 public abstract class AbstractCrudService<E extends BaseEntity<ID>, ID extends Serializable> implements CrudService<E, ID> {
     private static final String ID_NOT_FOUND_FORMAT_STRING = "Entity with id = [%s] not found";
@@ -22,92 +23,64 @@ public abstract class AbstractCrudService<E extends BaseEntity<ID>, ID extends S
     }
 
     @Override
-    @Transactional
     public E add(E entity) throws ServiceException {
+        if (!validateAdd(entity)) {
+            throw new BadEntityException();
+        }
+
         entity.setId(null); // to avoid update existing entities
-        E result;
-        try {
-            if (validateAdd(entity)) {
-                result = repository.save(entity);
-            } else {
-                throw new EntityNotFoundException("Referenced entities not found");
-            }
-            if (result == null) {
-                throw new ServiceException("Can't add entity.");
-            }
-        } catch (DataAccessException e) {
-            throw new ServiceException(e);
+        E result = wrapRepositoryCall(() -> repository.save(entity));
+
+        if (result == null) {
+            throw new ServiceException("Can't add entity.");
         }
         return result;
     }
 
     @Override
-    @Transactional
     public E update(E entity) throws ServiceException {
         ID id = entity.getId();
-        E result;
-        try {
-            if (id != null && repository.exists(id) && validateUpdate(entity)) {
-                result = repository.save(entity);
-            } else {
-                throw new EntityNotFoundException(idNotFoundMessage(id));
-            }
-            if (result == null) {
-                throw new ServiceException("Can't update entity.");
-            }
-        } catch (DataAccessException e) {
-            throw new ServiceException(e);
+        if (id == null || !repository.exists(id) || !validateUpdate(entity)) {
+            throw new BadEntityException(idNotFoundMessage(id));
+        }
+
+        E result = wrapRepositoryCall(() -> repository.save(entity));
+
+        if (result == null) {
+            throw new ServiceException("Can't update entity.");
         }
         return result;
     }
 
     @Override
     public Page<E> getAll(Pageable pageable) throws ServiceException {
-        Page<E> result;
-        try {
-            result = repository.findAll(pageable);
-        } catch (DataAccessException e) {
-            throw new ServiceException(e);
-        }
-        return result;
+        return wrapRepositoryCall(() -> repository.findAll(pageable));
     }
 
     @Override
     public E getOne(ID id) throws ServiceException {
-        E result = null;
-        try {
-            if (id != null) {
-                result = repository.findOne(id);
-            }
-            if (result == null) {
-                throw new EntityNotFoundException(idNotFoundMessage(id));
-            }
-        } catch (DataAccessException e) {
-            throw new ServiceException(e);
+        E result = wrapRepositoryCall(() -> repository.findOne(id));
+        if (result == null) {
+            throw new EntityNotFoundException(idNotFoundMessage(id));
         }
         return result;
     }
 
     @Override
     public void delete(ID id) throws ServiceException {
-        try {
-            if (id != null && repository.exists(id)) {
-                repository.delete(id);
-            } else {
-                throw new EntityNotFoundException(idNotFoundMessage(id));
-            }
-        } catch (DataAccessException e) {
-            throw new ServiceException(e);
+        if (id == null || !repository.exists(id)) {
+            throw new EntityNotFoundException(idNotFoundMessage(id));
         }
+        wrapRepositoryCall(() -> repository.delete(id));
     }
 
     protected boolean validateAdd(E entity) {
-        // check foreign keys before insert
+        // check constraints before insert
         return true;
     }
 
     protected boolean validateUpdate(E entity) {
-        // check foreign keys before update
+        // check constraints before update
         return true;
     }
 

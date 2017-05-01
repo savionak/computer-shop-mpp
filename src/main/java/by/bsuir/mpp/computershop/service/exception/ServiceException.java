@@ -1,9 +1,9 @@
 package by.bsuir.mpp.computershop.service.exception;
 
 public class ServiceException extends Exception {
-    private static final long serialVersionUID = 200L;
 
     public ServiceException(){
+
     }
 
     public ServiceException(Exception e){

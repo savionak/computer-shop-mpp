@@ -73,7 +73,7 @@ public abstract class AbstractCrudController
     public PageDto getAll(Pageable pageable) throws ControllerException {
         logger.info("GET ALL entities.");
         Page<E> all = wrapServiceCall(() -> service.getAll(pageable), logger);
-        return asPageDto(all);
+        return asPageDto(all, briefDtoClass);
     }
 
     @Override
@@ -82,10 +82,10 @@ public abstract class AbstractCrudController
         wrapServiceCall(() -> service.delete(id), logger);
     }
 
-    protected final PageDto asPageDto(Page<E> page) {
+    protected final PageDto asPageDto(Page<? extends BaseEntity<ID>> page, Class<? extends BaseBriefDto<ID>> pageBriefDtoClass) {
         PageDto.PageInfo info = mapper.map(page, PageDto.PageInfo.class);
-        Iterable<B> content = StreamSupport.stream(page.spliterator(), false)
-                .map(i -> mapper.map(i, briefDtoClass))
+        Iterable<? extends BaseBriefDto<ID>> content = StreamSupport.stream(page.spliterator(), false)
+                .map(i -> mapper.map(i, pageBriefDtoClass))
                 .collect(Collectors.toList());
 
         PageDto result = new PageDto();
