@@ -29,9 +29,8 @@ public class UserAuth extends BaseEntity<Long> {
             updatable = false, insertable = false)
     private Boolean removed;
 
-    // TODO: Test cascadeType
     @OneToOne(mappedBy = "userAuth", fetch = FetchType.LAZY,
-            optional = false, cascade = CascadeType.MERGE)
+            cascade = CascadeType.ALL)
     private UserInfo userInfo;
 
     public UserAuth() {

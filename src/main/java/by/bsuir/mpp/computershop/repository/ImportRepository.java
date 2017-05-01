@@ -1,7 +1,7 @@
 package by.bsuir.mpp.computershop.repository;
 
 import by.bsuir.mpp.computershop.entity.Import;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface ImportRepository extends CrudRepository<Import, Long> {
+public interface ImportRepository extends PagingAndSortingRepository<Import, Long> {
 }

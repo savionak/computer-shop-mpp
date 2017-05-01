@@ -5,7 +5,9 @@ import by.bsuir.mpp.computershop.service.CrudService;
 import by.bsuir.mpp.computershop.service.exception.EntityNotFoundException;
 import by.bsuir.mpp.computershop.service.exception.ServiceException;
 import org.springframework.dao.DataAccessException;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
@@ -13,9 +15,9 @@ import java.io.Serializable;
 public abstract class AbstractCrudService<E extends BaseEntity<ID>, ID extends Serializable> implements CrudService<E, ID> {
     private static final String ID_NOT_FOUND_FORMAT_STRING = "Entity with id = [%s] not found";
 
-    private CrudRepository<E, ID> repository;
+    private PagingAndSortingRepository<E, ID> repository;
 
-    AbstractCrudService(CrudRepository<E, ID> repository) {
+    AbstractCrudService(PagingAndSortingRepository<E, ID> repository) {
         this.repository = repository;
     }
 
@@ -25,12 +27,11 @@ public abstract class AbstractCrudService<E extends BaseEntity<ID>, ID extends S
         entity.setId(null); // to avoid update existing entities
         E result;
         try {
-            if (checkKeys(entity)) {
-                updateReferences(entity);
+            if (validateAdd(entity)) {
+                result = repository.save(entity);
             } else {
                 throw new EntityNotFoundException("Referenced entities not found");
             }
-            result = repository.save(entity);
             if (result == null) {
                 throw new ServiceException("Can't add entity.");
             }
@@ -46,13 +47,11 @@ public abstract class AbstractCrudService<E extends BaseEntity<ID>, ID extends S
         ID id = entity.getId();
         E result;
         try {
-            if (id != null && repository.exists(id)
-                    && checkKeys(entity)) {
-                updateReferences(entity);
+            if (id != null && repository.exists(id) && validateUpdate(entity)) {
+                result = repository.save(entity);
             } else {
                 throw new EntityNotFoundException(idNotFoundMessage(id));
             }
-            result = repository.save(entity);
             if (result == null) {
                 throw new ServiceException("Can't update entity.");
             }
@@ -63,10 +62,10 @@ public abstract class AbstractCrudService<E extends BaseEntity<ID>, ID extends S
     }
 
     @Override
-    public Iterable<E> getAll() throws ServiceException {
-        Iterable<E> result;
+    public Page<E> getAll(Pageable pageable) throws ServiceException {
+        Page<E> result;
         try {
-            result =  repository.findAll();
+            result = repository.findAll(pageable);
         } catch (DataAccessException e) {
             throw new ServiceException(e);
         }
@@ -91,7 +90,7 @@ public abstract class AbstractCrudService<E extends BaseEntity<ID>, ID extends S
 
     @Override
     public void delete(ID id) throws ServiceException {
-        try{
+        try {
             if (id != null && repository.exists(id)) {
                 repository.delete(id);
             } else {
@@ -102,13 +101,14 @@ public abstract class AbstractCrudService<E extends BaseEntity<ID>, ID extends S
         }
     }
 
-    protected boolean checkKeys(E entity) {
-        // check foreign keys before insert/update
+    protected boolean validateAdd(E entity) {
+        // check foreign keys before insert
         return true;
     }
 
-    protected void updateReferences(E entity) {
-        // assign entity references
+    protected boolean validateUpdate(E entity) {
+        // check foreign keys before update
+        return true;
     }
 
     private String idNotFoundMessage(ID id) {

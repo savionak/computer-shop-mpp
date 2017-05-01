@@ -2,12 +2,15 @@ package by.bsuir.mpp.computershop.controller.impl;
 
 import by.bsuir.mpp.computershop.controller.CrudController;
 import by.bsuir.mpp.computershop.controller.exception.ControllerException;
+import by.bsuir.mpp.computershop.dto.PageDto;
 import by.bsuir.mpp.computershop.dto.brief.BaseBriefDto;
 import by.bsuir.mpp.computershop.dto.full.BaseFullDto;
 import by.bsuir.mpp.computershop.entity.BaseEntity;
 import by.bsuir.mpp.computershop.service.CrudService;
 import ma.glasnost.orika.MapperFacade;
 import org.apache.log4j.Logger;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -67,12 +70,10 @@ public abstract class AbstractCrudController
     }
 
     @Override
-    public Iterable<B> getAll() throws ControllerException {
+    public PageDto getAll(Pageable pageable) throws ControllerException {
         logger.info("GET ALL entities.");
-        Iterable<E> all = wrapServiceCall(service::getAll, logger);
-        return StreamSupport.stream(all.spliterator(), false)
-                .map(i -> mapper.map(i, briefDtoClass))
-                .collect(Collectors.toList());
+        Page<E> all = wrapServiceCall(() -> service.getAll(pageable), logger);
+        return asPageDto(all);
     }
 
     @Override
@@ -80,4 +81,18 @@ public abstract class AbstractCrudController
         logger.info(String.format("DELETE entity with id = [%s]", id.toString()));
         wrapServiceCall(() -> service.delete(id), logger);
     }
+
+    protected final PageDto asPageDto(Page<E> page) {
+        PageDto.PageInfo info = mapper.map(page, PageDto.PageInfo.class);
+        Iterable<B> content = StreamSupport.stream(page.spliterator(), false)
+                .map(i -> mapper.map(i, briefDtoClass))
+                .collect(Collectors.toList());
+
+        PageDto result = new PageDto();
+        result.setInfo(info);
+        result.setContent(content);
+
+        return result;
+    }
+
 }
