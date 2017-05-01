@@ -3,13 +3,16 @@ package by.bsuir.mpp.computershop.general.service;
 import by.bsuir.mpp.computershop.entity.BaseEntity;
 import by.bsuir.mpp.computershop.service.CrudService;
 import by.bsuir.mpp.computershop.service.exception.EntityNotFoundException;
+import by.bsuir.mpp.computershop.service.exception.ServiceException;
 import by.bsuir.mpp.computershop.utils.entity.supplier.EntitySupplier;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.mockito.Matchers;
 import org.mockito.MockitoAnnotations;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.repository.CrudRepository;
 
 import java.io.Serializable;
@@ -52,4 +55,15 @@ public abstract class CrudServiceTest<E extends BaseEntity<ID>, ID extends Seria
         E entity = getCrudService().getOne(id);
     }
 
+
+    @Test(expected = ServiceException.class)
+    public void updateEntityExceptionTest() throws Exception {
+        E entity = getEntitySupplier().getValidEntityWithoutId();
+        when(getCrudRepository().save(Matchers.<E>any())).thenThrow(new DataIntegrityViolationException(""));
+        when(getCrudRepository().exists(any())).thenReturn(true);
+
+        getCrudService().update(entity);
+
+        verify(getCrudRepository(), times(1)).save(Matchers.<E>any());
+    }
 }
