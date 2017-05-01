@@ -2,6 +2,7 @@ package by.bsuir.mpp.computershop.controller;
 
 import by.bsuir.mpp.computershop.controller.exception.ControllerException;
 import by.bsuir.mpp.computershop.dto.brief.BaseBriefDto;
+import by.bsuir.mpp.computershop.dto.brief.pages.PageDto;
 import by.bsuir.mpp.computershop.dto.full.BaseFullDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +25,7 @@ public interface CrudController<B extends BaseBriefDto<ID>, F extends BaseFullDt
     F getById(@PathVariable ID id) throws ControllerException;
 
     @RequestMapping(method = RequestMethod.GET)
-    Iterable<B> getAll(Pageable pageable) throws ControllerException;
+    PageDto getAll(Pageable pageable) throws ControllerException;
 
     @RequestMapping(path = "delete/{id}", method = RequestMethod.DELETE)
     void delete(@PathVariable ID id) throws ControllerException;

@@ -5,6 +5,7 @@ import by.bsuir.mpp.computershop.service.CrudService;
 import by.bsuir.mpp.computershop.service.exception.EntityNotFoundException;
 import by.bsuir.mpp.computershop.service.exception.ServiceException;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,8 +65,8 @@ public abstract class AbstractCrudService<E extends BaseEntity<ID>, ID extends S
     }
 
     @Override
-    public Iterable<E> getAll(Pageable pageable) throws ServiceException {
-        Iterable<E> result;
+    public Page<E> getAll(Pageable pageable) throws ServiceException {
+        Page<E> result;
         try {
             result = repository.findAll(pageable);
         } catch (DataAccessException e) {
