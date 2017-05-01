@@ -1,6 +1,7 @@
 package by.bsuir.mpp.computershop.controller.exception.handler;
 
 import by.bsuir.mpp.computershop.controller.exception.ControllerException;
+import by.bsuir.mpp.computershop.controller.exception.InvalidDataException;
 import by.bsuir.mpp.computershop.controller.exception.ResourceNotFoundException;
 import by.bsuir.mpp.computershop.controller.exception.dto.CustomFieldErrorResponse;
 import by.bsuir.mpp.computershop.controller.exception.dto.ErrorResponse;
@@ -27,10 +28,17 @@ public class GlobalRestExceptionHandler {
     }
 
     @Order(10)
-    @ExceptionHandler(value = { ResourceNotFoundException.class })
+    @ExceptionHandler(value = ResourceNotFoundException.class)
     protected ResponseEntity<ErrorResponse> handleNotFound(ResourceNotFoundException ex) {
         ErrorResponse responseBody = new ErrorResponse("Requested resource not found");
         return new ResponseEntity<>(responseBody, HttpStatus.NOT_FOUND);
+    }
+
+    @Order(15)
+    @ExceptionHandler(value = InvalidDataException.class)
+    protected ResponseEntity<ErrorResponse> handleInvalidData(InvalidDataException ex) {
+        ErrorResponse responseBody = new ErrorResponse("Invalid data provided");
+        return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
     }
 
     @Order(20)
@@ -48,7 +56,7 @@ public class GlobalRestExceptionHandler {
     }
 
     @Order(30)
-    @ExceptionHandler(value = { MethodArgumentNotValidException.class })
+    @ExceptionHandler(value = {MethodArgumentNotValidException.class})
     protected ResponseEntity<ErrorResponse> handleInvalidArguments(MethodArgumentNotValidException ex) {
         BindingResult result = ex.getBindingResult();
         List<FieldError> errors = result.getFieldErrors();
@@ -58,7 +66,7 @@ public class GlobalRestExceptionHandler {
 
     private ValidationErrorResponse processFieldErrors(List<FieldError> errors) {
         ValidationErrorResponse result = new ValidationErrorResponse("Invalid arguments");
-        for (FieldError fieldError: errors) {
+        for (FieldError fieldError : errors) {
             result.addFieldError(new CustomFieldErrorResponse(fieldError.getField(), fieldError.getDefaultMessage()));
         }
         return result;
