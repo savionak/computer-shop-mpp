@@ -10,6 +10,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Matchers;
 import org.mockito.MockitoAnnotations;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -23,6 +25,9 @@ public abstract class CrudServiceTest<E extends BaseEntity<ID>, ID extends Seria
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+
+    @Captor
+    protected ArgumentCaptor<E> captor;
 
     @Before
     public void initTests() {
@@ -65,5 +70,15 @@ public abstract class CrudServiceTest<E extends BaseEntity<ID>, ID extends Seria
         getCrudService().update(entity);
 
         verify(getCrudRepository(), times(1)).save(Matchers.<E>any());
+    }
+
+    @Test(expected = EntityNotFoundException.class)
+    public void updateNotExistingEntityTest() throws Exception {
+        E entity = getEntitySupplier().getValidEntityWithoutId();
+        ID parameterId = getEntitySupplier().getAnyId();
+        when(getCrudRepository().exists(parameterId)).thenReturn(false);
+        when(getCrudRepository().findOne(parameterId)).thenReturn(null);
+
+        E actualResult = getCrudService().update(entity);
     }
 }
