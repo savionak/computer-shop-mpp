@@ -19,6 +19,10 @@ public class TestHelper {
         return RANDOM.nextLong() + 1;
     }
 
+    public static int nextInt(int max) {
+        return RANDOM.nextInt(max + 1);
+    }
+
     public static String nextString() {
         return nextString(BITS_COUNT);
     }

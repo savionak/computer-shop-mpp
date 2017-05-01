@@ -4,6 +4,7 @@ import by.bsuir.mpp.computershop.entity.BaseEntity;
 import by.bsuir.mpp.computershop.service.CrudService;
 import by.bsuir.mpp.computershop.service.exception.EntityNotFoundException;
 import by.bsuir.mpp.computershop.service.exception.ServiceException;
+import by.bsuir.mpp.computershop.utils.TestHelper;
 import by.bsuir.mpp.computershop.utils.entity.supplier.EntitySupplier;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,9 +17,14 @@ import org.mockito.Matchers;
 import org.mockito.MockitoAnnotations;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.*;
 
@@ -37,7 +43,7 @@ public abstract class CrudServiceTest<E extends BaseEntity<ID>, ID extends Seria
 
     protected abstract CrudService<E, ID> getCrudService();
 
-    protected abstract CrudRepository<E, ID> getCrudRepository();
+    protected abstract PagingAndSortingRepository<E, ID> getCrudRepository();
 
     protected abstract EntitySupplier<E, ID> getEntitySupplier();
 
@@ -51,6 +57,25 @@ public abstract class CrudServiceTest<E extends BaseEntity<ID>, ID extends Seria
 
         verify(getCrudRepository(), times(1)).findOne(id);
         Assert.assertEquals(expectedEntity, actualResult);
+    }
+
+    @Test
+    public void findAllEntitiesPageTest() throws Exception {
+        List<E> content = new ArrayList<>();
+        int size = TestHelper.nextInt(20);
+        for (int i = 0; i < size; ++i) {
+            content.add(getEntitySupplier().getValidEntityWithId());
+        }
+
+        Page<E> databasePage = getEntitySupplier().getPage(content);
+        Pageable pageable = new PageRequest(0, Integer.MAX_VALUE);
+
+        when(getCrudRepository().findAll(pageable)).thenReturn(databasePage);
+
+        Page<E> result = getCrudService().getAll(pageable);
+
+        verify(getCrudRepository(), times(1)).findAll(Matchers.<Pageable>any());
+        Assert.assertEquals(content.size(), result.getTotalElements());
     }
 
 

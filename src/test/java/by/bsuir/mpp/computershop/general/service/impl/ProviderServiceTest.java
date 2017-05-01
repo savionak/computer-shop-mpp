@@ -9,7 +9,7 @@ import by.bsuir.mpp.computershop.service.impl.ProviderServiceImpl;
 import by.bsuir.mpp.computershop.utils.entity.supplier.EntitySupplier;
 import by.bsuir.mpp.computershop.utils.entity.supplier.impl.ProviderEntitySupplier;
 import org.mockito.Mockito;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 
 public class ProviderServiceTest extends CrudServiceTest<Provider, Long>{
@@ -30,7 +30,7 @@ public class ProviderServiceTest extends CrudServiceTest<Provider, Long>{
     }
 
     @Override
-    protected CrudRepository<Provider, Long> getCrudRepository() {
+    protected PagingAndSortingRepository<Provider, Long> getCrudRepository() {
         return providerRepository;
     }
 
