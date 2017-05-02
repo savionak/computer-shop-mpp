@@ -6,22 +6,22 @@ import by.bsuir.mpp.computershop.repository.ComponentTypeRepository;
 import by.bsuir.mpp.computershop.service.ComponentTypeService;
 import by.bsuir.mpp.computershop.service.CrudService;
 import by.bsuir.mpp.computershop.service.impl.ComponentTypeServiceImpl;
-import by.bsuir.mpp.computershop.utils.entity.supplier.EntitySupplier;
-import by.bsuir.mpp.computershop.utils.entity.supplier.impl.ComponentTypeEntitySupplier;
+import by.bsuir.mpp.computershop.utils.supplier.entity.EntitySupplier;
+import by.bsuir.mpp.computershop.utils.supplier.entity.impl.ComponentTypeEntitySupplier;
 import org.mockito.Mockito;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 
-public class ComponentTypeServiceTest extends CrudServiceTest<ComponentType, Long>{
+public class ComponentTypeServiceTest extends CrudServiceTest<ComponentType, Long> {
 
     private ComponentTypeService componentTypeService;
     private ComponentTypeRepository componentTypeRepository;
     private ComponentTypeEntitySupplier componentTypeEntitySupplier;
 
-    public ComponentTypeServiceTest(){
-        componentTypeRepository= Mockito.mock(ComponentTypeRepository.class);
-        componentTypeService = new ComponentTypeServiceImpl(componentTypeRepository) ;
-        componentTypeEntitySupplier =  new ComponentTypeEntitySupplier();
+    public ComponentTypeServiceTest() {
+        componentTypeRepository = Mockito.mock(ComponentTypeRepository.class);
+        componentTypeService = new ComponentTypeServiceImpl(componentTypeRepository);
+        componentTypeEntitySupplier = new ComponentTypeEntitySupplier();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package by.bsuir.mpp.computershop.utils.entity.supplier;
+package by.bsuir.mpp.computershop.utils.supplier.entity;
 
 import by.bsuir.mpp.computershop.entity.BaseEntity;
 import org.springframework.data.domain.Page;
@@ -10,7 +10,7 @@ import java.util.List;
 public interface EntitySupplier<E extends BaseEntity<ID>, ID extends Serializable> {
     E getValidEntityWithoutId();
 
-    default E getValidEntityWithId(){
+    default E getValidEntityWithId() {
         E result = getValidEntityWithoutId();
         result.setId(getAnyId());
         return result;
@@ -18,8 +18,8 @@ public interface EntitySupplier<E extends BaseEntity<ID>, ID extends Serializabl
 
     E getInvalidEntity();
 
-    default Page<E> getPage(List<E> content){
-        return  new PageImpl<>(content);
+    default Page<E> getPage(List<E> content) {
+        return new PageImpl<>(content);
     }
 
 

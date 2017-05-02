@@ -2,21 +2,18 @@ package by.bsuir.mpp.computershop.general.service;
 
 import by.bsuir.mpp.computershop.entity.BaseEntity;
 import by.bsuir.mpp.computershop.service.CrudService;
+import by.bsuir.mpp.computershop.service.exception.BadEntityException;
 import by.bsuir.mpp.computershop.service.exception.EntityNotFoundException;
-import by.bsuir.mpp.computershop.service.exception.ServiceException;
 import by.bsuir.mpp.computershop.utils.TestHelper;
-import by.bsuir.mpp.computershop.utils.entity.supplier.EntitySupplier;
+import by.bsuir.mpp.computershop.utils.supplier.entity.EntitySupplier;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.Matchers;
 import org.mockito.MockitoAnnotations;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -32,9 +29,6 @@ public abstract class CrudServiceTest<E extends BaseEntity<ID>, ID extends Seria
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-
-    @Captor
-    protected ArgumentCaptor<E> captor;
 
     @Before
     public void initTests() {
@@ -79,7 +73,7 @@ public abstract class CrudServiceTest<E extends BaseEntity<ID>, ID extends Seria
 
     @Test
     public void findAllEntitiesEmptyTest() throws Exception {
-        Page<E> databasePage = getEntitySupplier().getPage(new ArrayList<E>());
+        Page<E> databasePage = getEntitySupplier().getPage(new ArrayList<>());
 
         Pageable pageable = new PageRequest(0, 10);
         when(getCrudRepository().findAll(pageable)).thenReturn(databasePage);
@@ -91,16 +85,16 @@ public abstract class CrudServiceTest<E extends BaseEntity<ID>, ID extends Seria
     }
 
     @Test(expected = EntityNotFoundException.class)
-    public void findNotExistingEntityTest() throws Exception {
+    public void findNonExistingEntityTest() throws Exception {
         ID id = getEntitySupplier().getAnyId();
         when(getCrudRepository().findOne(id)).thenReturn(null);
-        E entity = getCrudService().getOne(id);
+        getCrudService().getOne(id);
     }
 
 
-    @Test(expected = ServiceException.class)
+    @Test(expected = BadEntityException.class)
     public void updateEntityExceptionTest() throws Exception {
-        E entity = getEntitySupplier().getValidEntityWithoutId();
+        E entity = getEntitySupplier().getValidEntityWithId();
         when(getCrudRepository().save(Matchers.<E>any())).thenThrow(new DataIntegrityViolationException(""));
         when(getCrudRepository().exists(any())).thenReturn(true);
 
@@ -108,13 +102,13 @@ public abstract class CrudServiceTest<E extends BaseEntity<ID>, ID extends Seria
     }
 
     @Test(expected = EntityNotFoundException.class)
-    public void updateNotExistingEntityTest() throws Exception {
+    public void updateNonExistingEntityTest() throws Exception {
         E entity = getEntitySupplier().getValidEntityWithoutId();
         ID parameterId = getEntitySupplier().getAnyId();
         when(getCrudRepository().exists(parameterId)).thenReturn(false);
         when(getCrudRepository().findOne(parameterId)).thenReturn(null);
 
-        E actualResult = getCrudService().update(entity);
+        getCrudService().update(entity);
     }
 
     @Test(expected = EntityNotFoundException.class)
@@ -123,9 +117,8 @@ public abstract class CrudServiceTest<E extends BaseEntity<ID>, ID extends Seria
     }
 
     @Test(expected = EntityNotFoundException.class)
-    public void deleteNotExistingEntityTest() throws Exception {
-        doThrow(new EmptyResultDataAccessException(1)).when(getCrudRepository()).delete(Matchers.<ID>any());
-
+    public void deleteNonExistingEntityTest() throws Exception {
+        when(getCrudRepository().exists(Matchers.any())).thenReturn(false);
         getCrudService().delete(getEntitySupplier().getAnyId());
     }
 }

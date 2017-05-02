@@ -6,22 +6,22 @@ import by.bsuir.mpp.computershop.repository.AssemblyComponentRepository;
 import by.bsuir.mpp.computershop.service.AssemblyComponentService;
 import by.bsuir.mpp.computershop.service.CrudService;
 import by.bsuir.mpp.computershop.service.impl.AssemblyComponentServiceImpl;
-import by.bsuir.mpp.computershop.utils.entity.supplier.EntitySupplier;
-import by.bsuir.mpp.computershop.utils.entity.supplier.impl.AssemblyComponentEntitySupplier;
+import by.bsuir.mpp.computershop.utils.supplier.entity.EntitySupplier;
+import by.bsuir.mpp.computershop.utils.supplier.entity.impl.AssemblyComponentEntitySupplier;
 import org.mockito.Mockito;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 
-public class AssemblyComponentServiceTest extends CrudServiceTest<AssemblyComponent, Long>{
+public class AssemblyComponentServiceTest extends CrudServiceTest<AssemblyComponent, Long> {
 
     private AssemblyComponentService assemblyComponentService;
     private AssemblyComponentRepository assemblyComponentRepository;
     private AssemblyComponentEntitySupplier assemblyComponentEntitySupplier;
 
-    public AssemblyComponentServiceTest(){
-        assemblyComponentRepository= Mockito.mock(AssemblyComponentRepository.class);
-        assemblyComponentService = new AssemblyComponentServiceImpl(assemblyComponentRepository) ;
-        assemblyComponentEntitySupplier =  new AssemblyComponentEntitySupplier();
+    public AssemblyComponentServiceTest() {
+        assemblyComponentRepository = Mockito.mock(AssemblyComponentRepository.class);
+        assemblyComponentService = new AssemblyComponentServiceImpl(assemblyComponentRepository);
+        assemblyComponentEntitySupplier = new AssemblyComponentEntitySupplier();
     }
 
     @Override
