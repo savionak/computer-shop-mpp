@@ -1,8 +1,8 @@
-package by.bsuir.mpp.computershop.utils.entity.supplier.impl;
+package by.bsuir.mpp.computershop.utils.supplier.entity.impl;
 
 import by.bsuir.mpp.computershop.entity.UserAuth;
 import by.bsuir.mpp.computershop.utils.TestHelper;
-import by.bsuir.mpp.computershop.utils.entity.supplier.EntityLongSupplier;
+import by.bsuir.mpp.computershop.utils.supplier.entity.EntityLongSupplier;
 
 import static by.bsuir.mpp.computershop.utils.TestHelper.RANDOM;
 
@@ -10,7 +10,7 @@ public class UserAuthEntitySupplier implements EntityLongSupplier<UserAuth> {
 
     @Override
     public UserAuth getValidEntityWithoutId() {
-        UserAuth result =  new UserAuth();
+        UserAuth result = new UserAuth();
         result.setId(null);
         result.setEmail(TestHelper.nextString());
         result.setPassHash(TestHelper.nextString());

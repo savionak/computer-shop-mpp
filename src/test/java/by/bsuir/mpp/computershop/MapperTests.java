@@ -7,6 +7,7 @@ import by.bsuir.mpp.computershop.entity.Assembly;
 import by.bsuir.mpp.computershop.entity.AssemblyComponent;
 import by.bsuir.mpp.computershop.entity.UserAuth;
 import by.bsuir.mpp.computershop.utils.TestHelper;
+import by.bsuir.mpp.computershop.utils.supplier.entity.dto.full.UserAuthFullDtoSupplier;
 import ma.glasnost.orika.MapperFacade;
 import org.junit.Assert;
 import org.junit.Test;
@@ -28,6 +29,8 @@ public class MapperTests {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    private final UserAuthFullDtoSupplier fullDtoSupplier = new UserAuthFullDtoSupplier();
+
     @Test
     public void assemblyComponentMappingTest() {
         Assembly asm = new Assembly();
@@ -47,8 +50,7 @@ public class MapperTests {
 
     @Test
     public void userAuthConverterTest() {
-        UserAuthFullDto sourceAuthDto = TestHelper.nextUserAuthFullDto();
-
+        UserAuthFullDto sourceAuthDto = fullDtoSupplier.getFullDto();
         UserAuth entity = mapper.map(sourceAuthDto, UserAuth.class);
 
         Assert.assertEquals(entity.getEmail(), sourceAuthDto.getEmail());
@@ -56,5 +58,13 @@ public class MapperTests {
         Assert.assertEquals(entity.getUserInfo().getFirstName(), sourceAuthDto.getUserInfo().getFirstName());
 
         Assert.assertTrue(passwordEncoder.matches(sourceAuthDto.getPass(), entity.getPassHash()));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void userAutExceptionConverterTest() {
+        UserAuthFullDto sourceAuthDto = fullDtoSupplier.getFullDto();
+        sourceAuthDto.setUserInfo(null);
+
+        mapper.map(sourceAuthDto, UserAuth.class);
     }
 }

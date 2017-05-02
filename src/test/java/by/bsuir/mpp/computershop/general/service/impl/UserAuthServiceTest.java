@@ -6,22 +6,22 @@ import by.bsuir.mpp.computershop.repository.UserAuthRepository;
 import by.bsuir.mpp.computershop.service.CrudService;
 import by.bsuir.mpp.computershop.service.UserAuthService;
 import by.bsuir.mpp.computershop.service.impl.UserAuthServiceImpl;
-import by.bsuir.mpp.computershop.utils.entity.supplier.EntitySupplier;
-import by.bsuir.mpp.computershop.utils.entity.supplier.impl.UserAuthEntitySupplier;
+import by.bsuir.mpp.computershop.utils.supplier.entity.EntitySupplier;
+import by.bsuir.mpp.computershop.utils.supplier.entity.impl.UserAuthEntitySupplier;
 import org.mockito.Mockito;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 
-public class UserAuthServiceTest extends CrudServiceTest<UserAuth, Long>{
+public class UserAuthServiceTest extends CrudServiceTest<UserAuth, Long> {
 
     private UserAuthService userAuthService;
     private UserAuthRepository userAuthRepository;
     private UserAuthEntitySupplier userAuthEntitySupplier;
 
-    public UserAuthServiceTest(){
-        userAuthRepository= Mockito.mock(UserAuthRepository.class);
-        userAuthService = new UserAuthServiceImpl(userAuthRepository) ;
-        userAuthEntitySupplier =  new UserAuthEntitySupplier();
+    public UserAuthServiceTest() {
+        userAuthRepository = Mockito.mock(UserAuthRepository.class);
+        userAuthService = new UserAuthServiceImpl(userAuthRepository);
+        userAuthEntitySupplier = new UserAuthEntitySupplier();
     }
 
     @Override

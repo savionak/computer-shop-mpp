@@ -1,8 +1,8 @@
-package by.bsuir.mpp.computershop.utils.entity.supplier.impl;
+package by.bsuir.mpp.computershop.utils.supplier.entity.impl;
 
 import by.bsuir.mpp.computershop.entity.Order;
 import by.bsuir.mpp.computershop.utils.TestHelper;
-import by.bsuir.mpp.computershop.utils.entity.supplier.EntityLongSupplier;
+import by.bsuir.mpp.computershop.utils.supplier.entity.EntityLongSupplier;
 
 import static by.bsuir.mpp.computershop.utils.TestHelper.RANDOM;
 
@@ -11,7 +11,7 @@ public class OrderEntitySupplier implements EntityLongSupplier<Order> {
 
     @Override
     public Order getValidEntityWithoutId() {
-        Order result =  new Order();
+        Order result = new Order();
         result.setId(null);
         result.setCost(0L);
         result.setOrderDate(TestHelper.getCurrentTimestamp());

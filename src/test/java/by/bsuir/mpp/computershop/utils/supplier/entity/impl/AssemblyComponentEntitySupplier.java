@@ -1,15 +1,15 @@
-package by.bsuir.mpp.computershop.utils.entity.supplier.impl;
+package by.bsuir.mpp.computershop.utils.supplier.entity.impl;
 
 import by.bsuir.mpp.computershop.entity.AssemblyComponent;
 import by.bsuir.mpp.computershop.utils.TestHelper;
-import by.bsuir.mpp.computershop.utils.entity.supplier.EntityLongSupplier;
+import by.bsuir.mpp.computershop.utils.supplier.entity.EntityLongSupplier;
 
 
 public class AssemblyComponentEntitySupplier implements EntityLongSupplier<AssemblyComponent> {
 
     @Override
     public AssemblyComponent getValidEntityWithoutId() {
-        AssemblyComponent result =  new AssemblyComponent();
+        AssemblyComponent result = new AssemblyComponent();
         result.setId(null);
         result.setCount(TestHelper.nextLong());
 
