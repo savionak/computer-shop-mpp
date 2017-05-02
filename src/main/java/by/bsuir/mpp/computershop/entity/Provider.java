@@ -1,7 +1,8 @@
 package by.bsuir.mpp.computershop.entity;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "provider")
@@ -19,9 +20,6 @@ public class Provider extends BaseEntity<Long> {
     @Column(name = "imports_count", nullable = false,
             insertable = false, updatable = false)
     private Integer importsCount;
-
-    @OneToMany(mappedBy = "provider", fetch = FetchType.LAZY)
-    private List<Import> imports;
 
     public String getName() {
         return this.name;
@@ -55,11 +53,4 @@ public class Provider extends BaseEntity<Long> {
         this.importsCount = importsCount;
     }
 
-    public List<Import> getImports() {
-        return imports;
-    }
-
-    public void setImports(List<Import> imports) {
-        this.imports = imports;
-    }
 }

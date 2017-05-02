@@ -1,7 +1,6 @@
 package by.bsuir.mpp.computershop.entity;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "assembly")
@@ -17,10 +16,6 @@ public class Assembly extends BaseEntity<Long> {
 
     @Column(name = "count", nullable = false)
     private Long count;
-
-    @OneToMany(mappedBy = "assembly", fetch = FetchType.LAZY,
-            cascade = CascadeType.REMOVE)
-    private List<AssemblyComponent> components;
 
     public Order getOrder() {
         return this.order;
@@ -46,11 +41,4 @@ public class Assembly extends BaseEntity<Long> {
         this.count = count;
     }
 
-    public List<AssemblyComponent> getComponents() {
-        return components;
-    }
-
-    public void setComponents(List<AssemblyComponent> components) {
-        this.components = components;
-    }
 }

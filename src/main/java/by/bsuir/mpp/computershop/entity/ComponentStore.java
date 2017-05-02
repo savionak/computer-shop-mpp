@@ -1,7 +1,6 @@
 package by.bsuir.mpp.computershop.entity;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "component_store")
@@ -16,9 +15,6 @@ public class ComponentStore extends BaseEntity<Long> {
 
     @Column(name = "count", nullable = false)
     private Long count;
-
-    @OneToMany(mappedBy = "stored")
-    private List<Import> imports;
 
     public ComponentModel getModel() {
         return this.model;
@@ -44,11 +40,4 @@ public class ComponentStore extends BaseEntity<Long> {
         this.count = count;
     }
 
-    public List<Import> getImports() {
-        return imports;
-    }
-
-    public void setImports(List<Import> imports) {
-        this.imports = imports;
-    }
 }

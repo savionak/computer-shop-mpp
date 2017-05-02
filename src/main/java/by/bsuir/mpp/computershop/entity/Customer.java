@@ -1,7 +1,8 @@
 package by.bsuir.mpp.computershop.entity;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "customer")
@@ -19,9 +20,6 @@ public class Customer extends BaseEntity<Long> {
     @Column(name = "orders_count", nullable = false,
             insertable = false, updatable = false)
     private Integer ordersCount;
-
-    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
-    private List<Order> orders;
 
     public String getName() {
         return this.name;
@@ -55,11 +53,4 @@ public class Customer extends BaseEntity<Long> {
         this.ordersCount = ordersCount;
     }
 
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
-    }
 }
