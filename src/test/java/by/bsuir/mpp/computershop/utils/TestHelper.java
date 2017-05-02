@@ -5,6 +5,7 @@ import by.bsuir.mpp.computershop.dto.full.UserInfoFullDto;
 import by.bsuir.mpp.computershop.entity.UserAuth;
 
 import java.math.BigInteger;
+import java.sql.Timestamp;
 import java.util.Random;
 
 public class TestHelper {
@@ -17,6 +18,18 @@ public class TestHelper {
 
     public static Long nextLongId() {
         return RANDOM.nextLong() + 1;
+    }
+
+    public static Long nextLong() {
+        return RANDOM.nextLong();
+    }
+
+    public static int nextInt(int max) {
+        return RANDOM.nextInt(max + 1);
+    }
+
+    public static Timestamp getCurrentTimestamp(){
+        return new Timestamp(System.currentTimeMillis()) ;
     }
 
     public static String nextString() {
