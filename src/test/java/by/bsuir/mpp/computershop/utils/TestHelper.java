@@ -1,9 +1,5 @@
 package by.bsuir.mpp.computershop.utils;
 
-import by.bsuir.mpp.computershop.dto.full.UserAuthFullDto;
-import by.bsuir.mpp.computershop.dto.full.UserInfoFullDto;
-import by.bsuir.mpp.computershop.entity.UserAuth;
-
 import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.Random;
@@ -25,7 +21,7 @@ public class TestHelper {
     }
 
     public static int nextInt(int max) {
-        return RANDOM.nextInt(max + 1);
+        return RANDOM.nextInt(max) + 1;
     }
 
     public static Timestamp getCurrentTimestamp(){
@@ -38,19 +34,5 @@ public class TestHelper {
 
     public static String nextString(int bitsCount) {
         return new BigInteger(bitsCount, RANDOM).toString(RADIX);
-    }
-
-    public static UserAuthFullDto nextUserAuthFullDto() {
-        UserInfoFullDto info = new UserInfoFullDto();
-        info.setFirstName(nextString());
-        info.setLastName(nextString());
-
-        UserAuthFullDto result = new UserAuthFullDto();
-        result.setEmail(nextString());
-        result.setPass(nextString());
-        result.setRole(UserAuth.Role.VALUES.get(RANDOM.nextInt(UserAuth.Role.SIZE)));
-
-        result.setUserInfo(info);
-        return result;
     }
 }

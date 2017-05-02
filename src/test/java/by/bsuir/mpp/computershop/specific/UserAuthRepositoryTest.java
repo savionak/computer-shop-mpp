@@ -6,6 +6,7 @@ import by.bsuir.mpp.computershop.entity.UserAuth;
 import by.bsuir.mpp.computershop.entity.UserInfo;
 import by.bsuir.mpp.computershop.repository.UserAuthRepository;
 import by.bsuir.mpp.computershop.utils.TestHelper;
+import by.bsuir.mpp.computershop.utils.supplier.entity.dto.full.UserAuthFullDtoSupplier;
 import ma.glasnost.orika.MapperFacade;
 import org.junit.Assert;
 import org.junit.Test;
@@ -26,9 +27,11 @@ public class UserAuthRepositoryTest {
     @Autowired
     private UserAuthRepository userAuthRepository;
 
+    private final UserAuthFullDtoSupplier fullDtoSupplier = new UserAuthFullDtoSupplier();
+
     @Test
     public void saveDeleteTest() {
-        UserAuthFullDto sourceAuthDto = TestHelper.nextUserAuthFullDto();
+        UserAuthFullDto sourceAuthDto = fullDtoSupplier.getFullDto();
         UserAuth entity = mapper.map(sourceAuthDto, UserAuth.class);
         entity.setId(null); // to save new
 
@@ -45,8 +48,26 @@ public class UserAuthRepositoryTest {
     }
 
     @Test
+    public void saveTest() {
+        UserAuthFullDto sourceAuthDto = fullDtoSupplier.getFullDto();
+        UserAuth entity = mapper.map(sourceAuthDto, UserAuth.class);
+        entity.setId(null);
+
+        UserAuth result = null;
+        try {
+            result = userAuthRepository.save(entity);
+
+            Assert.assertEquals(entity.getEmail(), result.getEmail());
+            Assert.assertEquals(entity.getPassHash(), result.getPassHash());
+            Assert.assertEquals(entity.getRole(), result.getRole());
+        } finally {
+            removeSavedEntity(result);
+        }
+    }
+
+    @Test
     public void updateTest() {
-        UserAuthFullDto sourceAuthDto = TestHelper.nextUserAuthFullDto();
+        UserAuthFullDto sourceAuthDto = fullDtoSupplier.getFullDto();
         UserAuth entity = mapper.map(sourceAuthDto, UserAuth.class);
         entity.setId(null);
         String oldPassHash = entity.getPassHash();
@@ -75,10 +96,13 @@ public class UserAuthRepositoryTest {
             Assert.assertEquals(info.getFirstName(), resultInfo.getFirstName());
             Assert.assertEquals(info.getPatronymic(), resultInfo.getPatronymic());
         } finally {
-            if (result != null) {
-                userAuthRepository.delete(result.getId());
-                Assert.assertFalse(userAuthRepository.exists(result.getId()));
-            }
+            removeSavedEntity(result);
+        }
+    }
+
+    private void removeSavedEntity(UserAuth userAuth) {
+        if (userAuth != null) {
+            userAuthRepository.delete(userAuth.getId());
         }
     }
 }
