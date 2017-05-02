@@ -28,7 +28,7 @@ public class TestHelper {
         return RANDOM.nextInt(max + 1);
     }
 
-    public static Timestamp currentTimeMillis(){
+    public static Timestamp getCurrentTimestamp(){
         return new Timestamp(System.currentTimeMillis()) ;
     }
 
