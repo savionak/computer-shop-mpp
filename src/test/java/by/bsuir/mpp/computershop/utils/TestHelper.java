@@ -19,6 +19,10 @@ public class TestHelper {
         return RANDOM.nextLong() + 1;
     }
 
+    public static Long nextLong() {
+        return RANDOM.nextLong();
+    }
+
     public static int nextInt(int max) {
         return RANDOM.nextInt(max + 1);
     }
