@@ -59,4 +59,12 @@ public class MapperTests {
 
         Assert.assertTrue(passwordEncoder.matches(sourceAuthDto.getPass(), entity.getPassHash()));
     }
+
+    @Test(expected = NullPointerException.class)
+    public void userAutExceptionConverterTest() {
+        UserAuthFullDto sourceAuthDto = fullDtoSupplier.getFullDto();
+        sourceAuthDto.setUserInfo(null);
+
+        mapper.map(sourceAuthDto, UserAuth.class);
+    }
 }
