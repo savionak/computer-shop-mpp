@@ -5,7 +5,6 @@ import by.bsuir.mpp.computershop.service.CrudService;
 import by.bsuir.mpp.computershop.service.exception.BadEntityException;
 import by.bsuir.mpp.computershop.service.exception.EntityNotFoundException;
 import by.bsuir.mpp.computershop.service.exception.ServiceException;
-import by.bsuir.mpp.computershop.utils.TestHelper;
 import by.bsuir.mpp.computershop.utils.supplier.entity.EntitySupplier;
 import org.junit.Assert;
 import org.junit.Before;
@@ -57,11 +56,7 @@ public abstract class CrudServiceTest<E extends BaseEntity<ID>, ID extends Seria
 
     @Test
     public void findAllEntitiesPageTest() throws Exception {
-        List<E> content = new ArrayList<>();
-        int size = TestHelper.nextInt(20);
-        for (int i = 0; i < size; ++i) {
-            content.add(getEntitySupplier().getValidEntityWithId());
-        }
+        List<E> content = getEntitySupplier().getValidEntitiesList();
 
         Page<E> databasePage = getEntitySupplier().getPage(content);
         Pageable pageable = new PageRequest(0, Integer.MAX_VALUE);
