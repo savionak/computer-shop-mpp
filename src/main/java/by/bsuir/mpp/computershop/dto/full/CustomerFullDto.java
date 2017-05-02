@@ -1,12 +1,10 @@
 package by.bsuir.mpp.computershop.dto.full;
 
-import by.bsuir.mpp.computershop.dto.brief.OrderBriefDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.SafeHtml;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.util.List;
 
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.*;
 
@@ -25,9 +23,6 @@ public class CustomerFullDto extends BaseFullDto<Long> {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Integer ordersCount;
-
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private List<OrderBriefDto> orders;
 
     public String getName() {
         return this.name;
@@ -59,13 +54,5 @@ public class CustomerFullDto extends BaseFullDto<Long> {
 
     public void setOrdersCount(Integer ordersCount) {
         this.ordersCount = ordersCount;
-    }
-
-    public List<OrderBriefDto> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<OrderBriefDto> orders) {
-        this.orders = orders;
     }
 }

@@ -1,6 +1,5 @@
 package by.bsuir.mpp.computershop.dto.full;
 
-import by.bsuir.mpp.computershop.dto.brief.AssemblyBriefDto;
 import by.bsuir.mpp.computershop.dto.brief.CustomerBriefDto;
 import by.bsuir.mpp.computershop.dto.brief.ExportBriefDto;
 import by.bsuir.mpp.computershop.entity.Order.Status;
@@ -9,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
-import java.util.List;
 
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
 
@@ -30,9 +28,6 @@ public class OrderFullDto extends BaseFullDto<Long> {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private ExportBriefDto export;
-
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private List<AssemblyBriefDto> assemblies;
 
     public CustomerBriefDto getCustomer() {
         return customer;
@@ -72,13 +67,5 @@ public class OrderFullDto extends BaseFullDto<Long> {
 
     public void setExport(ExportBriefDto export) {
         this.export = export;
-    }
-
-    public List<AssemblyBriefDto> getAssemblies() {
-        return assemblies;
-    }
-
-    public void setAssemblies(List<AssemblyBriefDto> assemblies) {
-        this.assemblies = assemblies;
     }
 }

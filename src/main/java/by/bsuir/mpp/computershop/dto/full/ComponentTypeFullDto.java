@@ -1,12 +1,9 @@
 package by.bsuir.mpp.computershop.dto.full;
 
-import by.bsuir.mpp.computershop.dto.brief.ComponentModelBriefDto;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.SafeHtml;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.util.List;
 
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.*;
 
@@ -22,9 +19,6 @@ public class ComponentTypeFullDto extends BaseFullDto<Long> {
 
     @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     private Boolean removed;
-
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private List<ComponentModelBriefDto> models;
 
     public String getName() {
         return this.name;
@@ -48,13 +42,5 @@ public class ComponentTypeFullDto extends BaseFullDto<Long> {
 
     public void setRemoved(Boolean removed) {
         this.removed = removed;
-    }
-
-    public List<ComponentModelBriefDto> getModels() {
-        return models;
-    }
-
-    public void setModels(List<ComponentModelBriefDto> models) {
-        this.models = models;
     }
 }
