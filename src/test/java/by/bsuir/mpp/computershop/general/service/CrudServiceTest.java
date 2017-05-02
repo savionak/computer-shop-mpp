@@ -4,6 +4,7 @@ import by.bsuir.mpp.computershop.entity.BaseEntity;
 import by.bsuir.mpp.computershop.service.CrudService;
 import by.bsuir.mpp.computershop.service.exception.BadEntityException;
 import by.bsuir.mpp.computershop.service.exception.EntityNotFoundException;
+import by.bsuir.mpp.computershop.service.exception.ServiceException;
 import by.bsuir.mpp.computershop.utils.TestHelper;
 import by.bsuir.mpp.computershop.utils.supplier.entity.EntitySupplier;
 import org.junit.Assert;
@@ -14,6 +15,7 @@ import org.junit.rules.ExpectedException;
 import org.mockito.Matchers;
 import org.mockito.MockitoAnnotations;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.QueryTimeoutException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -91,7 +93,6 @@ public abstract class CrudServiceTest<E extends BaseEntity<ID>, ID extends Seria
         getCrudService().getOne(id);
     }
 
-
     @Test(expected = BadEntityException.class)
     public void updateEntityExceptionTest() throws Exception {
         E entity = getEntitySupplier().getValidEntityWithId();
@@ -99,6 +100,20 @@ public abstract class CrudServiceTest<E extends BaseEntity<ID>, ID extends Seria
         when(getCrudRepository().exists(any())).thenReturn(true);
 
         getCrudService().update(entity);
+    }
+
+    @Test(expected = ServiceException.class)
+    public void updateEntityDataAccessExceptionTest() throws Exception {
+        E entity = getEntitySupplier().getValidEntityWithId();
+        when(getCrudRepository().save(Matchers.<E>any())).thenThrow(new QueryTimeoutException(""));
+        when(getCrudRepository().exists(any())).thenReturn(true);
+
+        try {
+            getCrudService().update(entity);
+        } catch (ServiceException e) {
+            Assert.assertFalse(e instanceof BadEntityException);
+            throw e;
+        }
     }
 
     @Test(expected = EntityNotFoundException.class)
@@ -111,8 +126,9 @@ public abstract class CrudServiceTest<E extends BaseEntity<ID>, ID extends Seria
         getCrudService().update(entity);
     }
 
-    @Test(expected = EntityNotFoundException.class)
+    @Test
     public void deleteExistingEntityTest() throws Exception {
+        when(getCrudRepository().exists(Matchers.any())).thenReturn(true);
         getCrudService().delete(getEntitySupplier().getAnyId());
     }
 
