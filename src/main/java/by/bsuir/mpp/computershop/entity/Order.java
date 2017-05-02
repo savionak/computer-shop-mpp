@@ -2,6 +2,8 @@ package by.bsuir.mpp.computershop.entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -109,6 +111,10 @@ public class Order extends BaseEntity<Long> {
         };
 
         public static final String TYPE_DEFINITION = "ENUM ('IN_PROGRESS', 'READY', 'FINISHED')";
+
+        public static final List<Status> VALUES = Collections.unmodifiableList(Arrays.asList(values()));
+
+        public static final int SIZE = VALUES.size();
 
         public abstract String toString();
     }
