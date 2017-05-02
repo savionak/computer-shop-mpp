@@ -33,10 +33,6 @@ public class Order extends BaseEntity<Long> {
     @OneToOne(mappedBy = "order", fetch = FetchType.LAZY)
     private Export export;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY,
-            cascade = CascadeType.REMOVE)
-    private List<Assembly> assemblies;
-
     public Customer getCustomer() {
         return customer;
     }
@@ -77,14 +73,6 @@ public class Order extends BaseEntity<Long> {
         this.canceled = canceled;
     }
 
-    public List<Assembly> getAssemblies() {
-        return assemblies;
-    }
-
-    public void setAssemblies(List<Assembly> assemblyParcels) {
-        this.assemblies = assemblyParcels;
-    }
-
     public Export getExport() {
         return export;
     }
@@ -118,4 +106,5 @@ public class Order extends BaseEntity<Long> {
 
         public abstract String toString();
     }
+
 }

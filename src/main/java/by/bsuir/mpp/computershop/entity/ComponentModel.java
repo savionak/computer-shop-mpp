@@ -1,7 +1,6 @@
 package by.bsuir.mpp.computershop.entity;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "component_model")
@@ -19,12 +18,6 @@ public class ComponentModel extends BaseEntity<Long> {
 
     @Column(name = "removed", nullable = false)
     private Boolean removed;
-
-    @OneToMany(mappedBy = "model", fetch = FetchType.LAZY)
-    private List<ComponentStore> storedComponents;
-
-    @OneToMany(mappedBy = "model", fetch = FetchType.LAZY)
-    private List<Import> imports;
 
     public ComponentType getType() {
         return this.type;
@@ -58,19 +51,4 @@ public class ComponentModel extends BaseEntity<Long> {
         this.removed = removed;
     }
 
-    public List<ComponentStore> getStoredComponents() {
-        return storedComponents;
-    }
-
-    public void setStoredComponents(List<ComponentStore> storedComponents) {
-        this.storedComponents = storedComponents;
-    }
-
-    public List<Import> getImports() {
-        return imports;
-    }
-
-    public void setImports(List<Import> imports) {
-        this.imports = imports;
-    }
 }

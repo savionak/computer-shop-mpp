@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 @MappedSuperclass
 public abstract class BaseEntity<ID extends Serializable> {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private ID id;
@@ -19,4 +20,5 @@ public abstract class BaseEntity<ID extends Serializable> {
     public void setId(ID id) {
         this.id = id;
     }
+
 }

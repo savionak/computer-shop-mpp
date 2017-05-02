@@ -122,4 +122,5 @@ public class UserAuth extends BaseEntity<Long> {
 
         public abstract String toString();
     }
+
 }

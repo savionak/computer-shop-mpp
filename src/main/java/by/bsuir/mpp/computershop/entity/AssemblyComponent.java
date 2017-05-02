@@ -41,4 +41,5 @@ public class AssemblyComponent extends BaseEntity<Long> implements Serializable 
     public void setCount(Long count) {
         this.count = count;
     }
+
 }

@@ -1,20 +1,21 @@
 package by.bsuir.mpp.computershop.dto.full;
 
-import by.bsuir.mpp.computershop.dto.brief.ImportBriefDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.validator.constraints.SafeHtml;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.util.List;
 
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.*;
 
 public class ProviderFullDto extends BaseFullDto<Long> {
 
+    @SafeHtml
     @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     @Pattern(regexp = NON_EMPTY_STRING_REGEX, message = CANNOT_BE_EMPTY_MESSAGE)
     private String name;
 
+    @SafeHtml
     private String description;
 
     @NotNull(message = CANNOT_BE_NULL_MESSAGE)
@@ -22,9 +23,6 @@ public class ProviderFullDto extends BaseFullDto<Long> {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Integer importsCount;
-
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private List<ImportBriefDto> imports;
 
     public String getName() {
         return this.name;
@@ -56,13 +54,5 @@ public class ProviderFullDto extends BaseFullDto<Long> {
 
     public void setImportsCount(Integer importsCount) {
         this.importsCount = importsCount;
-    }
-
-    public List<ImportBriefDto> getImports() {
-        return imports;
-    }
-
-    public void setImports(List<ImportBriefDto> imports) {
-        this.imports = imports;
     }
 }
