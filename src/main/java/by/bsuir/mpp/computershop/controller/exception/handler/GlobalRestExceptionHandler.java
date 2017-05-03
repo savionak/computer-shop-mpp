@@ -10,6 +10,8 @@ import by.bsuir.mpp.computershop.controller.exception.dto.ValidationErrorRespons
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -28,6 +30,13 @@ public class GlobalRestExceptionHandler {
         return new ResponseEntity<>(responseBody, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @Order(0)
+    @ExceptionHandler(value = AccessDeniedException.class)
+    protected ResponseEntity<ErrorResponse> handleAccessDenied(AccessDeniedException ex) {
+        ErrorResponse responseBody = new TimestampErrorResponse("Access denied");
+        return new ResponseEntity<>(responseBody, HttpStatus.FORBIDDEN);
+    }
+
     @Order(10)
     @ExceptionHandler(value = ResourceNotFoundException.class)
     protected ResponseEntity<ErrorResponse> handleNotFound(ResourceNotFoundException ex) {
@@ -36,8 +45,8 @@ public class GlobalRestExceptionHandler {
     }
 
     @Order(15)
-    @ExceptionHandler(value = InvalidDataException.class)
-    protected ResponseEntity<ErrorResponse> handleInvalidData(InvalidDataException ex) {
+    @ExceptionHandler(value = {InvalidDataException.class, HttpMessageNotReadableException.class})
+    protected ResponseEntity<ErrorResponse> handleInvalidData(Exception ex) {
         ErrorResponse responseBody = new TimestampErrorResponse("Invalid data provided");
         return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
     }
