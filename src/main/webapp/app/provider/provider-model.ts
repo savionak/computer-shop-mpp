@@ -1,5 +1,6 @@
-export class ProviderModel {
-    id: number;
+import {BaseModel} from "../shared/base-model";
+
+export class ProviderModel extends BaseModel {
     name: string;
     description: string;
 

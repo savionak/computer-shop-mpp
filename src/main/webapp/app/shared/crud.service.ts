@@ -5,9 +5,10 @@ import "rxjs/add/operator/catch";
 import "rxjs/add/operator/map";
 import "rxjs/add/observable/throw";
 import {HttpOAuthService} from "./http-oauth.service";
+import {Page} from "./page";
 
 
-export abstract class CrudService<T> {
+export abstract class CrudService<T, U> {
     protected readonly http: HttpOAuthService;
     protected readonly apiUrl: string;
 
@@ -16,7 +17,7 @@ export abstract class CrudService<T> {
         this.http = http;
     }
 
-    getList(): Observable<T[]> {
+    getList(): Observable<Page<U>> {
         return this.http.get(this.apiUrl)
             .map(CrudService.extractData)
             .catch(CrudService.handleError);
@@ -61,6 +62,7 @@ export abstract class CrudService<T> {
     }
 
     private static handleError(error: Response | any) {
+        // TODO: rewrite
         let errMsg: string;
         if (error instanceof Response) {
             const body = error.json() || '';

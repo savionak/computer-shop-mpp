@@ -1,5 +1,6 @@
-export class ComponentTypeModel {
-    id: number;
+import {BaseModel} from "../shared/base-model";
+
+export class ComponentTypeModel extends BaseModel {
     name: string;
     description: string;
 
@@ -7,4 +8,3 @@ export class ComponentTypeModel {
         return {id: null, name: null, description: null}
     }
 }
-
