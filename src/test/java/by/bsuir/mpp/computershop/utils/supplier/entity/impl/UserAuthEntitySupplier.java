@@ -1,10 +1,10 @@
 package by.bsuir.mpp.computershop.utils.supplier.entity.impl;
 
 import by.bsuir.mpp.computershop.entity.UserAuth;
+import by.bsuir.mpp.computershop.entity.UserInfo;
 import by.bsuir.mpp.computershop.utils.TestHelper;
 import by.bsuir.mpp.computershop.utils.supplier.entity.EntityLongSupplier;
 
-import static by.bsuir.mpp.computershop.utils.TestHelper.RANDOM;
 
 public class UserAuthEntitySupplier implements EntityLongSupplier<UserAuth> {
 
@@ -14,7 +14,8 @@ public class UserAuthEntitySupplier implements EntityLongSupplier<UserAuth> {
         result.setId(null);
         result.setEmail(TestHelper.nextString());
         result.setPassHash(TestHelper.nextString());
-        result.setRole(UserAuth.Role.VALUES.get(RANDOM.nextInt(UserAuth.Role.SIZE)));
+        result.setRole(UserAuth.Role.VALUES.get(TestHelper.RANDOM.nextInt(UserAuth.Role.SIZE)));
+        result.setUserInfo(this.getUserInfo());
         return result;
     }
 
@@ -23,5 +24,10 @@ public class UserAuthEntitySupplier implements EntityLongSupplier<UserAuth> {
         return null;
     }
 
-
+    public UserInfo getUserInfo() {
+        UserInfo info = new UserInfo();
+        info.setFirstName(TestHelper.nextString());
+        info.setLastName(TestHelper.nextString());
+        return info;
+    }
 }

@@ -1,23 +1,22 @@
-package by.bsuir.mpp.computershop.utils.supplier.entity.dto.full;
+package by.bsuir.mpp.computershop.utils.supplier.dto.full;
 
 import by.bsuir.mpp.computershop.dto.full.UserAuthFullDto;
 import by.bsuir.mpp.computershop.dto.full.UserInfoFullDto;
 import by.bsuir.mpp.computershop.entity.UserAuth;
+import by.bsuir.mpp.computershop.utils.TestHelper;
 
-import static by.bsuir.mpp.computershop.utils.TestHelper.RANDOM;
-import static by.bsuir.mpp.computershop.utils.TestHelper.nextString;
 
 public class UserAuthFullDtoSupplier implements FullDtoSupplier {
 
     public UserAuthFullDto getFullDto() {
         UserInfoFullDto info = new UserInfoFullDto();
-        info.setFirstName(nextString());
-        info.setLastName(nextString());
+        info.setFirstName(TestHelper.nextString());
+        info.setLastName(TestHelper.nextString());
 
         UserAuthFullDto result = new UserAuthFullDto();
-        result.setEmail(nextString());
-        result.setPass(nextString());
-        result.setRole(UserAuth.Role.VALUES.get(RANDOM.nextInt(UserAuth.Role.SIZE)));
+        result.setEmail(TestHelper.nextString());
+        result.setPass(TestHelper.nextString());
+        result.setRole(UserAuth.Role.VALUES.get(TestHelper.RANDOM.nextInt(UserAuth.Role.SIZE)));
 
         result.setUserInfo(info);
         return result;

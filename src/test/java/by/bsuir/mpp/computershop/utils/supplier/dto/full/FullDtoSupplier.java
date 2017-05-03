@@ -1,4 +1,4 @@
-package by.bsuir.mpp.computershop.utils.supplier.entity.dto.full;
+package by.bsuir.mpp.computershop.utils.supplier.dto.full;
 
 import by.bsuir.mpp.computershop.dto.full.BaseFullDto;
 

@@ -6,7 +6,7 @@ import by.bsuir.mpp.computershop.entity.UserAuth;
 import by.bsuir.mpp.computershop.entity.UserInfo;
 import by.bsuir.mpp.computershop.repository.UserAuthRepository;
 import by.bsuir.mpp.computershop.utils.TestHelper;
-import by.bsuir.mpp.computershop.utils.supplier.entity.dto.full.UserAuthFullDtoSupplier;
+import by.bsuir.mpp.computershop.utils.supplier.dto.full.UserAuthFullDtoSupplier;
 import ma.glasnost.orika.MapperFacade;
 import org.junit.Assert;
 import org.junit.Test;
