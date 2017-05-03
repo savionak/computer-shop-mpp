@@ -1,7 +1,8 @@
 import {Component, OnInit} from "@angular/core";
 
-import {ComponentTypeModel} from "./component-type-model";
+import {ComponentTypeBriefModel} from "./component-type-brief-model";
 import {ComponentTypeService} from "./component-type.service";
+import {ComponentTypeModel} from "./component-type-model";
 
 @Component({
     selector: 'comp-type-list',
@@ -11,14 +12,14 @@ import {ComponentTypeService} from "./component-type.service";
     ]
 })
 export class ComponentTypesListComponent implements OnInit {
-    componentTypesList: ComponentTypeModel[];
+    private componentTypeService: ComponentTypeService;
+    componentTypesList: ComponentTypeBriefModel[];
     error: string;
     newType: ComponentTypeModel = ComponentTypeModel.empty();
-    editingIndex: number;
-    editingTypeCopy: ComponentTypeModel;
+    editingType: ComponentTypeModel;
 
-    constructor(private componentTypeService: ComponentTypeService) {
-
+    constructor(componentTypeService: ComponentTypeService) {
+        this.componentTypeService = componentTypeService;
     }
 
     onCloseError() {
@@ -32,8 +33,8 @@ export class ComponentTypesListComponent implements OnInit {
     getList() {
         this.componentTypeService.getList()
             .subscribe(
-                (list) => {
-                    this.componentTypesList = list
+                (page) => {
+                    this.componentTypesList = page.content
                 },
                 (error) => {
                     this.error = error
@@ -58,7 +59,7 @@ export class ComponentTypesListComponent implements OnInit {
             );
     }
 
-    onDelete(type: ComponentTypeModel): void {
+    onDelete(type: ComponentTypeBriefModel): void {
         this.componentTypeService.remove(type.id)
             .subscribe(
                 (res) => {
@@ -70,12 +71,20 @@ export class ComponentTypesListComponent implements OnInit {
             );
     }
 
-    onEdit(type: ComponentTypeModel): void {
-        this.editingTypeCopy = JSON.parse(JSON.stringify(type));
+    onEdit(type: ComponentTypeBriefModel): void {
+        this.componentTypeService.get(type.id)
+            .subscribe(
+                (res) => {
+                    this.editingType = res;
+                },
+                (error) => {
+                    this.error = error;
+                }
+            );
     }
 
     onSave(): void {
-        this.componentTypeService.update(this.editingTypeCopy)
+        this.componentTypeService.update(this.editingType)
             .subscribe(
                 (res) => {
                     this.endEditing();
@@ -92,7 +101,6 @@ export class ComponentTypesListComponent implements OnInit {
     }
 
     endEditing(): void {
-        this.editingTypeCopy = null;
-        this.editingIndex = null;
+        this.editingType = null;
     }
 }

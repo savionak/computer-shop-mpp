@@ -14,7 +14,7 @@
     </table>
     <button type="button" (click)="onAdd()">Add</button>
 </div>
-<div *ngIf="editingTypeCopy">
+<div *ngIf="editingType">
     <h2>Edit type:</h2>
     <table>
         <tr>
@@ -25,9 +25,9 @@
             <th></th>
         </tr>
         <tr>
-            <td>{{editingTypeCopy.id}}</td>
-            <td><input [(ngModel)]="editingTypeCopy.name" placeholder="Component name" /></td>
-            <td><input [(ngModel)]="editingTypeCopy.description" placeholder="Component description" /></td>
+            <td>{{editingType.id}}</td>
+            <td><input [(ngModel)]="editingType.name" placeholder="Component name" /></td>
+            <td><input [(ngModel)]="editingType.description" placeholder="Component description" /></td>
         </tr>
     </table>
     <button type="button" (click)="onSave()">Save</button>
