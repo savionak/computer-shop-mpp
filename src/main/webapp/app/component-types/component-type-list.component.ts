@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 
 import {ComponentTypeModel} from "./component-type-model";
 import {ComponentTypeService} from "./component-type.service";
@@ -10,7 +10,7 @@ import {ComponentTypeService} from "./component-type.service";
         ComponentTypeService
     ]
 })
-export class ComponentTypesListComponent {
+export class ComponentTypesListComponent implements OnInit {
     componentTypesList: ComponentTypeModel[];
     error: string;
     newType: ComponentTypeModel = ComponentTypeModel.empty();
@@ -49,13 +49,13 @@ export class ComponentTypesListComponent {
         this.componentTypeService.add(this.newType)
             .subscribe(
                 (res) => {
-                    this.getList()
+                    this.getList();
+                    this.newType = ComponentTypeModel.empty();
                 },
                 (error) => {
                     this.error = error
                 }
             );
-        this.newType = ComponentTypeModel.empty();
     }
 
     onDelete(type: ComponentTypeModel): void {

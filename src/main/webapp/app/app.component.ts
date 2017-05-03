@@ -4,8 +4,9 @@ import {HttpOAuthService} from "./shared/http-oauth.service";
 @Component({
     selector: 'app',
     template: `
-        <provider-list></provider-list>
-        <comp-type-list></comp-type-list>
+            <header></header>
+            <home-app></home-app>
+            <footer></footer>
     `,
     providers: [HttpOAuthService]
 })
