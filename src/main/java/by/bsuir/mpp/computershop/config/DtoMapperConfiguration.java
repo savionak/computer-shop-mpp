@@ -32,7 +32,10 @@ public class DtoMapperConfiguration {
                 .register();
 
         mapperFactory.classMap(AssemblyComponent.class, AssemblyComponentBriefDto.class)
+                .field("component.model.id", "modelId")
                 .field("component.model.name", "modelName")
+                .field("component.model.type.id", "typeId")
+                .field("component.model.type.name", "typeName")
                 .byDefault()
                 .register();
         mapperFactory.classMap(AssemblyComponent.class, AssemblyComponentFullDto.class)
@@ -41,8 +44,10 @@ public class DtoMapperConfiguration {
                 .register();
 
         mapperFactory.classMap(ComponentStore.class, ComponentStoreBriefDto.class)
-                .field("model.type.name", "typeName")
+                .field("model.id", "modelId")
                 .field("model.name", "modelName")
+                .field("model.type.id", "typeId")
+                .field("model.type.name", "typeName")
                 .byDefault()
                 .register();
 
@@ -51,14 +56,17 @@ public class DtoMapperConfiguration {
                 .byDefault()
                 .register();
         mapperFactory.classMap(Import.class, ImportBriefDto.class)
-                .field("model.type.name", "typeName")
+                .field("model.id", "modelId")
                 .field("model.name", "modelName")
+                .field("model.type.id", "typeId")
+                .field("model.type.name", "typeName")
                 .field("provider.name", "providerName")
                 .byDefault()
                 .register();
 
         mapperFactory.classMap(Export.class, ExportBriefDto.class)
                 .field("order.id", "orderId")
+                .field("order.customer.id", "customerId")
                 .field("order.customer.name", "customerName")
                 .field("order.cost", "orderCost")
                 .byDefault()

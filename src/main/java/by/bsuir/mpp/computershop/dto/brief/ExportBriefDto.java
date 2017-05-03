@@ -6,6 +6,8 @@ public class ExportBriefDto extends BaseBriefDto<Long> {
 
     private Long orderId;
 
+    private Long customerId;
+
     private String customerName;
 
     private Long orderCost;
@@ -62,5 +64,13 @@ public class ExportBriefDto extends BaseBriefDto<Long> {
 
     public void setDone(Boolean done) {
         this.done = done;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 }
