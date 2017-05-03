@@ -5,6 +5,7 @@ import by.bsuir.mpp.computershop.controller.exception.InvalidDataException;
 import by.bsuir.mpp.computershop.controller.exception.ResourceNotFoundException;
 import by.bsuir.mpp.computershop.controller.exception.dto.CustomFieldErrorResponse;
 import by.bsuir.mpp.computershop.controller.exception.dto.ErrorResponse;
+import by.bsuir.mpp.computershop.controller.exception.dto.TimestampErrorResponse;
 import by.bsuir.mpp.computershop.controller.exception.dto.ValidationErrorResponse;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -23,35 +24,35 @@ public class GlobalRestExceptionHandler {
     @Order(1000)
     @ExceptionHandler(value = ControllerException.class)
     protected ResponseEntity<ErrorResponse> handleControllerException(ControllerException ex) {
-        ErrorResponse responseBody = new ErrorResponse("Operation failed");
+        ErrorResponse responseBody = new TimestampErrorResponse("Operation failed");
         return new ResponseEntity<>(responseBody, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Order(10)
     @ExceptionHandler(value = ResourceNotFoundException.class)
     protected ResponseEntity<ErrorResponse> handleNotFound(ResourceNotFoundException ex) {
-        ErrorResponse responseBody = new ErrorResponse("Requested resource not found");
+        ErrorResponse responseBody = new TimestampErrorResponse("Requested resource not found");
         return new ResponseEntity<>(responseBody, HttpStatus.NOT_FOUND);
     }
 
     @Order(15)
     @ExceptionHandler(value = InvalidDataException.class)
     protected ResponseEntity<ErrorResponse> handleInvalidData(InvalidDataException ex) {
-        ErrorResponse responseBody = new ErrorResponse("Invalid data provided");
+        ErrorResponse responseBody = new TimestampErrorResponse("Invalid data provided");
         return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
     }
 
     @Order(20)
     @ExceptionHandler(value = IllegalArgumentException.class)
     protected ResponseEntity<ErrorResponse> handleIllegalArgument(IllegalArgumentException ex) {
-        ErrorResponse responseBody = new ErrorResponse(ex.getMessage());
+        ErrorResponse responseBody = new TimestampErrorResponse(ex.getMessage());
         return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
     }
 
     @Order(20)
     @ExceptionHandler(value = MethodArgumentTypeMismatchException.class)
     protected ResponseEntity<ErrorResponse> handleArgumentTypeMismatch(MethodArgumentTypeMismatchException ex) {
-        ErrorResponse responseBody = new ErrorResponse("Invalid type for " + ex.getName() + " argument");
+        ErrorResponse responseBody = new TimestampErrorResponse("Invalid type for " + ex.getName() + " argument");
         return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
     }
 
