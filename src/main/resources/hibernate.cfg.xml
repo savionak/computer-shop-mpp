@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <!--<property name="connection.url"/>-->
+    <!--<property name="connection.driver_class"/>-->
+    <!-- <property name="connection.username"/> -->
+    <!-- <property name="connection.password"/> -->
+
+    <!-- DB schema will be updated if needed -->
+    <!-- <property name="hbm2ddl.auto">update</property> -->
+      <mapping class="by.bsuir.mpp.computershop.entity.AssemblyComponent" />
+      <mapping class="by.bsuir.mpp.computershop.entity.Assembly" />
+      <mapping class="by.bsuir.mpp.computershop.entity.ComponentModel" />
+      <mapping class="by.bsuir.mpp.computershop.entity.ComponentStore" />
+      <mapping class="by.bsuir.mpp.computershop.entity.ComponentType" />
+      <mapping class="by.bsuir.mpp.computershop.entity.Customer" />
+      <mapping class="by.bsuir.mpp.computershop.entity.UserAuth" />
+      <mapping class="by.bsuir.mpp.computershop.entity.UserInfo" />
+      <mapping class="by.bsuir.mpp.computershop.entity.Export" />
+      <mapping class="by.bsuir.mpp.computershop.entity.Import" />
+      <mapping class="by.bsuir.mpp.computershop.entity.Order" />
+      <mapping class="by.bsuir.mpp.computershop.entity.Provider" />
+  </session-factory>
+</hibernate-configuration>

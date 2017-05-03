@@ -1,0 +1,33 @@
+target/
+!.mvn/wrapper/maven-wrapper.jar
+*.bak
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+### Angular2 ###
+typings
+**/webapp/app/**/*.js
+**/webapp/app/**/*.map
+**/webapp/node_modules
+**/webapp/jspm_packages
+**/webapp/bower_components
