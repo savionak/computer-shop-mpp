@@ -8,13 +8,13 @@
             <th></th>
         </tr>
         <tr>
-            <td><input [(ngModel)]="newProvider.name" placeholder="Provider name" /></td>
-            <td><input [(ngModel)]="newProvider.description" placeholder="Provider description" /></td>
+            <td><input [(ngModel)]="this.newModel.name" placeholder="Provider name" /></td>
+            <td><input [(ngModel)]="this.newModel.description" placeholder="Provider description" /></td>
         </tr>
     </table>
     <button type="button" (click)="onAdd()">Add</button>
 </div>
-<div *ngIf="editingProviderCopy">
+<div *ngIf="this.editingModel">
     <h2>Edit provider:</h2>
     <table>
         <tr>
@@ -25,16 +25,16 @@
             <th></th>
         </tr>
         <tr>
-            <td>{{editingProviderCopy.id}}</td>
-            <td><input [(ngModel)]="editingProviderCopy.name" placeholder="Provider name" /></td>
-            <td><input [(ngModel)]="editingProviderCopy.description" placeholder="Provider description" /></td>
+            <td>{{this.editingModel.id}}</td>
+            <td><input [(ngModel)]="this.editingModel.name" placeholder="Provider name" /></td>
+            <td><input [(ngModel)]="this.editingModel.description" placeholder="Provider description" /></td>
         </tr>
     </table>
     <button type="button" (click)="onSave()">Save</button>
     <button type="button" (click)="onCancel()">Cancel</button>
 </div>
 <hr/>
-<div  *ngIf="error" class="error">{{error}} <button (click)="onCloseError()">X</button> </div>
+<div  *ngIf="this.error" class="error">{{this.error}} <button (click)="onCloseError()">X</button> </div>
 <button type="button" (click)="onRefresh()">Update</button>
 <table>
     <tr>
@@ -44,7 +44,7 @@
         <th></th>
         <th></th>
     </tr>
-    <tr *ngFor="let provider of providerList">
+    <tr *ngFor="let provider of this.modelsList">
         <td>{{provider.id}}</td>
         <td>{{provider.name}}</td>
         <td>{{provider.description}}</td>

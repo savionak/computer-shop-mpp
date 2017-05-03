@@ -1,8 +1,9 @@
-import {Component, OnInit} from "@angular/core";
+import {Component} from "@angular/core";
 
 import {ProviderModel} from "./provider-model";
 import {ProviderService} from "./provider.service";
 import {ProviderBriefModel} from "./provider-brief-model";
+import {AbstractListComponent} from "../shared/list.component";
 
 @Component({
     selector: 'provider-list',
@@ -11,89 +12,15 @@ import {ProviderBriefModel} from "./provider-brief-model";
         ProviderService
     ]
 })
-export class ProviderListComponent implements OnInit {
-    providerList: ProviderBriefModel[];
-    error: string;
-    newProvider: ProviderModel = ProviderModel.empty();
-    editingIndex: number;
-    editingProviderCopy: ProviderModel;
+export class ProviderListComponent extends AbstractListComponent<ProviderModel, ProviderBriefModel> {
 
-    constructor(private providerService: ProviderService) {
-
+    constructor(private componentTypeService: ProviderService) {
+        super(componentTypeService);
+        this.componentTypeService = componentTypeService;
     }
 
-    onCloseError() {
-        this.error = null;
+    getEmptyModel(): ProviderModel {
+        return ProviderModel.empty();
     }
 
-    ngOnInit() {
-        this.getList();
-    }
-
-    getList() {
-        this.providerService.getList()
-            .subscribe(
-                (page) => {
-                    this.providerList = page.content
-                },
-                (error) => {
-                    this.error = error
-                }
-            )
-    }
-
-    onRefresh(): void {
-        this.getList();
-    }
-
-    onAdd(): void {
-        this.providerService.add(this.newProvider)
-            .subscribe(
-                (res) => {
-                    this.getList();
-                    this.newProvider = ProviderModel.empty();
-                },
-                (error) => {
-                    this.error = error
-                }
-            );
-    }
-
-    onDelete(provider: ProviderModel): void {
-        this.providerService.remove(provider.id)
-            .subscribe(
-                (res) => {
-                    this.getList()
-                },
-                (error) => {
-                    this.error = error
-                }
-            );
-    }
-
-    onEdit(provider: ProviderModel): void {
-        this.editingProviderCopy = JSON.parse(JSON.stringify(provider));
-    }
-
-    onSave(): void {
-        this.providerService.update(this.editingProviderCopy)
-            .subscribe(
-                (res) => {
-                    this.endEditing();
-                    this.getList();
-                },
-                (error) => {
-                    this.error = error
-                }
-            );
-    }
-
-    onCancel(): void {
-        this.endEditing();
-    }
-
-    endEditing(): void {
-        this.editingProviderCopy = null;
-        this.editingIndex = null;
-    }
 }
