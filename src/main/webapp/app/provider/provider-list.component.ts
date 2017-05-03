@@ -8,7 +8,7 @@ import {AbstractListComponent} from "../shared/list.component";
 @Component({
     selector: 'provider-list',
     templateUrl: './provider-list.component.html',
-    providers: [    // local provider -- created for each component
+    providers: [    // local provider -- created for each component <= replace with global
         ProviderService
     ]
 })
@@ -16,7 +16,6 @@ export class ProviderListComponent extends AbstractListComponent<ProviderModel, 
 
     constructor(private componentTypeService: ProviderService) {
         super(componentTypeService);
-        this.componentTypeService = componentTypeService;
     }
 
     getEmptyModel(): ProviderModel {
