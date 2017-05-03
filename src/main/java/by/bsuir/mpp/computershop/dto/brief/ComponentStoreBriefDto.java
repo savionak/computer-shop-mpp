@@ -2,7 +2,11 @@ package by.bsuir.mpp.computershop.dto.brief;
 
 public class ComponentStoreBriefDto extends BaseBriefDto<Long> {
 
+    private String typeId;
+
     private String typeName;
+
+    private String modelId;
 
     private String modelName;
 
@@ -40,5 +44,21 @@ public class ComponentStoreBriefDto extends BaseBriefDto<Long> {
 
     public void setCount(Long count) {
         this.count = count;
+    }
+
+    public String getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(String typeId) {
+        this.typeId = typeId;
+    }
+
+    public String getModelId() {
+        return modelId;
+    }
+
+    public void setModelId(String modelId) {
+        this.modelId = modelId;
     }
 }
