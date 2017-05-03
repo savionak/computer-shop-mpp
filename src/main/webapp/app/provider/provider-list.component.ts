@@ -2,6 +2,7 @@ import {Component, OnInit} from "@angular/core";
 
 import {ProviderModel} from "./provider-model";
 import {ProviderService} from "./provider.service";
+import {ProviderBriefModel} from "./provider-brief-model";
 
 @Component({
     selector: 'provider-list',
@@ -11,7 +12,7 @@ import {ProviderService} from "./provider.service";
     ]
 })
 export class ProviderListComponent implements OnInit {
-    providerList: ProviderModel[];
+    providerList: ProviderBriefModel[];
     error: string;
     newProvider: ProviderModel = ProviderModel.empty();
     editingIndex: number;
@@ -32,8 +33,8 @@ export class ProviderListComponent implements OnInit {
     getList() {
         this.providerService.getList()
             .subscribe(
-                (list) => {
-                    this.providerList = list
+                (page) => {
+                    this.providerList = page.content
                 },
                 (error) => {
                     this.error = error
