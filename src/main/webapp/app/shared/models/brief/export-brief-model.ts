@@ -1,4 +1,4 @@
-import {BaseModel} from "../../base-model";
+import {BaseModel} from "../base-model";
 import {Timestamp} from "rxjs/Rx";
 
 export class ExportBriefModel extends BaseModel {

@@ -1,4 +1,4 @@
-import {BaseModel} from "../../base-model";
+import {BaseModel} from "../base-model";
 import {OrderBriefModel} from "../brief/order-brief-model";
 import {Timestamp} from "rxjs/Rx";
 

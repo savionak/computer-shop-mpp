@@ -1,4 +1,4 @@
-import {BaseModel} from "../../base-model";
+import {BaseModel} from "../base-model";
 import {UserInfoModel} from "./user-info-model";
 
 export class UserAuthModel extends BaseModel {

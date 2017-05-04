@@ -1,4 +1,4 @@
-import {BaseModel} from "../../base-model";
+import {BaseModel} from "../base-model";
 import {ComponentStoreBriefModel} from "../brief/component-store-brief-model";
 
 

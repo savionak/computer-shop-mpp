@@ -1,4 +1,4 @@
-import {BaseModel} from "../../base-model";
+import {BaseModel} from "../base-model";
 import {ComponentTypeBriefModel} from "../brief/component-type-brief-model";
 
 export class ComponentModelModel extends BaseModel {

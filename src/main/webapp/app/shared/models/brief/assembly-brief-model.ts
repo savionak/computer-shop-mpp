@@ -1,4 +1,4 @@
-import {BaseModel} from "../../base-model";
+import {BaseModel} from "../base-model";
 import Order = jasmine.Order;
 
 export class AssemblyBriefModel extends BaseModel {
