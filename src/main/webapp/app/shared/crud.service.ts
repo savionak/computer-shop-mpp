@@ -17,8 +17,8 @@ export abstract class CrudService<T, U> {
         this.http = http;
     }
 
-    getList(): Observable<Page<U>> {
-        return this.http.get(this.apiUrl)
+    getList(url?: string): Observable<Page<U>> {
+        return this.http.get(url || this.apiUrl)
             .map(CrudService.extractData)
             .catch(CrudService.handleError);
     }
@@ -33,13 +33,13 @@ export abstract class CrudService<T, U> {
         let headers = new Headers({'Content-Type': 'application/json'});
         let options = new RequestOptions({headers: headers});
 
-        return this.http.post(this.apiUrl + '/add', JSON.stringify(type), options)
+        return this.http.post(this.apiUrl + '/' + this.ADD_PART, JSON.stringify(type), options)
             .map(CrudService.extractData)
             .catch(CrudService.handleError);
     }
 
     remove(id: number): Observable<T> {
-        return this.http.delete(this.apiUrl + '/delete/' + id)
+        return this.http.delete(this.apiUrl + '/' + this.DELETE_PART + '/' + id)
             .map(CrudService.extractData)
             .catch(CrudService.handleError);
     }
@@ -48,7 +48,7 @@ export abstract class CrudService<T, U> {
         let headers = new Headers({'Content-Type': 'application/json'});
         let options = new RequestOptions({headers: headers});
 
-        return this.http.put(this.apiUrl + '/update', JSON.stringify(type), options)
+        return this.http.put(this.apiUrl + '/' + this.UPDATE_PART, JSON.stringify(type), options)
             .map(CrudService.extractData)
             .catch(CrudService.handleError);
     }
@@ -74,4 +74,8 @@ export abstract class CrudService<T, U> {
         console.error(errMsg);
         return Observable.throw(errMsg);
     }
+
+    private readonly DELETE_PART: string = 'delete';
+    private readonly ADD_PART: string = 'add';
+    private readonly UPDATE_PART: string = 'update';
 }
