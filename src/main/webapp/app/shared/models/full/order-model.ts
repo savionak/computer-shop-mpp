@@ -11,7 +11,7 @@ export class OrderModel extends BaseModel {
     export:ExportBriefModel;
 
     public static empty(): OrderModel {
-        return {id: null, customer: null, cost: null, orderDate:null, status: null, export:null}
+        return {id: null, customer: null, cost: null, orderDate:null, status: Status.IN_PROGRESS, export:null}
     }
 }
 const enum Status{

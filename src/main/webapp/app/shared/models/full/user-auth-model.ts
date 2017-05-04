@@ -3,14 +3,14 @@ import {UserInfoModel} from "./user-info-model";
 
 export class UserAuthModel extends BaseModel {
     email: string;
-    path: string;
+    pass: string;
     role: Role;
     blocked:boolean;
     removed:boolean;
     userInfo: UserInfoModel;
 
     public static empty(): UserAuthModel {
-        return {id: null, email: "", path: null, role: null, blocked:false,removed:false,userInfo:null}
+        return {id: null, email: "", pass: null, role: Role.MANAGER, blocked:false,removed:false,userInfo:null}
     }
 }
 const enum Role{
