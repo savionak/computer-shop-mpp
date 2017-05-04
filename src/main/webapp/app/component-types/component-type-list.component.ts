@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
 
-import {ComponentTypeBriefModel} from "./component-type-brief-model";
+import {ComponentTypeBriefModel} from "../shared/models/brief/component-type-brief-model";
 import {ComponentTypeService} from "./component-type.service";
-import {ComponentTypeModel} from "./component-type-model";
+import {ComponentTypeModel} from "../shared/models/full/component-type-model";
 import {AbstractListComponent} from "../shared/list.component";
 
 @Component({

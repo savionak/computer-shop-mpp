@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
 
-import {ProviderModel} from "./provider-model";
+import {ProviderModel} from "../shared/models/full/provider-model";
 import {ProviderService} from "./provider.service";
-import {ProviderBriefModel} from "./provider-brief-model";
+import {ProviderBriefModel} from "../shared/models/brief/provider-brief-model";
 import {AbstractListComponent} from "../shared/list.component";
 
 @Component({
