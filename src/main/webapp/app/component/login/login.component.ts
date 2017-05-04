@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {LoginModel} from "./login-model";
-import {LoginService} from "./login.service";
+import {LoginService} from "../../service/login.service";
+
 
 @Component({
     selector: 'login',

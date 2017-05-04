@@ -4,13 +4,13 @@ import {FormsModule} from "@angular/forms";
 import {HttpModule, JsonpModule} from "@angular/http";
 
 import {Routes, RouterModule} from "@angular/router";
-import {AppComponent} from "./app.component";
-import {ComponentTypesListComponent} from "./component-types/component-type-list.component";
-import {ProviderListComponent} from "./provider/provider-list.component";
-import {HomeComponent} from "./home.component";
-import {FooterComponent} from "./footer.component";
-import {HeaderComponent} from "./header.component";
-import {LoginComponent} from "./login/login.component";
+import {AppComponent} from "./component/app/app.component";
+import {ComponentTypesListComponent} from "./component/component-types/component-type-list.component";
+import {ProviderListComponent} from "./component/provider/provider-list.component";
+import {HomeComponent} from "./component/app/home.component";
+import {FooterComponent} from "./component/app/footer.component";
+import {HeaderComponent} from "./component/app/header.component";
+import {LoginComponent} from "./component/login/login.component";
 
 const appRoutes: Routes =[
     { path: 'component', component: ComponentTypesListComponent},

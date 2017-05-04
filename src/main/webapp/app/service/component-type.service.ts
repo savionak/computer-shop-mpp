@@ -4,9 +4,10 @@ import "rxjs/add/operator/catch";
 import "rxjs/add/operator/map";
 
 import {HttpOAuthService} from "../shared/http-oauth.service";
-import {ComponentTypeBriefModel} from "../shared/models/brief/component-type-brief-model";
-import {CrudService} from "../shared/crud.service";
-import {ComponentTypeModel} from "../shared/models/full/component-type-model";
+import {CrudService} from "./crud.service";
+import {ComponentTypeModel} from "../model/full/component-type-model";
+import {ComponentTypeBriefModel} from "../model/brief/component-type-brief-model";
+
 
 @Injectable()
 export class ComponentTypeService extends CrudService<ComponentTypeModel, ComponentTypeBriefModel> {
