@@ -1,9 +1,10 @@
 import {Component} from "@angular/core";
+import {ProviderService} from "../../service/provider.service";
+import {AbstractListComponent} from "../app/list.component";
+import {ProviderModel} from "../../model/full/provider-model";
+import {ProviderBriefModel} from "../../model/brief/provider-brief-model";
 
-import {ProviderModel} from "../shared/models/full/provider-model";
-import {ProviderService} from "./provider.service";
-import {ProviderBriefModel} from "../shared/models/brief/provider-brief-model";
-import {AbstractListComponent} from "../shared/list.component";
+
 
 @Component({
     selector: 'provider-list',
