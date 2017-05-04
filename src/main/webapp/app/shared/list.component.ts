@@ -1,6 +1,6 @@
 import {OnInit} from "@angular/core";
 
-import {BaseModel} from "./base-model";
+import {BaseModel} from "./models/base-model";
 import {CrudService} from "./crud.service";
 
 // T - FullDto, U - BriefDto
