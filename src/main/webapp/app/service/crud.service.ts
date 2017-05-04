@@ -4,8 +4,8 @@ import {Observable} from "rxjs/Observable";
 import "rxjs/add/operator/catch";
 import "rxjs/add/operator/map";
 import "rxjs/add/observable/throw";
-import {HttpOAuthService} from "./http-oauth.service";
-import {Page} from "./page";
+import {HttpOAuthService} from "../shared/http-oauth.service";
+import {Page} from "../shared/page";
 
 
 export abstract class CrudService<T, U> {

@@ -1,9 +1,9 @@
 import {Component} from "@angular/core";
 
 import {ComponentTypeBriefModel} from "./component-type-brief-model";
-import {ComponentTypeService} from "./component-type.service";
+import {ComponentTypeService} from "../../service/impl/component-type.service";
 import {ComponentTypeModel} from "./component-type-model";
-import {AbstractListComponent} from "../shared/list.component";
+import {AbstractListComponent} from "../list.component";
 
 @Component({
     selector: 'comp-type-list',

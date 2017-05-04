@@ -1,4 +1,4 @@
-import {BaseModel} from "../shared/base-model";
+import {BaseModel} from "../../shared/base-model";
 
 export class ComponentTypeBriefModel extends BaseModel {
     name: string;
