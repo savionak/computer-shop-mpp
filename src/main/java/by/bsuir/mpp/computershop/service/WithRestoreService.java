@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.io.Serializable;
 
-public interface WithRemovedService<E extends BaseEntity<ID>, ID extends Serializable> extends CrudService<E, ID> {
+public interface WithRestoreService<E extends BaseEntity<ID>, ID extends Serializable> extends CrudService<E, ID> {
 
     void restore(Long id) throws ServiceException;
 

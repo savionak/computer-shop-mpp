@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.Serializable;
 
-public interface WithRemovedController<B extends BaseBriefDto<ID>, F extends BaseFullDto<ID>, ID extends Serializable>
+public interface WithRestoreController<B extends BaseBriefDto<ID>, F extends BaseFullDto<ID>, ID extends Serializable>
         extends CrudController<B, F, ID>{
 
     @RequestMapping(path = "removed", method = RequestMethod.GET)

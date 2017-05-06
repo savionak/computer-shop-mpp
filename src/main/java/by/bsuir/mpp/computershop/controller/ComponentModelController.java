@@ -6,5 +6,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("api/component/model")
 public interface ComponentModelController
-        extends WithRemovedController<ComponentModelBriefDto, ComponentModelFullDto, Long> {
+        extends WithRestoreController<ComponentModelBriefDto, ComponentModelFullDto, Long> {
 }

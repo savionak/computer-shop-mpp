@@ -19,6 +19,6 @@ public class ComponentStoreControllerImpl
 
     @Autowired
     public ComponentStoreControllerImpl(ComponentStoreService storeService, MapperFacade mapper) {
-        super(storeService, mapper, ComponentStoreBriefDto.class, ComponentStoreFullDto.class, ComponentStore.class, logger);
+        super(storeService, mapper, ComponentStoreBriefDto.class, ComponentStoreFullDto.class, logger);
     }
 }

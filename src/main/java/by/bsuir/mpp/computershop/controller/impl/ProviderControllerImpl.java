@@ -12,18 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ProviderControllerImpl
-        extends AbstractWithRemovedController<ProviderBriefDto, ProviderFullDto, Provider, Long>
+        extends AbstractWithRestoreController<ProviderBriefDto, ProviderFullDto, Provider, Long>
         implements ProviderController {
 
     private static final Logger logger = Logger.getLogger(ProviderControllerImpl.class);
-    private final ProviderService service;
-    private final MapperFacade mapper;
 
     @Autowired
     public ProviderControllerImpl(ProviderService providerService, MapperFacade mapper) {
         super(providerService, mapper, ProviderBriefDto.class, ProviderFullDto.class, Provider.class, logger);
-        this.service = providerService;
-        this.mapper = mapper;
     }
 
 }

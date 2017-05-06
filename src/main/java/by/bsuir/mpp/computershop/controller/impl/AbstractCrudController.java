@@ -24,7 +24,6 @@ public abstract class AbstractCrudController
     private final CrudService<E, ID> service;
     private final Logger logger;
     private final MapperFacade mapper;
-    private final Class<B> briefDtoClass;
     private final Class<F> fullDtoClass;
     private final Class<E> entityClass;
 
@@ -34,10 +33,9 @@ public abstract class AbstractCrudController
                            Class<F> fullDtoClass,
                            Class<E> entityClass,
                            Logger logger) {
-        super(service, mapper, briefDtoClass, fullDtoClass, entityClass, logger);
+        super(service, mapper, briefDtoClass, fullDtoClass, logger);
         this.service = service;
         this.mapper = mapper;
-        this.briefDtoClass = briefDtoClass;
         this.fullDtoClass = fullDtoClass;
         this.entityClass = entityClass;
         this.logger = logger;

@@ -28,19 +28,16 @@ public abstract class AbstractReadController
     private final MapperFacade mapper;
     private final Class<B> briefDtoClass;
     private final Class<F> fullDtoClass;
-    private final Class<E> entityClass;
 
     AbstractReadController(CrudService<E, ID> service,
                            MapperFacade mapper,
                            Class<B> briefDtoClass,
                            Class<F> fullDtoClass,
-                           Class<E> entityClass,
                            Logger logger) {
         this.service = service;
         this.mapper = mapper;
         this.briefDtoClass = briefDtoClass;
         this.fullDtoClass = fullDtoClass;
-        this.entityClass = entityClass;
         this.logger = logger;
     }
 
