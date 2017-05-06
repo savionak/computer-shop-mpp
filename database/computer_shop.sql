@@ -706,7 +706,7 @@ BEGIN
 	IF EXISTS(
 		SELECT 1
         FROM `component_store`
-        WHERE `type_id` = m_model_id
+        WHERE `model_id` = m_model_id
     ) THEN
 		UPDATE `component_model`
 		SET `removed` = TRUE
