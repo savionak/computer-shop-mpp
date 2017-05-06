@@ -208,8 +208,8 @@ CREATE TABLE IF NOT EXISTS `computer_shop`.`user_info` (
   CONSTRAINT `fk_user_info_user_auth1`
     FOREIGN KEY (`auth_id`)
     REFERENCES `computer_shop`.`user_auth` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -228,7 +228,7 @@ CREATE TABLE IF NOT EXISTS `computer_shop`.`export` (
   CONSTRAINT `FK_export_order`
     FOREIGN KEY (`order_id`)
     REFERENCES `computer_shop`.`order` (`id`)
-    ON DELETE CASCADE
+    ON DELETE RESTRICT
     ON UPDATE RESTRICT)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -280,8 +280,8 @@ CREATE TABLE IF NOT EXISTS `computer_shop`.`import` (
   CONSTRAINT `fk_import_component_store1`
     FOREIGN KEY (`store_id`)
     REFERENCES `computer_shop`.`component_store` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -502,43 +502,6 @@ END$$
 DELIMITER ;
 
 -- -----------------------------------------------------
--- procedure remove_order
--- -----------------------------------------------------
-
-DELIMITER $$
-USE `computer_shop`$$
-CREATE PROCEDURE remove_order(
-	IN ord_id BIGINT UNSIGNED
-)
-BEGIN
-	DECLARE asm_id BIGINT UNSIGNED DEFAULT NULL;
-	DECLARE done BOOLEAN DEFAULT FALSE;
-	DECLARE asm_cur CURSOR FOR
-		SELECT `id`
-        FROM `assembly`
-        WHERE `order_id` = ord_id;
-    
-    DECLARE CONTINUE HANDLER FOR NOT FOUND
-		SET done = TRUE;
-	
-    OPEN asm_cur;
-    FETCH asm_cur INTO asm_id;
-    WHILE NOT done DO
-		CALL remove_assembly(asm_id);
-		FETCH asm_cur INTO asm_id;
-    END WHILE;
-    CLOSE asm_cur;
-    
-    DELETE FROM `export`
-	WHERE `order_id` = ord_id;
-    
-    DELETE FROM `order`
-	WHERE `id` = ord_id;
-END$$
-
-DELIMITER ;
-
--- -----------------------------------------------------
 -- procedure add_store_record
 -- -----------------------------------------------------
 
@@ -683,6 +646,178 @@ BEGIN
     SET `status` = 'IN_PROGRESS'
     WHERE `id` = order_id
 		AND `status` = 'READY';
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure remove_type
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE remove_type(
+	IN t_type_id BIGINT UNSIGNED
+)
+BEGIN
+	IF EXISTS(
+		SELECT 1
+        FROM `component_model`
+        WHERE `type_id` = t_type_id
+    ) THEN
+		UPDATE `component_type`
+		SET `removed` = TRUE
+		WHERE `id` = t_type_id;
+	ELSE
+		DELETE FROM `component_type`
+		WHERE `id` = t_type_id;
+    END IF;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure restore_type
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE restore_type(
+	IN t_type_id BIGINT UNSIGNED
+)
+BEGIN
+	UPDATE `component_type`
+	SET `removed` = FALSE
+	WHERE `id` = t_type_id;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure remove_model
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE remove_model(
+	IN m_model_id BIGINT UNSIGNED
+)
+BEGIN
+	IF EXISTS(
+		SELECT 1
+        FROM `component_store`
+        WHERE `type_id` = m_model_id
+    ) THEN
+		UPDATE `component_model`
+		SET `removed` = TRUE
+		WHERE `id` = m_model_id;
+	ELSE
+		DELETE FROM `component_model`
+		WHERE `id` = m_model_id;
+    END IF;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure restore_model
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE restore_model(
+	IN m_model_id BIGINT UNSIGNED
+)
+BEGIN
+	UPDATE `component_model`
+	SET `removed` = FALSE
+	WHERE `id` = m_model_id;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure remove_provider
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE remove_provider(
+	IN p_provider_id BIGINT UNSIGNED
+)
+BEGIN
+	IF EXISTS(
+		SELECT 1
+        FROM `import`
+        WHERE `provider_id` = p_provider_id
+    ) THEN
+		UPDATE `provider`
+		SET `removed` = TRUE
+		WHERE `id` = p_provider_id;
+	ELSE
+		DELETE FROM `provider`
+		WHERE `id` = p_provider_id;
+    END IF;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure restore_provider
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE restore_provider(
+	IN p_provider_id BIGINT UNSIGNED
+)
+BEGIN
+	UPDATE `provider`
+	SET `removed` = FALSE
+	WHERE `id` = p_provider_id;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure remove_customer
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE remove_customer(
+	IN c_customer_id BIGINT UNSIGNED
+)
+BEGIN
+	IF EXISTS(
+		SELECT 1
+        FROM `order`
+        WHERE `customer_id` = c_customer_id
+    ) THEN
+		UPDATE `customer`
+		SET `removed` = TRUE
+		WHERE `id` = c_customer_id;
+	ELSE
+		DELETE FROM `customer`
+		WHERE `id` = c_customer_id;
+    END IF;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure restore_customer
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE restore_customer(
+	IN c_customer_id BIGINT UNSIGNED
+)
+BEGIN
+	UPDATE `customer`
+	SET `removed` = FALSE
+	WHERE `id` = c_customer_id;
 END$$
 
 DELIMITER ;
