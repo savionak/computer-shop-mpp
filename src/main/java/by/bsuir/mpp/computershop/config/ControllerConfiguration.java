@@ -33,8 +33,7 @@ public class ControllerConfiguration {
 
     @Bean
     public CustomerController customerController(CustomerService customerService, MapperFacade mapperFacade) {
-        return new CustomerControllerImpl(customerService, mapperFacade) {
-        };
+        return new CustomerControllerImpl(customerService, mapperFacade);
     }
 
     @Bean

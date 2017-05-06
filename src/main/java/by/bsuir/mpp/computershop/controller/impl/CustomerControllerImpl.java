@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class CustomerControllerImpl
-        extends AbstractCrudController<CustomerBriefDto, CustomerFullDto, Customer, Long>
+        extends AbstractWithRemovedController<CustomerBriefDto, CustomerFullDto, Customer, Long>
         implements CustomerController {
 
     private static final Logger logger = Logger.getLogger(CustomerControllerImpl.class);

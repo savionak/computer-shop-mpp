@@ -6,5 +6,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("api/customer")
 public interface CustomerController
-        extends CrudController<CustomerBriefDto, CustomerFullDto, Long> {
+        extends WithRemovedController<CustomerBriefDto, CustomerFullDto, Long> {
 }
