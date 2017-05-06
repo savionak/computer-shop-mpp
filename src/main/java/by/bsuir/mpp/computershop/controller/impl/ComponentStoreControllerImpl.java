@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ComponentStoreControllerImpl
-        extends AbstractCrudController<ComponentStoreBriefDto, ComponentStoreFullDto, ComponentStore, Long>
+        extends AbstractReadController<ComponentStoreBriefDto, ComponentStoreFullDto, ComponentStore, Long>
         implements ComponentStoreController {
 
     private static final Logger logger = Logger.getLogger(ComponentStoreControllerImpl.class);
