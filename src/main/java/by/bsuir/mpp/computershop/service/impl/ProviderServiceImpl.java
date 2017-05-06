@@ -31,4 +31,9 @@ public class ProviderServiceImpl extends AbstractCrudService<Provider, Long> imp
     public Page<Provider> getRemoved(Pageable pageable) throws ServiceException{
         return wrapRepositoryCall(() -> providerRepository.findAllByRemovedIsTrue(pageable));
     }
+
+    @Override
+    public void restore(Long id) throws ServiceException {
+        wrapRepositoryCall(() -> providerRepository.restore(id));
+    }
 }

@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import static by.bsuir.mpp.computershop.controller.exception.wrapper.ServiceCallWrapper.wrapServiceCall;
@@ -37,5 +38,11 @@ public class ProviderControllerImpl
         logger.info("GET REMOVED Providers");
         Page<Provider> removed = wrapServiceCall(() -> service.getRemoved(pageable), logger);
         return asPageDto(removed, ProviderBriefDto.class);
+    }
+
+    @Override
+    public void restore(@PathVariable Long id) throws ControllerException {
+        logger.info(String.format("RESTORE Provider with id = [%s]", id.toString()));
+        wrapServiceCall(() -> service.restore(id), logger);
     }
 }
