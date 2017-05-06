@@ -30,7 +30,7 @@ public class Order extends BaseEntity<Long> {
     @Column(name = "canceled", nullable = false)
     private Boolean canceled = false;
 
-    @OneToOne(mappedBy = "order", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private Export export;
 
     public Customer getCustomer() {

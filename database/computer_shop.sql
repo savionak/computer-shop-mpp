@@ -224,7 +224,6 @@ CREATE TABLE IF NOT EXISTS `computer_shop`.`export` (
   `order_id` BIGINT UNSIGNED NOT NULL,
   `export_date` DATETIME NOT NULL DEFAULT NOW(),
   `address` VARCHAR(255) NOT NULL,
-  `done` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   CONSTRAINT `FK_export_order`
     FOREIGN KEY (`order_id`)
@@ -600,13 +599,90 @@ DELIMITER ;
 DELIMITER $$
 USE `computer_shop`$$
 CREATE PROCEDURE accept_order(
-	IN ord_id BIGINT UNSIGNED
+	IN order_id BIGINT UNSIGNED
 )
 BEGIN
 	UPDATE `order`
     SET `status` = 'READY'
-    WHERE `id` = ord_id
-		AND `status` != 'FINISHED';
+    WHERE `id` = order_id
+		AND `status` = 'IN_PROGRESS';
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure finish_order
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE finish_order(
+	IN order_id BIGINT UNSIGNED
+)
+BEGIN
+	UPDATE `order`
+    SET `status` = 'FINISHED'
+    WHERE `id` = order_id
+		AND `status` = 'READY';
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure unfinish_order
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE unfinish_order(
+	IN order_id BIGINT UNSIGNED
+)
+BEGIN
+	UPDATE `order`
+    SET `status` = 'READY'
+    WHERE `id` = order_id
+		AND `status` = 'FINISHED';
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- function try_renew_order
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE FUNCTION try_renew_order(
+	order_id BIGINT UNSIGNED
+)
+RETURNS BOOLEAN
+BEGIN
+	DECLARE result BOOLEAN DEFAULT FALSE;
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
+		SET result = FALSE;
+
+	CALL renew_order(order_id);
+    SET result = TRUE;
+
+	RETURN result;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure start_edit_order
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE start_edit_order(
+	IN order_id BIGINT UNSIGNED
+)
+BEGIN
+	UPDATE `order`
+    SET `status` = 'IN_PROGRESS'
+    WHERE `id` = order_id
+		AND `status` = 'READY';
 END$$
 
 DELIMITER ;
@@ -890,59 +966,6 @@ BEGIN
     THEN
 		SIGNAL SQLSTATE '45000'
 			SET MESSAGE_TEXT = 'FORBIDDEN: Remove last ADMIN.';
-    END IF;
-END$$
-
-USE `computer_shop`$$
-CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`export_BEFORE_INSERT`
-BEFORE INSERT ON `export`
-FOR EACH ROW
-BEGIN
-	SET NEW.`done` = FALSE;
-END$$
-
-USE `computer_shop`$$
-CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`export_BEFORE_UPDATE`
-BEFORE UPDATE ON `export`
-FOR EACH ROW
-BEGIN
-	DECLARE order_status ENUM('IN_PROGRESS', 'READY', 'FINISHED');
-    
-	SELECT `status`
-    INTO order_status
-    FROM `order`
-    WHERE `id` = NEW.`order_id`;
-    
-	IF (NEW.`done`)
-    THEN
-		IF (order_status = 'IN_PROGRESS')
-        THEN
-			SET NEW.`done` = FALSE;
-		ELSE
-			UPDATE `order`
-            SET `status` = 'FINISHED'
-            WHERE `id` = NEW.`order_id`;
-        END IF;
-	ELSE
-		IF (order_status = 'FINISHED')
-        THEN
-			UPDATE `order`
-			SET `status` = 'READY'
-			WHERE `id` = NEW.`order_id`;
-		END IF;
-    END IF;
-END$$
-
-USE `computer_shop`$$
-CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`export_AFTER_DELETE`
-AFTER DELETE ON `export`
-FOR EACH ROW
-BEGIN
-	IF (OLD.`done`)
-    THEN
-		UPDATE `order`
-		SET `status` = 'READY'
-		WHERE `id` = OLD.`order_id`;
     END IF;
 END$$
 
