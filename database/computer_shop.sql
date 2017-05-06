@@ -538,24 +538,6 @@ END$$
 DELIMITER ;
 
 -- -----------------------------------------------------
--- procedure apply_order
--- -----------------------------------------------------
-
-DELIMITER $$
-USE `computer_shop`$$
-CREATE PROCEDURE apply_order(
-	IN ord_id BIGINT UNSIGNED
-)
-BEGIN
-	UPDATE `order`
-    SET `status` = 'READY'
-    WHERE `id` = ord_id
-		AND `status` != 'FINISHED';
-END$$
-
-DELIMITER ;
-
--- -----------------------------------------------------
 -- procedure accept_order
 -- -----------------------------------------------------
 
@@ -605,29 +587,6 @@ BEGIN
     SET `status` = 'READY'
     WHERE `id` = order_id
 		AND `status` = 'FINISHED';
-END$$
-
-DELIMITER ;
-
--- -----------------------------------------------------
--- function try_renew_order
--- -----------------------------------------------------
-
-DELIMITER $$
-USE `computer_shop`$$
-CREATE FUNCTION try_renew_order(
-	order_id BIGINT UNSIGNED
-)
-RETURNS BOOLEAN
-BEGIN
-	DECLARE result BOOLEAN DEFAULT FALSE;
-    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
-		SET result = FALSE;
-
-	CALL renew_order(order_id);
-    SET result = TRUE;
-
-	RETURN result;
 END$$
 
 DELIMITER ;
