@@ -5,6 +5,7 @@ import by.bsuir.mpp.computershop.dto.PageDto;
 import by.bsuir.mpp.computershop.dto.brief.BaseBriefDto;
 import by.bsuir.mpp.computershop.dto.full.BaseFullDto;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -15,4 +16,7 @@ public interface WithRemovedController<B extends BaseBriefDto<ID>, F extends Bas
 
     @RequestMapping(path = "removed", method = RequestMethod.GET)
     PageDto getRemoved(Pageable pageable) throws ControllerException;
+
+    @RequestMapping(path = "restore/{id}", method = RequestMethod.GET)
+    void restore(@PathVariable Long id) throws ControllerException;
 }

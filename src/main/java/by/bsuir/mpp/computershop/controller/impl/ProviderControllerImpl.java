@@ -1,8 +1,6 @@
 package by.bsuir.mpp.computershop.controller.impl;
 
 import by.bsuir.mpp.computershop.controller.ProviderController;
-import by.bsuir.mpp.computershop.controller.exception.ControllerException;
-import by.bsuir.mpp.computershop.dto.PageDto;
 import by.bsuir.mpp.computershop.dto.brief.ProviderBriefDto;
 import by.bsuir.mpp.computershop.dto.full.ProviderFullDto;
 import by.bsuir.mpp.computershop.entity.Provider;
@@ -10,16 +8,11 @@ import by.bsuir.mpp.computershop.service.ProviderService;
 import ma.glasnost.orika.MapperFacade;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-
-import static by.bsuir.mpp.computershop.controller.exception.wrapper.ServiceCallWrapper.wrapServiceCall;
 
 @RestController
 public class ProviderControllerImpl
-        extends AbstractCrudController<ProviderBriefDto, ProviderFullDto, Provider, Long>
+        extends AbstractWithRemovedController<ProviderBriefDto, ProviderFullDto, Provider, Long>
         implements ProviderController {
 
     private static final Logger logger = Logger.getLogger(ProviderControllerImpl.class);
@@ -33,16 +26,4 @@ public class ProviderControllerImpl
         this.mapper = mapper;
     }
 
-    @Override
-    public PageDto getRemoved(Pageable pageable) throws ControllerException {
-        logger.info("GET REMOVED Providers");
-        Page<Provider> removed = wrapServiceCall(() -> service.getRemoved(pageable), logger);
-        return asPageDto(removed, ProviderBriefDto.class);
-    }
-
-    @Override
-    public void restore(@PathVariable Long id) throws ControllerException {
-        logger.info(String.format("RESTORE Provider with id = [%s]", id.toString()));
-        wrapServiceCall(() -> service.restore(id), logger);
-    }
 }
