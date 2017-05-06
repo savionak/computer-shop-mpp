@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ComponentTypeControllerImpl
-        extends AbstractCrudController<ComponentTypeBriefDto, ComponentTypeFullDto, ComponentType, Long>
+        extends AbstractWithRemovedController<ComponentTypeBriefDto, ComponentTypeFullDto, ComponentType, Long>
         implements ComponentTypeController {
 
     private static final Logger logger = Logger.getLogger(ComponentTypeControllerImpl.class);
@@ -25,4 +25,5 @@ public class ComponentTypeControllerImpl
         this.service = componentTypeService;
         this.mapper = mapper;
     }
+
 }
