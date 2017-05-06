@@ -1,7 +1,6 @@
 package by.bsuir.mpp.computershop.controller.impl;
 
 import by.bsuir.mpp.computershop.controller.ProviderController;
-import by.bsuir.mpp.computershop.controller.WithRemovedController;
 import by.bsuir.mpp.computershop.controller.exception.ControllerException;
 import by.bsuir.mpp.computershop.dto.PageDto;
 import by.bsuir.mpp.computershop.dto.brief.ProviderBriefDto;
@@ -20,8 +19,7 @@ import static by.bsuir.mpp.computershop.controller.exception.wrapper.ServiceCall
 @RestController
 public class ProviderControllerImpl
         extends AbstractCrudController<ProviderBriefDto, ProviderFullDto, Provider, Long>
-        implements ProviderController,
-        WithRemovedController {
+        implements ProviderController {
 
     private static final Logger logger = Logger.getLogger(ProviderControllerImpl.class);
     private final ProviderService service;
