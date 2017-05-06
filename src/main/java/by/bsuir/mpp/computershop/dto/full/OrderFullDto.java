@@ -27,6 +27,9 @@ public class OrderFullDto extends BaseFullDto<Long> {
     private Status status;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Boolean canceled;
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private ExportBriefDto export;
 
     public CustomerBriefDto getCustomer() {
@@ -67,5 +70,13 @@ public class OrderFullDto extends BaseFullDto<Long> {
 
     public void setExport(ExportBriefDto export) {
         this.export = export;
+    }
+
+    public Boolean getCanceled() {
+        return canceled;
+    }
+
+    public void setCanceled(Boolean canceled) {
+        this.canceled = canceled;
     }
 }
