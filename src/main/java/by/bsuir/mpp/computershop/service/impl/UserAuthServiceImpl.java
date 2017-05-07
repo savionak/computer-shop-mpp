@@ -1,6 +1,6 @@
 package by.bsuir.mpp.computershop.service.impl;
 
-import by.bsuir.mpp.computershop.dto.full.UpdatePassDto;
+import by.bsuir.mpp.computershop.dto.helper.UpdateUserPassDto;
 import by.bsuir.mpp.computershop.entity.UserAuth;
 import by.bsuir.mpp.computershop.repository.UserAuthRepository;
 import by.bsuir.mpp.computershop.service.UserAuthService;
@@ -24,7 +24,7 @@ public class UserAuthServiceImpl extends AbstractCrudService<UserAuth, Long> imp
     }
 
     @Override
-    public void updatePasswordHash(UpdatePassDto passDto) throws ServiceException {
+    public void updatePasswordHash(UpdateUserPassDto passDto) throws ServiceException {
         wrapRepositoryCall(() -> userRepository.updatePasswordHash(passDto.getUserId(), passDto.getNewHash()));
     }
 

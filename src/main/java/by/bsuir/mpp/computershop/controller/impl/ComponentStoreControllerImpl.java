@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 import static by.bsuir.mpp.computershop.controller.exception.wrapper.ServiceCallWrapper.wrapServiceCall;
 
 @RestController
@@ -30,7 +32,7 @@ public class ComponentStoreControllerImpl
     }
 
     @Override
-    public void updateStorePrice(@RequestBody UpdateStoredPriceDto dto) throws ControllerException {
+    public void updateStorePrice(@Valid @RequestBody UpdateStoredPriceDto dto) throws ControllerException {
         logger.info(String.format("UPDATE PRICE of stored component with id = [%s}", dto.getId().toString()));
         wrapServiceCall(() -> storeService.updateStorePrice(dto), logger);
     }

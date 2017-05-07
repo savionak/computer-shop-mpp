@@ -1,4 +1,4 @@
-package by.bsuir.mpp.computershop.dto.full;
+package by.bsuir.mpp.computershop.dto.helper;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_EMPTY_MESSAGE;
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
 
-public class UpdatePassDto {
+public class UpdateUserPassDto {
 
     @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     private Long userId;

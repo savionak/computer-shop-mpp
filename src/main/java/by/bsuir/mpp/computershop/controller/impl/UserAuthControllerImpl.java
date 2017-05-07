@@ -3,8 +3,8 @@ package by.bsuir.mpp.computershop.controller.impl;
 import by.bsuir.mpp.computershop.controller.UserAuthController;
 import by.bsuir.mpp.computershop.controller.exception.ControllerException;
 import by.bsuir.mpp.computershop.dto.brief.UserBriefDto;
-import by.bsuir.mpp.computershop.dto.full.UpdatePassDto;
 import by.bsuir.mpp.computershop.dto.full.UserAuthFullDto;
+import by.bsuir.mpp.computershop.dto.helper.UpdateUserPassDto;
 import by.bsuir.mpp.computershop.entity.UserAuth;
 import by.bsuir.mpp.computershop.service.UserAuthService;
 import ma.glasnost.orika.MapperFacade;
@@ -14,6 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 import static by.bsuir.mpp.computershop.controller.exception.wrapper.ServiceCallWrapper.wrapServiceCall;
 
@@ -34,7 +36,7 @@ public class UserAuthControllerImpl
     }
 
     @Override
-    public void updatePassword(@RequestBody UpdatePassDto passDto) throws ControllerException {
+    public void updatePassword(@Valid @RequestBody UpdateUserPassDto passDto) throws ControllerException {
         logger.info(String.format("UPDATE PASS of user with id = [%s]", passDto.getUserId().toString()));
         String passHash = passwordEncoder.encode(passDto.getNewHash());
         passDto.setNewHash(passHash);
