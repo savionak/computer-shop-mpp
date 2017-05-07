@@ -6,6 +6,8 @@ import by.bsuir.mpp.computershop.repository.UserAuthRepository;
 import by.bsuir.mpp.computershop.service.UserAuthService;
 import by.bsuir.mpp.computershop.service.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import static by.bsuir.mpp.computershop.service.exception.wrapper.RepositoryCallWrapper.wrapRepositoryCall;
@@ -22,12 +24,27 @@ public class UserAuthServiceImpl extends AbstractCrudService<UserAuth, Long> imp
     }
 
     @Override
-    public void updatePasswordHash(UpdatePassDto passDto) throws ServiceException{
+    public void updatePasswordHash(UpdatePassDto passDto) throws ServiceException {
         wrapRepositoryCall(() -> userRepository.updatePasswordHash(passDto.getUserId(), passDto.getNewHash()));
     }
 
     @Override
-    protected boolean validateAdd(UserAuth entity) {
-        return entity.getPassHash() != null;
+    public Page<UserAuth> getAll(Pageable pageable) throws ServiceException {
+        return wrapRepositoryCall(() -> userRepository.findAllByRemovedIsFalse(pageable));
+    }
+
+    @Override
+    public Page<UserAuth> getRemoved(Pageable pageable) throws ServiceException {
+        return wrapRepositoryCall(() -> userRepository.findAllByRemovedIsTrue(pageable));
+    }
+
+    @Override
+    public void restore(Long id) throws ServiceException {
+        wrapRepositoryCall(() -> userRepository.restore(id));
+    }
+
+    @Override
+    public void dropUser(Long id) throws ServiceException {
+        wrapRepositoryCall(() -> userRepository.drop(id));
     }
 }
