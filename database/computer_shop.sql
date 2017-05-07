@@ -467,6 +467,10 @@ BEGIN
     FROM `component_store`
     WHERE `id` = store_id;
     
+    IF (new_count IS NULL) THEN
+		SET new_count = s_count;
+    END IF;
+    
 	IF (new_count > s_count)
     THEN
 		SIGNAL SQLSTATE '45000'
@@ -477,7 +481,7 @@ BEGIN
     SET `count` = `count` - new_count
     WHERE `id` = store_id;
 
-    CALL add_store_record(s_model_id, new_price, new_count);
+    CALL add_store_record(s_model_id, new_price, new_count, store_id);
 END$$
 
 DELIMITER ;
