@@ -11,7 +11,7 @@ public interface OrderRepository extends PagingAndSortingRepository<Order, Long>
 
     @Transactional
     @Modifying
-    @Query(value = "CALL computer_shop.accept_order(:id)", nativeQuery = true)
+    @Query(value = "CALL accept_order(:id)", nativeQuery = true)
     void accept(@Param("id") Long id);
 
     @Transactional

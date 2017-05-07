@@ -6,6 +6,7 @@ import by.bsuir.mpp.computershop.service.*;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 
 @Configuration
@@ -62,7 +63,8 @@ public class ControllerConfiguration {
     }
 
     @Bean
-    public UserAuthController userAuthController(UserAuthService userAuthService, MapperFacade mapperFacade) {
-        return new UserAuthControllerImpl(userAuthService, mapperFacade);
+    public UserAuthController userAuthController(UserAuthService userAuthService, MapperFacade mapperFacade,
+                                                 PasswordEncoder passwordEncoder) {
+        return new UserAuthControllerImpl(userAuthService, mapperFacade, passwordEncoder);
     }
 }

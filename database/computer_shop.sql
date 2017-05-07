@@ -780,6 +780,24 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure update_pass
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE update_pass(
+	IN user_id BIGINT UNSIGNED,
+    IN new_hash VARCHAR(60)
+)
+BEGIN
+	UPDATE `user_auth`
+    SET `pass_hash` = new_hash
+    WHERE `id` = user_id;
+END$$
+
+DELIMITER ;
 USE `computer_shop`;
 
 DELIMITER $$
