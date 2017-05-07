@@ -17,6 +17,6 @@ public interface WithRestoreController<B extends BaseBriefDto<ID>, F extends Bas
     @RequestMapping(path = "removed", method = RequestMethod.GET)
     PageDto getRemoved(Pageable pageable) throws ControllerException;
 
-    @RequestMapping(path = "restore/{id}", method = RequestMethod.GET)
+    @RequestMapping(path = "restore/{id}", method = RequestMethod.POST)
     void restore(@PathVariable Long id) throws ControllerException;
 }
