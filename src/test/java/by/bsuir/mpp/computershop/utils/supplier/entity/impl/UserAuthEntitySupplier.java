@@ -15,7 +15,7 @@ public class UserAuthEntitySupplier implements EntityLongSupplier<UserAuth> {
         result.setEmail(TestHelper.nextString());
         result.setPassHash(TestHelper.nextString());
         result.setRole(UserAuth.Role.VALUES.get(TestHelper.RANDOM.nextInt(UserAuth.Role.SIZE)));
-        result.setUserInfo(this.getUserInfo());
+        result.setUserInfo(this.getUserInfo(), true);
         return result;
     }
 

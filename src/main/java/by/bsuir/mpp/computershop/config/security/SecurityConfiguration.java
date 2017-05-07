@@ -2,6 +2,7 @@ package by.bsuir.mpp.computershop.config.security;
 
 import by.bsuir.mpp.computershop.config.security.userdetails.UserAuthDetailsService;
 import by.bsuir.mpp.computershop.repository.UserAuthRepository;
+import ma.glasnost.orika.MapperFacade;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -37,8 +38,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public TokenEnhancer tokenEnhancer() {
-        return new CustomTokenEnhancer();
+    public TokenEnhancer tokenEnhancer(MapperFacade mapper) {
+        return new CustomTokenEnhancer(mapper);
     }
 
 

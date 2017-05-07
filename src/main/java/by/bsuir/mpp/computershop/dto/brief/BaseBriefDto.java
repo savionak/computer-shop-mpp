@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
 
-public abstract class BaseBriefDto<ID extends Serializable> {
+public abstract class BaseBriefDto<ID extends Serializable> implements Serializable {
 
     @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     private ID id;

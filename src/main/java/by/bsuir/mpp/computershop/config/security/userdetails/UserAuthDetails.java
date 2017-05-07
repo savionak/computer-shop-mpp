@@ -5,13 +5,14 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.beans.Transient;
 import java.io.Serializable;
 import java.util.Collection;
 
 public class UserAuthDetails extends UserAuth implements UserDetails, Serializable {
 
     UserAuthDetails(UserAuth user) {
-        super(user, false);
+        super(user, true);
     }
 
     @Override
@@ -21,31 +22,37 @@ public class UserAuthDetails extends UserAuth implements UserDetails, Serializab
         );
     }
 
+    @Transient
     @Override
     public String getPassword() {
         return getPassHash();
     }
 
+    @Transient
     @Override
     public String getUsername() {
         return getEmail();
     }
 
+    @Transient
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    @Transient
     @Override
     public boolean isAccountNonLocked() {
         return !isBlocked();
     }
 
+    @Transient
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
+    @Transient
     @Override
     public boolean isEnabled() {
         return !isRemoved();
