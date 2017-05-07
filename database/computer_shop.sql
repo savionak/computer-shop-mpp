@@ -798,6 +798,59 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure remove_user
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE remove_user(
+	IN u_user_id BIGINT UNSIGNED
+)
+BEGIN
+	UPDATE `user_auth`
+	SET `removed` = TRUE
+	WHERE `id` = u_user_id;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure restore_user
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE restore_user(
+	IN u_user_id BIGINT UNSIGNED
+)
+BEGIN
+	UPDATE `user_auth`
+	SET `removed` = FALSE
+	WHERE `id` = u_user_id;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure drop_user
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE drop_user(
+	IN u_user_id BIGINT UNSIGNED
+)
+BEGIN
+	DELETE FROM `user_info`
+	WHERE `auth_id` = u_user_id;
+
+	DELETE FROM `user_auth`
+	WHERE `id` = u_user_id;
+END$$
+
+DELIMITER ;
 USE `computer_shop`;
 
 DELIMITER $$
