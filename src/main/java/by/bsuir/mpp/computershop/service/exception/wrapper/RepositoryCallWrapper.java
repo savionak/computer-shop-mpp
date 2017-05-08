@@ -1,9 +1,11 @@
 package by.bsuir.mpp.computershop.service.exception.wrapper;
 
 import by.bsuir.mpp.computershop.service.exception.BadEntityException;
+import by.bsuir.mpp.computershop.service.exception.EntityOperationException;
 import by.bsuir.mpp.computershop.service.exception.ServiceException;
 import by.bsuir.mpp.computershop.service.exception.wrapper.WrappedRepositoryFunctions.RepositoryFunction;
 import by.bsuir.mpp.computershop.service.exception.wrapper.WrappedRepositoryFunctions.VoidRepositoryFunction;
+import org.hibernate.exception.GenericJDBCException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 
@@ -15,6 +17,9 @@ public class RepositoryCallWrapper {
         } catch (DataIntegrityViolationException e) {
             throw new BadEntityException(e);
         } catch (DataAccessException e) {
+            if (isUserSqlException(e)) {
+                throw new EntityOperationException("FORBIDDEN");
+            }
             throw new ServiceException(e);
         }
         return result;
@@ -25,5 +30,11 @@ public class RepositoryCallWrapper {
             func.call();
             return null;
         });
+    }
+
+    private static boolean isUserSqlException(Exception e) {
+        Throwable cause = e.getCause();
+        return (cause instanceof GenericJDBCException) &&
+                ((GenericJDBCException) cause).getSQLState().startsWith("45");
     }
 }

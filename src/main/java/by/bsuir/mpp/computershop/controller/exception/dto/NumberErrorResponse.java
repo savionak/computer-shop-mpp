@@ -25,6 +25,7 @@ public class NumberErrorResponse extends ErrorResponse{
 
     public enum ErrorNumber {
         SERVER_ERROR,
-        CONSTRAINTS_ERROR
+        CONSTRAINTS_ERROR,
+        OPERATION_ERROR
     }
 }

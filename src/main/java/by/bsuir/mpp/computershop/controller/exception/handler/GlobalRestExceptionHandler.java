@@ -2,6 +2,7 @@ package by.bsuir.mpp.computershop.controller.exception.handler;
 
 import by.bsuir.mpp.computershop.controller.exception.ControllerException;
 import by.bsuir.mpp.computershop.controller.exception.InvalidDataException;
+import by.bsuir.mpp.computershop.controller.exception.OperationException;
 import by.bsuir.mpp.computershop.controller.exception.ResourceNotFoundException;
 import by.bsuir.mpp.computershop.controller.exception.dto.CustomFieldError;
 import by.bsuir.mpp.computershop.controller.exception.dto.ErrorResponse;
@@ -43,6 +44,15 @@ public class GlobalRestExceptionHandler {
         ErrorResponse responseBody = new ErrorResponse("Requested resource not found", HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(responseBody, HttpStatus.NOT_FOUND);
     }
+
+    @Order(15)
+    @ExceptionHandler(value = OperationException.class)
+    protected ResponseEntity<ErrorResponse> handleOperationException(OperationException ex) {
+        NumberErrorResponse.ErrorNumber errorNumber = NumberErrorResponse.ErrorNumber.OPERATION_ERROR;
+        NumberErrorResponse responseBody = new NumberErrorResponse("Operation is forbidden.", errorNumber);
+        return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+    }
+
 
     @Order(15)
     @ExceptionHandler(value = {HttpMessageNotReadableException.class, InvalidDataException.class})
