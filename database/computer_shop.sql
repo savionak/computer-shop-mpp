@@ -208,8 +208,8 @@ CREATE TABLE IF NOT EXISTS `computer_shop`.`user_info` (
   CONSTRAINT `fk_user_info_user_auth1`
     FOREIGN KEY (`auth_id`)
     REFERENCES `computer_shop`.`user_auth` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -224,12 +224,11 @@ CREATE TABLE IF NOT EXISTS `computer_shop`.`export` (
   `order_id` BIGINT UNSIGNED NOT NULL,
   `export_date` DATETIME NOT NULL DEFAULT NOW(),
   `address` VARCHAR(255) NOT NULL,
-  `done` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   CONSTRAINT `FK_export_order`
     FOREIGN KEY (`order_id`)
     REFERENCES `computer_shop`.`order` (`id`)
-    ON DELETE CASCADE
+    ON DELETE RESTRICT
     ON UPDATE RESTRICT)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -281,8 +280,8 @@ CREATE TABLE IF NOT EXISTS `computer_shop`.`import` (
   CONSTRAINT `fk_import_component_store1`
     FOREIGN KEY (`store_id`)
     REFERENCES `computer_shop`.`component_store` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -468,6 +467,10 @@ BEGIN
     FROM `component_store`
     WHERE `id` = store_id;
     
+    IF (new_count IS NULL) THEN
+		SET new_count = s_count;
+    END IF;
+    
 	IF (new_count > s_count)
     THEN
 		SIGNAL SQLSTATE '45000'
@@ -478,7 +481,7 @@ BEGIN
     SET `count` = `count` - new_count
     WHERE `id` = store_id;
 
-    CALL add_store_record(s_model_id, new_price, new_count);
+    CALL add_store_record(s_model_id, new_price, new_count, store_id);
 END$$
 
 DELIMITER ;
@@ -498,43 +501,6 @@ BEGIN
     
     DELETE FROM `assembly`
     WHERE `id` = asm_id;
-END$$
-
-DELIMITER ;
-
--- -----------------------------------------------------
--- procedure remove_order
--- -----------------------------------------------------
-
-DELIMITER $$
-USE `computer_shop`$$
-CREATE PROCEDURE remove_order(
-	IN ord_id BIGINT UNSIGNED
-)
-BEGIN
-	DECLARE asm_id BIGINT UNSIGNED DEFAULT NULL;
-	DECLARE done BOOLEAN DEFAULT FALSE;
-	DECLARE asm_cur CURSOR FOR
-		SELECT `id`
-        FROM `assembly`
-        WHERE `order_id` = ord_id;
-    
-    DECLARE CONTINUE HANDLER FOR NOT FOUND
-		SET done = TRUE;
-	
-    OPEN asm_cur;
-    FETCH asm_cur INTO asm_id;
-    WHILE NOT done DO
-		CALL remove_assembly(asm_id);
-		FETCH asm_cur INTO asm_id;
-    END WHILE;
-    CLOSE asm_cur;
-    
-    DELETE FROM `export`
-	WHERE `order_id` = ord_id;
-    
-    DELETE FROM `order`
-	WHERE `id` = ord_id;
 END$$
 
 DELIMITER ;
@@ -576,37 +542,316 @@ END$$
 DELIMITER ;
 
 -- -----------------------------------------------------
--- procedure apply_order
--- -----------------------------------------------------
-
-DELIMITER $$
-USE `computer_shop`$$
-CREATE PROCEDURE apply_order(
-	IN ord_id BIGINT UNSIGNED
-)
-BEGIN
-	UPDATE `order`
-    SET `status` = 'READY'
-    WHERE `id` = ord_id
-		AND `status` != 'FINISHED';
-END$$
-
-DELIMITER ;
-
--- -----------------------------------------------------
 -- procedure accept_order
 -- -----------------------------------------------------
 
 DELIMITER $$
 USE `computer_shop`$$
 CREATE PROCEDURE accept_order(
-	IN ord_id BIGINT UNSIGNED
+	IN order_id BIGINT UNSIGNED
 )
 BEGIN
 	UPDATE `order`
     SET `status` = 'READY'
-    WHERE `id` = ord_id
-		AND `status` != 'FINISHED';
+    WHERE `id` = order_id
+		AND `status` = 'IN_PROGRESS';
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure finish_order
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE finish_order(
+	IN order_id BIGINT UNSIGNED
+)
+BEGIN
+	UPDATE `order`
+    SET `status` = 'FINISHED'
+    WHERE `id` = order_id
+		AND `status` = 'READY';
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure unfinish_order
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE unfinish_order(
+	IN order_id BIGINT UNSIGNED
+)
+BEGIN
+	UPDATE `order`
+    SET `status` = 'READY'
+    WHERE `id` = order_id
+		AND `status` = 'FINISHED';
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure start_edit_order
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE start_edit_order(
+	IN order_id BIGINT UNSIGNED
+)
+BEGIN
+	UPDATE `order`
+    SET `status` = 'IN_PROGRESS'
+    WHERE `id` = order_id
+		AND `status` = 'READY';
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure remove_type
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE remove_type(
+	IN t_type_id BIGINT UNSIGNED
+)
+BEGIN
+	IF EXISTS(
+		SELECT 1
+        FROM `component_model`
+        WHERE `type_id` = t_type_id
+    ) THEN
+		UPDATE `component_type`
+		SET `removed` = TRUE
+		WHERE `id` = t_type_id;
+	ELSE
+		DELETE FROM `component_type`
+		WHERE `id` = t_type_id;
+    END IF;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure restore_type
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE restore_type(
+	IN t_type_id BIGINT UNSIGNED
+)
+BEGIN
+	UPDATE `component_type`
+	SET `removed` = FALSE
+	WHERE `id` = t_type_id;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure remove_model
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE remove_model(
+	IN m_model_id BIGINT UNSIGNED
+)
+BEGIN
+	IF EXISTS(
+		SELECT 1
+        FROM `component_store`
+        WHERE `model_id` = m_model_id
+    ) THEN
+		UPDATE `component_model`
+		SET `removed` = TRUE
+		WHERE `id` = m_model_id;
+	ELSE
+		DELETE FROM `component_model`
+		WHERE `id` = m_model_id;
+    END IF;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure restore_model
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE restore_model(
+	IN m_model_id BIGINT UNSIGNED
+)
+BEGIN
+	UPDATE `component_model`
+	SET `removed` = FALSE
+	WHERE `id` = m_model_id;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure remove_provider
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE remove_provider(
+	IN p_provider_id BIGINT UNSIGNED
+)
+BEGIN
+	IF EXISTS(
+		SELECT 1
+        FROM `import`
+        WHERE `provider_id` = p_provider_id
+    ) THEN
+		UPDATE `provider`
+		SET `removed` = TRUE
+		WHERE `id` = p_provider_id;
+	ELSE
+		DELETE FROM `provider`
+		WHERE `id` = p_provider_id;
+    END IF;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure restore_provider
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE restore_provider(
+	IN p_provider_id BIGINT UNSIGNED
+)
+BEGIN
+	UPDATE `provider`
+	SET `removed` = FALSE
+	WHERE `id` = p_provider_id;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure remove_customer
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE remove_customer(
+	IN c_customer_id BIGINT UNSIGNED
+)
+BEGIN
+	IF EXISTS(
+		SELECT 1
+        FROM `order`
+        WHERE `customer_id` = c_customer_id
+    ) THEN
+		UPDATE `customer`
+		SET `removed` = TRUE
+		WHERE `id` = c_customer_id;
+	ELSE
+		DELETE FROM `customer`
+		WHERE `id` = c_customer_id;
+    END IF;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure restore_customer
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE restore_customer(
+	IN c_customer_id BIGINT UNSIGNED
+)
+BEGIN
+	UPDATE `customer`
+	SET `removed` = FALSE
+	WHERE `id` = c_customer_id;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure update_pass
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE update_pass(
+	IN user_id BIGINT UNSIGNED,
+    IN new_hash VARCHAR(60)
+)
+BEGIN
+	UPDATE `user_auth`
+    SET `pass_hash` = new_hash
+    WHERE `id` = user_id;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure remove_user
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE remove_user(
+	IN u_user_id BIGINT UNSIGNED
+)
+BEGIN
+	UPDATE `user_auth`
+	SET `removed` = TRUE
+	WHERE `id` = u_user_id;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure restore_user
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE restore_user(
+	IN u_user_id BIGINT UNSIGNED
+)
+BEGIN
+	UPDATE `user_auth`
+	SET `removed` = FALSE
+	WHERE `id` = u_user_id;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure drop_user
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE drop_user(
+	IN u_user_id BIGINT UNSIGNED
+)
+BEGIN
+	DELETE FROM `user_info`
+	WHERE `auth_id` = u_user_id;
+
+	DELETE FROM `user_auth`
+	WHERE `id` = u_user_id;
 END$$
 
 DELIMITER ;
@@ -890,59 +1135,6 @@ BEGIN
     THEN
 		SIGNAL SQLSTATE '45000'
 			SET MESSAGE_TEXT = 'FORBIDDEN: Remove last ADMIN.';
-    END IF;
-END$$
-
-USE `computer_shop`$$
-CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`export_BEFORE_INSERT`
-BEFORE INSERT ON `export`
-FOR EACH ROW
-BEGIN
-	SET NEW.`done` = FALSE;
-END$$
-
-USE `computer_shop`$$
-CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`export_BEFORE_UPDATE`
-BEFORE UPDATE ON `export`
-FOR EACH ROW
-BEGIN
-	DECLARE order_status ENUM('IN_PROGRESS', 'READY', 'FINISHED');
-    
-	SELECT `status`
-    INTO order_status
-    FROM `order`
-    WHERE `id` = NEW.`order_id`;
-    
-	IF (NEW.`done`)
-    THEN
-		IF (order_status = 'IN_PROGRESS')
-        THEN
-			SET NEW.`done` = FALSE;
-		ELSE
-			UPDATE `order`
-            SET `status` = 'FINISHED'
-            WHERE `id` = NEW.`order_id`;
-        END IF;
-	ELSE
-		IF (order_status = 'FINISHED')
-        THEN
-			UPDATE `order`
-			SET `status` = 'READY'
-			WHERE `id` = NEW.`order_id`;
-		END IF;
-    END IF;
-END$$
-
-USE `computer_shop`$$
-CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`export_AFTER_DELETE`
-AFTER DELETE ON `export`
-FOR EACH ROW
-BEGIN
-	IF (OLD.`done`)
-    THEN
-		UPDATE `order`
-		SET `status` = 'READY'
-		WHERE `id` = OLD.`order_id`;
     END IF;
 END$$
 

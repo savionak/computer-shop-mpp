@@ -38,13 +38,14 @@ public class UserAuth extends BaseEntity<Long> {
     }
 
     public UserAuth(UserAuth userAuth, boolean copyAuth) {
+        this.setId(userAuth.getId());
         email = userAuth.email;
         role = userAuth.role;
         passHash = userAuth.passHash;
         blocked = userAuth.blocked;
         removed = userAuth.removed;
         if (copyAuth) {
-            setUserInfo(new UserInfo(userAuth.userInfo));
+            setUserInfo(new UserInfo(userAuth.userInfo), false);
         }
     }
 
@@ -92,8 +93,10 @@ public class UserAuth extends BaseEntity<Long> {
         return userInfo;
     }
 
-    public void setUserInfo(UserInfo userInfo) {
-        userInfo.setUserAuth(this);
+    public void setUserInfo(UserInfo userInfo, boolean setLink) {
+        if (setLink) {
+            userInfo.setUserAuth(this);
+        }
         this.userInfo = userInfo;
     }
 

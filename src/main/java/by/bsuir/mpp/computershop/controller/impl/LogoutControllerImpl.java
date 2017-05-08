@@ -1,6 +1,8 @@
 package by.bsuir.mpp.computershop.controller.impl;
 
 import by.bsuir.mpp.computershop.controller.LogoutController;
+import by.bsuir.mpp.computershop.controller.exception.ControllerException;
+import by.bsuir.mpp.computershop.controller.exception.InvalidDataException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -19,7 +21,10 @@ public class LogoutControllerImpl implements LogoutController {
     }
 
     @Override
-    public void revokeToken(OAuth2Authentication auth) {
+    public void revokeToken(OAuth2Authentication auth) throws ControllerException {
+        if (auth == null) {
+            throw new InvalidDataException();
+        }
         logger.info(auth);
         OAuth2AuthenticationDetails authDetails = (OAuth2AuthenticationDetails) auth.getDetails();
         String tokenValue = authDetails.getTokenValue();

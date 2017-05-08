@@ -2,7 +2,7 @@ package by.bsuir.mpp.computershop.dto.full;
 
 import java.io.Serializable;
 
-public abstract class BaseFullDto<ID extends Serializable> {
+public abstract class BaseFullDto<ID extends Serializable> implements Serializable {
 
     private ID id;
 

@@ -6,5 +6,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("api/provider")
 public interface ProviderController
-        extends CrudController<ProviderBriefDto, ProviderFullDto, Long> {
+        extends WithRestoreController<ProviderBriefDto, ProviderFullDto, Long> {
 }

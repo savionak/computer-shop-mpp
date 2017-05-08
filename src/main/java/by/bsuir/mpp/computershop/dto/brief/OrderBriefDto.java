@@ -14,6 +14,8 @@ public class OrderBriefDto extends BaseBriefDto<Long> {
 
     private Status status;
 
+    private Boolean canceled;
+
     public CustomerBriefDto getCustomer() {
         return customer;
     }
@@ -44,5 +46,13 @@ public class OrderBriefDto extends BaseBriefDto<Long> {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public Boolean getCanceled() {
+        return canceled;
+    }
+
+    public void setCanceled(Boolean canceled) {
+        this.canceled = canceled;
     }
 }
