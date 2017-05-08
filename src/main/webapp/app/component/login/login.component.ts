@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component} from "@angular/core";
 import {LoginModel} from "./login-model";
 import {LoginService} from "../../service/login.service";
 
@@ -10,15 +10,21 @@ import {LoginService} from "../../service/login.service";
         LoginService
     ]
 })
-export class LoginComponent  {
+export class LoginComponent {
 
     loginUser = new LoginModel();
-    error:string;
+    error: string;
 
-    constructor(private loginService:LoginService) {
+    constructor(private loginService: LoginService) {
 
     }
-    onLogIn() {
-        this.error = null;
+
+    onSubmit(event: Event, email: string, pass: string) {
+        event.preventDefault();
+        this.loginService.login(email, pass)
+            .subscribe(
+                (res) => {/* TODO: say OK and place UserModel in localStorage*/},
+                (err) => {/* TODO: show Error */}
+            );
     }
 }

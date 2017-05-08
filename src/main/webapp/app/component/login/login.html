@@ -12,14 +12,14 @@
             <div class="panel-body">
                 <h3 class="thin text-center">Sign in</h3>
                 <hr>
-                <form>
+                <form (submit)="onSubmit($event, email.value, pass.value)">
                     <div class="top-margin">
-                        <label>Username/Email <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control">
+                        <label>Email <span class="text-danger">*</span></label>
+                        <input type="text" name="email" class="form-control" required="Enter email">
                     </div>
                     <div class="top-margin">
                         <label>Password <span class="text-danger">*</span></label>
-                        <input type="password" class="form-control">
+                        <input type="password" name="pass" class="form-control" required="Enter password">
                     </div>
                     <hr>
                     <div class="row">
