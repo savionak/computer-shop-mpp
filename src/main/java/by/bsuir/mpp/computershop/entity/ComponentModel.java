@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "component_model")
-public class ComponentModel extends BaseEntity<Long> {
+public class ComponentModel extends BaseSoftEntity<Long> {
 
     @ManyToOne
     @JoinColumn(name = "type_id", unique = true, nullable = false)
@@ -15,9 +15,6 @@ public class ComponentModel extends BaseEntity<Long> {
 
     @Column(name = "description", columnDefinition = "text")
     private String description;
-
-    @Column(name = "removed", nullable = false)
-    private Boolean removed;
 
     public ComponentType getType() {
         return this.type;
@@ -42,13 +39,4 @@ public class ComponentModel extends BaseEntity<Long> {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public Boolean isRemoved() {
-        return removed;
-    }
-
-    public void setRemoved(Boolean removed) {
-        this.removed = removed;
-    }
-
 }

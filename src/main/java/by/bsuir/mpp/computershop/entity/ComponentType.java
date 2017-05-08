@@ -6,16 +6,13 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "component_type")
-public class ComponentType extends BaseEntity<Long> {
+public class ComponentType extends BaseSoftEntity<Long> {
 
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
     @Column(name = "description", columnDefinition = "text")
     private String description;
-
-    @Column(name = "removed", nullable = false)
-    private Boolean removed;
 
     public String getName() {
         return this.name;
@@ -32,13 +29,4 @@ public class ComponentType extends BaseEntity<Long> {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public Boolean isRemoved() {
-        return removed;
-    }
-
-    public void setRemoved(Boolean removed) {
-        this.removed = removed;
-    }
-
 }

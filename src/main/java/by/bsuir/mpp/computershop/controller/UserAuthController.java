@@ -13,7 +13,7 @@ import javax.validation.Valid;
 
 @RequestMapping("api/user")
 public interface UserAuthController
-        extends WithRestoreController<UserBriefDto, UserAuthFullDto, Long> {
+        extends SoftDeleteController<UserBriefDto, UserAuthFullDto, Long> {
 
     @RequestMapping(value = "update/password", method = RequestMethod.POST)
     void updatePassword(@Valid @RequestBody UpdateUserPassDto passDto) throws ControllerException;

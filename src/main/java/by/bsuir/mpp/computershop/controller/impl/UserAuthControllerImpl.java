@@ -21,7 +21,7 @@ import static by.bsuir.mpp.computershop.controller.exception.wrapper.ServiceCall
 
 @RestController
 public class UserAuthControllerImpl
-        extends AbstractWithRestoreController<UserBriefDto, UserAuthFullDto, UserAuth, Long>
+        extends AbstractSoftDeleteController<UserBriefDto, UserAuthFullDto, UserAuth, Long>
         implements UserAuthController {
 
     private static final Logger logger = Logger.getLogger(UserAuthControllerImpl.class);

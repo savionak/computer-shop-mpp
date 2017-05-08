@@ -7,9 +7,9 @@ import org.springframework.data.domain.Pageable;
 
 import java.io.Serializable;
 
-public interface WithRestoreService<E extends BaseEntity<ID>, ID extends Serializable> extends CrudService<E, ID> {
+public interface SoftDeleteService<E extends BaseEntity<ID>, ID extends Serializable> extends CrudService<E, ID> {
 
-    void restore(Long id) throws ServiceException;
+    void restore(ID id) throws ServiceException;
 
     @Override
     Page<E> getAll(Pageable pageable) throws ServiceException;

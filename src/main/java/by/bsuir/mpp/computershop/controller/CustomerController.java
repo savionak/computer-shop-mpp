@@ -6,5 +6,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("api/customer")
 public interface CustomerController
-        extends WithRestoreController<CustomerBriefDto, CustomerFullDto, Long> {
+        extends SoftDeleteController<CustomerBriefDto, CustomerFullDto, Long> {
 }

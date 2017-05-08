@@ -6,5 +6,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("api/component/type")
 public interface ComponentTypeController
-        extends WithRestoreController<ComponentTypeBriefDto, ComponentTypeFullDto, Long> {
+        extends SoftDeleteController<ComponentTypeBriefDto, ComponentTypeFullDto, Long> {
 }

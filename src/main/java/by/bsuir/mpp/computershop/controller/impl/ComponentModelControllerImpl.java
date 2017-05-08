@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ComponentModelControllerImpl
-        extends AbstractWithRestoreController<ComponentModelBriefDto, ComponentModelFullDto, ComponentModel, Long>
+        extends AbstractSoftDeleteController<ComponentModelBriefDto, ComponentModelFullDto, ComponentModel, Long>
         implements ComponentModelController {
 
     private static final Logger logger = Logger.getLogger(ComponentModelControllerImpl.class);

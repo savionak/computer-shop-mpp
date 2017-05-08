@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "user_auth")
-public class UserAuth extends BaseEntity<Long> {
+public class UserAuth extends BaseSoftEntity<Long> {
 
     @Column(name = "email", unique = true, nullable = false)
     private String email;
@@ -24,10 +24,6 @@ public class UserAuth extends BaseEntity<Long> {
     @Column(name = "blocked", nullable = false,
             updatable = false, insertable = false)
     private Boolean blocked;
-
-    @Column(name = "removed", nullable = false,
-            updatable = false, insertable = false)
-    private Boolean removed;
 
     @OneToOne(mappedBy = "userAuth", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
@@ -47,6 +43,12 @@ public class UserAuth extends BaseEntity<Long> {
         if (copyAuth) {
             setUserInfo(new UserInfo(userAuth.userInfo), false);
         }
+    }
+
+    @Column(name = "removed", nullable = false,
+            updatable = false, insertable = false)
+    public Boolean getRemoved() {
+        return super.getRemoved();
     }
 
     public String getEmail() {

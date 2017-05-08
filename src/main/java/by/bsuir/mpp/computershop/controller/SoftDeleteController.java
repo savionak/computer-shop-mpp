@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.Serializable;
 
-public interface WithRestoreController<B extends BaseBriefDto<ID>, F extends BaseFullDto<ID>, ID extends Serializable>
+public interface SoftDeleteController<B extends BaseBriefDto<ID>, F extends BaseFullDto<ID>, ID extends Serializable>
         extends CrudController<B, F, ID>{
 
     @RequestMapping(path = "removed", method = RequestMethod.GET)
     PageDto getRemoved(Pageable pageable) throws ControllerException;
 
     @RequestMapping(path = "restore/{id}", method = RequestMethod.POST)
-    void restore(@PathVariable Long id) throws ControllerException;
+    void restore(@PathVariable ID id) throws ControllerException;
 }

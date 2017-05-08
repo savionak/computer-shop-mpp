@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ProviderControllerImpl
-        extends AbstractWithRestoreController<ProviderBriefDto, ProviderFullDto, Provider, Long>
+        extends AbstractSoftDeleteController<ProviderBriefDto, ProviderFullDto, Provider, Long>
         implements ProviderController {
 
     private static final Logger logger = Logger.getLogger(ProviderControllerImpl.class);

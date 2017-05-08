@@ -6,17 +6,13 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "customer")
-public class Customer extends BaseEntity<Long> {
+public class Customer extends BaseSoftEntity<Long> {
 
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
     @Column(name = "description", columnDefinition = "text")
     private String description;
-
-    @Column(name = "removed", nullable = false)
-    private Boolean removed;
-
     @Column(name = "orders_count", nullable = false,
             insertable = false, updatable = false)
     private Integer ordersCount;
@@ -35,14 +31,6 @@ public class Customer extends BaseEntity<Long> {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Boolean isRemoved() {
-        return removed;
-    }
-
-    public void setRemoved(Boolean removed) {
-        this.removed = removed;
     }
 
     public Integer getOrdersCount() {
