@@ -4,21 +4,18 @@ import { Component} from '@angular/core';
     selector: 'home-app',
 
     template: `
-<div class="mycontainer">
-         <div>         
-        <ul class="nav nav-pills">
-               <li role="presentation" class="active"><a href="">Home</a></li>
-              <li role="presentation"><a routerLink="/provider">Providers</a></li>
-              <li role="presentation"><a routerLink="/component">Components Types</a></li>
-              <li role="presentation"><a routerLink="/login">Login</a></li>
-        </ul>
+
+	<div class="container">
+	<div class="home-container">
+		<br>
+		<br>
+        <!--<login></login>-->
+        <router-outlet></router-outlet>
+		<div class="row">
+		</div>
         </div>
-   <div>
-           <router-outlet></router-outlet>
     </div>
     
-</div>
-      
 `
 })
 export class HomeComponent { }
