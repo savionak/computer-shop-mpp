@@ -62,6 +62,9 @@ public abstract class AbstractCrudService<E extends BaseEntity<ID>, ID extends S
 
     @Override
     public E getOne(ID id) throws ServiceException {
+        if (id == null) {
+            throw new EntityNotFoundException(idNotFoundMessage(null));
+        }
         E result = wrapRepositoryCall(() -> repository.findOne(id));
         if (result == null) {
             throw new EntityNotFoundException(idNotFoundMessage(id));
