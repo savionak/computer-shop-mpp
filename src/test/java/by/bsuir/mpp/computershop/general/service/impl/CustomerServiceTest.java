@@ -1,18 +1,18 @@
 package by.bsuir.mpp.computershop.general.service.impl;
 
 import by.bsuir.mpp.computershop.entity.Customer;
-import by.bsuir.mpp.computershop.general.service.CrudServiceTest;
+import by.bsuir.mpp.computershop.general.service.SoftDeleteServiceTest;
 import by.bsuir.mpp.computershop.repository.CustomerRepository;
-import by.bsuir.mpp.computershop.service.CrudService;
+import by.bsuir.mpp.computershop.repository.SoftDeleteRepository;
 import by.bsuir.mpp.computershop.service.CustomerService;
+import by.bsuir.mpp.computershop.service.SoftDeleteService;
 import by.bsuir.mpp.computershop.service.impl.CustomerServiceImpl;
 import by.bsuir.mpp.computershop.utils.supplier.entity.EntitySupplier;
 import by.bsuir.mpp.computershop.utils.supplier.entity.impl.CustomerEntitySupplier;
 import org.mockito.Mockito;
-import org.springframework.data.repository.PagingAndSortingRepository;
 
 
-public class CustomerServiceTest extends CrudServiceTest<Customer, Long> {
+public class CustomerServiceTest extends SoftDeleteServiceTest<Customer, Long> {
 
     private CustomerService customerService;
     private CustomerRepository customerRepository;
@@ -25,12 +25,12 @@ public class CustomerServiceTest extends CrudServiceTest<Customer, Long> {
     }
 
     @Override
-    protected CrudService<Customer, Long> getCrudService() {
+    protected SoftDeleteService<Customer, Long> getCrudService() {
         return customerService;
     }
 
     @Override
-    protected PagingAndSortingRepository<Customer, Long> getCrudRepository() {
+    protected SoftDeleteRepository<Customer, Long> getCrudRepository() {
         return customerRepository;
     }
 

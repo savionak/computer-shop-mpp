@@ -41,7 +41,7 @@ public class UserAuthRepositoryTest {
             Assert.assertEquals(result.getUserInfo().getFirstName(), sourceAuthDto.getUserInfo().getFirstName());
         } finally {
             if (result != null) {
-                userAuthRepository.delete(result.getId());
+                userAuthRepository.drop(result.getId());
                 Assert.assertFalse(userAuthRepository.exists(result.getId()));
             }
         }

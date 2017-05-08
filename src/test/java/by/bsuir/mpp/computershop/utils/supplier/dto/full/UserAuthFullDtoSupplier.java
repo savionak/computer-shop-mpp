@@ -17,6 +17,7 @@ public class UserAuthFullDtoSupplier implements FullDtoSupplier {
         result.setEmail(TestHelper.nextString());
         result.setPass(TestHelper.nextString());
         result.setRole(UserAuth.Role.VALUES.get(TestHelper.RANDOM.nextInt(UserAuth.Role.SIZE)));
+        result.setRemoved(false);
 
         result.setUserInfo(info);
         return result;
