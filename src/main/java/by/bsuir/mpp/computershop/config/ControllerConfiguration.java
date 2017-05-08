@@ -13,8 +13,8 @@ import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 public class ControllerConfiguration {
 
     @Bean
-    public AssemblyController assemblyController(AssemblyService assemblyService, MapperFacade mapperFacade) {
-        return new AssemblyControllerImpl(assemblyService, mapperFacade);
+    public AssemblyController assemblyController(AssemblyService assemblyService, AssemblyComponentService componentService, MapperFacade mapperFacade) {
+        return new AssemblyControllerImpl(assemblyService, componentService, mapperFacade);
     }
 
     @Bean

@@ -11,7 +11,7 @@ import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL
 
 public class AssemblyComponentFullDto extends BaseFullDto<Long> {
 
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
+//    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     private Long assemblyId;
 
     @Valid
