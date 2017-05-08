@@ -32,10 +32,12 @@ public class DtoMapperConfiguration {
                 .register();
 
         mapperFactory.classMap(AssemblyComponent.class, AssemblyComponentBriefDto.class)
+                .field("component.id", "storeId")
                 .field("component.model.id", "modelId")
                 .field("component.model.name", "modelName")
                 .field("component.model.type.id", "typeId")
                 .field("component.model.type.name", "typeName")
+                .field("component.price", "price")
                 .byDefault()
                 .register();
         mapperFactory.classMap(AssemblyComponent.class, AssemblyComponentFullDto.class)
