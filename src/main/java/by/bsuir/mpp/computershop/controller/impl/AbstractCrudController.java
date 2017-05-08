@@ -50,16 +50,16 @@ public abstract class AbstractCrudController
     }
 
     @Override
-    public F update(@Valid @RequestBody F dto) throws ControllerException {
-        logger.info(String.format("UPDATE entity with id = [%s]", dto.getId()));
+    public F update(@PathVariable ID id, @Valid @RequestBody F dto) throws ControllerException {
+        logger.info(String.format("UPDATE entity with id = [%s]", id));
         E entity = mapper.map(dto, entityClass);
-        E resultEntity = wrapServiceCall(() -> service.update(entity), logger);
+        E resultEntity = wrapServiceCall(() -> service.update(id, entity), logger);
         return mapper.map(resultEntity, fullDtoClass);
     }
 
     @Override
     public void delete(@PathVariable ID id) throws ControllerException {
-        logger.info(String.format("DELETE entity with id = [%s]", id.toString()));
+        logger.info(String.format("DELETE entity with id = [%s]", id));
         wrapServiceCall(() -> service.delete(id), logger);
     }
 }

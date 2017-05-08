@@ -38,8 +38,7 @@ public abstract class AbstractCrudService<E extends BaseEntity<ID>, ID extends S
     }
 
     @Override
-    public E update(E entity) throws ServiceException {
-        ID id = entity.getId();
+    public E update(ID id, E entity) throws ServiceException {
         if (id == null || !repository.exists(id)) {
             throw new EntityNotFoundException(idNotFoundMessage(id));
         }
@@ -47,6 +46,7 @@ public abstract class AbstractCrudService<E extends BaseEntity<ID>, ID extends S
             throw new BadEntityException();
         }
 
+        entity.setId(id);
         E result = wrapRepositoryCall(() -> repository.save(entity));
 
         if (result == null) {

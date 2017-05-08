@@ -91,20 +91,22 @@ public abstract class CrudServiceTest<E extends BaseEntity<ID>, ID extends Seria
     @Test(expected = BadEntityException.class)
     public void updateEntityExceptionTest() throws Exception {
         E entity = getEntitySupplier().getValidEntityWithId();
+        ID id = entity.getId();
         when(getCrudRepository().save(Matchers.<E>any())).thenThrow(new DataIntegrityViolationException(""));
         when(getCrudRepository().exists(any())).thenReturn(true);
 
-        getCrudService().update(entity);
+        getCrudService().update(id, entity);
     }
 
     @Test(expected = ServiceException.class)
     public void updateEntityDataAccessExceptionTest() throws Exception {
         E entity = getEntitySupplier().getValidEntityWithId();
+        ID id = entity.getId();
         when(getCrudRepository().save(Matchers.<E>any())).thenThrow(new QueryTimeoutException(""));
         when(getCrudRepository().exists(any())).thenReturn(true);
 
         try {
-            getCrudService().update(entity);
+            getCrudService().update(id, entity);
         } catch (ServiceException e) {
             Assert.assertFalse(e instanceof BadEntityException);
             throw e;
@@ -114,11 +116,11 @@ public abstract class CrudServiceTest<E extends BaseEntity<ID>, ID extends Seria
     @Test(expected = EntityNotFoundException.class)
     public void updateNonExistingEntityTest() throws Exception {
         E entity = getEntitySupplier().getValidEntityWithoutId();
-        ID parameterId = getEntitySupplier().getAnyId();
-        when(getCrudRepository().exists(parameterId)).thenReturn(false);
-        when(getCrudRepository().findOne(parameterId)).thenReturn(null);
+        ID id = entity.getId();
+        when(getCrudRepository().exists(id)).thenReturn(false);
+        when(getCrudRepository().findOne(id)).thenReturn(null);
 
-        getCrudService().update(entity);
+        getCrudService().update(id, entity);
     }
 
     @Test

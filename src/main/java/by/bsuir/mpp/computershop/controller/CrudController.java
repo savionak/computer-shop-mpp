@@ -17,8 +17,8 @@ public interface CrudController<B extends BaseBriefDto<ID>, F extends BaseFullDt
     @RequestMapping(path = "add", method = RequestMethod.POST)
     F add(@Valid @RequestBody F dto) throws ControllerException;
 
-    @RequestMapping(path = "update", method = RequestMethod.PUT)
-    F update(@Valid @RequestBody F entity) throws ControllerException;
+    @RequestMapping(path = "update/{id}", method = RequestMethod.PUT)
+    F update(@PathVariable ID id, @Valid @RequestBody F entity) throws ControllerException;
 
     @RequestMapping(path = "delete/{id}", method = RequestMethod.DELETE)
     void delete(@PathVariable ID id) throws ControllerException;
