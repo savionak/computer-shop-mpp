@@ -9,7 +9,6 @@ import {ComponentTypeService} from "../../service/component-type.service";
     template: `
         <header></header>
         <router-outlet></router-outlet>
-        <router-outlet id="popup"></router-outlet>
         <footer></footer>
     `,
     providers: [

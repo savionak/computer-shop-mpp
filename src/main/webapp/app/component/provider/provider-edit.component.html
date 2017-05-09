@@ -1,0 +1,23 @@
+<div>
+    <h2>{{isEditing ? "Edit" : "Add"}} provider:</h2>
+    <div *ngIf="error">
+        {{error}}
+        <button (click)="onCloseError()">X</button>
+    </div>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <td>{{model.id}}</td>
+            <td><input [(ngModel)]="model.name" placeholder="Provider name"/></td>
+            <td><input [(ngModel)]="model.description" placeholder="Provider description"/></td>
+        </tr>
+    </table>
+    <button type="button" (click)="onAction()">{{isEditing ? "Save" : "Add"}}</button>
+    <button type="button" (click)="onCancel()">Cancel</button>
+</div>

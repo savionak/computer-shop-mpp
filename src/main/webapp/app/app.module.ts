@@ -11,6 +11,8 @@ import {FooterComponent} from "./component/app/footer.component";
 import {HeaderComponent} from "./component/app/header.component";
 import {LoginComponent} from "./component/login/login.component";
 import {CanActivateViaOAuthGuard} from "./shared/can-activate-guard";
+import {ProviderEditComponent} from "./component/provider/provider-edit.component";
+import {ProviderPage} from "./component/provider/provider-page";
 
 const appRoutes: Routes = [
     {
@@ -32,7 +34,7 @@ const appRoutes: Routes = [
             },
             {
                 path: 'provider',
-                component: ProviderListComponent
+                component: ProviderPage
             }
         ]
     }
@@ -51,12 +53,16 @@ const appRoutes: Routes = [
     ],
     declarations: [
         AppComponent,
-        ComponentTypesListComponent,
-        ProviderListComponent,
+
         FooterComponent,
         HeaderComponent,
-        LoginComponent
+        LoginComponent,
 
+        ProviderPage,
+        ProviderListComponent,
+        ProviderEditComponent,
+
+        ComponentTypesListComponent
     ],
     bootstrap: [
         AppComponent

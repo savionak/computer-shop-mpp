@@ -1,0 +1,19 @@
+<h2>Provider</h2>
+<provider-edit *ngIf="model"
+               [model]="model"
+               [isEditing]="isEditing"
+               (onAdd)="onAddDone()"
+               (onEdit)="onEditDone()"
+               (onCancel)="onCancel()">
+</provider-edit>
+<hr/>
+<div *ngIf="error">
+    {{error}}
+    <button (click)="onCloseError()">X</button>
+</div>
+<provider-list
+        (onAdd)="onAdd($event)"
+        (onView)="onView($event)"
+        (onEdit)="onEdit($event)"
+        (onDelete)="onDelete($event)">
+</provider-list>
