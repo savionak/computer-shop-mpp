@@ -1,27 +1,4 @@
-<div *ngIf="model">
-    <h2>{{isEditing ? "Edit" : "Add"}} provider:</h2>
-    <table>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th></th>
-            <th></th>
-        </tr>
-        <tr>
-            <td>{{model.id}}</td>
-            <td><input [(ngModel)]="model.name" placeholder="Provider name" /></td>
-            <td><input [(ngModel)]="model.description" placeholder="Provider description" /></td>
-        </tr>
-    </table>
-    <button type="button" (click)="onAction()">{{isEditing ? "Save" : "Add"}}</button>
-    <button type="button" (click)="onCancel()">Cancel</button>
-</div>
-<hr/>
-<div  *ngIf="error">
-    {{error}}
-    <button (click)="onCloseError()">X</button> </div>
-<button type="button" (click)="onRefresh()">Update</button>
+<button type="button" (click)="onRefresh()">Refresh</button>
 <button type="button" (click)="onAdd()">Add</button>
 <table>
     <tr>
@@ -30,12 +7,20 @@
         <th>Description</th>
         <th></th>
         <th></th>
+        <th></th>
     </tr>
     <tr *ngFor="let model of modelsList">
         <td>{{model.id}}</td>
         <td>{{model.name}}</td>
         <td>{{model.description}}</td>
-        <td><button type="button" (click)="onEdit(model)">Edit</button></td>
-        <td><button type="button" (click)="onDelete(model)">Delete</button></td>
+        <td>
+            <button type="button" (click)="onViewDetails(model)">View</button>
+        </td>
+        <td>
+            <button type="button" (click)="onEdit(model)">Edit</button>
+        </td>
+        <td>
+            <button type="button" (click)="onDelete(model)">Delete</button>
+        </td>
     </tr>
 </table>

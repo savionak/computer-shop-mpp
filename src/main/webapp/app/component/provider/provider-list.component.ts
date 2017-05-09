@@ -1,7 +1,6 @@
-import {Component} from "@angular/core";
+import {Component, EventEmitter, OnInit, Output} from "@angular/core";
 
 import {ProviderService} from "../../service/provider.service";
-import {ProviderModel} from "../../model/full/provider-model";
 import {ProviderBriefModel} from "../../model/brief/provider-brief-model";
 
 
@@ -9,134 +8,54 @@ import {ProviderBriefModel} from "../../model/brief/provider-brief-model";
     selector: 'provider-list',
     templateUrl: './provider-list.component.html'
 })
-export class ProviderListComponent {
+export class ProviderListComponent implements OnInit {
     private service: ProviderService;
-
     protected modelsList: ProviderBriefModel[];
-    protected error: string;
 
-    protected model: ProviderModel;
-    protected isEditing: boolean;
-
-    ngOnInit() {
-        this.refreshList();
-    }
+    @Output('onView') viewCallBack: EventEmitter<number> = new EventEmitter();
+    @Output('onAdd') addCallBack: EventEmitter<null> = new EventEmitter();
+    @Output('onEdit') editCallBack: EventEmitter<number> = new EventEmitter();
+    @Output('onDelete') deleteCallBack: EventEmitter<number> = new EventEmitter();
 
     constructor(service: ProviderService) {
         this.service = service;
     }
 
-    getEmptyModel(): ProviderModel {
-        return ProviderModel.empty();
+    ngOnInit() {
+        this.refreshList();
     }
 
-    refreshList() {
+    onRefresh(): void {
+        alert('Refresh list');
+        this.refreshList();
+    }
+
+    onViewDetails(model: ProviderBriefModel): void {
+        this.viewCallBack.emit(model.id);
+    }
+
+    onAdd(): void {
+        this.addCallBack.emit(null);
+    }
+
+    onEdit(model: ProviderBriefModel): void {
+        this.editCallBack.emit(model.id);
+    }
+
+    onDelete(model: ProviderBriefModel): void {
+        this.deleteCallBack.emit(model.id);
+    }
+
+    private refreshList() {
         this.service.getList()
             .subscribe(
                 (page) => {
                     this.modelsList = page.content
                 },
                 (error) => {
-                    // TODO: show popup
-                    this.error = error;
-                    alert(error);
+                    alert('Error' + error);
+
                 }
             )
-    }
-
-    onRefresh(): void {
-        this.refreshList();
-    }
-
-    onDelete(model: ProviderBriefModel): void {
-        this.service.remove(model.id)
-            .subscribe(
-                (res) => {
-                    this.refreshList()
-                },
-                (error) => {
-                    // TODO: show popup
-                    this.error = error;
-                    alert(error);
-                }
-            );
-    }
-
-    onAdd(): void {
-        this.isEditing = false;
-        this.model = this.getEmptyModel();
-    }
-
-    onEdit(model: ProviderBriefModel): void {
-        this.isEditing = true;
-
-        this.service.get(model.id)
-            .subscribe(
-                (res) => {
-                    this.model = res;
-                },
-                (error) => {
-                    // TODO: show popup
-                    this.error = error;
-                    alert(error);
-                }
-            );
-    }
-
-    onSave(): void {
-        this.service.update(this.model.id, this.model)
-            .subscribe(
-                (res) => {
-                    this.endEditing();
-                    this.refreshList();
-                },
-                (error) => {
-                    // TODO: show popup
-                    this.error = error;
-                    alert(error);
-                }
-            );
-    }
-
-    onAction(): void {
-        if (this.isEditing) {
-            this.service.update(this.model.id, this.model)
-                .subscribe(
-                    (res) => {
-                        this.endEditing();
-                        this.refreshList();
-                    },
-                    (error) => {
-                        // TODO: show popup
-                        this.error = error;
-                        alert(error);
-                    }
-                );
-        } else {
-            this.service.add(this.model)
-                .subscribe(
-                    (res) => {
-                        this.endEditing();
-                        this.refreshList();
-                    },
-                    (error) => {
-                        // TODO: show popup
-                        this.error = error;
-                        alert(error);
-                    }
-                );
-        }
-    }
-
-    onCancel(): void {
-        this.endEditing();
-    }
-
-    endEditing(): void {
-        this.model = null;
-    }
-
-    onCloseError() {
-        this.error = null;
     }
 }
