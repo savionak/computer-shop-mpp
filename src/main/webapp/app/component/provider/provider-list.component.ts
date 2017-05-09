@@ -16,6 +16,7 @@ export class ProviderListComponent implements OnInit {
     @Output('onAdd') addCallBack: EventEmitter<null> = new EventEmitter();
     @Output('onEdit') editCallBack: EventEmitter<number> = new EventEmitter();
     @Output('onDelete') deleteCallBack: EventEmitter<number> = new EventEmitter();
+    @Output('onError') errorCallBack: EventEmitter<string> = new EventEmitter();
 
     constructor(service: ProviderService) {
         this.service = service;
@@ -53,8 +54,7 @@ export class ProviderListComponent implements OnInit {
                     this.modelsList = page.content
                 },
                 (error) => {
-                    alert('Error' + error);
-
+                    this.errorCallBack.emit(error);
                 }
             )
     }
