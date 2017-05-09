@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Http, Request, RequestOptionsArgs, Response, URLSearchParams} from "@angular/http";
+import {Headers, Http, Request, RequestOptions, RequestOptionsArgs, Response, URLSearchParams} from "@angular/http";
 
 import {Observable} from "rxjs/Observable";
 import {CredentialsModel} from "../component/login/login-model";
@@ -12,35 +12,39 @@ export class HttpOAuthService {
     private readonly clientSecret: string = "123456789";
     private readonly oauthLogInEndpointUrl: string = "/oauth/token";
     private readonly oauthLogOutEndpointUrl: string = "/oauth/revoke_token";
-    private readonly defaultSearchParams: URLSearchParams;
     private readonly grantType: string = 'password';
 
     constructor(private http: Http) {
-        this.defaultSearchParams = new URLSearchParams();
+
     }
 
     login(credentials: CredentialsModel): Observable<any> {
-        let params: URLSearchParams = this.getDefaultSearchParams();
+        let headers = this.getDefaultHeaders();
+        let options = new RequestOptions({headers: headers});
 
-        params.set('username', credentials.email);
-        params.set('password', credentials.password);
+        let body: URLSearchParams = new URLSearchParams();
+        body.set('grant_type', this.grantType);
+        body.set('username', credentials.email);
+        body.set('password', credentials.password);
 
-        return this.http.get(this.oauthLogInEndpointUrl, {search: params})
+        // TODO: save to localstorage
+
+        return this.http.post(this.oauthLogInEndpointUrl, body, options)
             .map(ResponseHandler.extractData)
             .catch(ResponseHandler.handleError);
     }
 
     logout(): Observable<boolean> {
-        return this.http.post(this.oauthLogOutEndpointUrl, "")
+        // TODO: post to endpoint + delete from localstorage
+        return this.post(this.oauthLogOutEndpointUrl, "")
             .map(ResponseHandler.extractData)
             .catch(ResponseHandler.handleError);
     }
 
-    private getDefaultSearchParams(): URLSearchParams {
-        let result: URLSearchParams = new URLSearchParams();
-        result.set('client_id', this.clientId);
-        result.set('client_secret', this.clientSecret);
-        result.set('grant_type', this.grantType);
+    private getDefaultHeaders() {
+        let result = new Headers();
+        result.append("Authorization", "Basic " + btoa(this.clientId + ":" + this.clientSecret));
+        // result.append("Content");
         return result;
     }
 
