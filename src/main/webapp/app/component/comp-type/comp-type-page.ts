@@ -1,13 +1,13 @@
 import {Component, ViewChild} from "@angular/core";
 
 import {ComponentTypeService} from "../../service/component-type.service";
-import {ComponentTypesListComponent} from "./component-type-list.component";
+import {ComponentTypesListComponent} from "./comp-type-list.component";
 import {ComponentTypeRemovedListComponent} from "./comp-type-removed-list.component";
 
 
 @Component({
     selector: 'type-page',
-    templateUrl: './component-type-page.html'
+    templateUrl: './comp-type-page.html'
 })
 export class ComponentTypePage {
     private service: ComponentTypeService;

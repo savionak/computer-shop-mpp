@@ -8,7 +8,7 @@ import {ComponentTypeBriefModel} from "../../model/brief/component-type-brief-mo
 
 @Component({
     selector: 'comp-type-list',
-    templateUrl: './component-type-list.component.html'
+    templateUrl: './comp-type-list.component.html'
 })
 export class ComponentTypesListComponent extends ListComponent<ComponentTypeModel, ComponentTypeBriefModel> {
     constructor(private componentTypeService: ComponentTypeService) {

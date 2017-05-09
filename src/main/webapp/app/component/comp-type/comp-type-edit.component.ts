@@ -8,7 +8,7 @@ import {ComponentTypeBriefModel} from "../../model/brief/component-type-brief-mo
 
 @Component({
     selector: 'comp-type-edit',
-    templateUrl: './component-type-edit.component.html'
+    templateUrl: './comp-type-edit.component.html'
 })
 export class ComponentTypeEditComponent extends EditComponent<ComponentTypeModel, ComponentTypeBriefModel> {
     constructor(service: ComponentTypeService) {

@@ -5,18 +5,23 @@ import {HttpModule, JsonpModule} from "@angular/http";
 import {RouterModule, Routes} from "@angular/router";
 
 import {AppComponent} from "./component/app/app.component";
-import {ComponentTypesListComponent} from "./component/component-types/component-type-list.component";
-import {ProviderListComponent} from "./component/provider/provider-list.component";
-import {FooterComponent} from "./component/app/footer.component";
-import {HeaderComponent} from "./component/app/header.component";
-import {LoginComponent} from "./component/login/login.component";
+
 import {CanActivateViaOAuthGuard} from "./shared/can-activate-guard";
-import {ProviderEditComponent} from "./component/provider/provider-edit.component";
+
+import {HeaderComponent} from "./component/app/header.component";
+import {FooterComponent} from "./component/app/footer.component";
+import {LoginComponent} from "./component/login/login.component";
+
 import {ProviderPage} from "./component/provider/provider-page";
-import {ComponentTypePage} from "./component/component-types/component-type-page";
-import {ComponentTypeEditComponent} from "./component/component-types/component-type-edit.component";
+import {ProviderListComponent} from "./component/provider/provider-list.component";
 import {ProviderRemovedListComponent} from "./component/provider/provider-removed-list.component";
-import {ComponentTypeRemovedListComponent} from "./component/component-types/comp-type-removed-list.component";
+import {ProviderEditComponent} from "./component/provider/provider-edit.component";
+
+import {ComponentTypePage} from "./component/comp-type/comp-type-page";
+import {ComponentTypesListComponent} from "./component/comp-type/comp-type-list.component";
+import {ComponentTypeRemovedListComponent} from "./component/comp-type/comp-type-removed-list.component";
+import {ComponentTypeEditComponent} from "./component/comp-type/comp-type-edit.component";
+
 
 const appRoutes: Routes = [
     {
