@@ -16,6 +16,7 @@ import {ProviderPage} from "./component/provider/provider-page";
 import {ComponentTypePage} from "./component/component-types/component-type-page";
 import {ComponentTypeEditComponent} from "./component/component-types/component-type-edit.component";
 import {ProviderRemovedListComponent} from "./component/provider/provider-removed-list.component";
+import {ComponentTypeRemovedListComponent} from "./component/component-types/comp-type-removed-list.component";
 
 const appRoutes: Routes = [
     {
@@ -68,6 +69,7 @@ const appRoutes: Routes = [
 
         ComponentTypePage,
         ComponentTypesListComponent,
+        ComponentTypeRemovedListComponent,
         ComponentTypeEditComponent
     ],
     bootstrap: [
