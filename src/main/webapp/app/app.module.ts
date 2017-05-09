@@ -2,8 +2,8 @@ import {NgModule} from "@angular/core";
 import {BrowserModule} from "@angular/platform-browser";
 import {FormsModule} from "@angular/forms";
 import {HttpModule, JsonpModule} from "@angular/http";
-
 import {RouterModule, Routes} from "@angular/router";
+
 import {AppComponent} from "./component/app/app.component";
 import {ComponentTypesListComponent} from "./component/component-types/component-type-list.component";
 import {ProviderListComponent} from "./component/provider/provider-list.component";
@@ -12,10 +12,25 @@ import {HeaderComponent} from "./component/app/header.component";
 import {LoginComponent} from "./component/login/login.component";
 
 const appRoutes: Routes = [
-    {path: 'component', component: ComponentTypesListComponent},
-    {path: 'provider', component: ProviderListComponent},
-    {path: 'login', component: LoginComponent}
+    {
+        path: '',
+        redirectTo: 'login',
+        pathMatch: 'full'
+    },
+    {
+        path: 'login',
+        component: LoginComponent
+    },
+    {
+        path: 'type',
+        component: ComponentTypesListComponent
+    },
+    {
+        path: 'provider',
+        component: ProviderListComponent
+    }
 ];
+
 @NgModule({
     imports: [
         BrowserModule,
@@ -38,4 +53,5 @@ const appRoutes: Routes = [
     ]
 })
 export class AppModule {
+
 }
