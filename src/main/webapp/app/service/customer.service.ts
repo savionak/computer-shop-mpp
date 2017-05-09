@@ -1,18 +1,16 @@
 import {Injectable} from "@angular/core";
 
-
 import "rxjs/add/operator/catch";
 import "rxjs/add/operator/map";
+
 import {HttpOAuthService} from "../shared/http-oauth.service";
-import {CrudService} from "./crud.service";
-import {ProviderModel} from "../model/full/provider-model";
-import {ProviderBriefModel} from "../model/brief/provider-brief-model";
 import {CustomerModel} from "../model/full/customer-model";
 import {CustomerBriefModel} from "../model/brief/customer-brief-model";
+import {SoftDeleteService} from "./base/soft-delete.service";
 
 
 @Injectable()
-export class CustomerService extends CrudService<CustomerModel, CustomerBriefModel> {
+export class CustomerService extends SoftDeleteService<CustomerModel, CustomerBriefModel> {
 
     constructor(http: HttpOAuthService) {
         super(http, '/api/customer');

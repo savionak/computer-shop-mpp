@@ -4,9 +4,7 @@ import "rxjs/add/operator/catch";
 import "rxjs/add/operator/map";
 
 import {HttpOAuthService} from "../shared/http-oauth.service";
-import {CrudService} from "./crud.service";
-import {ComponentTypeModel} from "../model/full/component-type-model";
-import {ComponentTypeBriefModel} from "../model/brief/component-type-brief-model";
+import {CrudService} from "./base/crud.service";
 import {ImportModel} from "../model/full/import-model";
 import {ImportBriefModel} from "../model/brief/import-brief-model";
 

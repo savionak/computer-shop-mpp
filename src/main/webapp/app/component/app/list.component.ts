@@ -1,7 +1,7 @@
 import {OnInit} from "@angular/core";
 
 import {BaseModel} from "../../model/base-model";
-import {CrudService} from "../../service/crud.service";
+import {CrudService} from "../../service/base/crud.service";
 
 // T - FullDto, U - BriefDto
 export abstract class AbstractListComponent<T extends BaseModel, U extends BaseModel> implements OnInit {

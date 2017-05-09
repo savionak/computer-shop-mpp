@@ -2,12 +2,13 @@ import {Injectable} from "@angular/core";
 
 import "rxjs/add/operator/catch";
 import "rxjs/add/operator/map";
+
 import {Observable} from "rxjs/Rx";
 import {Http, Response, URLSearchParams} from "@angular/http";
 
 
 @Injectable()
-export class LoginService {
+export class AuthService {
 
     clientId: string;
     clientSecret: string;
@@ -35,23 +36,23 @@ export class LoginService {
             .catch(this.handleError);
     }
 
+    logout(): Observable<boolean> {
+        return this.http.get(this.oauthLogInEndpointUrl, {
+            search: {}
+        }).map(this.handleData)
+            .catch(this.handleError);
+    }
+
     private handleData(res: Response) {
         // TODO: create UserModel
         let body = res.json();
         return body;
     }
 
-    private handleError (error: any) {
+    private handleError(error: any) {
         let errMsg = (error.message) ? error.message :
             error.status ? `${error.status} - ${error.statusText}` : 'Server error';
         console.error(errMsg); // log to console instead
         return Observable.throw(errMsg);
-    }
-
-    public logout(): Observable<boolean> {
-        return this.http.get(this.oauthLogInEndpointUrl, {
-            search: {}
-        }).map(this.handleData)
-            .catch(this.handleError);
     }
 }
