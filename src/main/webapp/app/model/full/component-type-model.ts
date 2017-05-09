@@ -1,5 +1,6 @@
 import {BaseModel} from "../base-model";
 
+
 export class ComponentTypeModel extends BaseModel {
     name: string;
     description: string;

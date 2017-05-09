@@ -1,6 +1,7 @@
 import {BaseModel} from "../base-model";
 import {OrderBriefModel} from "../brief/order-brief-model";
 
+
 export class AssemblyModel extends BaseModel {
     order: OrderBriefModel;
     cost: number;
