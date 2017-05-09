@@ -27,8 +27,8 @@ export abstract class SoftDeleteService<T, U> extends CrudService<T, U> {
             .catch(ResponseHandler.handleError);
     }
 
-    restore(): Observable<void> {
-        return this.http.post(this.apiUrl + '/' + SoftDeleteService.RESTORE_PART, "")
+    restore(id: number): Observable<void> {
+        return this.http.post(this.apiUrl + '/' + SoftDeleteService.RESTORE_PART + '/' + id, "")
             .map(ResponseHandler.extractData)
             .catch(ResponseHandler.handleError);
     }
