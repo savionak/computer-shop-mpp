@@ -15,6 +15,7 @@ import {ProviderEditComponent} from "./component/provider/provider-edit.componen
 import {ProviderPage} from "./component/provider/provider-page";
 import {ComponentTypePage} from "./component/component-types/component-type-page";
 import {ComponentTypeEditComponent} from "./component/component-types/component-type-edit.component";
+import {ProviderRemovedListComponent} from "./component/provider/provider-removed-list.component";
 
 const appRoutes: Routes = [
     {
@@ -62,6 +63,7 @@ const appRoutes: Routes = [
 
         ProviderPage,
         ProviderListComponent,
+        ProviderRemovedListComponent,
         ProviderEditComponent,
 
         ComponentTypePage,

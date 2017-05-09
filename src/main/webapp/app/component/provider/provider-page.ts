@@ -19,6 +19,10 @@ export class ProviderPage {
 
     }
 
+    onRestoreDone() {
+
+    }
+
     onError(error: string) {
         this.error = error;
     }

@@ -5,7 +5,6 @@ import {SoftDeleteService} from "../../service/base/soft-delete.service";
 
 // T - FullDto, U - BriefDto
 export class RemovedListComponent<T extends BaseModel, U> extends ReadOnlyListComponent<T, U> {
-    @Output('onAdd') addCallBack: EventEmitter<null> = new EventEmitter();
     @Output('onRestore') restoreCallBack: EventEmitter<number> = new EventEmitter();
 
     constructor(private _service: SoftDeleteService<T, U>) {
@@ -22,10 +21,6 @@ export class RemovedListComponent<T extends BaseModel, U> extends ReadOnlyListCo
                     this.errorCallBack.emit(error);
                 }
             )
-    }
-
-    onAdd(): void {
-        this.addCallBack.emit(null);
     }
 
     onRestore(model: T): void {
