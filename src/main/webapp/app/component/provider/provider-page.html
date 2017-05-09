@@ -8,6 +8,7 @@
 <provider-edit *ngIf="model"
                [model]="model"
                [isEditing]="isEditing"
+               [isViewing]="isViewing"
                (onAdd)="onAddDone($event)"
                (onEdit)="onEditDone($event)"
                (onCancel)="onCancel($event)"

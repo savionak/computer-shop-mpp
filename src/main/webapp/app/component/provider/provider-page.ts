@@ -15,6 +15,7 @@ export class ProviderPage {
     protected error: string;
 
     private model: ProviderModel = null;
+    private isViewing: boolean = true;
     private isEditing: boolean = false;
 
     @ViewChild(ProviderListComponent) list: ProviderListComponent;
@@ -29,6 +30,8 @@ export class ProviderPage {
 
     onView(id: number) {
         alert('View: ' + id);
+        this.isViewing = true;
+        this.loadModel(id);
     }
 
     private loadModel(id: number) {
@@ -45,12 +48,14 @@ export class ProviderPage {
 
     onAdd(): void {
         alert('Add');
+        this.isViewing = false;
         this.isEditing = false;
         this.model = this.getEmptyModel();
     }
 
     onEdit(id: number): void {
         alert('Edit: ' + id);
+        this.isViewing = false;
         this.isEditing = true;
         this.loadModel(id);
     }

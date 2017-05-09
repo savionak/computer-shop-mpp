@@ -1,23 +1,24 @@
-<div>
-    <h2>{{isEditing ? "Edit" : "Add"}} provider:</h2>
-    <div *ngIf="error">
-        {{error}}
-        <button (click)="onCloseError()">X</button>
+<div *ngIf="model">
+    <div *ngIf="isViewing">
+        <label>Id: </label><span>{{model.id}}</span><br/>
+        <label>Name: </label><span>{{model.name}}</span><br/>
+        <label>Removed: </label><span>{{model.removed}}</span><br/>
+        <label>Description:</label><br/>
+        <textarea readonly>{{model.description}}</textarea><br/>
+        <button type="button" (click)="onCancel()">Cancel</button>
     </div>
-    <table>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th></th>
-            <th></th>
-        </tr>
-        <tr>
-            <td>{{model.id}}</td>
-            <td><input [(ngModel)]="model.name" placeholder="Provider name"/></td>
-            <td><input [(ngModel)]="model.description" placeholder="Provider description"/></td>
-        </tr>
-    </table>
-    <button type="button" (click)="onAction()">{{isEditing ? "Save" : "Add"}}</button>
-    <button type="button" (click)="onCancel()">Cancel</button>
+    <div *ngIf="!isViewing">
+        <h2>{{isEditing ? "Edit" : "Add"}} provider:</h2>
+        <form (submit)="onAction()">
+            <label>Id</label>
+            <span>{{model.id}}</span><br/>
+            <label for="name">Name</label>
+            <input [(ngModel)]="model.name" id="name" name="name" placeholder="Provider name"/><br/>
+            <label for="description">Description</label>
+            <textarea [(ngModel)]="model.description" id="description" name="description" placeholder="Provider description">
+            </textarea><br/>
+            <button type="submit">{{isEditing ? "Save" : "Add"}}</button>
+            <button type="button" (click)="onCancel()">Cancel</button>
+        </form>
+    </div>
 </div>

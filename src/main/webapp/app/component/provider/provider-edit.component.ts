@@ -11,6 +11,7 @@ import {ProviderModel} from "../../model/full/provider-model";
 export class ProviderEditComponent {
     private service: ProviderService;
 
+    @Input() isViewing: boolean;
     @Input() isEditing: boolean;
     @Input() model: ProviderModel;
 
@@ -24,6 +25,11 @@ export class ProviderEditComponent {
     }
 
     onAction(): void {
+        if (this.isViewing) {
+            alert('View only!');
+            return;
+        }
+
         if (this.isEditing) {
             this.service.update(this.model.id, this.model)
                 .subscribe(
