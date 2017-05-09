@@ -29,7 +29,7 @@ export class ProviderPage {
     }
 
     onView(id: number) {
-        alert('View: ' + id);
+        // alert('View: ' + id);
         this.isViewing = true;
         this.loadModel(id);
     }
@@ -47,14 +47,14 @@ export class ProviderPage {
     }
 
     onAdd(): void {
-        alert('Add');
+        // alert('Add');
         this.isViewing = false;
         this.isEditing = false;
         this.model = this.getEmptyModel();
     }
 
     onEdit(id: number): void {
-        alert('Edit: ' + id);
+        // alert('Edit: ' + id);
         this.isViewing = false;
         this.isEditing = true;
         this.loadModel(id);

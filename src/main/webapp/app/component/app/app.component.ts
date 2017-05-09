@@ -9,7 +9,7 @@ import {ComponentTypeService} from "../../service/component-type.service";
     template: `
         <header></header>
         <router-outlet></router-outlet>
-        <footer></footer>
+        <!--<footer></footer>-->
     `,
     providers: [
         HttpOAuthService,

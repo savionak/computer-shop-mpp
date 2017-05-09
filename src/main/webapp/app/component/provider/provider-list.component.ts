@@ -27,7 +27,7 @@ export class ProviderListComponent implements OnInit {
     }
 
     onRefresh(): void {
-        alert('Refresh list');
+        // alert('Refresh list');
         this.refreshList();
     }
 
