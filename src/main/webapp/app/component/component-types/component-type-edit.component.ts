@@ -11,7 +11,6 @@ import {ComponentTypeBriefModel} from "../../model/brief/component-type-brief-mo
     templateUrl: './component-type-edit.component.html'
 })
 export class ComponentTypeEditComponent extends EditComponent<ComponentTypeModel, ComponentTypeBriefModel> {
-
     constructor(service: ComponentTypeService) {
         super(service);
     }

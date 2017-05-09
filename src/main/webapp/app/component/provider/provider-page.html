@@ -1,24 +1,11 @@
 <h2>Provider</h2>
+<hr/>
 <div *ngIf="error">
-    <hr/>
     {{error}}
     <button (click)="onCloseError()">X</button>
     <hr/>
 </div>
-<provider-edit *ngIf="model"
-               [model]="model"
-               [isEditing]="isEditing"
-               [isViewing]="isViewing"
-               (onAdd)="onAddDone($event)"
-               (onEdit)="onEditDone($event)"
-               (onCancel)="onCancel($event)"
-               (onError)="onError($event)">
-</provider-edit>
-<hr/>
 <provider-list
-        (onAdd)="onAdd($event)"
-        (onView)="onView($event)"
-        (onEdit)="onEdit($event)"
-        (onDelete)="onDelete($event)"
+        (onDelete)="onDeleteDone($event)"
         (onError)="onError($event)">
 </provider-list>

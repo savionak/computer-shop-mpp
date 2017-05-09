@@ -3,10 +3,13 @@ import {CrudService} from "../../service/base/crud.service";
 import {BaseModel} from "../../model/base-model";
 
 // T - FullDto, U - BriefDto
-export class ReadOnlyListComponent<T extends BaseModel, U> implements OnInit {
-    protected modelsList: U[];
+export abstract class ReadOnlyListComponent<T extends BaseModel, U> implements OnInit {
+    public error: string;
 
-    @Output('onView') viewCallBack: EventEmitter<number> = new EventEmitter();
+    protected modelsList: U[];
+    protected model: T = null;
+    protected isViewing: boolean = true;
+
     @Output('onError') errorCallBack: EventEmitter<string> = new EventEmitter();
 
     constructor(private service: CrudService<T, U>) {
@@ -14,27 +17,51 @@ export class ReadOnlyListComponent<T extends BaseModel, U> implements OnInit {
     }
 
     ngOnInit() {
-        this.refreshList();
+        this.onRefresh();
     }
 
     onRefresh(): void {
-        // alert('Refresh list');
         this.refreshList();
     }
 
     onViewDetails(model: T): void {
-        this.viewCallBack.emit(model.id);
+        this.isViewing = true;
+        this.loadModel(model.id);
+    }
+
+    onCancel() {
+        this.closeDialog();
+        this.onRefresh();
+    }
+
+    onError(error: string) {
+        this.errorCallBack.emit(error);
     }
 
     protected refreshList() {
         this.service.getList()
             .subscribe(
-                (page) => {
+                page => {
                     this.modelsList = page.content
                 },
-                (error) => {
+                error => {
                     this.errorCallBack.emit(error);
                 }
             )
+    }
+
+    protected loadModel(id: number) {
+        this.service.get(id).subscribe(
+            res => {
+                this.model = res
+            },
+            error => {
+                this.errorCallBack.emit(error);
+            }
+        )
+    }
+
+    protected closeDialog() {
+        this.model = null;
     }
 }

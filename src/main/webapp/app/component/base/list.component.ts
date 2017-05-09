@@ -4,25 +4,52 @@ import {BaseModel} from "../../model/base-model";
 import {ReadOnlyListComponent} from "./read-only-list.component";
 
 // T - FullDto, U - BriefDto
-export class ListComponent<T extends BaseModel, U> extends ReadOnlyListComponent<T, U> {
+export abstract class ListComponent<T extends BaseModel, U> extends ReadOnlyListComponent<T, U> {
+    protected isEditing: boolean = false;
 
-    @Output('onAdd') addCallBack: EventEmitter<null> = new EventEmitter();
-    @Output('onEdit') editCallBack: EventEmitter<number> = new EventEmitter();
     @Output('onDelete') deleteCallBack: EventEmitter<number> = new EventEmitter();
 
-    constructor(service: CrudService<T, U>) {
-        super(service);
+    constructor(private _service: CrudService<T, U>) {
+        super(_service);
     }
 
+    protected abstract getEmptyModel(): T;
+
     onAdd(): void {
-        this.addCallBack.emit(null);
+        this.isViewing = false;
+        this.isEditing = false;
+        this.model = this.getEmptyModel();
+    }
+
+    onAddDone(model: T) {
+        this.onRefresh();
+        this.closeDialog();
     }
 
     onEdit(model: T): void {
-        this.editCallBack.emit(model.id);
+        this.isViewing = false;
+        this.isEditing = true;
+        this.loadModel(model.id);
+    }
+
+    onEditDone(model: T) {
+        this.onRefresh();
+        this.closeDialog();
     }
 
     onDelete(model: T): void {
-        this.deleteCallBack.emit(model.id);
+        let id: number = model.id;
+        if (confirm('Delete model with id = [' + id + '] ?')) {
+            this._service.remove(id)
+                .subscribe(
+                    () => {
+                        this.onRefresh();
+                        this.deleteCallBack.emit(model.id);
+                    },
+                    (error) => {
+                        this.errorCallBack.emit(error);
+                    }
+                );
+        }
     }
 }

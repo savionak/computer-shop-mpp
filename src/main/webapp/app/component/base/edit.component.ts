@@ -48,7 +48,7 @@ export class EditComponent<T extends BaseModel, U> {
         }
     }
 
-    onCancel(): void {
+    onClose(): void {
         this.cancelCallback.emit();
     }
 }

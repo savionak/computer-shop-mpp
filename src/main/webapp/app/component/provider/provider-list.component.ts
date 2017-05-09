@@ -1,8 +1,9 @@
 import {Component} from "@angular/core";
 
-import {ProviderService} from "../../service/provider.service";
-import {ProviderBriefModel} from "../../model/brief/provider-brief-model";
 import {ListComponent} from "../base/list.component";
+import {ProviderService} from "../../service/provider.service";
+import {ProviderModel} from "../../model/full/provider-model";
+import {ProviderBriefModel} from "../../model/brief/provider-brief-model";
 
 
 @Component({
@@ -10,8 +11,11 @@ import {ListComponent} from "../base/list.component";
     templateUrl: './provider-list.component.html'
 })
 export class ProviderListComponent extends ListComponent<ProviderBriefModel, ProviderBriefModel> {
-
     constructor(service: ProviderService) {
         super(service);
+    }
+
+    protected getEmptyModel(): ProviderModel {
+        return ProviderModel.empty();
     }
 }
