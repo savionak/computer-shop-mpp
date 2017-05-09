@@ -10,28 +10,38 @@ import {ProviderListComponent} from "./component/provider/provider-list.componen
 import {FooterComponent} from "./component/app/footer.component";
 import {HeaderComponent} from "./component/app/header.component";
 import {LoginComponent} from "./component/login/login.component";
+import {CanActivateViaOAuthGuard} from "./shared/can-activate-guard";
 
 const appRoutes: Routes = [
+    {
+        path: 'login',
+        component: LoginComponent
+    },
     {
         path: '',
         redirectTo: 'login',
         pathMatch: 'full'
     },
     {
-        path: 'login',
-        component: LoginComponent
-    },
-    {
-        path: 'type',
-        component: ComponentTypesListComponent
-    },
-    {
-        path: 'provider',
-        component: ProviderListComponent
+        path: '',
+        canActivate: [CanActivateViaOAuthGuard],
+        children: [
+            {
+                path: 'type',
+                component: ComponentTypesListComponent
+            },
+            {
+                path: 'provider',
+                component: ProviderListComponent
+            }
+        ]
     }
 ];
 
 @NgModule({
+    providers: [
+        CanActivateViaOAuthGuard
+    ],
     imports: [
         BrowserModule,
         RouterModule.forRoot(appRoutes, {useHash: true}),
