@@ -1,36 +1,18 @@
-<article class="col-xs-12 maincontent">
-
-    <!--<header class="page-header">-->
-        <!--<h1 class="page-title">Sign in</h1>-->
-    <!--</header>-->
-<br>
-    <br><br>
-
-
-    <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <h3 class="thin text-center">Sign in</h3>
-                <hr>
-                <form (submit)="onSubmit($event, email.value, pass.value)">
-                    <div class="top-margin">
-                        <label>Email <span class="text-danger">*</span></label>
-                        <input type="text" name="email" class="form-control" required="Enter email">
-                    </div>
-                    <div class="top-margin">
-                        <label>Password <span class="text-danger">*</span></label>
-                        <input type="password" name="pass" class="form-control" required="Enter password">
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="text-center">
-                            <button class="btn btn-action" type="submit">Sign in</button>
-                        </div>
-                    </div>
-
-                </form>
-            </div>
+<h3>Sign in</h3>
+<hr>
+<form (submit)="onSubmit($event)">
+    <div>
+        <label for="email">Email</label>
+        <input type="text" id="email" name="email" value="{{credentials.email}}" required/>
+    </div>
+    <div>
+        <label for="pass">Password</label>
+        <input type="password" id="pass" name="pass" value="{{credentials.password}}" required/>
+    </div>
+    <hr>
+    <div>
+        <div>
+            <button type="submit">Sign in</button>
         </div>
     </div>
-
-</article>
+</form>

@@ -5,7 +5,8 @@ import {HttpOAuthService} from "../../shared/http-oauth.service";
     selector: 'app',
     template: `
             <header></header>
-            <home-app></home-app>
+            <router-outlet></router-outlet>
+            <router-outlet id="popup"></router-outlet>
             <footer></footer>
     `,
     providers: [HttpOAuthService]

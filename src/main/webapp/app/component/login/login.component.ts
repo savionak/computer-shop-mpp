@@ -1,30 +1,31 @@
 import {Component} from "@angular/core";
-import {LoginModel} from "./login-model";
-import {LoginService} from "../../service/login.service";
+import {CredentialsModel} from "./login-model";
+import {HttpOAuthService} from "../../shared/http-oauth.service";
 
 
 @Component({
     selector: 'login',
-    templateUrl: './login.html',
-    providers: [    // local provider -- created for each component
-        LoginService
-    ]
+    templateUrl: './login.html'
 })
 export class LoginComponent {
 
-    loginUser = new LoginModel();
+    credentials = new CredentialsModel();
     error: string;
 
-    constructor(private loginService: LoginService) {
+    constructor(private authService: HttpOAuthService) {
 
     }
 
-    onSubmit(event: Event, email: string, pass: string) {
+    onSubmit(event: Event) {
         event.preventDefault();
-        this.loginService.login(email, pass)
+        this.authService.login(this.credentials)
             .subscribe(
-                (res) => {/* TODO: say OK and place UserModel in localStorage*/},
-                (err) => {/* TODO: show Error */}
+                (res) => {
+                    console.log("Success!\nUser is:\n", res);
+                },
+                (err) => {
+                    console.error(err);
+                }
             );
     }
 }
