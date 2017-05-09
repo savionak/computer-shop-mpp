@@ -1,0 +1,24 @@
+<h2>Component Types</h2>
+<div *ngIf="error">
+    <hr/>
+    {{error}}
+    <button (click)="onCloseError()">X</button>
+    <hr/>
+</div>
+<comp-type-edit *ngIf="model"
+                [model]="model"
+                [isEditing]="isEditing"
+                [isViewing]="isViewing"
+                (onAdd)="onAddDone($event)"
+                (onEdit)="onEditDone($event)"
+                (onCancel)="onCancel($event)"
+                (onError)="onError($event)">
+</comp-type-edit>
+<hr/>
+<comp-type-list
+        (onAdd)="onAdd($event)"
+        (onView)="onView($event)"
+        (onEdit)="onEdit($event)"
+        (onDelete)="onDelete($event)"
+        (onError)="onError($event)">
+</comp-type-list>

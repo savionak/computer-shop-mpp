@@ -13,6 +13,8 @@ import {LoginComponent} from "./component/login/login.component";
 import {CanActivateViaOAuthGuard} from "./shared/can-activate-guard";
 import {ProviderEditComponent} from "./component/provider/provider-edit.component";
 import {ProviderPage} from "./component/provider/provider-page";
+import {ComponentTypePage} from "./component/component-types/component-type-page";
+import {ComponentTypeEditComponent} from "./component/component-types/component-type-edit.component";
 
 const appRoutes: Routes = [
     {
@@ -30,7 +32,7 @@ const appRoutes: Routes = [
         children: [
             {
                 path: 'type',
-                component: ComponentTypesListComponent
+                component: ComponentTypePage
             },
             {
                 path: 'provider',
@@ -62,7 +64,9 @@ const appRoutes: Routes = [
         ProviderListComponent,
         ProviderEditComponent,
 
-        ComponentTypesListComponent
+        ComponentTypePage,
+        ComponentTypesListComponent,
+        ComponentTypeEditComponent
     ],
     bootstrap: [
         AppComponent

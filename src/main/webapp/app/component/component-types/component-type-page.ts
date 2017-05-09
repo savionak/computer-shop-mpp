@@ -1,30 +1,29 @@
 import {Component, ViewChild} from "@angular/core";
-
-import {ProviderService} from "../../service/provider.service";
-import {ProviderModel} from "../../model/full/provider-model";
-import {ProviderListComponent} from "./provider-list.component";
+import {ComponentTypeService} from "../../service/component-type.service";
+import {ComponentTypeModel} from "../../model/full/component-type-model";
+import {ComponentTypesListComponent} from "./component-type-list.component";
 
 
 @Component({
-    selector: 'provider-page',
-    templateUrl: './provider-page.html'
+    selector: 'type-page',
+    templateUrl: './component-type-page.html'
 })
-export class ProviderPage {
-    private service: ProviderService;
+export class ComponentTypePage {
+    private service: ComponentTypeService;
     protected error: string;
 
-    private model: ProviderModel = null;
+    private model: ComponentTypeModel = null;
     private isViewing: boolean = true;
     private isEditing: boolean = false;
 
-    @ViewChild(ProviderListComponent) list: ProviderListComponent;
+    @ViewChild(ComponentTypesListComponent) list: ComponentTypesListComponent;
 
-    constructor(service: ProviderService) {
+    constructor(service: ComponentTypeService) {
         this.service = service;
     }
 
-    getEmptyModel(): ProviderModel {
-        return ProviderModel.empty();
+    getEmptyModel(): ComponentTypeModel {
+        return ComponentTypeModel.empty();
     }
 
     onView(id: number) {

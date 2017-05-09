@@ -1,0 +1,24 @@
+<div *ngIf="this.model">
+    <div *ngIf="this.isViewing">
+        <label>Id: </label><span>{{this.model.id}}</span><br/>
+        <label>Name: </label><span>{{this.model.name}}</span><br/>
+        <label>Removed: </label><span>{{this.model.removed}}</span><br/>
+        <label>Description:</label><br/>
+        <textarea readonly>{{this.model.description}}</textarea><br/>
+        <button type="button" (click)="onCancel()">Cancel</button>
+    </div>
+    <div *ngIf="!this.isViewing">
+        <h2>{{this.isEditing ? "Edit" : "Add"}} type:</h2>
+        <form (submit)="onAction()">
+            <label>Id</label>
+            <span>{{this.model.id}}</span><br/>
+            <label for="name">Name</label>
+            <input [(ngModel)]="this.model.name" id="name" name="name" placeholder="Type name"/><br/>
+            <label for="description">Description</label>
+            <textarea [(ngModel)]="this.model.description" id="description" name="description" placeholder="Type description">
+            </textarea><br/>
+            <button type="submit">{{this.isEditing ? "Save" : "Add"}}</button>
+            <button type="button" (click)="onCancel()">Cancel</button>
+        </form>
+    </div>
+</div>
