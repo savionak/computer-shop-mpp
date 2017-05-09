@@ -35,7 +35,8 @@
 </div>
 <hr/>
 <!-- Here goes the List -->
-<div *ngIf="this.error" class="error">{{this.error}}
+<div *ngIf="this.error">
+    {{this.error}}
     <button (click)="onCloseError()">X</button>
 </div>
 <button type="button" (click)="onRefresh()">Update</button>

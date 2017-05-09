@@ -9,8 +9,8 @@ import {HttpOAuthService} from "../../shared/http-oauth.service";
 })
 export class LoginComponent {
 
-    credentials = new CredentialsModel();
-    error: string;
+    private credentials = new CredentialsModel();
+    private error: string;
 
     constructor(private authService: HttpOAuthService) {
 
@@ -21,13 +21,19 @@ export class LoginComponent {
         this.authService.login(this.credentials)
             .subscribe(
                 (res) => {
+                    alert("Success!");
                     console.log("Success!\nUser is:\n", res);
                     this.authService.setCurrentUser(res);
                 },
                 (err) => {
                     // TODO: show popup
-                    console.error(err);
+                    this.error = err;
+                    alert(err);
                 }
             );
+    }
+
+    onCloseError() {
+        this.error = null;
     }
 }

@@ -29,7 +29,9 @@ export abstract class AbstractListComponent<T extends BaseModel, U extends BaseM
                     this.modelsList = page.content
                 },
                 (error) => {
-                    this.error = error
+                    // TODO: show popup
+                    this.error = error;
+                    alert(error);
                 }
             )
     }
@@ -46,7 +48,9 @@ export abstract class AbstractListComponent<T extends BaseModel, U extends BaseM
                     this.newModel = this.getEmptyModel();
                 },
                 (error) => {
-                    this.error = error
+                    // TODO: show popup
+                    this.error = error;
+                    alert(error);
                 }
             );
     }
@@ -58,7 +62,9 @@ export abstract class AbstractListComponent<T extends BaseModel, U extends BaseM
                     this.refreshList()
                 },
                 (error) => {
-                    this.error = error
+                    // TODO: show popup
+                    this.error = error;
+                    alert(error);
                 }
             );
     }
@@ -70,7 +76,9 @@ export abstract class AbstractListComponent<T extends BaseModel, U extends BaseM
                     this.editingModel = res;
                 },
                 (error) => {
+                    // TODO: show popup
                     this.error = error;
+                    alert(error);
                 }
             );
     }
@@ -83,7 +91,9 @@ export abstract class AbstractListComponent<T extends BaseModel, U extends BaseM
                     this.refreshList();
                 },
                 (error) => {
-                    this.error = error
+                    // TODO: show popup
+                    this.error = error;
+                    alert(error);
                 }
             );
     }

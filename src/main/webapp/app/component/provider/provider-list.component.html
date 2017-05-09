@@ -34,7 +34,9 @@
     <button type="button" (click)="onCancel()">Cancel</button>
 </div>
 <hr/>
-<div  *ngIf="this.error" class="error">{{this.error}} <button (click)="onCloseError()">X</button> </div>
+<div  *ngIf="this.error">
+    {{this.error}}
+    <button (click)="onCloseError()">X</button> </div>
 <button type="button" (click)="onRefresh()">Update</button>
 <table>
     <tr>

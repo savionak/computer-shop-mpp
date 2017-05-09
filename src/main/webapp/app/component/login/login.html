@@ -1,5 +1,8 @@
 <h3>Sign in</h3>
 <hr>
+<div *ngIf="error" class="error">{{error}}
+    <button (click)="onCloseError()">X</button>
+</div>
 <form (submit)="onSubmit($event)">
     <div>
         <label for="email">Email</label>
