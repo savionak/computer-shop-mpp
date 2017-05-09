@@ -60,22 +60,24 @@ export class HttpOAuthService {
     // Append access_token to api requests
     //----------------------------------------------------------------------------------
 
-    private readonly AUTH_HEADER: string = "Authorization";
+    private static readonly AUTH_HEADER: string = "Authorization";
+    private static readonly CONTENT_TYPE = 'Content-Type';
+    private static readonly CONTENT_TYPE_VALUE = 'application/json';
 
-    private appendAuthHeader(options: RequestOptionsArgs): any {
+    private appendAuthHeader(options: RequestOptionsArgs): RequestOptions {
         let result: RequestOptions;
         let currentUser = this.getCurrentUser();
         if (!!currentUser) {
             if (!options) {
                 result = new RequestOptions();
-                result.headers = new Headers();
             } else {
                 result = Util.copy(options);
-                if (result.headers.has(this.AUTH_HEADER)) {
-                    result.headers.delete(this.AUTH_HEADER);
-                }
             }
-            result.headers.append(this.AUTH_HEADER, currentUser.token_type + " " + currentUser.access_token);
+            if (!result.headers) {
+                result.headers = new Headers();
+            }
+            result.headers.append(HttpOAuthService.AUTH_HEADER, currentUser.token_type + " " + currentUser.access_token);
+            result.headers.append(HttpOAuthService.CONTENT_TYPE, HttpOAuthService.CONTENT_TYPE_VALUE);
         }
         return result;
     }

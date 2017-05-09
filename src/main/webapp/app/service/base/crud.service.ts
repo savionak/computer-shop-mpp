@@ -1,4 +1,3 @@
-import {Headers, RequestOptions} from "@angular/http";
 import {Observable} from "rxjs/Observable";
 
 import "rxjs/add/operator/catch";
@@ -16,9 +15,7 @@ export abstract class CrudService<T, U> extends ReadOnlyService<T, U> {
     }
 
     add(type: T): Observable<T> {
-        let headers = new Headers(CrudService.CONTENT_TYPE_HEADER);
-        let options = new RequestOptions({headers: headers});
-        return this.http.post(this.apiUrl + '/' + CrudService.ADD_PART, JSON.stringify(type), options)
+        return this.http.post(this.apiUrl + '/' + CrudService.ADD_PART, JSON.stringify(type))
             .map(ResponseHandler.extractData)
             .catch(ResponseHandler.handleError);
     }
@@ -30,14 +27,10 @@ export abstract class CrudService<T, U> extends ReadOnlyService<T, U> {
     }
 
     update(type: T): Observable<T> {
-        const headers = new Headers(CrudService.CONTENT_TYPE_HEADER);
-        let options = new RequestOptions({headers: headers});
-        return this.http.put(this.apiUrl + '/' + CrudService.UPDATE_PART, JSON.stringify(type), options)
+        return this.http.put(this.apiUrl + '/' + CrudService.UPDATE_PART, JSON.stringify(type))
             .map(ResponseHandler.extractData)
             .catch(ResponseHandler.handleError);
     }
-
-    private static readonly CONTENT_TYPE_HEADER = {'Content-Type': 'application/json'};
 
     private static readonly DELETE_PART: string = 'delete';
     private static readonly ADD_PART: string = 'add';
