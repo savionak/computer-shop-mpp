@@ -4,18 +4,24 @@ import {Headers, Http, Request, RequestOptions, RequestOptionsArgs, Response, UR
 import {Observable} from "rxjs/Observable";
 import {CredentialsModel} from "../component/login/login-model";
 import {ResponseHandler} from "./response-handler";
+import {CurrentUser} from "./current-user.model";
+import {Util} from "./utils";
 
 
 @Injectable()
 export class HttpOAuthService {
-    private readonly clientId: string = "web-client";
-    private readonly clientSecret: string = "123456789";
-    private readonly oauthLogInEndpointUrl: string = "/oauth/token";
-    private readonly oauthLogOutEndpointUrl: string = "/oauth/revoke_token";
-    private readonly grantType: string = 'password';
 
     constructor(private http: Http) {
 
+    }
+
+    getCurrentUser(): CurrentUser {
+        let result = localStorage.getItem('currentUser');
+        return (!!result) ? JSON.parse(result) : null;
+    }
+
+    setCurrentUser(user: CurrentUser) {
+        localStorage.setItem('currentUser', JSON.stringify(user));
     }
 
     login(credentials: CredentialsModel): Observable<any> {
@@ -27,15 +33,13 @@ export class HttpOAuthService {
         body.set('username', credentials.email);
         body.set('password', credentials.password);
 
-        // TODO: save to localstorage
-
         return this.http.post(this.oauthLogInEndpointUrl, body, options)
             .map(ResponseHandler.extractData)
             .catch(ResponseHandler.handleError);
     }
 
     logout(): Observable<boolean> {
-        // TODO: post to endpoint + delete from localstorage
+        localStorage.removeItem('currentUser');
         return this.post(this.oauthLogOutEndpointUrl, "")
             .map(ResponseHandler.extractData)
             .catch(ResponseHandler.handleError);
@@ -44,43 +48,76 @@ export class HttpOAuthService {
     private getDefaultHeaders() {
         let result = new Headers();
         result.append("Authorization", "Basic " + btoa(this.clientId + ":" + this.clientSecret));
-        // result.append("Content");
         return result;
     }
 
+    private readonly clientId: string = "web-client";
+    private readonly clientSecret: string = "123456789";
+    private readonly oauthLogInEndpointUrl: string = "/oauth/token";
+    private readonly oauthLogOutEndpointUrl: string = "/oauth/revoke_token";
+    private readonly grantType: string = 'password';
+
     //----------------------------------------------------------------------------------
-    // TODO: handle OAuth2 to api requests
+    // Append access_token to api requests
     //----------------------------------------------------------------------------------
 
+    private readonly AUTH_HEADER: string = "Authorization";
+
+    private appendAuthHeader(options: RequestOptionsArgs): any {
+        let result: RequestOptions;
+        let currentUser = this.getCurrentUser();
+        if (!!currentUser) {
+            if (!options) {
+                result = new RequestOptions();
+                result.headers = new Headers();
+            } else {
+                result = Util.copy(options);
+                if (result.headers.has(this.AUTH_HEADER)) {
+                    result.headers.delete(this.AUTH_HEADER);
+                }
+            }
+            result.headers.append(this.AUTH_HEADER, currentUser.token_type + " " + currentUser.access_token);
+        }
+        return result;
+    }
+
     request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
+        options = this.appendAuthHeader(options);
         return this.http.request(url, options);
     };
 
     get(url: string, options?: RequestOptionsArgs): Observable<Response> {
+        options = this.appendAuthHeader(options);
         return this.http.get(url, options);
     }
 
     post(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
+        options = this.appendAuthHeader(options);
         return this.http.post(url, body, options);
     }
 
     put(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
+        options = this.appendAuthHeader(options);
         return this.http.put(url, body, options);
     }
 
     delete(url: string, options?: RequestOptionsArgs): Observable<Response> {
+        options = this.appendAuthHeader(options);
         return this.http.delete(url, options);
     }
 
     patch(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
+        options = this.appendAuthHeader(options);
         return this.http.patch(url, body, options);
     };
 
     head(url: string, options?: RequestOptionsArgs): Observable<Response> {
+        options = this.appendAuthHeader(options);
         return this.http.head(url, options);
     };
 
     options(url: string, options?: RequestOptionsArgs): Observable<Response> {
+        options = this.appendAuthHeader(options);
         return this.http.options(url, options);
     };
 }

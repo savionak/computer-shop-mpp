@@ -22,8 +22,10 @@ export class LoginComponent {
             .subscribe(
                 (res) => {
                     console.log("Success!\nUser is:\n", res);
+                    this.authService.setCurrentUser(res);
                 },
                 (err) => {
+                    // TODO: show popup
                     console.error(err);
                 }
             );

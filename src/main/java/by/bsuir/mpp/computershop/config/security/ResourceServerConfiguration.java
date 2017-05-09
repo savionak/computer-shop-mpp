@@ -1,5 +1,6 @@
 package by.bsuir.mpp.computershop.config.security;
 
+import by.bsuir.mpp.computershop.entity.UserAuth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,7 +42,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 authorizeRequests()
                     .antMatchers("/").anonymous()
                 // TODO: configure access for roles
-                //.antMatchers("/api/**").permitAll()
+                .antMatchers("/api/**").hasAuthority(UserAuth.Role.ADMIN.name())
                 .anyRequest().permitAll();
     }
 }
