@@ -39,7 +39,6 @@ export class HttpOAuthService {
     }
 
     logout(): Observable<boolean> {
-        localStorage.removeItem('currentUser');
         return this.post(this.oauthLogOutEndpointUrl, "")
             .map(ResponseHandler.extractData)
             .catch(ResponseHandler.handleError);

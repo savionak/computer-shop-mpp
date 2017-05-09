@@ -8,6 +8,10 @@ import {Router} from "@angular/router";
 })
 export class HeaderComponent {
 
+    private isLoggedIn(): boolean {
+        return !!localStorage.getItem('currentUser');
+    }
+
     constructor(private authService: HttpOAuthService, private router: Router) {
 
     }
@@ -15,8 +19,14 @@ export class HeaderComponent {
     onLogout() {
         this.authService.logout()
             .subscribe(
-                (res) => { this.router.navigateByUrl("/login"); },
-                (err) => { /* show error popup */ }
+                (res) => {
+                    localStorage.removeItem('currentUser');
+                    this.router.navigateByUrl("/login");
+                },
+                (err) => {
+                    // TODO: show popup
+                    alert(err);
+                }
             );
     }
 }
