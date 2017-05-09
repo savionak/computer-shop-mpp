@@ -1,17 +1,14 @@
 import {Component} from "@angular/core";
+
 import {ProviderService} from "../../service/provider.service";
 import {AbstractListComponent} from "../app/list.component";
 import {ProviderModel} from "../../model/full/provider-model";
 import {ProviderBriefModel} from "../../model/brief/provider-brief-model";
 
 
-
 @Component({
     selector: 'provider-list',
-    templateUrl: './provider-list.component.html',
-    providers: [    // local provider -- created for each component <= replace with global
-        ProviderService
-    ]
+    templateUrl: './provider-list.component.html'
 })
 export class ProviderListComponent extends AbstractListComponent<ProviderModel, ProviderBriefModel> {
 

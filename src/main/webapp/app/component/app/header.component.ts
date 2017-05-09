@@ -8,12 +8,12 @@ import {Router} from "@angular/router";
 })
 export class HeaderComponent {
 
-    private isLoggedIn(): boolean {
-        return !!localStorage.getItem('currentUser');
-    }
-
     constructor(private authService: HttpOAuthService, private router: Router) {
 
+    }
+
+    private isLoggedIn(): boolean {
+        return !!this.authService.getCurrentUser();
     }
 
     onLogout() {

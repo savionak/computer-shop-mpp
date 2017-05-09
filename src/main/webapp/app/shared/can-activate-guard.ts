@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {CanActivate, Router} from "@angular/router";
 
+
 @Injectable()
 export class CanActivateViaOAuthGuard implements CanActivate {
 
@@ -9,11 +10,10 @@ export class CanActivateViaOAuthGuard implements CanActivate {
     }
 
     canActivate() {
-        if (localStorage.getItem('currentUser') === null) {
+        if (!localStorage.getItem('currentUser')) {
             this.router.navigateByUrl('/login');
-            // TODO: return here after redirect
+            // TODO: pass abstract method to redirect-back: check role and show appropriate page
         }
-        // TODO: call abstract method to check user
         return (localStorage.getItem('currentUser') !== null);
     }
 }

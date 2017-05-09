@@ -1,15 +1,14 @@
-import {Component, OnInit} from "@angular/core";
+import {Component} from "@angular/core";
+
 import {AbstractListComponent} from "../app/list.component";
 import {ComponentTypeService} from "../../service/component-type.service";
 import {ComponentTypeModel} from "../../model/full/component-type-model";
 import {ComponentTypeBriefModel} from "../../model/brief/component-type-brief-model";
-@Component({
 
+
+@Component({
     selector: 'comp-type-list',
-    templateUrl: './component-type-list.component.html',
-    providers: [    // local provider -- created for each component <= replace with global
-        ComponentTypeService
-    ]
+    templateUrl: './component-type-list.component.html'
 })
 export class ComponentTypesListComponent extends AbstractListComponent<ComponentTypeModel, ComponentTypeBriefModel> {
 
