@@ -14,8 +14,8 @@ export abstract class CrudService<T, U> extends ReadOnlyService<T, U> {
         super(http, apiUrl);
     }
 
-    add(type: T): Observable<T> {
-        return this.http.post(this.apiUrl + '/' + CrudService.ADD_PART, JSON.stringify(type))
+    add(model: T): Observable<T> {
+        return this.http.post(this.apiUrl + '/' + CrudService.ADD_PART, JSON.stringify(model))
             .map(ResponseHandler.extractData)
             .catch(ResponseHandler.handleError);
     }
@@ -26,8 +26,8 @@ export abstract class CrudService<T, U> extends ReadOnlyService<T, U> {
             .catch(ResponseHandler.handleError);
     }
 
-    update(type: T): Observable<T> {
-        return this.http.put(this.apiUrl + '/' + CrudService.UPDATE_PART, JSON.stringify(type))
+    update(id: number, model: T): Observable<T> {
+        return this.http.put(this.apiUrl + '/' + CrudService.UPDATE_PART + '/' + id, JSON.stringify(model))
             .map(ResponseHandler.extractData)
             .catch(ResponseHandler.handleError);
     }

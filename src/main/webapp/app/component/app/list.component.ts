@@ -84,7 +84,7 @@ export abstract class AbstractListComponent<T extends BaseModel, U extends BaseM
     }
 
     onSave(): void {
-        this.service.update(this.editingModel)
+        this.service.update(this.editingModel.id, this.editingModel)
             .subscribe(
                 (res) => {
                     this.endEditing();
