@@ -16,12 +16,12 @@ export class HttpOAuthService {
     }
 
     getCurrentUser(): CurrentUser {
-        let result = localStorage.getItem('currentUser');
+        let result = localStorage.getItem(Util.STORAGE_KEY);
         return (!!result) ? JSON.parse(result) : null;
     }
 
     setCurrentUser(user: CurrentUser) {
-        localStorage.setItem('currentUser', JSON.stringify(user));
+        localStorage.setItem(Util.STORAGE_KEY, JSON.stringify(user));
     }
 
     login(credentials: CredentialsModel): Observable<any> {

@@ -1,6 +1,7 @@
 import {Component} from "@angular/core";
 import {HttpOAuthService} from "../../shared/http-oauth.service";
 import {Router} from "@angular/router";
+import {Util} from "../../shared/utils";
 
 @Component({
     selector: 'header',
@@ -20,7 +21,7 @@ export class HeaderComponent {
         this.authService.logout()
             .subscribe(
                 (res) => {
-                    localStorage.removeItem('currentUser');
+                    localStorage.removeItem(Util.STORAGE_KEY);
                     this.router.navigateByUrl("/login");
                 },
                 (err) => {
