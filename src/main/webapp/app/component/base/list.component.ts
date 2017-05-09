@@ -1,33 +1,17 @@
-import {EventEmitter, OnInit, Output} from "@angular/core";
+import {EventEmitter, Output} from "@angular/core";
 import {CrudService} from "../../service/base/crud.service";
 import {BaseModel} from "../../model/base-model";
+import {ReadOnlyListComponent} from "./read-only-list.component";
 
 // T - FullDto, U - BriefDto
-export class ListComponent<T extends BaseModel, U> implements OnInit {
-    private service: CrudService<T, U>;
-    protected modelsList: U[];
+export class ListComponent<T extends BaseModel, U> extends ReadOnlyListComponent<T, U> {
 
-    @Output('onView') viewCallBack: EventEmitter<number> = new EventEmitter();
     @Output('onAdd') addCallBack: EventEmitter<null> = new EventEmitter();
     @Output('onEdit') editCallBack: EventEmitter<number> = new EventEmitter();
     @Output('onDelete') deleteCallBack: EventEmitter<number> = new EventEmitter();
-    @Output('onError') errorCallBack: EventEmitter<string> = new EventEmitter();
 
     constructor(service: CrudService<T, U>) {
-        this.service = service;
-    }
-
-    ngOnInit() {
-        this.refreshList();
-    }
-
-    onRefresh(): void {
-        // alert('Refresh list');
-        this.refreshList();
-    }
-
-    onViewDetails(model: T): void {
-        this.viewCallBack.emit(model.id);
+        super(service);
     }
 
     onAdd(): void {
@@ -40,17 +24,5 @@ export class ListComponent<T extends BaseModel, U> implements OnInit {
 
     onDelete(model: T): void {
         this.deleteCallBack.emit(model.id);
-    }
-
-    private refreshList() {
-        this.service.getList()
-            .subscribe(
-                (page) => {
-                    this.modelsList = page.content
-                },
-                (error) => {
-                    this.errorCallBack.emit(error);
-                }
-            )
     }
 }
