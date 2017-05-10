@@ -879,6 +879,18 @@ BEGIN
 END$$
 
 USE `computer_shop`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`order_AFTER_UPDATE` AFTER UPDATE ON `order` FOR EACH ROW
+BEGIN
+	UPDATE `customer`
+    SET `orders_count` = `orders_count` - 1
+    WHERE `id` = OLD.`customer_id`;
+    
+	UPDATE `customer`
+    SET `orders_count` = `orders_count` + 1
+    WHERE `id` = NEW.`customer_id`;
+END$$
+
+USE `computer_shop`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`assembly_BEFORE_INSERT`
 BEFORE INSERT ON `assembly`
 FOR EACH ROW
