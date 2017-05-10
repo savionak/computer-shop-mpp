@@ -20,7 +20,13 @@ export class OrderListComponent extends ListComponent <OrderModel, OrderBriefMod
     }
 
     onViewDetails(model: OrderModel): void {
-        alert("OK!");
+        alert("VIEW ORDER!");
         // TODO: view assemblies list
     }
+
+    onEdit(model: OrderModel): void {
+        alert("EDIT ORDER!");
+        // TODO: ...
+    }
+
 }
