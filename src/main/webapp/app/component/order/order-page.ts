@@ -18,11 +18,6 @@ export class OrderPage {
         this.service = service;
     }
 
-
-    onRestoreDone() {
-        this.list.onRefresh();
-    }
-
     onDeleteDone() {
         this.list.onRefresh();
     }

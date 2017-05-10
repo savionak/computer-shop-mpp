@@ -1,4 +1,4 @@
-import {EventEmitter, Output} from "@angular/core";
+import {EventEmitter, Input, Output} from "@angular/core";
 import {CrudService} from "../../service/base/crud.service";
 import {BaseModel} from "../../model/base-model";
 import {ReadOnlyListComponent} from "./read-only-list.component";
@@ -6,6 +6,7 @@ import {ReadOnlyListComponent} from "./read-only-list.component";
 // T - FullDto, U - BriefDto
 export abstract class ListComponent<T extends BaseModel, U> extends ReadOnlyListComponent<T, U> {
     protected isEditing: boolean = false;
+    @Input() isReadOnly: boolean = false;
 
     @Output('onDelete') deleteCallBack: EventEmitter<number> = new EventEmitter();
 

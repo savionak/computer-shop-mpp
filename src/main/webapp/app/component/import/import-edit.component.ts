@@ -33,37 +33,18 @@ export class ImportEditComponent extends EditComponent<ImportModel, ImportBriefM
             error => {
                 this.errorCallback.emit(error);
             }
-        ),
-            this.sub = this.providerService.getList().subscribe(
-                page => {
-                    this.providersList = page.content;
-                },
-                error => {
-                    this.errorCallback.emit(error);
-                }
-            );
+        );
+        this.sub = this.providerService.getList().subscribe(
+            page => {
+                this.providersList = page.content;
+            },
+            error => {
+                this.errorCallback.emit(error);
+            }
+        );
     }
-
-    // ngOnInit(): void {
-    //     this.sub = this.providerService.getList().subscribe(
-    //         page => {
-    //             this.providersList = page.content;
-    //         },
-    //         error => {
-    //             this.errorCallback.emit(error);
-    //         }
-    //     );
-    // }
 
     ngOnDestroy(): void {
         this.sub.unsubscribe();
-    }
-
-    compareBriefProvider(t1: ComponentModelBriefModel, t2: ComponentModelBriefModel): boolean {
-        return t1 && t2 ? t1.id === t2.id : t1 === t2;
-    }
-
-    compareBriefModel(t1: ProviderBriefModel, t2: ProviderBriefModel): boolean {
-        return t1 && t2 ? t1.id === t2.id : t1 === t2;
     }
 }
