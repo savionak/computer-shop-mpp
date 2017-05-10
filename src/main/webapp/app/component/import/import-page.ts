@@ -22,6 +22,10 @@ export class ImportPage {
         this.list.onRefresh();
     }
 
+    onDeleteDone() {
+        this.list.onRefresh();
+    }
+
     onError(error: string) {
         this.error = error;
     }
