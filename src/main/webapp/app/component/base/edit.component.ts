@@ -51,4 +51,8 @@ export class EditComponent<T extends BaseModel, U> {
     onClose(): void {
         this.cancelCallback.emit();
     }
+
+    compareBriefModel(t1: BaseModel, t2: BaseModel): boolean {
+        return t1 && t2 ? t1.id === t2.id : t1 === t2;
+    }
 }

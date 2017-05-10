@@ -18,4 +18,9 @@ export class OrderListComponent extends ListComponent <OrderModel, OrderBriefMod
     protected getEmptyModel(): OrderModel {
         return OrderModel.empty();
     }
+
+    onViewDetails(model: OrderModel): void {
+        alert("OK!");
+        // TODO: view assemblies list
+    }
 }

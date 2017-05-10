@@ -27,7 +27,7 @@
             <br/>
 
             <label for="provider">Provider</label>
-            <select [(ngModel)]="model.provider" id="provider" name="provider" [compareWith]="compareBriefProvider" required>
+            <select [(ngModel)]="model.provider" id="provider" name="provider" [compareWith]="compareBriefModel" required>
                 <option *ngFor="let provider of providersList" [ngValue]="provider">{{provider.name}}</option>
             </select>
             <br/>

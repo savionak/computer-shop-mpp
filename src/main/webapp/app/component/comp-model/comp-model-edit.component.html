@@ -23,7 +23,7 @@
             <input [(ngModel)]="model.name" id="name" name="name" placeholder="Model name"/>
             <br/>
             <label for="type">Type</label>
-            <select [(ngModel)]="model.type" id="type" name="type" [compareWith]="compareBrief" required>
+            <select [(ngModel)]="model.type" id="type" name="type" [compareWith]="compareBriefModel" required>
                 <option *ngFor="let type of typesList" [ngValue]="type">{{type.name}}</option>
             </select>
             <br/>

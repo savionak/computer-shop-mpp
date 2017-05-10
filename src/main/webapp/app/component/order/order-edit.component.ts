@@ -2,7 +2,6 @@ import {Component, OnDestroy, OnInit} from "@angular/core";
 
 import {EditComponent} from "../base/edit.component";
 import {Subscription} from "rxjs/Subscription";
-import {BaseModel} from "../../model/base-model";
 import {CustomerService} from "../../service/customer.service";
 import {OrderModel} from "../../model/full/order-model";
 import {OrderBriefModel} from "../../model/brief/order-brief-model";
@@ -35,9 +34,5 @@ export class OrderEditComponent extends EditComponent<OrderModel, OrderBriefMode
 
     ngOnDestroy(): void {
         this.sub.unsubscribe();
-    }
-
-    compareBriefModel(t1: BaseModel, t2: BaseModel): boolean {
-        return t1 && t2 ? t1.id === t2.id : t1 === t2;
     }
 }

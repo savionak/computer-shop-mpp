@@ -35,8 +35,4 @@ export class ComponentModelEditComponent extends EditComponent<ComponentModelMod
     ngOnDestroy(): void {
         this.sub.unsubscribe();
     }
-
-    compareBrief(t1: ComponentTypeBriefModel, t2: ComponentTypeBriefModel): boolean {
-        return t1 && t2 ? t1.id === t2.id : t1 === t2;
-    }
 }
