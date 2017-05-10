@@ -1,0 +1,16 @@
+<h2>Customer</h2>
+<hr/>
+<div *ngIf="error">
+    {{error}}
+    <button (click)="onCloseError()">X</button>
+    <hr/>
+</div>
+<customer-list
+        (onDelete)="onDeleteDone($event)"
+        (onError)="onError($event)">
+</customer-list>
+<hr/>
+<customer-removed-list
+        (onRestore)="onRestoreDone($event)"
+        (onError)="onError($event)">
+</customer-removed-list>

@@ -5,6 +5,9 @@ import {ProviderService} from "../../service/provider.service";
 import {ComponentTypeService} from "../../service/component-type.service";
 import {ComponentModelService} from "../../service/component-model.service";
 
+import {CustomerService} from "../../service/customer.service";
+
+
 @Component({
     selector: 'app',
     template: `
@@ -17,7 +20,10 @@ import {ComponentModelService} from "../../service/component-model.service";
 
         ProviderService,
         ComponentTypeService,
-        ComponentModelService
+        ProviderService,
+        ComponentModelService,
+        CustomerService
+
     ]
 })
 export class AppComponent {
