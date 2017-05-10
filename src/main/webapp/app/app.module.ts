@@ -21,6 +21,10 @@ import {ComponentTypePage} from "./component/comp-type/comp-type-page";
 import {ComponentTypesListComponent} from "./component/comp-type/comp-type-list.component";
 import {ComponentTypeRemovedListComponent} from "./component/comp-type/comp-type-removed-list.component";
 import {ComponentTypeEditComponent} from "./component/comp-type/comp-type-edit.component";
+import {ComponentModelPage} from "./component/comp-model/comp-model-page";
+import {ComponentModelListComponent} from "./component/comp-model/comp-model-list.component";
+import {ComponentModelRemovedListComponent} from "./component/comp-model/comp-model-removed-list.component";
+import {ComponentModelEditComponent} from "./component/comp-model/comp-model-edit.component";
 
 
 const appRoutes: Routes = [
@@ -38,12 +42,16 @@ const appRoutes: Routes = [
         canActivate: [CanActivateViaOAuthGuard],
         children: [
             {
+                path: 'provider',
+                component: ProviderPage
+            },
+            {
                 path: 'type',
                 component: ComponentTypePage
             },
             {
-                path: 'provider',
-                component: ProviderPage
+                path: 'model',
+                component: ComponentModelPage
             }
         ]
     }
@@ -75,7 +83,12 @@ const appRoutes: Routes = [
         ComponentTypePage,
         ComponentTypesListComponent,
         ComponentTypeRemovedListComponent,
-        ComponentTypeEditComponent
+        ComponentTypeEditComponent,
+
+        ComponentModelPage,
+        ComponentModelListComponent,
+        ComponentModelRemovedListComponent,
+        ComponentModelEditComponent
     ],
     bootstrap: [
         AppComponent
