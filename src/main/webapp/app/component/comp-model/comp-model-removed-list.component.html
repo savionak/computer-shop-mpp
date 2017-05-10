@@ -5,12 +5,14 @@
     <tr>
         <th>Id</th>
         <th>Name</th>
+        <th>Type</th>
         <th>Description</th>
         <th></th>
     </tr>
     <tr *ngFor="let model of modelsList">
         <td>{{model.id}}</td>
         <td>{{model.name}}</td>
+        <td>{{model.typeName}}</td>
         <td>{{model.description}}</td>
         <td>
             <button type="button" (click)="onRestore(model)">Restore</button>
