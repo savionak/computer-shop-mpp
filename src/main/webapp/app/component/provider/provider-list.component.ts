@@ -10,7 +10,7 @@ import {ProviderBriefModel} from "../../model/brief/provider-brief-model";
     selector: 'provider-list',
     templateUrl: './provider-list.component.html'
 })
-export class ProviderListComponent extends ListComponent<ProviderBriefModel, ProviderBriefModel> {
+export class ProviderListComponent extends ListComponent<ProviderModel, ProviderBriefModel> {
     constructor(service: ProviderService) {
         super(service);
     }
