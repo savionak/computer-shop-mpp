@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class ComponentModel extends BaseSoftEntity<Long> {
 
     @ManyToOne
-    @JoinColumn(name = "type_id", unique = true, nullable = false)
+    @JoinColumn(name = "type_id", nullable = false)
     private ComponentType type;
 
     @Column(name = "name", nullable = false)

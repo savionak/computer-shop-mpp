@@ -4,7 +4,7 @@ public class ComponentModelBriefDto extends BaseBriefDto<Long> {
 
     private Long typeId;
 
-    private Long typeName;
+    private String typeName;
 
     private String name;
 
@@ -34,11 +34,11 @@ public class ComponentModelBriefDto extends BaseBriefDto<Long> {
         this.typeId = typeId;
     }
 
-    public Long getTypeName() {
+    public String getTypeName() {
         return typeName;
     }
 
-    public void setTypeName(Long typeName) {
+    public void setTypeName(String typeName) {
         this.typeName = typeName;
     }
 }
