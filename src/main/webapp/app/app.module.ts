@@ -32,11 +32,16 @@ import {CustomerRemovedListComponent} from "./component/customer/customer-remove
 import {CustomerListComponent} from "./component/customer/customer-list.component";
 import {CustomerEditComponent} from "./component/customer/customer-edit.component";
 
+import {ImportPage} from "./component/import/import-page";
 import {ImportListComponent} from "./component/import/import-list.component";
 import {ImportEditComponent} from "./component/import/import-edit.component";
-import {ImportPage} from "./component/import/import-page";
+
 import {ComponentStorePage} from "./component/comp-store/comp-store-page";
 import {ComponentStoreListComponent} from "./component/comp-store/comp-store-list.component";
+
+import {OrderPage} from "./component/order/order-page";
+import {OrderListComponent} from "./component/order/order-list.component";
+import {OrderEditComponent} from "./component/order/order-edit.component";
 
 
 const appRoutes: Routes = [
@@ -76,6 +81,10 @@ const appRoutes: Routes = [
             {
                 path: 'store',
                 component: ComponentStorePage
+            },
+            {
+                path: 'order',
+                component: OrderPage
             }
         ]
     }
@@ -124,7 +133,11 @@ const appRoutes: Routes = [
         ImportEditComponent,
 
         ComponentStorePage,
-        ComponentStoreListComponent
+        ComponentStoreListComponent,
+
+        OrderPage,
+        OrderListComponent,
+        OrderEditComponent
     ],
     bootstrap: [
         AppComponent

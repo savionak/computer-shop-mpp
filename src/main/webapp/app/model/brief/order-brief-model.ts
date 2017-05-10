@@ -7,7 +7,7 @@ export class OrderBriefModel extends BaseModel {
     cost: number;
     orderDate: number;
     status: Status;
-
+    canceled: boolean;
 }
 const enum Status{
     IN_PROGRESS,
