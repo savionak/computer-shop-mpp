@@ -12,8 +12,7 @@ import {UserAuthService} from "../../service/user-auth.service";
 })
 export class UserEditComponent extends EditComponent<UserAuthModel, UserBriefModel> {
 
-    rolesNames: string[] = ["MANAGER", "DIRECTOR", "ADMIN"];
-    roles: Role[] = [Role.MANAGER, Role.ADMIN, Role.DIRECTOR];
+    roles: string[] = Object.keys(Role).filter((v) => +v !== +v);
 
     constructor(service: UserAuthService) {
         super(service);

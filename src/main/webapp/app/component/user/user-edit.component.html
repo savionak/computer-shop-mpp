@@ -37,8 +37,8 @@
             <br/>
 
             <label for="role">Role</label>
-            <select id="role">
-                <option *ngFor="let role of roles" [value]="rolesNames[role]">{{rolesNames[role]}}</option>
+            <select [(ngModel)]="model.role" id="role" name="role" required>
+                <option *ngFor="let role of roles" [ngValue]="role">{{role}}</option>
             </select>
             <br/>
 

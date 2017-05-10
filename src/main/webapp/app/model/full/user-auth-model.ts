@@ -23,8 +23,10 @@ export class UserAuthModel extends BaseModel {
     }
 }
 
-export const enum Role{
-    MANAGER = 0,
-    DIRECTOR = 1,
-    ADMIN = 2
+export enum Role {
+    ADMIN = 0,
+    MANAGER = 1,
+    DIRECTOR = 2
 }
+
+export const RoleNames: string[] = ["Менеджер", "Директор", "Администратор"];
