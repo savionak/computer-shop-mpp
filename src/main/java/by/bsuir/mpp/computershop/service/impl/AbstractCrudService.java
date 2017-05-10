@@ -47,6 +47,8 @@ public abstract class AbstractCrudService<E extends BaseEntity<ID>, ID extends S
         }
 
         entity.setId(id);
+        updateOnUpdate(entity);
+
         E result = wrapRepositoryCall(() -> repository.save(entity));
 
         if (result == null) {
@@ -88,6 +90,10 @@ public abstract class AbstractCrudService<E extends BaseEntity<ID>, ID extends S
     protected boolean validateUpdate(E entity) {
         // check constraints before update
         return true;
+    }
+
+    protected void updateOnUpdate(E entity) throws ServiceException {
+        // update fields
     }
 
     private String idNotFoundMessage(ID id) {
