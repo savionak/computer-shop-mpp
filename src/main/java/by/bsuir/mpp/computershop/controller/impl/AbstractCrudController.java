@@ -45,6 +45,9 @@ public abstract class AbstractCrudController
     @Override
     public F add(@Valid @RequestBody F dto) throws ControllerException {
         logger.info(String.format("ADD new %s entity", dto.getClass()));
+        if (!checkBeforeInsert(dto)) {
+            throw new InvalidDataException();
+        }
         E entity = mapper.map(dto, entityClass);
         E resultEntity = wrapServiceCall(() -> service.add(entity), logger);
         return mapper.map(resultEntity, fullDtoClass);
@@ -53,9 +56,6 @@ public abstract class AbstractCrudController
     @Override
     public F update(@PathVariable ID id, @Valid @RequestBody F dto) throws ControllerException {
         logger.info(String.format("UPDATE entity with id = [%s]", id));
-        if (!checkBeforeInsert(dto)) {
-            throw new InvalidDataException();
-        }
         E entity = mapper.map(dto, entityClass);
         E resultEntity = wrapServiceCall(() -> service.update(id, entity), logger);
         return mapper.map(resultEntity, fullDtoClass);
