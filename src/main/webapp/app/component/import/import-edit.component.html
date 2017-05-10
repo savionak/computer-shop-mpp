@@ -2,9 +2,9 @@
     <div *ngIf="isViewing">
         <h3>View import {{model.id}}</h3>
         <br/>
-        <label>Provider: </label><span>{{model.provider}}</span>
+        <label>Provider: </label><span>{{model.provider.name}}</span>
         <br/>
-        <label>Model: </label><span>{{model.model}}</span>
+        <label>Model: </label><span>{{model.model.name}}</span>
         <br/>
         <label>ImportDate: </label><span>{{model.importDate}}</span>
         <br/>
