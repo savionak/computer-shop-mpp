@@ -21,14 +21,22 @@ import {ComponentTypePage} from "./component/comp-type/comp-type-page";
 import {ComponentTypesListComponent} from "./component/comp-type/comp-type-list.component";
 import {ComponentTypeRemovedListComponent} from "./component/comp-type/comp-type-removed-list.component";
 import {ComponentTypeEditComponent} from "./component/comp-type/comp-type-edit.component";
+
 import {ComponentModelPage} from "./component/comp-model/comp-model-page";
 import {ComponentModelListComponent} from "./component/comp-model/comp-model-list.component";
 import {ComponentModelRemovedListComponent} from "./component/comp-model/comp-model-removed-list.component";
 import {ComponentModelEditComponent} from "./component/comp-model/comp-model-edit.component";
+
 import {CustomerPage} from "./component/customer/customer-page";
 import {CustomerRemovedListComponent} from "./component/customer/customer-removed-list.component";
 import {CustomerListComponent} from "./component/customer/customer-list.component";
 import {CustomerEditComponent} from "./component/customer/customer-edit.component";
+
+import {ImportListComponent} from "./component/import/import-list.component";
+import {ImportEditComponent} from "./component/import/import-edit.component";
+import {ImportPage} from "./component/import/import-page";
+import {ComponentStorePage} from "./component/comp-store/comp-store-page";
+import {ComponentStoreListComponent} from "./component/comp-store/comp-store-list.component";
 
 
 const appRoutes: Routes = [
@@ -60,6 +68,14 @@ const appRoutes: Routes = [
             {
                 path: 'customer',
                 component: CustomerPage
+            },
+            {
+                path: 'import',
+                component: ImportPage
+            },
+            {
+                path: 'store',
+                component: ComponentStorePage
             }
         ]
     }
@@ -101,7 +117,14 @@ const appRoutes: Routes = [
         CustomerPage,
         CustomerListComponent,
         CustomerRemovedListComponent,
-        CustomerEditComponent
+        CustomerEditComponent,
+
+        ImportPage,
+        ImportListComponent,
+        ImportEditComponent,
+
+        ComponentStorePage,
+        ComponentStoreListComponent
     ],
     bootstrap: [
         AppComponent

@@ -7,6 +7,7 @@ import {ComponentModelService} from "../../service/component-model.service";
 
 import {CustomerService} from "../../service/customer.service";
 import {ImportService} from "../../service/import.service";
+import {ComponentStoreService} from "../../service/component-store.service";
 
 
 @Component({
@@ -24,7 +25,8 @@ import {ImportService} from "../../service/import.service";
         ProviderService,
         ComponentModelService,
         CustomerService,
-        ImportService
+        ImportService,
+        ComponentStoreService
 
     ]
 })

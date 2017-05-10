@@ -1,0 +1,24 @@
+<div>
+    <button type="button" (click)="onRefresh()">Refresh</button>
+</div>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Type</th>
+        <th>Model</th>
+        <th>Price</th>
+        <th>Count</th>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr *ngFor="let model of modelsList">
+        <td>{{model.id}}</td>
+        <td>{{model.typeName}}</td>
+        <td>{{model.modelName}}</td>
+        <td>{{model.price}}</td>
+        <td>{{model.count}}</td>
+        <td>
+            <button type="button" (click)="onChange(model)">View</button>
+        </td>
+    </tr>
+</table>
