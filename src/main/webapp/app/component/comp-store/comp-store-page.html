@@ -1,0 +1,12 @@
+<h2>Component Store</h2>
+<hr/>
+<div *ngIf="error">
+    {{error}}
+    <button (click)="onCloseError()">X</button>
+    <hr/>
+</div>
+<comp-store-list
+        (onDelete)="onDeleteDone($event)"
+        (onError)="onError($event)">
+</comp-store-list>
+<hr/>

@@ -1,0 +1,34 @@
+<div>
+    <button type="button" (click)="onRefresh()">Refresh</button>
+    <button type="button" (click)="onAdd()">Add</button>
+</div>
+<!--<comp-store-edit *ngIf="model"-->
+                <!--[model]="model"-->
+                <!--[isEditing]="isEditing"-->
+                <!--[isViewing]="isViewing"-->
+                <!--(onAdd)="onAddDone($event)"-->
+                <!--(onEdit)="onEditDone($event)"-->
+                <!--(onCancel)="onCancel($event)"-->
+                <!--(onError)="onError($event)">-->
+<!--</comp-store-edit>-->
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Type</th>
+        <th>Model</th>
+        <th>Price</th>
+        <th>Count</th>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr *ngFor="let model of modelsList">
+        <td>{{model.id}}</td>
+        <td>{{model.type.name}}</td>
+        <td>{{model.model.name}}</td>
+        <td>{{model.price}}</td>
+        <td>{{model.count}}</td>
+        <td>
+            <button type="button" (click)="onViewDetails(model)">View</button>
+        </td>
+    </tr>
+</table>
