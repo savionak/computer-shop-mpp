@@ -3,14 +3,14 @@ import {UserInfoModel} from "./user-info-model";
 
 
 export class UserAuthModel extends BaseModel {
-    email:string;
-    pass:string;
-    role:Role;
-    blocked:boolean;
-    removed?:boolean;
-    userInfo:UserInfoModel;
+    email: string;
+    pass: string;
+    role: Role;
+    blocked: boolean;
+    removed?: boolean;
+    userInfo: UserInfoModel;
 
-    public static empty():UserAuthModel {
+    public static empty(): UserAuthModel {
         return {
             id: null,
             email: "",

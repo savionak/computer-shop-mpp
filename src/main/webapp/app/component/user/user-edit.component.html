@@ -38,12 +38,13 @@
 
             <label for="role">Role</label>
             <select id="role">
-                <option *ngFor="let role of roles" [value]="rolesNames[role]" >{{rolesNames[role]}}</option>
+                <option *ngFor="let role of roles" [value]="rolesNames[role]">{{rolesNames[role]}}</option>
             </select>
             <br/>
 
             <label for="firstName">First Name</label>
-            <input [(ngModel)]="model.userInfo.firstName" id="firstName" name="firstName" placeholder="User first Name"/>
+            <input [(ngModel)]="model.userInfo.firstName" id="firstName" name="firstName"
+                   placeholder="User first Name"/>
             <br/>
 
             <label for="lastName">Last Name</label>
@@ -51,7 +52,8 @@
             <br/>
 
             <label for="patronymic">Patronymic</label>
-            <input [(ngModel)]="model.userInfo.patronymic" id="patronymic" name="patronymic" placeholder="User patronymic"/>
+            <input [(ngModel)]="model.userInfo.patronymic" id="patronymic" name="patronymic"
+                   placeholder="User patronymic"/>
             <br/>
 
             <label for="phone">Phone</label>

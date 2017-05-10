@@ -3,13 +3,13 @@
     <button type="button" (click)="onAdd()">Add</button>
 </div>
 <user-edit *ngIf="model"
-               [model]="model"
-               [isEditing]="isEditing"
-               [isViewing]="isViewing"
-               (onAdd)="onAddDone($event)"
-               (onEdit)="onEditDone($event)"
-               (onCancel)="onCancel($event)"
-               (onError)="onError($event)">
+           [model]="model"
+           [isEditing]="isEditing"
+           [isViewing]="isViewing"
+           (onAdd)="onAddDone($event)"
+           (onEdit)="onEditDone($event)"
+           (onCancel)="onCancel($event)"
+           (onError)="onError($event)">
 </user-edit>
 <table>
     <tr>

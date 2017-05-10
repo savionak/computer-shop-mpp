@@ -3,7 +3,7 @@ import {Component} from "@angular/core";
 import {ListComponent} from "../base/list.component";
 import {UserBriefModel} from "../../model/brief/user-brief-model";
 import {UserAuthService} from "../../service/user-auth.service";
-import {UserAuthModel, Role} from "../../model/full/user-auth-model";
+import {UserAuthModel} from "../../model/full/user-auth-model";
 
 
 @Component({
