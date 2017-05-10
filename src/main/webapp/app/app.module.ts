@@ -42,6 +42,10 @@ import {ComponentStoreListComponent} from "./component/comp-store/comp-store-lis
 import {OrderPage} from "./component/order/order-page";
 import {OrderListComponent} from "./component/order/order-list.component";
 import {OrderEditComponent} from "./component/order/order-edit.component";
+import {UserPage} from "./component/user/user-page";
+import {UserListComponent} from "./component/user/user-list.component";
+import {UserRemovedListComponent} from "./component/user/user-removed-list.component";
+import {UserEditComponent} from "./component/user/user-edit.component";
 
 
 const appRoutes: Routes = [
@@ -85,6 +89,10 @@ const appRoutes: Routes = [
             {
                 path: 'order',
                 component: OrderPage
+            },
+            {
+                path: 'user',
+                component: UserPage
             }
         ]
     }
@@ -137,7 +145,12 @@ const appRoutes: Routes = [
 
         OrderPage,
         OrderListComponent,
-        OrderEditComponent
+        OrderEditComponent,
+
+        UserPage,
+        UserListComponent,
+        UserRemovedListComponent,
+        UserEditComponent
     ],
     bootstrap: [
         AppComponent
