@@ -6,6 +6,7 @@
     <hr/>
 </div>
 <order-list
+        [isReadOnly]="false"
         (onDelete)="onDeleteDone($event)"
         (onError)="onError($event)">
 </order-list>
