@@ -14,7 +14,7 @@ export class OrderModel extends BaseModel {
     public static empty(): OrderModel {
         return {
             id: null,
-            customer: null,
+            customer: {id: null},
             cost: null,
             orderDate: null,
             status: Status.IN_PROGRESS,

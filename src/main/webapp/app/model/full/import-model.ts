@@ -15,8 +15,8 @@ export class ImportModel extends BaseModel {
     public static empty(): ImportModel {
         return {
             id: null,
-            provider: null,
-            model: null,
+            provider: {id: null},
+            model: {id: null},
             importDate: null,
             count: null,
             purchasePrice: null,

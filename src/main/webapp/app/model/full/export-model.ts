@@ -9,6 +9,6 @@ export class ExportModel extends BaseModel {
     done: boolean;
 
     public static empty(): ExportModel {
-        return {id: null, order: null, exportDate: (new Date().getTime()), address: null, done: false}
+        return {id: null, order: {id: null}, exportDate: (new Date().getTime()), address: null, done: false}
     }
 }

@@ -8,6 +8,6 @@ export class AssemblyModel extends BaseModel {
     count: number;
 
     public static empty(): AssemblyModel {
-        return {id: null, order: null, cost: null, count: null}
+        return {id: null, order: {id: null}, cost: null, count: 0}
     }
 }
