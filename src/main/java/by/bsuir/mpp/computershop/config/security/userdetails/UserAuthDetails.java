@@ -55,6 +55,6 @@ public class UserAuthDetails extends UserAuth implements UserDetails, Serializab
     @Transient
     @Override
     public boolean isEnabled() {
-        return !isRemoved();
+        return !getRemoved();
     }
 }
