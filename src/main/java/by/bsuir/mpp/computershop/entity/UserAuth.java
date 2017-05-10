@@ -45,12 +45,6 @@ public class UserAuth extends BaseSoftEntity<Long> {
         }
     }
 
-    @Column(name = "removed", nullable = false,
-            updatable = false, insertable = false)
-    public Boolean getRemoved() {
-        return super.getRemoved();
-    }
-
     public String getEmail() {
         return email;
     }
@@ -81,14 +75,6 @@ public class UserAuth extends BaseSoftEntity<Long> {
 
     public void setBlocked(Boolean blocked) {
         this.blocked = blocked;
-    }
-
-    public Boolean isRemoved() {
-        return this.removed;
-    }
-
-    public void setRemoved(Boolean removed) {
-        this.removed = removed;
     }
 
     public UserInfo getUserInfo() {

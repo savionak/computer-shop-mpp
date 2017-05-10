@@ -30,4 +30,11 @@ public class UserAuthServiceImpl extends AbstractSoftDeleteService<UserAuth, Lon
     public void dropUser(Long id) throws ServiceException {
         wrapRepositoryCall(() -> userRepository.drop(id));
     }
+
+    @Override
+    protected void updateOnUpdate(UserAuth entity) throws ServiceException {
+        UserAuth template = wrapRepositoryCall(() -> userRepository.findOne(entity.getId()));
+        entity.setRemoved(template.getRemoved());
+        entity.setBlocked(template.isBlocked());
+    }
 }

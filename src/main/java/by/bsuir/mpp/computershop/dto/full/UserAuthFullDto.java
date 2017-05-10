@@ -17,7 +17,6 @@ public class UserAuthFullDto extends BaseFullDto<Long> {
     @Pattern(regexp = EMAIL_REGEX, message = INVALID_VALUE_MESSAGE)
     private String email;
 
-    // TODO: check for NULL in service on ADD
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String pass;
 

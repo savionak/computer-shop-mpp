@@ -2,6 +2,7 @@ package by.bsuir.mpp.computershop.controller.impl;
 
 import by.bsuir.mpp.computershop.controller.CrudController;
 import by.bsuir.mpp.computershop.controller.exception.ControllerException;
+import by.bsuir.mpp.computershop.controller.exception.InvalidDataException;
 import by.bsuir.mpp.computershop.dto.brief.BaseBriefDto;
 import by.bsuir.mpp.computershop.dto.full.BaseFullDto;
 import by.bsuir.mpp.computershop.entity.BaseEntity;
@@ -52,6 +53,9 @@ public abstract class AbstractCrudController
     @Override
     public F update(@PathVariable ID id, @Valid @RequestBody F dto) throws ControllerException {
         logger.info(String.format("UPDATE entity with id = [%s]", id));
+        if (!checkBeforeInsert(dto)) {
+            throw new InvalidDataException();
+        }
         E entity = mapper.map(dto, entityClass);
         E resultEntity = wrapServiceCall(() -> service.update(id, entity), logger);
         return mapper.map(resultEntity, fullDtoClass);
@@ -61,5 +65,10 @@ public abstract class AbstractCrudController
     public void delete(@PathVariable ID id) throws ControllerException {
         logger.info(String.format("DELETE entity with id = [%s]", id));
         wrapServiceCall(() -> service.delete(id), logger);
+    }
+
+    protected boolean checkBeforeInsert(F dto) {
+        // check DTO before insert
+        return true;
     }
 }

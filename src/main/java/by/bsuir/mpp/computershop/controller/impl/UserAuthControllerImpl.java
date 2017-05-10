@@ -2,6 +2,7 @@ package by.bsuir.mpp.computershop.controller.impl;
 
 import by.bsuir.mpp.computershop.controller.UserAuthController;
 import by.bsuir.mpp.computershop.controller.exception.ControllerException;
+import by.bsuir.mpp.computershop.controller.exception.InvalidDataException;
 import by.bsuir.mpp.computershop.dto.brief.UserBriefDto;
 import by.bsuir.mpp.computershop.dto.full.UserAuthFullDto;
 import by.bsuir.mpp.computershop.dto.helper.UpdateUserPassDto;
@@ -38,7 +39,11 @@ public class UserAuthControllerImpl
     @Override
     public void updatePassword(@Valid @RequestBody UpdateUserPassDto passDto) throws ControllerException {
         logger.info(String.format("UPDATE PASS of user with id = [%s]", passDto.getUserId().toString()));
-        String passHash = passwordEncoder.encode(passDto.getNewHash());
+        String password = passDto.getNewHash();
+        if (password == null || password.isEmpty()) {
+            throw new InvalidDataException();
+        }
+        String passHash = passwordEncoder.encode(password);
         passDto.setNewHash(passHash);
         wrapServiceCall(() -> userService.updatePasswordHash(passDto), logger);
     }
@@ -47,5 +52,10 @@ public class UserAuthControllerImpl
     public void dropUser(@PathVariable Long id) throws ControllerException {
         logger.info(String.format("DROP USER with id = [%s]", id.toString()));
         wrapServiceCall(() -> userService.dropUser(id), logger);
+    }
+
+    @Override
+    protected boolean checkBeforeInsert(UserAuthFullDto dto) {
+        return (dto.getPass() != null) && (!dto.getPass().isEmpty());
     }
 }
