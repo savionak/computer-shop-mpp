@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public interface AssemblyController
         extends CrudController<AssemblyBriefDto, AssemblyFullDto, Long> {
 
+    @RequestMapping(value = "/by/order/{id}", method = RequestMethod.GET)
+    PageDto getListByOrderId(@PathVariable("id") Long orderId, Pageable pageable) throws ControllerException;
+
     @RequestMapping(value = "{id}/components", method = RequestMethod.GET)
     PageDto getComponentsList(@PathVariable("id") Long assemblyId, Pageable pageable) throws ControllerException;
 

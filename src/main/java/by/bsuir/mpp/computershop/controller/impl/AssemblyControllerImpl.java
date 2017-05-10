@@ -31,6 +31,7 @@ public class AssemblyControllerImpl
         implements AssemblyController {
 
     private static final Logger logger = Logger.getLogger(AssemblyControllerImpl.class);
+    private final AssemblyService assemblyService;
     private final AssemblyComponentService componentService;
     private final MapperFacade mapper;
 
@@ -39,8 +40,17 @@ public class AssemblyControllerImpl
                                   AssemblyComponentService componentService,
                                   MapperFacade mapper) {
         super(assemblyService, mapper, AssemblyBriefDto.class, AssemblyFullDto.class, Assembly.class, logger);
+        this.assemblyService = assemblyService;
         this.componentService = componentService;
         this.mapper = mapper;
+    }
+
+    @Override
+    public PageDto getListByOrderId(@PathVariable("id") Long orderId, Pageable pageable) throws ControllerException {
+        logger.info(String.format("GET LIST by ORDER [%s]", orderId));
+        Page<Assembly> components =
+                wrapServiceCall(() -> assemblyService.getListByOrderId(orderId, pageable), logger);
+        return asPageDto(components, AssemblyBriefDto.class);
     }
 
     @Override
