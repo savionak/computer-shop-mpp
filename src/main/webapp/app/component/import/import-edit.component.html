@@ -1,0 +1,61 @@
+<div *ngIf="model">
+    <div *ngIf="isViewing">
+        <h3>View import {{model.id}}</h3>
+        <br/>
+        <label>Provider: </label><span>{{model.provider}}</span>
+        <br/>
+        <label>Model: </label><span>{{model.model}}</span>
+        <br/>
+        <label>ImportDate: </label><span>{{model.importDate}}</span>
+        <br/>
+        <label>Count: </label><span>{{model.count}}</span>
+        <br/>
+        <label>PurchasePrice: </label><span>{{model.purchasePrice}}</span>
+        <br/>
+        <label>Price: </label><span>{{model.price}}</span>
+        <br/>
+        <label>StoredCount: </label><span>{{model.storedCount}}</span>
+        <br/>
+
+        <button type="button" (click)="onClose()">Cancel</button>
+    </div>
+    <div *ngIf="!isViewing">
+        <h3>{{isEditing ? "Edit" : "Add"}} import:</h3>
+        <form (submit)="onAction()">
+            <label>Id</label>
+            <span>{{model.id}}</span>
+            <br/>
+
+            <label for="provider">Provider</label>
+            <select [(ngModel)]="model.provider" id="provider" name="provider" [compareWith]="compareBriefProvider" required>
+                <option *ngFor="let provider of providersList" [ngValue]="provider">{{provider.name}}</option>
+            </select>
+            <br/>
+
+            <label for="model">Model</label>
+            <select [(ngModel)]="model.model" id="model" name="model" [compareWith]="compareBriefModel" required>
+                <option *ngFor="let model of modelsList" [ngValue]="model">{{model.name}}</option>
+            </select>
+            <br/>
+
+            <label for="importDate">ImportDate</label>
+            <input [(ngModel)]="model.importDate" id="importDate" name="importDate" placeholder="Import date"/>
+            <br/>
+
+            <label for="count">Count</label>
+            <input [(ngModel)]="model.count" id="count" name="count" placeholder="Import count"/>
+            <br/>
+
+            <label for="purchasePrice">PurchasePrice</label>
+            <input [(ngModel)]="model.purchasePrice" id="purchasePrice" name="purchasePrice" placeholder="Import purchasePrice"/>
+            <br/>
+
+            <label for="price">Price</label>
+            <input [(ngModel)]="model.price" id="price" name="price" placeholder="Import price"/>
+            <br/>
+
+            <button type="submit">{{isEditing ? "Save" : "Add"}}</button>
+            <button type="button" (click)="onClose()">Cancel</button>
+        </form>
+    </div>
+</div>
