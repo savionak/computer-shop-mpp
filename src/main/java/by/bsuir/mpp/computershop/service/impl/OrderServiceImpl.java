@@ -49,4 +49,12 @@ public class OrderServiceImpl extends AbstractCrudService<Order, Long> implement
     public void renew(Long id) throws ServiceException {
         wrapRepositoryCall(() -> orderRepository.renew(id));
     }
+
+    @Override
+    protected void updateOnUpdate(Order entity) throws ServiceException {
+        Order template = wrapRepositoryCall(() -> orderRepository.findOne(entity.getId()));
+        entity.setCanceled(template.isCanceled());
+        entity.setStatus(template.getStatus());
+        entity.setCost(entity.getCost());
+    }
 }

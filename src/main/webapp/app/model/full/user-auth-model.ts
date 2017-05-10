@@ -7,16 +7,26 @@ export class UserAuthModel extends BaseModel {
     pass: string;
     role: Role;
     blocked: boolean;
-    removed: boolean;
+    removed?: boolean;
     userInfo: UserInfoModel;
 
     public static empty(): UserAuthModel {
-        return {id: null, email: "", pass: null, role: Role.MANAGER, blocked: false, removed: false, userInfo: null}
+        return {
+            id: null,
+            email: "",
+            pass: null,
+            role: Role.MANAGER,
+            blocked: false,
+            removed: false,
+            userInfo: UserInfoModel.empty()
+        }
     }
 }
 
-const enum Role{
-    MANAGER,
-    DIRECTOR,
-    ADMIN
+export enum Role {
+    ADMIN = 0,
+    MANAGER = 1,
+    DIRECTOR = 2
 }
+
+export const RoleNames: string[] = ["Менеджер", "Директор", "Администратор"];

@@ -1,0 +1,29 @@
+<div *ngIf="model">
+    <div *ngIf="isViewing">
+        <h3>View assembly {{model.id}}</h3>
+        <br/>
+        <label>Order id: </label><span>{{orderId}}</span>
+        <br/>
+        <label>Cost: </label><span>{{model.cost}}</span>
+        <br/>
+        <label>Count: </label><span>{{model.count}}</span>
+        <br/>
+
+        <button type="button" (click)="onClose()">Cancel</button>
+    </div>
+    <div *ngIf="!isViewing">
+        <h3>{{isEditing ? "Edit" : "Add"}} order:</h3>
+        <form (submit)="onAction()">
+            <label>Id: </label>
+            <span>{{model.id}}</span>
+            <br/>
+            <label>Order id: </label><span>{{orderId}}</span>
+            <label>Cost: </label><span>{{model.cost}}</span>
+            <input [(ngModel)]="model.count" id="count" name="count" placeholder="Assembly count"/>
+            <br/>
+
+            <button type="submit">{{isEditing ? "Save" : "Add"}}</button>
+            <button type="button" (click)="onClose()">Cancel</button>
+        </form>
+    </div>
+</div>

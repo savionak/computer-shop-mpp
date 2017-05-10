@@ -1,0 +1,67 @@
+<div *ngIf="model">
+    <div *ngIf="isViewing">
+        <h3>View users {{model.id}}</h3>
+        <br/>
+        <label>Email: </label><span>{{model.email}}</span>
+        <br/>
+        <label>Pass: </label><span>{{model.pass}}</span>
+        <br/>
+        <label>Role: </label><span>{{model.role}}</span>
+        <br/>
+        <label>Blocked: </label><span>{{model.blocked}}</span>
+        <br/>
+        <label>Removed: </label><span>{{model.removed}}</span>
+        <br/>
+        <label>First Name: </label><span>{{model.userInfo.firstName}}</span>
+        <br/>
+        <label>Last Name: </label><span>{{model.userInfo.lastName}}</span>
+        <br/>
+        <label>Patronymic: </label><span>{{model.userInfo.patronymic}}</span>
+        <br/>
+        <label>Phone: </label><span>{{model.userInfo.phone}}</span>
+        <br/>
+
+        <button type="button" (click)="onClose()">Cancel</button>
+    </div>
+    <div *ngIf="!isViewing">
+        <h3>{{isEditing ? "Edit" : "Add"}} user:</h3>
+        <form (submit)="onAction()">
+            <label>Id</label>
+            <span>{{model.id}}</span>
+            <br/>
+            <label for="email">Email</label>
+            <input [(ngModel)]="model.email" id="email" name="email" placeholder="User email"/>
+            <br/>
+            <label for="pass">Pass</label>
+            <input [(ngModel)]="model.pass" id="pass" name="pass" placeholder="User pass"/>
+            <br/>
+
+            <label for="role">Role</label>
+            <select [(ngModel)]="model.role" id="role" name="role" required>
+                <option *ngFor="let role of roles" [ngValue]="role">{{role}}</option>
+            </select>
+            <br/>
+
+            <label for="firstName">First Name</label>
+            <input [(ngModel)]="model.userInfo.firstName" id="firstName" name="firstName"
+                   placeholder="User first Name"/>
+            <br/>
+
+            <label for="lastName">Last Name</label>
+            <input [(ngModel)]="model.userInfo.lastName" id="lastName" name="lastName" placeholder="User last Name"/>
+            <br/>
+
+            <label for="patronymic">Patronymic</label>
+            <input [(ngModel)]="model.userInfo.patronymic" id="patronymic" name="patronymic"
+                   placeholder="User patronymic"/>
+            <br/>
+
+            <label for="phone">Phone</label>
+            <input [(ngModel)]="model.userInfo.phone" id="phone" name="phone" placeholder="User phone"/>
+            <br/>
+
+            <button type="submit">{{isEditing ? "Save" : "Add"}}</button>
+            <button type="button" (click)="onClose()">Cancel</button>
+        </form>
+    </div>
+</div>

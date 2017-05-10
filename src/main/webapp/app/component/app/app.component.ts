@@ -7,6 +7,10 @@ import {ComponentModelService} from "../../service/component-model.service";
 
 import {CustomerService} from "../../service/customer.service";
 import {ImportService} from "../../service/import.service";
+import {ComponentStoreService} from "../../service/component-store.service";
+import {OrderService} from "../../service/order.service";
+import {AssemblyService} from "../../service/assembly.service";
+import {UserAuthService} from "../../service/user-auth.service";
 
 
 @Component({
@@ -24,8 +28,11 @@ import {ImportService} from "../../service/import.service";
         ProviderService,
         ComponentModelService,
         CustomerService,
-        ImportService
-
+        ImportService,
+        ComponentStoreService,
+        OrderService,
+        AssemblyService,
+        UserAuthService
     ]
 })
 export class AppComponent {

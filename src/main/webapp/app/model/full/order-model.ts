@@ -9,9 +9,18 @@ export class OrderModel extends BaseModel {
     orderDate: number;
     status: Status;
     export: ExportBriefModel;
+    canceled: boolean;
 
     public static empty(): OrderModel {
-        return {id: null, customer: null, cost: null, orderDate: null, status: Status.IN_PROGRESS, export: null}
+        return {
+            id: null,
+            customer: {id: null},
+            cost: null,
+            orderDate: null,
+            status: Status.IN_PROGRESS,
+            export: null,
+            canceled: false
+        }
     }
 }
 const enum Status{

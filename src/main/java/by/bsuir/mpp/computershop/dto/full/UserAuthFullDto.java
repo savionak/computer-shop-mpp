@@ -29,7 +29,7 @@ public class UserAuthFullDto extends BaseFullDto<Long> {
 
     // Separate endpoints to remove/restore user
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Boolean removed;
+    private Boolean removed = false;
 
     @Valid
     @NotNull(message = CANNOT_BE_NULL_MESSAGE)

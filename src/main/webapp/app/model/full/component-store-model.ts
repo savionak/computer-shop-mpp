@@ -8,6 +8,6 @@ export class ComponentStoreModel extends BaseModel {
     count: number;
 
     public static empty(): ComponentStoreModel {
-        return {id: null, model: null, price: null, count: null}
+        return {id: null, model: {id: null}, price: null, count: null}
     }
 }

@@ -1,0 +1,14 @@
+<h2>Orders</h2>
+<hr/>
+<div *ngIf="error">
+    {{error}}
+    <button (click)="onCloseError()">X</button>
+    <hr/>
+</div>
+<router-outlet></router-outlet>
+<order-list
+        [isReadOnly]="false"
+        (onDelete)="onDeleteDone($event)"
+        (onError)="onError($event)">
+</order-list>
+<hr/>

@@ -3,11 +3,11 @@ import {CustomerBriefModel} from "./customer-brief-model";
 
 
 export class OrderBriefModel extends BaseModel {
-    customer: CustomerBriefModel;
-    cost: number;
-    orderDate: number;
-    status: Status;
-
+    customer?: CustomerBriefModel;
+    cost?: number;
+    orderDate?: number;
+    status?: Status;
+    canceled?: boolean;
 }
 const enum Status{
     IN_PROGRESS,

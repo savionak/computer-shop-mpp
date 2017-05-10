@@ -1,6 +1,7 @@
 import {EventEmitter, OnInit, Output} from "@angular/core";
 import {CrudService} from "../../service/base/crud.service";
 import {BaseModel} from "../../model/base-model";
+import {ReadOnlyService} from "../../service/base/read-only.service";
 
 // T - FullDto, U - BriefDto
 export abstract class ReadOnlyListComponent<T extends BaseModel, U> implements OnInit {
@@ -12,7 +13,7 @@ export abstract class ReadOnlyListComponent<T extends BaseModel, U> implements O
 
     @Output('onError') errorCallBack: EventEmitter<string> = new EventEmitter();
 
-    constructor(private service: CrudService<T, U>) {
+    constructor(private service: ReadOnlyService<T, U>) {
         this.service = service;
     }
 

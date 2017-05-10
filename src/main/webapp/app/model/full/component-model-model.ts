@@ -9,6 +9,6 @@ export class ComponentModelModel extends BaseModel {
     removed: boolean;
 
     public static empty(): ComponentModelModel {
-        return {id: null, type: null, name: "", description: null, removed: false}
+        return {id: null, type: {id: null}, name: "", description: null, removed: false}
     }
 }

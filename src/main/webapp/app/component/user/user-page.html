@@ -1,16 +1,16 @@
-<h2>Component Types</h2>
+<h2>User</h2>
 <hr/>
 <div *ngIf="error">
     {{error}}
     <button (click)="onCloseError()">X</button>
     <hr/>
 </div>
-<comp-model-list
+<user-list
         (onDelete)="onDeleteDone($event)"
         (onError)="onError($event)">
-</comp-model-list>
+</user-list>
 <hr/>
-<comp-model-removed-list
+<user-removed-list
         (onRestore)="onRestoreDone($event)"
         (onError)="onError($event)">
-</comp-model-removed-list>
+</user-removed-list>
