@@ -42,6 +42,9 @@ import {ComponentStoreListComponent} from "./component/comp-store/comp-store-lis
 import {OrderPage} from "./component/order/order-page";
 import {OrderListComponent} from "./component/order/order-list.component";
 import {OrderEditComponent} from "./component/order/order-edit.component";
+import {AssemblyPage} from "./component/assembly/assembly-page";
+import {AssemblyListComponent} from "./component/assembly/assembly-list.component";
+import {AssemblyEditComponent} from "./component/assembly/assembly-edit.component";
 
 
 const appRoutes: Routes = [
@@ -84,7 +87,13 @@ const appRoutes: Routes = [
             },
             {
                 path: 'order',
-                component: OrderPage
+                component: OrderPage,
+                children: [
+                    {
+                        path: ':id/assembly',
+                        component: AssemblyPage
+                    }
+                ]
             }
         ]
     }
@@ -137,7 +146,11 @@ const appRoutes: Routes = [
 
         OrderPage,
         OrderListComponent,
-        OrderEditComponent
+        OrderEditComponent,
+
+        AssemblyPage,
+        AssemblyListComponent,
+        AssemblyEditComponent
     ],
     bootstrap: [
         AppComponent

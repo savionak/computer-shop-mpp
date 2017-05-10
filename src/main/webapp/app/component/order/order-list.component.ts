@@ -4,6 +4,7 @@ import {ListComponent} from "../base/list.component";
 import {OrderModel} from "../../model/full/order-model";
 import {OrderBriefModel} from "../../model/brief/order-brief-model";
 import {OrderService} from "../../service/order.service";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -11,7 +12,7 @@ import {OrderService} from "../../service/order.service";
     templateUrl: './order-list.component.html'
 })
 export class OrderListComponent extends ListComponent <OrderModel, OrderBriefModel> {
-    constructor(private orderService: OrderService) {
+    constructor(private orderService: OrderService, private router: Router) {
         super(orderService);
     }
 
@@ -26,7 +27,7 @@ export class OrderListComponent extends ListComponent <OrderModel, OrderBriefMod
 
     onEdit(model: OrderModel): void {
         alert("EDIT ORDER!");
-        // TODO: ...
+        this.router.navigate(['order', model.id, 'assembly']);
     }
 
 }
