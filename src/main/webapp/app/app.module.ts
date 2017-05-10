@@ -25,6 +25,10 @@ import {ComponentModelPage} from "./component/comp-model/comp-model-page";
 import {ComponentModelListComponent} from "./component/comp-model/comp-model-list.component";
 import {ComponentModelRemovedListComponent} from "./component/comp-model/comp-model-removed-list.component";
 import {ComponentModelEditComponent} from "./component/comp-model/comp-model-edit.component";
+import {CustomerPage} from "./component/customer/customer-page";
+import {CustomerRemovedListComponent} from "./component/customer/customer-removed-list.component";
+import {CustomerListComponent} from "./component/customer/customer-list.component";
+import {CustomerEditComponent} from "./component/customer/customer-edit.component";
 
 
 const appRoutes: Routes = [
@@ -52,6 +56,10 @@ const appRoutes: Routes = [
             {
                 path: 'model',
                 component: ComponentModelPage
+            },
+            {
+                path: 'customer',
+                component: CustomerPage
             }
         ]
     }
@@ -88,7 +96,12 @@ const appRoutes: Routes = [
         ComponentModelPage,
         ComponentModelListComponent,
         ComponentModelRemovedListComponent,
-        ComponentModelEditComponent
+        ComponentModelEditComponent,
+
+        CustomerPage,
+        CustomerListComponent,
+        CustomerRemovedListComponent,
+        CustomerEditComponent
     ],
     bootstrap: [
         AppComponent
