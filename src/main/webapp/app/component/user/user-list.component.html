@@ -1,0 +1,43 @@
+<div>
+    <button type="button" (click)="onRefresh()">Refresh</button>
+    <button type="button" (click)="onAdd()">Add</button>
+</div>
+<user-edit *ngIf="model"
+               [model]="model"
+               [isEditing]="isEditing"
+               [isViewing]="isViewing"
+               (onAdd)="onAddDone($event)"
+               (onEdit)="onEditDone($event)"
+               (onCancel)="onCancel($event)"
+               (onError)="onError($event)">
+</user-edit>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>First Name</th>
+        <th>Second Name</th>
+        <th>Blocked</th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr *ngFor="let model of modelsList">
+        <td>{{model.id}}</td>
+        <td>{{model.email}}</td>
+        <td>{{model.role}}</td>
+        <td>{{model.firstName}}</td>
+        <td>{{model.secondName}}</td>
+        <td>{{model.blocked}}</td>
+        <td>
+            <button type="button" (click)="onViewDetails(model)">View</button>
+        </td>
+        <td>
+            <button type="button" (click)="onEdit(model)">Edit</button>
+        </td>
+        <td>
+            <button type="button" (click)="onDelete(model)">Delete</button>
+        </td>
+    </tr>
+</table>

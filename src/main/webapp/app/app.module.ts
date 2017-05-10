@@ -42,9 +42,15 @@ import {ComponentStoreListComponent} from "./component/comp-store/comp-store-lis
 import {OrderPage} from "./component/order/order-page";
 import {OrderListComponent} from "./component/order/order-list.component";
 import {OrderEditComponent} from "./component/order/order-edit.component";
+
 import {AssemblyPage} from "./component/assembly/assembly-page";
 import {AssemblyListComponent} from "./component/assembly/assembly-list.component";
 import {AssemblyEditComponent} from "./component/assembly/assembly-edit.component";
+
+import {UserPage} from "./component/user/user-page";
+import {UserListComponent} from "./component/user/user-list.component";
+import {UserRemovedListComponent} from "./component/user/user-removed-list.component";
+import {UserEditComponent} from "./component/user/user-edit.component";
 
 
 const appRoutes: Routes = [
@@ -94,6 +100,10 @@ const appRoutes: Routes = [
                         component: AssemblyPage
                     }
                 ]
+            },
+            {
+                path: 'user',
+                component: UserPage
             }
         ]
     }
@@ -150,7 +160,12 @@ const appRoutes: Routes = [
 
         AssemblyPage,
         AssemblyListComponent,
-        AssemblyEditComponent
+        AssemblyEditComponent,
+
+        UserPage,
+        UserListComponent,
+        UserRemovedListComponent,
+        UserEditComponent
     ],
     bootstrap: [
         AppComponent

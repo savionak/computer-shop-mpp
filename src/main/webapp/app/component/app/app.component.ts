@@ -10,6 +10,7 @@ import {ImportService} from "../../service/import.service";
 import {ComponentStoreService} from "../../service/component-store.service";
 import {OrderService} from "../../service/order.service";
 import {AssemblyService} from "../../service/assembly.service";
+import {UserAuthService} from "../../service/user-auth.service";
 
 
 @Component({
@@ -30,7 +31,8 @@ import {AssemblyService} from "../../service/assembly.service";
         ImportService,
         ComponentStoreService,
         OrderService,
-        AssemblyService
+        AssemblyService,
+        UserAuthService
     ]
 })
 export class AppComponent {
