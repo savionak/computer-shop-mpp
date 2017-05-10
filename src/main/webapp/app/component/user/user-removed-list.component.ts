@@ -11,7 +11,18 @@ import {UserAuthService} from "../../service/user-auth.service";
     templateUrl: './user-removed-list.component.html'
 })
 export class UserRemovedListComponent extends RemovedListComponent<UserAuthModel, UserBriefModel> {
-    constructor(service: UserAuthService) {
-        super(service);
+    constructor(private userService: UserAuthService) {
+        super(userService);
+    }
+
+    onDrop(model: UserBriefModel) {
+        if (confirm("DROP User with id = " + model.id + " ?")) {
+            if (confirm("Are You Sure ?")) {
+                this.userService.drop(model.id).subscribe(
+                    () => this.onRefresh(),
+                    error => this.errorCallBack.emit(error)
+                )
+            }
+        }
     }
 }

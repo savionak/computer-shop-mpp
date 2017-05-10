@@ -32,9 +32,9 @@
             <label for="email">Email</label>
             <input [(ngModel)]="model.email" id="email" name="email" placeholder="User email"/>
             <br/>
-            <label for="pass">Pass</label>
-            <input [(ngModel)]="model.pass" id="pass" name="pass" placeholder="User pass"/>
-            <br/>
+            <label *ngIf="!isEditing" for="pass">Pass</label>
+            <input *ngIf="!isEditing" [(ngModel)]="model.pass" id="pass" name="pass" placeholder="User pass"/>
+            <br *ngIf="isEditing"/>
 
             <label for="role">Role</label>
             <select [(ngModel)]="model.role" id="role" name="role" required>

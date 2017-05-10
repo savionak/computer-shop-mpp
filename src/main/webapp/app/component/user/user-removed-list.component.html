@@ -8,8 +8,7 @@
         <th>Role</th>
         <th>First Name</th>
         <th>Second Name</th>
-        <th>Blocked</th>
-        <th>Removed</th>
+        <th></th>
         <th></th>
     </tr>
     <tr *ngFor="let model of modelsList">
@@ -17,11 +16,12 @@
         <td>{{model.email}}</td>
         <td>{{model.role}}</td>
         <td>{{model.firstName}}</td>
-        <td>{{model.secondName}}</td>
-        <td>{{model.blocked}}</td>
-        <td>{{model.removed}}</td>
+        <td>{{model.lastName}}</td>
         <td>
             <button type="button" (click)="onRestore(model)">Restore</button>
+        </td>
+        <td>
+            <button type="button" (click)="onDrop(model)">Drop</button>
         </td>
     </tr>
 </table>
