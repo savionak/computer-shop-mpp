@@ -1,0 +1,39 @@
+<div>
+    <button type="button" (click)="onRefresh()">Refresh</button>
+    <button type="button" (click)="onAdd()">Add</button>
+</div>
+<comp-model-edit *ngIf="model"
+                [model]="model"
+                [isEditing]="isEditing"
+                [isViewing]="isViewing"
+                (onAdd)="onAddDone($event)"
+                (onEdit)="onEditDone($event)"
+                (onCancel)="onCancel($event)"
+                (onError)="onError($event)">
+</comp-model-edit>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr *ngFor="let model of modelsList">
+        <td>{{model.id}}</td>
+        <td>{{model.name}}</td>
+        <td>{{model.typeName}}</td>
+        <td>{{model.description}}</td>
+        <td>
+            <button type="button" (click)="onViewDetails(model)">View</button>
+        </td>
+        <td>
+            <button type="button" (click)="onEdit(model)">Edit</button>
+        </td>
+        <td>
+            <button type="button" (click)="onDelete(model)">Delete</button>
+        </td>
+    </tr>
+</table>

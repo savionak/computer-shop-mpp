@@ -1,0 +1,45 @@
+<div>
+    <button type="button" (click)="onRefresh()">Refresh</button>
+    <button type="button" (click)="onAdd()">Add</button>
+</div>
+<import-edit *ngIf="model"
+                [model]="model"
+                [isEditing]="isEditing"
+                [isViewing]="isViewing"
+                (onAdd)="onAddDone($event)"
+                (onEdit)="onEditDone($event)"
+                (onCancel)="onCancel($event)"
+                (onError)="onError($event)">
+</import-edit>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Date</th>
+        <th>Type</th>
+        <th>Model</th>
+        <th>purchasePrice</th>
+        <th>count</th>
+        <th>providerName</th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr *ngFor="let model of modelsList">
+        <td>{{model.id}}</td>
+        <td>{{model.importDate}}</td>
+        <td>{{model.typeName}}</td>
+        <td>{{model.modelName}}</td>
+        <td>{{model.purchasePrice}}</td>
+        <td>{{model.count}}</td>
+        <td>{{model.providerName}}</td>
+        <td>
+            <button type="button" (click)="onViewDetails(model)">View</button>
+        </td>
+        <td>
+            <button type="button" (click)="onEdit(model)">Edit</button>
+        </td>
+        <td>
+            <button type="button" (click)="onDelete(model)">Delete</button>
+        </td>
+    </tr>
+</table>

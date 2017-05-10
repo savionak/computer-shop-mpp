@@ -1,0 +1,12 @@
+<h2>Imports</h2>
+<hr/>
+<div *ngIf="error">
+    {{error}}
+    <button (click)="onCloseError()">X</button>
+    <hr/>
+</div>
+<import-list
+        (onDelete)="onDeleteDone($event)"
+        (onError)="onError($event)">
+</import-list>
+<hr/>
