@@ -19,4 +19,8 @@ export class ComponentStoreListComponent extends ReadOnlyListComponent<Component
     protected getEmptyModel(): ComponentStoreModel {
         return ComponentStoreModel.empty();
     }
+
+    onChange(model: ComponentStoreBriefModel) {
+
+    }
 }
