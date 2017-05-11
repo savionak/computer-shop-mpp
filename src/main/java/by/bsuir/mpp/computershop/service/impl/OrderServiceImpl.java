@@ -5,6 +5,8 @@ import by.bsuir.mpp.computershop.repository.OrderRepository;
 import by.bsuir.mpp.computershop.service.OrderService;
 import by.bsuir.mpp.computershop.service.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import static by.bsuir.mpp.computershop.service.exception.wrapper.RepositoryCallWrapper.wrapRepositoryCall;
@@ -38,6 +40,11 @@ public class OrderServiceImpl extends AbstractCrudService<Order, Long> implement
     @Override
     public void renew(Long id) throws ServiceException {
         wrapRepositoryCall(() -> orderRepository.renew(id));
+    }
+
+    @Override
+    public Page<Order> getCanceled(Pageable pageable) throws ServiceException {
+        return wrapRepositoryCall(() -> orderRepository.findAllByCanceledIsTrue(pageable));
     }
 
     @Override

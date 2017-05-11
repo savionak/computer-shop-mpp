@@ -1,6 +1,8 @@
 package by.bsuir.mpp.computershop.repository;
 
 import by.bsuir.mpp.computershop.entity.Order;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -28,4 +30,8 @@ public interface OrderRepository extends PagingAndSortingRepository<Order, Long>
     @Modifying
     @Query(value = "CALL renew_order(:id)", nativeQuery = true)
     void renew(@Param("id") Long id);
+
+    Page<Order> findAllByCanceledIsTrue(Pageable pageable);
+
+    Page<Order> findAllByCanceledIsFalse(Pageable pageable);
 }
