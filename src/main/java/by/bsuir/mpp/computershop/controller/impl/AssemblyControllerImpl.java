@@ -64,7 +64,7 @@ public class AssemblyControllerImpl
     @Override
     public AssemblyComponentFullDto getComponent(@PathVariable("id") Long assemblyId, @PathVariable("component_id") Long componentId)
             throws ControllerException {
-        logger.info(String.format("UPDATE COMPONENT [%s] of ASSEMBLY [%s]", componentId, assemblyId));
+        logger.info(String.format("GET COMPONENT [%s] of ASSEMBLY [%s]", componentId, assemblyId));
         AssemblyComponent component = getCheckComponent(assemblyId, componentId);
         return mapper.map(component, AssemblyComponentFullDto.class);
     }
