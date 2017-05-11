@@ -23,9 +23,10 @@ export class AssemblyPage implements OnInit {
     }
 
     ngOnInit(): void {
-        this.orderId = +this.route.snapshot.params['id'];
         let urlSegments = this.route.snapshot.url;
-        this.isReadOnly = urlSegments[urlSegments.length - 1].toString() !== 'edit';
+        this.isReadOnly = urlSegments[1].toString() !== 'edit';
+
+        this.orderId = +this.route.snapshot.params['id'];
     }
 
     onDeleteDone() {
