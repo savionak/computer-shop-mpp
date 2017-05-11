@@ -2,9 +2,11 @@
     <div *ngIf="isViewing">
         <h3>View assembly {{model.id}}</h3>
         <br/>
-        <label>Order id: </label><span>{{orderId}}</span>
+        <label>Asm id: </label><span>{{model.asmId}}</span>
         <br/>
-        <label>Cost: </label><span>{{model.cost}}</span>
+        <label>Type: </label><span>{{model.component.typeName}}</span>
+        <br/>
+        <label>Model: </label><span>{{model.component.modelName}}</span>
         <br/>
         <label>Count: </label><span>{{model.count}}</span>
         <br/>
@@ -12,14 +14,26 @@
         <button type="button" (click)="onClose()">Cancel</button>
     </div>
     <div *ngIf="!isViewing">
-        <h3>{{isEditing ? "Edit" : "Add"}} order:</h3>
+        <h3>{{isEditing ? "Edit" : "Add"}} component:</h3>
         <form (submit)="onAction()">
             <label>Id: </label>
             <span>{{model.id}}</span>
             <br/>
-            <label>Order id: </label><span>{{orderId}}</span>
-            <label>Cost: </label><span>{{model.cost}}</span>
-            <input [(ngModel)]="model.count" id="count" name="count" placeholder="Assembly count"/>
+            <label>Asm id: </label><span>{{asmId}}</span>
+            <br/>
+            <label for="component">Component: </label>
+            <select *ngIf="!isEditing" [(ngModel)]="model.component" id="component" name="component"
+                    [compareWith]="compareBriefModel" required>
+                <option *ngFor="let store of storeList" [ngValue]="store">{{store.typeName}} - {{store.modelName}} -
+                    {{store.price}}
+                </option>
+            </select>
+            <span *ngIf="isEditing">{{model.component.typeName}} - {{model.component.modelName}}</span>
+            <br/>
+            <label>Price: </label><span>{{model.component.price}}</span>
+            <br/>
+            <label for="count">Count: </label><input [(ngModel)]="model.count" id="count" name="count"
+                                                     placeholder="Component count"/>
             <br/>
 
             <button type="submit">{{isEditing ? "Save" : "Add"}}</button>

@@ -16,7 +16,7 @@
         <th>Id</th>
         <th>Cost</th>
         <th>Count</th>
-        <th></th>
+        <th *ngIf="isReadOnly"></th>
         <th *ngIf="!isReadOnly"></th>
         <th *ngIf="!isReadOnly"></th>
     </tr>
@@ -24,7 +24,7 @@
         <td>{{model.id}}</td>
         <td>{{model.cost}}</td>
         <td>{{model.count}}</td>
-        <td>
+        <td *ngIf="isReadOnly">
             <button type="button" (click)="onViewDetails(model)">View</button>
         </td>
         <td *ngIf="!isReadOnly">

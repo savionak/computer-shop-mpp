@@ -1,12 +1,12 @@
 import {Component, Input, OnDestroy, OnInit} from "@angular/core";
 
 import {EditComponent} from "../base/edit.component";
-import {OrderBriefModel} from "../../model/brief/order-brief-model";
 import {Subscription} from "rxjs/Subscription";
 import {AssemblyComponentBriefModel} from "../../model/brief/assembly-component-brief-model";
 import {AssemblyComponentModel} from "../../model/full/assembly-component-model";
 import {AssemblyComponentService} from "../../service/assembly-component.service";
 import {ComponentStoreService} from "../../service/component-store.service";
+import {ComponentStoreBriefModel} from "../../model/brief/component-store-brief-model";
 
 
 @Component({
@@ -14,7 +14,7 @@ import {ComponentStoreService} from "../../service/component-store.service";
     templateUrl: './asm-comp-edit.component.html'
 })
 export class AssemblyComponentEditComponent extends EditComponent<AssemblyComponentModel, AssemblyComponentBriefModel> implements OnInit, OnDestroy {
-    private storeList: OrderBriefModel[];
+    private storeList: ComponentStoreBriefModel[];
     private sub: Subscription;
     @Input() asmId: number;
 
@@ -38,10 +38,25 @@ export class AssemblyComponentEditComponent extends EditComponent<AssemblyCompon
     }
 
     protected update(): void {
-        this._service.update(this.model.id, this.model, this.asmId + '');
+        this._service.update(this.model.id, this.model, this.asmId + '').subscribe(
+            (res) => {
+                this.editCallback.emit(res);
+            },
+            (error) => {
+                this.errorCallback.emit(error);
+            }
+        );
     }
 
     protected add(): void {
-        this._service.add(this.model, this.asmId + '');
+        console.log(this.model);
+        this._service.add(this.model, this.asmId + '').subscribe(
+            (res) => {
+                this.addCallback.emit(res);
+            },
+            (error) => {
+                this.errorCallback.emit(error);
+            }
+        );
     }
 }

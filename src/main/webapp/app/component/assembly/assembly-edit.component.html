@@ -12,13 +12,12 @@
         <button type="button" (click)="onClose()">Cancel</button>
     </div>
     <div *ngIf="!isViewing">
-        <h3>{{isEditing ? "Edit" : "Add"}} order:</h3>
+        <h3>{{isEditing ? "Edit" : "Add"}} assembly:</h3>
         <form (submit)="onAction()">
             <label>Id: </label>
             <span>{{model.id}}</span>
             <br/>
             <label>Order id: </label><span>{{orderId}}</span>
-            <label>Cost: </label><span>{{model.cost}}</span>
             <input [(ngModel)]="model.count" id="count" name="count" placeholder="Assembly count"/>
             <br/>
 

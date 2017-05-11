@@ -3,6 +3,7 @@
     <button *ngIf="!isReadOnly" type="button" (click)="onAdd()">Add</button>
 </div>
 <asm-comp-edit *ngIf="model"
+               [asmId]="assemblyId"
                [model]="model"
                [isEditing]="isEditing"
                [isViewing]="isViewing"
@@ -14,7 +15,9 @@
 <table>
     <tr>
         <th>Id</th>
-        <th>Cost</th>
+        <th>Type</th>
+        <th>Model</th>
+        <th>Price</th>
         <th>Count</th>
         <th></th>
         <th *ngIf="!isReadOnly"></th>
