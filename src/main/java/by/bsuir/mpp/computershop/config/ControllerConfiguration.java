@@ -38,11 +38,6 @@ public class ControllerConfiguration {
     }
 
     @Bean
-    public ExportController exportController(ExportService exportService, MapperFacade mapperFacade) {
-        return new ExportControllerImpl(exportService, mapperFacade);
-    }
-
-    @Bean
     public ImportController importController(ImportService importService, MapperFacade mapperFacade) {
         return new ImportControllerImpl(importService, mapperFacade);
     }

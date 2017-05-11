@@ -30,11 +30,11 @@ public class Order extends BaseEntity<Long> {
     @Column(name = "canceled", nullable = false)
     private Boolean canceled = false;
 
+    @Column(name = "export_address", nullable = false)
+    private String exportAddress;
+
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Assembly> assemblies;
-
-    @OneToOne(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private Export export;
 
     public Customer getCustomer() {
         return customer;
@@ -76,20 +76,20 @@ public class Order extends BaseEntity<Long> {
         this.canceled = canceled;
     }
 
-    public Export getExport() {
-        return export;
-    }
-
-    public void setExport(Export export) {
-        this.export = export;
-    }
-
     public List<Assembly> getAssemblies() {
         return assemblies;
     }
 
     public void setAssemblies(List<Assembly> assemblies) {
         this.assemblies = assemblies;
+    }
+
+    public String getExportAddress() {
+        return exportAddress;
+    }
+
+    public void setExportAddress(String exportAddress) {
+        this.exportAddress = exportAddress;
     }
 
     public enum Status {

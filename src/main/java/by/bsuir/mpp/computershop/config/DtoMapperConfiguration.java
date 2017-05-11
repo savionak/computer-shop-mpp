@@ -72,14 +72,6 @@ public class DtoMapperConfiguration {
                 .byDefault()
                 .register();
 
-        mapperFactory.classMap(Export.class, ExportBriefDto.class)
-                .field("order.id", "orderId")
-                .field("order.customer.id", "customerId")
-                .field("order.customer.name", "customerName")
-                .field("order.cost", "orderCost")
-                .byDefault()
-                .register();
-
         mapperFactory.classMap(UserAuth.class, UserBriefDto.class)
                 .field("userInfo.firstName", "firstName")
                 .field("userInfo.lastName", "lastName")

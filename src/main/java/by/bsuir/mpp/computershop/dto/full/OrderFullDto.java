@@ -1,14 +1,15 @@
 package by.bsuir.mpp.computershop.dto.full;
 
 import by.bsuir.mpp.computershop.dto.brief.CustomerBriefDto;
-import by.bsuir.mpp.computershop.dto.brief.ExportBriefDto;
 import by.bsuir.mpp.computershop.entity.Order.Status;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
+import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_EMPTY_MESSAGE;
 import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
 
 public class OrderFullDto extends BaseFullDto<Long> {
@@ -29,8 +30,9 @@ public class OrderFullDto extends BaseFullDto<Long> {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Boolean canceled;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private ExportBriefDto export;
+    @NotEmpty(message = CANNOT_BE_EMPTY_MESSAGE)
+    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
+    private String exportAddress;
 
     public CustomerBriefDto getCustomer() {
         return customer;
@@ -64,19 +66,19 @@ public class OrderFullDto extends BaseFullDto<Long> {
         this.status = status;
     }
 
-    public ExportBriefDto getExport() {
-        return export;
-    }
-
-    public void setExport(ExportBriefDto export) {
-        this.export = export;
-    }
-
     public Boolean getCanceled() {
         return canceled;
     }
 
     public void setCanceled(Boolean canceled) {
         this.canceled = canceled;
+    }
+
+    public String getExportAddress() {
+        return exportAddress;
+    }
+
+    public void setExportAddress(String exportAddress) {
+        this.exportAddress = exportAddress;
     }
 }
