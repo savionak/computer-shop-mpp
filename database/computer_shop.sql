@@ -33,12 +33,13 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `computer_shop`.`order`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `computer_shop`.`order` (
-  `id`          BIGINT UNSIGNED               NOT NULL AUTO_INCREMENT,
-  `customer_id` BIGINT UNSIGNED               NOT NULL,
-  `cost`        INT UNSIGNED                  NOT NULL DEFAULT 0,
-  `order_date`  DATETIME                      NOT NULL DEFAULT NOW(),
-  `status`      ENUM ('IN_PROGRESS', 'READY') NOT NULL DEFAULT 'IN_PROGRESS',
-  `canceled`    TINYINT(1)                    NOT NULL DEFAULT 0,
+  `id`             BIGINT UNSIGNED               NOT NULL AUTO_INCREMENT,
+  `customer_id`    BIGINT UNSIGNED               NOT NULL,
+  `cost`           INT UNSIGNED                  NOT NULL DEFAULT 0,
+  `order_date`     DATETIME                      NOT NULL DEFAULT NOW(),
+  `status`         ENUM ('IN_PROGRESS', 'READY') NOT NULL DEFAULT 'IN_PROGRESS',
+  `canceled`       TINYINT(1)                    NOT NULL DEFAULT 0,
+  `export_address` VARCHAR(255)                  NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `FK_order_customer`
     FOREIGN KEY (`customer_id`)
@@ -214,28 +215,6 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 CREATE INDEX `fk_user_info_user_auth1_idx` ON `computer_shop`.`user_info` (`auth_id` ASC);
-
-
--- -----------------------------------------------------
--- Table `computer_shop`.`export`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `computer_shop`.`export` (
-  `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `order_id` BIGINT UNSIGNED NOT NULL,
-  `export_date` DATETIME NOT NULL DEFAULT NOW(),
-  `address` VARCHAR(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `FK_export_order`
-    FOREIGN KEY (`order_id`)
-    REFERENCES `computer_shop`.`order` (`id`)
-    ON DELETE RESTRICT
-    ON UPDATE RESTRICT)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-CREATE INDEX `FK_export_order` ON `computer_shop`.`export` (`order_id` ASC);
-
-CREATE UNIQUE INDEX `order_id_UNIQUE` ON `computer_shop`.`export` (`order_id` ASC);
 
 
 -- -----------------------------------------------------
@@ -1328,9 +1307,9 @@ VALUES
   ('3', 'Third', '');
   
 INSERT INTO `computer_shop`.`order`
-(`id`, `customer_id`)
+(`id`, `customer_id`, `export_address`)
 VALUES
-  ('1', '1');
+  ('1', '1', 'Baker St. 221b');
 
 INSERT INTO `computer_shop`.`assembly`
 (`id`, `order_id`, `count`)
@@ -1344,12 +1323,6 @@ VALUES
   ('1', '1', '3'),
   ('1', '3', '1'),
   ('2', '2', '2');
-
-
-INSERT INTO `computer_shop`.`export`
-(`order_id`, `address`)
-VALUE
-  ('1', 'Some address');
 
 UPDATE `computer_shop`.`order`
 SET `status` = 'READY'
