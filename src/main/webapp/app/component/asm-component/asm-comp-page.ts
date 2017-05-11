@@ -20,12 +20,12 @@ export class AssemblyComponentPage implements OnInit {
 
     @ViewChild(AssemblyComponentListComponent) list: AssemblyComponentListComponent;
 
-    constructor(private route: ActivatedRoute, private assemblyServise: AssemblyService) {
+    constructor(private route: ActivatedRoute, private assemblyService: AssemblyService) {
     }
 
     ngOnInit(): void {
         this.asmId = +this.route.snapshot.params['asmId'];
-        this.assemblyServise.get(this.asmId).subscribe(
+        this.assemblyService.get(this.asmId).subscribe(
             model => this.assembly = model,
             error => this.error = error
         );

@@ -23,8 +23,8 @@ export class OrderModel extends BaseModel {
         }
     }
 }
-const enum Status{
+
+export const enum Status{
     IN_PROGRESS,
-    READY,
-    FINISHED
+    READY
 }

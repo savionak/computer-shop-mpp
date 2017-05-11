@@ -17,6 +17,7 @@
             <span>{{model.id}}</span>
             <br/>
             <label>Order id: </label><span>{{orderId}}</span>
+            <label for="count">Count: </label>
             <input [(ngModel)]="model.count" id="count" name="count" placeholder="Assembly count"/>
             <br/>
             <button type="submit">{{isEditing ? "Save" : "Add"}}</button>

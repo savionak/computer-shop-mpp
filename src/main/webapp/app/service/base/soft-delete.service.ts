@@ -15,12 +15,6 @@ export abstract class SoftDeleteService<T, U> extends CrudService<T, U> {
         super(http, apiUrl);
     }
 
-    getList(url?: string): Observable<Page<U>> {
-        return this.http.get(url || this.apiUrl)
-            .map(ResponseHandler.extractData)
-            .catch(ResponseHandler.handleError);
-    }
-
     getRemovedList(url?: string): Observable<Page<U>> {
         return this.http.get((url || this.apiUrl) + '/' + SoftDeleteService.REMOVED_LIST_PART)
             .map(ResponseHandler.extractData)
