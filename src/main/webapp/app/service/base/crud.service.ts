@@ -14,25 +14,25 @@ export abstract class CrudService<T, U> extends ReadOnlyService<T, U> {
         super(http, apiUrl);
     }
 
-    add(model: T): Observable<T> {
-        return this.http.post(this.apiUrl + '/' + CrudService.ADD_PART, JSON.stringify(model))
+    add(model: T, url?: string): Observable<T> {
+        return this.http.post((url || this.apiUrl) + '/' + CrudService.ADD_PART, JSON.stringify(model))
             .map(ResponseHandler.extractData)
             .catch(ResponseHandler.handleError);
     }
 
-    remove(id: number): Observable<T> {
-        return this.http.delete(this.apiUrl + '/' + CrudService.DELETE_PART + '/' + id)
+    remove(id: number, url?: string): Observable<T> {
+        return this.http.delete((url || this.apiUrl) + '/' + CrudService.DELETE_PART + '/' + id)
             .map(ResponseHandler.extractData)
             .catch(ResponseHandler.handleError);
     }
 
-    update(id: number, model: T): Observable<T> {
-        return this.http.put(this.apiUrl + '/' + CrudService.UPDATE_PART + '/' + id, JSON.stringify(model))
+    update(id: number, model: T, url?: string): Observable<T> {
+        return this.http.put((url || this.apiUrl) + '/' + CrudService.UPDATE_PART + '/' + id, JSON.stringify(model))
             .map(ResponseHandler.extractData)
             .catch(ResponseHandler.handleError);
     }
 
-    private static readonly DELETE_PART: string = 'delete';
-    private static readonly ADD_PART: string = 'add';
-    private static readonly UPDATE_PART: string = 'update';
+    protected static readonly DELETE_PART: string = 'delete';
+    protected static readonly ADD_PART: string = 'add';
+    protected static readonly UPDATE_PART: string = 'update';
 }

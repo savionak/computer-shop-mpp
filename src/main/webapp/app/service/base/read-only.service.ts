@@ -24,8 +24,8 @@ export abstract class ReadOnlyService<T, U> {
             .catch(ResponseHandler.handleError);
     }
 
-    get(id: number): Observable<T> {
-        return this.http.get(this.apiUrl + '/' + id)
+    get(id: number, url?: string): Observable<T> {
+        return this.http.get((url || this.apiUrl) + '/' + id)
             .map(ResponseHandler.extractData)
             .catch(ResponseHandler.handleError);
     }
