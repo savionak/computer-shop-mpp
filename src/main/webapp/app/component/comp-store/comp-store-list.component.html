@@ -9,7 +9,6 @@
         <th>Price</th>
         <th>Count</th>
         <th></th>
-        <th></th>
     </tr>
     <tr *ngFor="let model of modelsList">
         <td>{{model.id}}</td>
@@ -18,7 +17,7 @@
         <td>{{model.price}}</td>
         <td>{{model.count}}</td>
         <td>
-            <button type="button" (click)="onChange(model)">View</button>
+            <button type="button" (click)="onChange(model)">Change</button>
         </td>
     </tr>
 </table>
