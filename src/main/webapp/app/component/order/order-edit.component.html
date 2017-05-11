@@ -14,7 +14,7 @@
             <label>Export date: </label><span>{{model.export.exportDate}}</span>
         </div>
 
-        <button type="button" (click)="onClose()">Cancel</button>
+        <button *ngIf="!isEmbedded" type="button" (click)="onClose()">Cancel</button>
     </div>
     <div *ngIf="!isViewing">
         <h3>{{isEditing ? "Edit" : "Add"}} order:</h3>
@@ -47,4 +47,5 @@
             <button *ngIf="!isEmbedded" type="button" (click)="onClose()">Cancel</button>
         </form>
     </div>
+    <hr *ngIf="isEmbedded"/>
 </div>

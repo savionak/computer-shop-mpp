@@ -5,6 +5,12 @@
     <button (click)="onCloseError()">X</button>
     <hr/>
 </div>
+<order-edit
+        [model]="order"
+        [isEmbedded]="true"
+        [isViewing]="isReadOnly"
+        [isEditing]="true">
+</order-edit>
 <asm-list
         [isReadOnly]="isReadOnly"
         [orderId]="orderId"
