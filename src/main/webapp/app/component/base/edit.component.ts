@@ -9,7 +9,13 @@ export class EditComponent<T extends BaseModel, U> {
     @Input() isEmbedded: boolean = false;
     @Input() isViewing: boolean;
     @Input() isEditing: boolean;
-    @Input() model: T;
+    model: T;
+
+    @Input('model')
+    set setModel(model: T) {
+        this.model = model;
+        this.onModelSet(model);
+    }
 
     @Output('onAdd') addCallback: EventEmitter<T> = new EventEmitter();
     @Output('onEdit') editCallback: EventEmitter<T> = new EventEmitter();
@@ -63,5 +69,9 @@ export class EditComponent<T extends BaseModel, U> {
                     this.errorCallback.emit(error);
                 }
             );
+    }
+
+    protected onModelSet(model: T) {
+
     }
 }

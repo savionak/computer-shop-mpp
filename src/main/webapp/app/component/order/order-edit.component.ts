@@ -24,6 +24,25 @@ export class OrderEditComponent extends EditComponent<OrderModel, OrderBriefMode
     }
 
     ngOnInit(): void {
+        this.getCustomersList();
+    }
+
+    ngOnDestroy(): void {
+        this.sub.unsubscribe();
+    }
+
+    protected onModelSet(model: OrderModel) {
+        if (this.isEditing && (model != null) && (model.id != null)) {
+            this._service.startEdit(model.id)
+                .subscribe(
+                    () => {
+                    },
+                    error => this.errorCallback.emit(error)
+                )
+        }
+    }
+
+    private getCustomersList(): void {
         this.sub = this.customerService.getList().subscribe(
             page => {
                 this.customersList = page.content;
@@ -32,9 +51,5 @@ export class OrderEditComponent extends EditComponent<OrderModel, OrderBriefMode
                 this.errorCallback.emit(error);
             }
         )
-    }
-
-    ngOnDestroy(): void {
-        this.sub.unsubscribe();
     }
 }
