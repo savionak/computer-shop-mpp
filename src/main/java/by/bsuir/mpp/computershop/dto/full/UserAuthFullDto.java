@@ -2,6 +2,7 @@ package by.bsuir.mpp.computershop.dto.full;
 
 import by.bsuir.mpp.computershop.entity.UserAuth.Role;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 
 import javax.validation.Valid;
@@ -13,7 +14,7 @@ import static by.bsuir.mpp.computershop.utils.ValidationConstants.*;
 public class UserAuthFullDto extends BaseFullDto<Long> {
 
     @SafeHtml
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
+    @NotEmpty(message = CANNOT_BE_EMPTY_MESSAGE)
     @Pattern(regexp = EMAIL_REGEX, message = INVALID_VALUE_MESSAGE)
     private String email;
 

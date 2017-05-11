@@ -1,13 +1,14 @@
 package by.bsuir.mpp.computershop.dto.full;
 
 import by.bsuir.mpp.computershop.dto.brief.ComponentTypeBriefDto;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
-import static by.bsuir.mpp.computershop.utils.ValidationConstants.*;
+import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_EMPTY_MESSAGE;
+import static by.bsuir.mpp.computershop.utils.ValidationConstants.CANNOT_BE_NULL_MESSAGE;
 
 public class ComponentModelFullDto extends BaseFullDto<Long> {
 
@@ -16,8 +17,7 @@ public class ComponentModelFullDto extends BaseFullDto<Long> {
     private ComponentTypeBriefDto type;
 
     @SafeHtml
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
-    @Pattern(regexp = NON_EMPTY_STRING_REGEX, message = CANNOT_BE_EMPTY_MESSAGE)
+    @NotEmpty(message = CANNOT_BE_EMPTY_MESSAGE)
     private String name;
 
     @SafeHtml

@@ -31,7 +31,6 @@ public class OrderFullDto extends BaseFullDto<Long> {
     private Boolean canceled;
 
     @NotEmpty(message = CANNOT_BE_EMPTY_MESSAGE)
-    @NotNull(message = CANNOT_BE_NULL_MESSAGE)
     private String exportAddress;
 
     public CustomerBriefDto getCustomer() {
