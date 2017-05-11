@@ -3,7 +3,7 @@ import {Component, OnDestroy, OnInit} from "@angular/core";
 import {EditComponent} from "../base/edit.component";
 import {Subscription} from "rxjs/Subscription";
 import {CustomerService} from "../../service/customer.service";
-import {OrderModel} from "../../model/full/order-model";
+import {OrderModel, Status} from "../../model/full/order-model";
 import {OrderBriefModel} from "../../model/brief/order-brief-model";
 import {OrderService} from "../../service/order.service";
 import {CustomerBriefModel} from "../../model/brief/customer-brief-model";
@@ -17,8 +17,10 @@ export class OrderEditComponent extends EditComponent<OrderModel, OrderBriefMode
     private customersList: CustomerBriefModel[];
     private sub: Subscription;
 
-    constructor(service: OrderService, private customerService: CustomerService) {
-        super(service);
+    private ReadyStatus = Status.READY;
+
+    constructor(private _service: OrderService, private customerService: CustomerService) {
+        super(_service);
     }
 
     ngOnInit(): void {
@@ -29,7 +31,7 @@ export class OrderEditComponent extends EditComponent<OrderModel, OrderBriefMode
             error => {
                 this.errorCallback.emit(error);
             }
-        );
+        )
     }
 
     ngOnDestroy(): void {

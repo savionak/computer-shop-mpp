@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, EventEmitter, Output} from "@angular/core";
 
 import {ListComponent} from "../base/list.component";
 import {OrderModel} from "../../model/full/order-model";
@@ -12,6 +12,8 @@ import {Router} from "@angular/router";
     templateUrl: './order-list.component.html'
 })
 export class OrderListComponent extends ListComponent <OrderModel, OrderBriefModel> {
+    @Output('onCancelOrderDone') onCancelEmitter: EventEmitter<null> = new EventEmitter();
+
     constructor(private orderService: OrderService, private router: Router) {
         super(orderService);
     }
@@ -28,4 +30,14 @@ export class OrderListComponent extends ListComponent <OrderModel, OrderBriefMod
         this.router.navigate(['order', 'edit', model.id]);
     }
 
+    onCancelOrder(model: OrderBriefModel) {
+        this.orderService.cancel(model.id)
+            .subscribe(
+                () => {
+                    this.refreshList();
+                    this.onCancelEmitter.emit();
+                },
+                error => this.errorCallBack.emit(error)
+            )
+    }
 }

@@ -8,6 +8,10 @@
 <order-list
         [isReadOnly]="isReadOnly"
         (onDelete)="onDeleteDone($event)"
+        (onCancelOrderDone)="onCancelDone($event)"
         (onError)="onError($event)">
 </order-list>
 <hr/>
+<order-removed-list *ngIf="!isReadOnly"
+                    (onRestore)="onRestoreDone()">
+</order-removed-list>

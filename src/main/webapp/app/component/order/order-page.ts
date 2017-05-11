@@ -2,6 +2,7 @@ import {Component, ViewChild} from "@angular/core";
 
 import {OrderListComponent} from "./order-list.component";
 import {OrderService} from "../../service/order.service";
+import {OrderCanceledListComponent} from "./order-canceled-list.component";
 
 
 @Component({
@@ -15,13 +16,22 @@ export class OrderPage {
     protected isReadOnly: boolean;
 
     @ViewChild(OrderListComponent) list: OrderListComponent;
+    @ViewChild(OrderCanceledListComponent) removedList: OrderCanceledListComponent;
 
     constructor(service: OrderService) {
         this.service = service;
     }
 
-    onDeleteDone() {
+    onCancelDone() {
+        this.removedList.onRefresh();
+    }
+
+    onRestoreDone() {
         this.list.onRefresh();
+    }
+
+    onDeleteDone() {
+        this.removedList.onRefresh();
     }
 
     onError(error: string) {

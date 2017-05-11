@@ -54,6 +54,7 @@ import {UserEditComponent} from "./component/user/user-edit.component";
 import {AssemblyComponentPage} from "./component/asm-component/asm-comp-page";
 import {AssemblyComponentListComponent} from "./component/asm-component/asm-comp-list.component";
 import {AssemblyComponentEditComponent} from "./component/asm-component/asm-comp-edit.component";
+import {OrderCanceledListComponent} from "./component/order/order-canceled-list.component";
 
 
 const appRoutes: Routes = [
@@ -169,6 +170,7 @@ const appRoutes: Routes = [
 
         OrderPage,
         OrderListComponent,
+        OrderCanceledListComponent,
         OrderEditComponent,
 
         AssemblyPage,
