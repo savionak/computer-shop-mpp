@@ -5,6 +5,12 @@
     <button (click)="onCloseError()">X</button>
     <hr/>
 </div>
+<asm-edit
+        [model]="assembly"
+        [isEmbedded]="true"
+        [isViewing]="isReadOnly"
+        [isEditing]="true">
+</asm-edit>
 <asm-comp-list
         [isReadOnly]="isReadOnly"
         [assemblyId]="asmId"

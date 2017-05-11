@@ -8,8 +8,7 @@
         <br/>
         <label>Count: </label><span>{{model.count}}</span>
         <br/>
-
-        <button type="button" (click)="onClose()">Cancel</button>
+        <button *ngIf="!isEmbedded" type="button" (click)="onClose()">Cancel</button>
     </div>
     <div *ngIf="!isViewing">
         <h3>{{isEditing ? "Edit" : "Add"}} assembly:</h3>
@@ -20,9 +19,8 @@
             <label>Order id: </label><span>{{orderId}}</span>
             <input [(ngModel)]="model.count" id="count" name="count" placeholder="Assembly count"/>
             <br/>
-
             <button type="submit">{{isEditing ? "Save" : "Add"}}</button>
-            <button type="button" (click)="onClose()">Cancel</button>
+            <button *ngIf="!isEmbedded" type="button" (click)="onClose()">Cancel</button>
         </form>
     </div>
 </div>

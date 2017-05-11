@@ -6,6 +6,7 @@ import {BaseModel} from "../../model/base-model";
 export class EditComponent<T extends BaseModel, U> {
     private service: CrudService<T, U>;
 
+    @Input() isEmbedded: boolean = false;
     @Input() isViewing: boolean;
     @Input() isEditing: boolean;
     @Input() model: T;

@@ -37,7 +37,7 @@
             <br/>
 
             <button type="submit">{{isEditing ? "Save" : "Add"}}</button>
-            <button type="button" (click)="onClose()">Cancel</button>
+            <button *ngIf="!isEmbedded" type="button" (click)="onClose()">Cancel</button>
         </form>
     </div>
 </div>
