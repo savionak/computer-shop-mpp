@@ -41,16 +41,20 @@ export abstract class ListComponent<T extends BaseModel, U> extends ReadOnlyList
     onDelete(model: T): void {
         let id: number = model.id;
         if (confirm('Delete model with id = [' + id + '] ?')) {
-            this._service.remove(id)
-                .subscribe(
-                    () => {
-                        this.onRefresh();
-                        this.deleteCallBack.emit(model.id);
-                    },
-                    (error) => {
-                        this.errorCallBack.emit(error);
-                    }
-                );
+            this.remove(id);
         }
+    }
+
+    protected remove(id: number) {
+        this._service.remove(id)
+            .subscribe(
+                () => {
+                    this.onRefresh();
+                    this.deleteCallBack.emit(id);
+                },
+                (error) => {
+                    this.errorCallBack.emit(error);
+                }
+            );
     }
 }
