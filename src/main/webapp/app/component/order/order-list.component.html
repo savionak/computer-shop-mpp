@@ -35,17 +35,14 @@
         <td>
             <button type="button" (click)="onViewDetails(model)">View</button>
         </td>
-        <td *ngIf="!isReadOnly && (model.status != ReadyStatus)">
+        <td *ngIf="!isReadOnly">
             <button type="button" (click)="onEdit(model)">Edit</button>
         </td>
         <td *ngIf="!isReadOnly">
             <button type="button" (click)="onAccept(model)">Accept</button>
         </td>
-        <td *ngIf="!isReadOnly && (model.status != ReadyStatus)">
-            <button type="button" (click)="onCancelOrder(model)">Cancel</button>
-        </td>
         <td *ngIf="!isReadOnly">
-            <button type="button" (click)="onDelete(model)">Delete</button>
+            <button type="button" (click)="onCancelOrder(model)">Cancel</button>
         </td>
     </tr>
 </table>

@@ -23,5 +23,8 @@
         <td>
             <button type="button" (click)="onRestore(model)">Restore</button>
         </td>
+        <td *ngIf="!isReadOnly">
+            <button type="button" (click)="onDeleteOrder(model)">Drop</button>
+        </td>
     </tr>
 </table>

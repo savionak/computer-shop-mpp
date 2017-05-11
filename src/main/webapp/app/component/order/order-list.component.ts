@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Output} from "@angular/core";
 
 import {ListComponent} from "../base/list.component";
-import {OrderModel} from "../../model/full/order-model";
+import {OrderModel, Status} from "../../model/full/order-model";
 import {OrderBriefModel} from "../../model/brief/order-brief-model";
 import {OrderService} from "../../service/order.service";
 import {Router} from "@angular/router";
@@ -47,5 +47,13 @@ export class OrderListComponent extends ListComponent <OrderModel, OrderBriefMod
                 },
                 error => this.errorCallBack.emit(error)
             )
+    }
+
+    canAccept(model: OrderModel): boolean {
+        return model.status != Status.READY;
+    }
+
+    canCancel(model: OrderModel): boolean {
+        return model.status != Status.READY;
     }
 }

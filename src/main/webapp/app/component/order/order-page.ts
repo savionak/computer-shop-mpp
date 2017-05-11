@@ -31,7 +31,7 @@ export class OrderPage {
     }
 
     onDeleteDone() {
-        this.removedList.onRefresh();
+
     }
 
     onError(error: string) {
