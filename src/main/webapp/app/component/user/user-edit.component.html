@@ -1,4 +1,16 @@
 <div *ngIf="model">
+    <div *ngIf="updatePassModel">
+        <h3>Change user password: {{model.id}}</h3>
+        <label>User: </label><span>{{model.email}}</span>
+        <br/>
+        <label for="newpass">New password: </label>
+        <input [(ngModel)]="updatePassModel.newHash" id="newpass" name="newpass"
+               placeholder="New password"/>
+        <br/>
+        <button type="button" (click)="onChangePass()">Apply</button>
+        <button type="button" (click)="onCancelChangePass()">Cancel</button>
+    </div>
+
     <div *ngIf="isViewing">
         <h3>View users {{model.id}}</h3>
         <br/>
@@ -32,9 +44,12 @@
             <label for="email">Email</label>
             <input [(ngModel)]="model.email" id="email" name="email" placeholder="User email"/>
             <br/>
+
             <label *ngIf="!isEditing" for="pass">Pass</label>
             <input *ngIf="!isEditing" [(ngModel)]="model.pass" id="pass" name="pass" placeholder="User pass"/>
-            <br *ngIf="isEditing"/>
+
+            <button *ngIf="isEditing" type="button" (click)="onStartChangePass(model)">Change pass</button>
+            <br/>
 
             <label for="role">Role</label>
             <select [(ngModel)]="model.role" id="role" name="role" required>
