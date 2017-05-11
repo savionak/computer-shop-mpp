@@ -15,19 +15,27 @@ export abstract class CrudService<T, U> extends ReadOnlyService<T, U> {
     }
 
     add(model: T, url?: string): Observable<T> {
-        return this.http.post((url || this.apiUrl) + '/' + CrudService.ADD_PART, JSON.stringify(model))
+        let path = ((url || this.apiUrl) + '/' + CrudService.ADD_PART);
+        let body = JSON.stringify(model);
+
+        return this.http.post(path, body)
             .map(ResponseHandler.extractData)
             .catch(ResponseHandler.handleError);
     }
 
     remove(id: number, url?: string): Observable<T> {
-        return this.http.delete((url || this.apiUrl) + '/' + CrudService.DELETE_PART + '/' + id)
+        let path = ((url || this.apiUrl) + '/' + CrudService.DELETE_PART + '/' + id);
+
+        return this.http.delete(path)
             .map(ResponseHandler.extractData)
             .catch(ResponseHandler.handleError);
     }
 
     update(id: number, model: T, url?: string): Observable<T> {
-        return this.http.put((url || this.apiUrl) + '/' + CrudService.UPDATE_PART + '/' + id, JSON.stringify(model))
+        let path = ((url || this.apiUrl) + '/' + CrudService.UPDATE_PART + '/' + id);
+        let body = JSON.stringify(model);
+
+        return this.http.put(path, body)
             .map(ResponseHandler.extractData)
             .catch(ResponseHandler.handleError);
     }

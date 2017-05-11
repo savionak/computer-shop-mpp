@@ -19,13 +19,17 @@ export abstract class ReadOnlyService<T, U> {
     }
 
     getList(url?: string): Observable<Page<U>> {
-        return this.http.get(url || this.apiUrl)
+        let path = (url || this.apiUrl);
+
+        return this.http.get(path)
             .map(ResponseHandler.extractData)
             .catch(ResponseHandler.handleError);
     }
 
     get(id: number, url?: string): Observable<T> {
-        return this.http.get((url || this.apiUrl) + '/' + id)
+        let path = (url || this.apiUrl) + '/' + id;
+
+        return this.http.get(path)
             .map(ResponseHandler.extractData)
             .catch(ResponseHandler.handleError);
     }
