@@ -11,6 +11,7 @@ import {ComponentStoreService} from "../../service/component-store.service";
 import {OrderService} from "../../service/order.service";
 import {AssemblyService} from "../../service/assembly.service";
 import {UserAuthService} from "../../service/user-auth.service";
+import {AssemblyComponentService} from "../../service/assembly-component.service";
 
 
 @Component({
@@ -32,6 +33,7 @@ import {UserAuthService} from "../../service/user-auth.service";
         ComponentStoreService,
         OrderService,
         AssemblyService,
+        AssemblyComponentService,
         UserAuthService
     ]
 })

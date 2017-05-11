@@ -4,6 +4,7 @@ import {ListComponent} from "../base/list.component";
 import {AssemblyModel} from "../../model/full/assembly-model";
 import {AssemblyBriefModel} from "../../model/brief/assembly-brief-model";
 import {AssemblyService} from "../../service/assembly.service";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -13,7 +14,7 @@ import {AssemblyService} from "../../service/assembly.service";
 export class AssemblyListComponent extends ListComponent <AssemblyModel, AssemblyBriefModel> {
     @Input() orderId: number;
 
-    constructor(private asmService: AssemblyService) {
+    constructor(private asmService: AssemblyService, private router: Router) {
         super(asmService);
     }
 
@@ -35,12 +36,10 @@ export class AssemblyListComponent extends ListComponent <AssemblyModel, Assembl
     }
 
     onViewDetails(model: AssemblyModel): void {
-        alert("VIEW ASSEMBLY!");
-        // TODO: view components list
+        this.router.navigate(['order', 'view', this.orderId, 'asm', model.id]);
     }
 
     onEdit(model: AssemblyModel): void {
-        alert("EDIT ASM!");
-        // TODO: edit components list
+        this.router.navigate(['order', 'edit', this.orderId, 'asm', model.id]);
     }
 }

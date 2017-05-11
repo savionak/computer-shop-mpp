@@ -20,7 +20,7 @@ export class AssemblyComponentPage implements OnInit {
     }
 
     ngOnInit(): void {
-        this.asmId = +this.route.snapshot.params['id'];
+        this.asmId = +this.route.snapshot.params['asmId'];
         let urlSegments = this.route.snapshot.url;
         this.isReadOnly = urlSegments[1].toString() !== 'edit';
     }

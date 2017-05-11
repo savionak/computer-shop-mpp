@@ -51,6 +51,9 @@ import {UserPage} from "./component/user/user-page";
 import {UserListComponent} from "./component/user/user-list.component";
 import {UserRemovedListComponent} from "./component/user/user-removed-list.component";
 import {UserEditComponent} from "./component/user/user-edit.component";
+import {AssemblyComponentPage} from "./component/asm-component/asm-comp-page";
+import {AssemblyComponentListComponent} from "./component/asm-component/asm-comp-list.component";
+import {AssemblyComponentEditComponent} from "./component/asm-component/asm-comp-edit.component";
 
 
 const appRoutes: Routes = [
@@ -90,6 +93,14 @@ const appRoutes: Routes = [
             {
                 path: 'store',
                 component: ComponentStorePage
+            },
+            {
+                path: 'order/view/:id/asm/:asmId',
+                component: AssemblyComponentPage
+            },
+            {
+                path: 'order/edit/:id/asm/:asmId',
+                component: AssemblyComponentPage
             },
             {
                 path: 'order/view/:id',
@@ -163,6 +174,10 @@ const appRoutes: Routes = [
         AssemblyPage,
         AssemblyListComponent,
         AssemblyEditComponent,
+
+        AssemblyComponentPage,
+        AssemblyComponentListComponent,
+        AssemblyComponentEditComponent,
 
         UserPage,
         UserListComponent,
