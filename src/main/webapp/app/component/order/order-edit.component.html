@@ -19,7 +19,7 @@
         <h3>{{isEditing ? "Edit" : "Add"}} order:</h3>
         <form (submit)="onAction()">
             <label>Id: </label>
-            <span>{{model.id}}</span>
+            <span>{{model.id || "N/A"}}</span>
             <br/>
 
             <label for="customer">Customer: </label>
@@ -28,7 +28,8 @@
             </select>
             <br/>
 
-            <label>Cost: </label><span>{{model.cost}}</span>
+            <label>Cost: </label><span>{{model.cost || "N/A"}}</span>
+            <br/>
 
             <label for="orderDate">Order Date: </label>
             <input [(ngModel)]="model.orderDate" id="orderDate" name="orderDate" placeholder="Order date" required/>
@@ -37,6 +38,7 @@
             <label>Status: </label><span>{{model.status}}</span>
             <br/>
 
+            <label for="exportAddress">Export address: </label>
             <input [(ngModel)]="model.exportAddress" id="exportAddress" name="exportAddress"
                    placeholder="Export address" required/>
             <br/>

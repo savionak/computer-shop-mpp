@@ -23,7 +23,6 @@
         <th *ngIf="!isReadOnly"></th>
         <th *ngIf="!isReadOnly"></th>
         <th *ngIf="!isReadOnly"></th>
-        <th *ngIf="!isReadOnly"></th>
     </tr>
     <tr *ngFor="let model of modelsList">
         <td>{{model.id}}</td>
@@ -31,7 +30,6 @@
         <td>{{model.cost}}</td>
         <td>{{model.orderDate}}</td>
         <td>{{model.status}}</td>
-        <td>{{model.canceled}}</td>
         <td>
             <button type="button" (click)="onViewDetails(model)">View</button>
         </td>
