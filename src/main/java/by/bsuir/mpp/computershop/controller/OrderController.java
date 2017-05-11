@@ -17,12 +17,6 @@ public interface OrderController
     @RequestMapping(path = "start_edit/{id}", method = RequestMethod.POST)
     void startEdit(@PathVariable Long id) throws ControllerException;
 
-    @RequestMapping(path = "finish/{id}", method = RequestMethod.POST)
-    void finish(@PathVariable Long id) throws ControllerException;
-
-    @RequestMapping(path = "unfinish/{id}", method = RequestMethod.POST)
-    void unfinish(@PathVariable Long id) throws ControllerException;
-
     @RequestMapping(path = "cancel/{id}", method = RequestMethod.POST)
     void cancel(@PathVariable Long id) throws ControllerException;
 

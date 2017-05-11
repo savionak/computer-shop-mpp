@@ -21,16 +21,6 @@ public interface OrderRepository extends PagingAndSortingRepository<Order, Long>
 
     @Transactional
     @Modifying
-    @Query(value = "CALL finish_order(:id)", nativeQuery = true)
-    void finish(@Param("id") Long id);
-
-    @Transactional
-    @Modifying
-    @Query(value = "CALL unfinish_order(:id)", nativeQuery = true)
-    void unfinish(@Param("id") Long id);
-
-    @Transactional
-    @Modifying
     @Query(value = "CALL cancel_order(:id)", nativeQuery = true)
     void cancel(@Param("id") Long id);
 

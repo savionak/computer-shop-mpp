@@ -9,10 +9,6 @@ public interface OrderService extends CrudService<Order, Long> {
 
     void startEdit(Long id) throws ServiceException;
 
-    void finish(Long id) throws ServiceException;
-
-    void unfinish(Long id) throws ServiceException;
-
     void cancel(Long id) throws ServiceException;
 
     void renew(Long id) throws ServiceException;

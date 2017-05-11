@@ -41,18 +41,6 @@ public class OrderControllerImpl
     }
 
     @Override
-    public void finish(@PathVariable Long id) throws ControllerException {
-        logger.info(String.format("FINISH Order with id = [%s]", id.toString()));
-        wrapServiceCall(() -> orderService.finish(id), logger);
-    }
-
-    @Override
-    public void unfinish(@PathVariable Long id) throws ControllerException {
-        logger.info(String.format("UNFINISH Order with id = [%s]", id.toString()));
-        wrapServiceCall(() -> orderService.unfinish(id), logger);
-    }
-
-    @Override
     public void cancel(@PathVariable Long id) throws ControllerException {
         logger.info(String.format("CANCEK Order with id = [%s]", id.toString()));
         wrapServiceCall(() -> orderService.cancel(id), logger);

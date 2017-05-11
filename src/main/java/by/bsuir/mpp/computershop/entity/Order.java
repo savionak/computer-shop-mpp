@@ -102,14 +102,9 @@ public class Order extends BaseEntity<Long> {
             public String toString() {
                 return "Принят";
             }
-        },
-        FINISHED {
-            public String toString() {
-                return "Завершен";
-            }
         };
 
-        public static final String TYPE_DEFINITION = "ENUM ('IN_PROGRESS', 'READY', 'FINISHED')";
+        public static final String TYPE_DEFINITION = "ENUM ('IN_PROGRESS', 'READY')";
 
         public static final List<Status> VALUES = Collections.unmodifiableList(Arrays.asList(values()));
 

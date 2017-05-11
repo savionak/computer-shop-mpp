@@ -31,16 +31,6 @@ public class OrderServiceImpl extends AbstractCrudService<Order, Long> implement
     }
 
     @Override
-    public void finish(Long id) throws ServiceException {
-        wrapRepositoryCall(() -> orderRepository.finish(id));
-    }
-
-    @Override
-    public void unfinish(Long id) throws ServiceException {
-        wrapRepositoryCall(() -> orderRepository.unfinish(id));
-    }
-
-    @Override
     public void cancel(Long id) throws ServiceException {
         wrapRepositoryCall(() -> orderRepository.cancel(id));
     }
