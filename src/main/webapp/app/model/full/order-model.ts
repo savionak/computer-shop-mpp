@@ -1,5 +1,4 @@
 import {BaseModel} from "../base-model";
-import {ExportBriefModel} from "../brief/export-brief-model";
 import {CustomerBriefModel} from "../brief/customer-brief-model";
 
 
@@ -8,7 +7,6 @@ export class OrderModel extends BaseModel {
     cost: number;
     orderDate: number;
     status: Status;
-    export: ExportBriefModel;
     canceled: boolean;
 
     public static empty(): OrderModel {
@@ -18,7 +16,6 @@ export class OrderModel extends BaseModel {
             cost: null,
             orderDate: null,
             status: Status.IN_PROGRESS,
-            export: null,
             canceled: false
         }
     }

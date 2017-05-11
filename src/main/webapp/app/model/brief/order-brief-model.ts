@@ -1,5 +1,6 @@
 import {BaseModel} from "../base-model";
 import {CustomerBriefModel} from "./customer-brief-model";
+import {Status} from "../full/order-model";
 
 
 export class OrderBriefModel extends BaseModel {
@@ -8,9 +9,4 @@ export class OrderBriefModel extends BaseModel {
     orderDate?: number;
     status?: Status;
     canceled?: boolean;
-}
-const enum Status{
-    IN_PROGRESS,
-    READY,
-    FINISHED
 }
