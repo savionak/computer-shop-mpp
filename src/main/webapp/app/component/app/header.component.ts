@@ -18,16 +18,17 @@ export class HeaderComponent {
     }
 
     onLogout() {
-        this.authService.logout()
-            .subscribe(
-                (res) => {
-                    localStorage.removeItem(Util.STORAGE_KEY);
-                    this.router.navigateByUrl("/login");
-                },
-                (err) => {
-                    // TODO: show popup
-                    alert(err);
-                }
-            );
+        if (confirm("Are you sure ?"))
+            this.authService.logout()
+                .subscribe(
+                    (res) => {
+                        localStorage.removeItem(Util.STORAGE_KEY);
+                        this.router.navigateByUrl("/login");
+                    },
+                    (err) => {
+                        // TODO: show popup
+                        alert(err);
+                    }
+                );
     }
 }
