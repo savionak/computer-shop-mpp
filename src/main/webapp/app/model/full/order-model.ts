@@ -8,6 +8,7 @@ export class OrderModel extends BaseModel {
     orderDate: number;
     status: Status;
     canceled: boolean;
+    exportAddress: Status;
 
     public static empty(): OrderModel {
         return {
@@ -16,7 +17,8 @@ export class OrderModel extends BaseModel {
             cost: null,
             orderDate: null,
             status: Status.IN_PROGRESS,
-            canceled: false
+            canceled: false,
+            exportAddress: null
         }
     }
 }

@@ -10,9 +10,8 @@
         <br/>
         <label>Status: </label><span>{{model.status}}</span>
         <br/>
-        <div *ngIf="model.export">
-            <label>Export date: </label><span>{{model.export.exportDate}}</span>
-        </div>
+        <label>Export address: </label><span>{{model.exportAddress}}</span>
+        <br/>
 
         <button *ngIf="!isEmbedded" type="button" (click)="onClose()">Cancel</button>
     </div>
@@ -32,16 +31,15 @@
             <label>Cost: </label><span>{{model.cost}}</span>
 
             <label for="orderDate">Order Date: </label>
-            <input [(ngModel)]="model.orderDate" id="orderDate" name="orderDate" placeholder="Import date"/>
+            <input [(ngModel)]="model.orderDate" id="orderDate" name="orderDate" placeholder="Order date" required/>
             <br/>
 
             <label>Status: </label><span>{{model.status}}</span>
             <br/>
 
-            <!-- TODO: add export addition -->
-            <div *ngIf="model.export">
-                <label>Export date: </label><span>{{model.export.exportDate}}</span>
-            </div>
+            <input [(ngModel)]="model.exportAddress" id="exportAddress" name="exportAddress"
+                   placeholder="Export address" required/>
+            <br/>
 
             <button type="submit">{{isEditing ? "Save" : "Add"}}</button>
             <button *ngIf="!isEmbedded" type="button" (click)="onClose()">Cancel</button>
