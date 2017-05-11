@@ -13,5 +13,6 @@
 <hr/>
 <order-removed-list *ngIf="!isReadOnly"
                     (onRestore)="onRestoreDone()"
-                    (onDelete)="onDeleteDone($event)">
+                    (onDelete)="onDeleteDone($event)"
+                    (onError)="onError($event)">
 </order-removed-list>

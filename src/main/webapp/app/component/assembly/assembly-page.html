@@ -9,7 +9,8 @@
         [model]="order"
         [isEmbedded]="true"
         [isViewing]="isReadOnly"
-        [isEditing]="true">
+        [isEditing]="true"
+        (onError)="onError($event)">
 </order-edit>
 <asm-list
         [isReadOnly]="isReadOnly"
