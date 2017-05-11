@@ -1,12 +1,9 @@
 import {EventEmitter, OnInit, Output} from "@angular/core";
-import {CrudService} from "../../service/base/crud.service";
 import {BaseModel} from "../../model/base-model";
 import {ReadOnlyService} from "../../service/base/read-only.service";
 
 // T - FullDto, U - BriefDto
 export abstract class ReadOnlyListComponent<T extends BaseModel, U> implements OnInit {
-    public error: string;
-
     protected modelsList: U[];
     protected model: T = null;
     protected isViewing: boolean = true;

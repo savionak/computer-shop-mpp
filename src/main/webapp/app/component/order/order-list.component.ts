@@ -30,6 +30,14 @@ export class OrderListComponent extends ListComponent <OrderModel, OrderBriefMod
         this.router.navigate(['order', 'edit', model.id]);
     }
 
+    onAccept(model: OrderModel): void {
+        this.orderService.accept(model.id)
+            .subscribe(
+                () => this.refreshList(),
+                error => this.errorCallBack.emit(error)
+            )
+    }
+
     onCancelOrder(model: OrderBriefModel) {
         this.orderService.cancel(model.id)
             .subscribe(

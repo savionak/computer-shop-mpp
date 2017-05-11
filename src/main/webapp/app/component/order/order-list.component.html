@@ -23,6 +23,7 @@
         <th *ngIf="!isReadOnly"></th>
         <th *ngIf="!isReadOnly"></th>
         <th *ngIf="!isReadOnly"></th>
+        <th *ngIf="!isReadOnly"></th>
     </tr>
     <tr *ngFor="let model of modelsList">
         <td>{{model.id}}</td>
@@ -36,6 +37,9 @@
         </td>
         <td *ngIf="!isReadOnly && (model.status != ReadyStatus)">
             <button type="button" (click)="onEdit(model)">Edit</button>
+        </td>
+        <td *ngIf="!isReadOnly">
+            <button type="button" (click)="onAccept(model)">Accept</button>
         </td>
         <td *ngIf="!isReadOnly && (model.status != ReadyStatus)">
             <button type="button" (click)="onCancelOrder(model)">Cancel</button>
