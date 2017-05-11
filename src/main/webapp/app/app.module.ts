@@ -92,14 +92,16 @@ const appRoutes: Routes = [
                 component: ComponentStorePage
             },
             {
+                path: 'order/:id/view',
+                component: AssemblyPage
+            },
+            {
+                path: 'order/:id/edit',
+                component: AssemblyPage
+            },
+            {
                 path: 'order',
                 component: OrderPage,
-                children: [
-                    {
-                        path: ':id/assembly',
-                        component: AssemblyPage
-                    }
-                ]
             },
             {
                 path: 'user',

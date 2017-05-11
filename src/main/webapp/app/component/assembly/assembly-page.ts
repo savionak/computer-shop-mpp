@@ -1,20 +1,20 @@
-import {Component, OnDestroy, OnInit, ViewChild} from "@angular/core";
+import {Component, OnInit, ViewChild} from "@angular/core";
 
 import {AssemblyListComponent} from "./assembly-list.component";
 import {AssemblyService} from "../../service/assembly.service";
 import {ActivatedRoute} from "@angular/router";
-import {Subscription} from "rxjs/Subscription";
 
 
 @Component({
     selector: 'asm-page',
     templateUrl: './assembly-page.html'
 })
-export class AssemblyPage implements OnInit, OnDestroy {
+export class AssemblyPage implements OnInit {
     private service: AssemblyService;
     protected error: string;
+
     protected orderId: number;
-    protected sub: Subscription;
+    protected isReadOnly: boolean;
 
     @ViewChild(AssemblyListComponent) list: AssemblyListComponent;
 
@@ -23,15 +23,10 @@ export class AssemblyPage implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.sub = this.route.params.subscribe(params => {
-            this.orderId = +params['id'];
-        });
+        this.orderId = +this.route.snapshot.params['id'];
+        let urlSegments = this.route.snapshot.url;
+        this.isReadOnly = urlSegments[urlSegments.length - 1].toString() !== 'edit';
     }
-
-    ngOnDestroy(): void {
-        this.sub.unsubscribe();
-    }
-
 
     onDeleteDone() {
         this.list.onRefresh();

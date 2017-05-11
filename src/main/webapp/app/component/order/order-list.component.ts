@@ -21,13 +21,11 @@ export class OrderListComponent extends ListComponent <OrderModel, OrderBriefMod
     }
 
     onViewDetails(model: OrderModel): void {
-        alert("VIEW ORDER!");
-        // TODO: view assemblies list
+        this.router.navigate(['order', model.id, 'view']);
     }
 
     onEdit(model: OrderModel): void {
-        alert("EDIT ORDER!");
-        this.router.navigate(['order', model.id, 'assembly']);
+        this.router.navigate(['order', model.id, 'edit']);
     }
 
 }

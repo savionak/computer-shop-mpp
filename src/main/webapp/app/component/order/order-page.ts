@@ -12,6 +12,8 @@ export class OrderPage {
     private service: OrderService;
     protected error: string;
 
+    protected isReadOnly: boolean;
+
     @ViewChild(OrderListComponent) list: OrderListComponent;
 
     constructor(service: OrderService) {

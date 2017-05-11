@@ -6,7 +6,7 @@
     <hr/>
 </div>
 <asm-list
-        [isReadOnly]="false"
+        [isReadOnly]="isReadOnly"
         [orderId]="orderId"
         (onDelete)="onDeleteDone($event)"
         (onError)="onError($event)">

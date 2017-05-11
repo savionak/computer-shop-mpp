@@ -5,9 +5,8 @@
     <button (click)="onCloseError()">X</button>
     <hr/>
 </div>
-<router-outlet></router-outlet>
 <order-list
-        [isReadOnly]="false"
+        [isReadOnly]="isReadOnly"
         (onDelete)="onDeleteDone($event)"
         (onError)="onError($event)">
 </order-list>
