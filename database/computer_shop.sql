@@ -33,12 +33,12 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `computer_shop`.`order`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `computer_shop`.`order` (
-  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `customer_id` BIGINT UNSIGNED NOT NULL,
-  `cost` INT UNSIGNED NOT NULL DEFAULT 0,
-  `order_date` DATETIME NOT NULL DEFAULT NOW(),
-  `status` ENUM('IN_PROGRESS', 'READY', 'FINISHED') NOT NULL DEFAULT 'IN_PROGRESS',
-  `canceled` TINYINT(1) NOT NULL DEFAULT 0,
+  `id`          BIGINT UNSIGNED               NOT NULL AUTO_INCREMENT,
+  `customer_id` BIGINT UNSIGNED               NOT NULL,
+  `cost`        INT UNSIGNED                  NOT NULL DEFAULT 0,
+  `order_date`  DATETIME                      NOT NULL DEFAULT NOW(),
+  `status`      ENUM ('IN_PROGRESS', 'READY') NOT NULL DEFAULT 'IN_PROGRESS',
+  `canceled`    TINYINT(1)                    NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   CONSTRAINT `FK_order_customer`
     FOREIGN KEY (`customer_id`)
@@ -391,10 +391,6 @@ BEGIN
 		SET store.`count` = store.`count` + (comp.`count` * asm.`count`)
 		WHERE asm.`order_id` = ord_id;
         
-        UPDATE `customer`
-        SET `orders_count` = `orders_count` - 1
-        WHERE `id` = cust_id;
-        
         UPDATE `order`
 		SET `order`.`canceled` = TRUE
         WHERE `id` = ord_id;
@@ -553,8 +549,7 @@ CREATE PROCEDURE accept_order(
 BEGIN
 	UPDATE `order`
     SET `status` = 'READY'
-    WHERE `id` = order_id
-		AND `status` = 'IN_PROGRESS';
+  WHERE `id` = order_id;
 END$$
 
 DELIMITER ;
@@ -607,8 +602,7 @@ CREATE PROCEDURE start_edit_order(
 BEGIN
 	UPDATE `order`
     SET `status` = 'IN_PROGRESS'
-    WHERE `id` = order_id
-		AND `status` = 'READY';
+  WHERE `id` = order_id;
 END$$
 
 DELIMITER ;
@@ -871,23 +865,27 @@ BEGIN
 END$$
 
 USE `computer_shop`$$
-CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`order_BEFORE_DELETE` BEFORE DELETE ON `order` FOR EACH ROW
+CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`order_AFTER_UPDATE`
+AFTER UPDATE ON `order`
+FOR EACH ROW
 BEGIN
 	UPDATE `customer`
     SET `orders_count` = `orders_count` - 1
     WHERE `id` = OLD.`customer_id`;
+
+  UPDATE `customer`
+  SET `orders_count` = `orders_count` + 1
+  WHERE `id` = NEW.`customer_id`;
 END$$
 
 USE `computer_shop`$$
-CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`order_AFTER_UPDATE` AFTER UPDATE ON `order` FOR EACH ROW
+CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`order_BEFORE_DELETE`
+BEFORE DELETE ON `order`
+FOR EACH ROW
 BEGIN
 	UPDATE `customer`
     SET `orders_count` = `orders_count` - 1
     WHERE `id` = OLD.`customer_id`;
-    
-	UPDATE `customer`
-    SET `orders_count` = `orders_count` + 1
-    WHERE `id` = NEW.`customer_id`;
 END$$
 
 USE `computer_shop`$$
@@ -1132,6 +1130,15 @@ BEGIN
 	SET `cost` = `cost` - (s_price * OLD.`count`)
 	WHERE `id` = OLD.`assembly_id`;
 END$$
+
+USE `computer_shop`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`user_auth_BEFORE_INSERT`
+BEFORE INSERT ON `user_auth`
+FOR EACH ROW
+  BEGIN
+
+  END
+$$
 
 USE `computer_shop`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`user_auth_AFTER_DELETE`
