@@ -32,7 +32,7 @@ export abstract class CrudService<T, U> extends ReadOnlyService<T, U> {
             .catch(ResponseHandler.handleError);
     }
 
-    protected static readonly DELETE_PART: string = 'delete';
-    protected static readonly ADD_PART: string = 'add';
-    protected static readonly UPDATE_PART: string = 'update';
+    static readonly DELETE_PART: string = 'delete';
+    static readonly ADD_PART: string = 'add';
+    static readonly UPDATE_PART: string = 'update';
 }
