@@ -26,25 +26,9 @@ export class EditComponent<T extends BaseModel, U> {
         }
 
         if (this.isEditing) {
-            this.service.update(this.model.id, this.model)
-                .subscribe(
-                    (res) => {
-                        this.editCallback.emit(res);
-                    },
-                    (error) => {
-                        this.errorCallback.emit(error);
-                    }
-                );
+            this.update();
         } else {
-            this.service.add(this.model)
-                .subscribe(
-                    (res) => {
-                        this.addCallback.emit(res);
-                    },
-                    (error) => {
-                        this.errorCallback.emit(error);
-                    }
-                );
+            this.add();
         }
     }
 
@@ -52,7 +36,31 @@ export class EditComponent<T extends BaseModel, U> {
         this.cancelCallback.emit();
     }
 
-    compareBriefModel(t1: BaseModel, t2: BaseModel): boolean {
+    compareBriefModel(t1: T, t2: T): boolean {
         return t1 && t2 ? t1.id === t2.id : t1 === t2;
+    }
+
+    protected update(): void {
+        this.service.update(this.model.id, this.model)
+            .subscribe(
+                (res) => {
+                    this.editCallback.emit(res);
+                },
+                (error) => {
+                    this.errorCallback.emit(error);
+                }
+            );
+    }
+
+    protected add(): void {
+        this.service.add(this.model)
+            .subscribe(
+                (res) => {
+                    this.addCallback.emit(res);
+                },
+                (error) => {
+                    this.errorCallback.emit(error);
+                }
+            );
     }
 }
