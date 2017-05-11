@@ -1,0 +1,37 @@
+<div>
+    <button type="button" (click)="onRefresh()">Refresh</button>
+    <button *ngIf="!isReadOnly" type="button" (click)="onAdd()">Add</button>
+</div>
+<asm-comp-edit *ngIf="model"
+               [model]="model"
+               [isEditing]="isEditing"
+               [isViewing]="isViewing"
+               (onAdd)="onAddDone($event)"
+               (onEdit)="onEditDone($event)"
+               (onCancel)="onCancel($event)"
+               (onError)="onError($event)">
+</asm-comp-edit>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Cost</th>
+        <th>Count</th>
+        <th></th>
+        <th *ngIf="!isReadOnly"></th>
+        <th *ngIf="!isReadOnly"></th>
+    </tr>
+    <tr *ngFor="let model of modelsList">
+        <td>{{model.id}}</td>
+        <td>{{model.cost}}</td>
+        <td>{{model.count}}</td>
+        <td>
+            <button type="button" (click)="onViewDetails(model)">View</button>
+        </td>
+        <td *ngIf="!isReadOnly">
+            <button type="button" (click)="onEdit(model)">Edit</button>
+        </td>
+        <td *ngIf="!isReadOnly">
+            <button type="button" (click)="onDelete(model)">Delete</button>
+        </td>
+    </tr>
+</table>

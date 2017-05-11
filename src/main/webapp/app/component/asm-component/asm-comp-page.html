@@ -1,0 +1,14 @@
+<h2>Assembly</h2>
+<hr/>
+<div *ngIf="error">
+    {{error}}
+    <button (click)="onCloseError()">X</button>
+    <hr/>
+</div>
+<asm-comp-list
+        [isReadOnly]="isReadOnly"
+        [asmId]="asmId"
+        (onDelete)="onDeleteDone($event)"
+        (onError)="onError($event)">
+</asm-comp-list>
+<hr/>
