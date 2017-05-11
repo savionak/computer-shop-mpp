@@ -18,6 +18,7 @@
         <th>Cost</th>
         <th>Date</th>
         <th>Status</th>
+        <th>Canceled</th>
         <th></th>
         <th *ngIf="!isReadOnly"></th>
         <th *ngIf="!isReadOnly"></th>
@@ -28,6 +29,7 @@
         <td>{{model.cost}}</td>
         <td>{{model.orderDate}}</td>
         <td>{{model.status}}</td>
+        <td>{{model.canceled}}</td>
         <td>
             <button type="button" (click)="onViewDetails(model)">View</button>
         </td>
