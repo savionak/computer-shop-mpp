@@ -1,3 +1,23 @@
+<div *ngIf="updatePriceModel">
+    <h3>Change price of record</h3>
+    <label>Type: </label><span>{{updatedStoreRecord.typeName}}</span>
+    <br/>
+    <label>Model: </label><span>{{updatedStoreRecord.modelName}}</span>
+    <br/>
+    <label>Price: </label><span>{{updatedStoreRecord.price}}</span>
+    <br/>
+    <label>Count: </label><span>{{updatedStoreRecord.count}}</span>
+    <hr/>
+    <label for="price">New Price: </label>
+    <input [(ngModel)]="updatePriceModel.newPrice" id="price" name="price" placeholder="Assembly count" required/>
+    <br/>
+    <label for="count">New Count: </label>
+    <input [(ngModel)]="updatePriceModel.newCount" id="count" name="count" placeholder="Assembly count" required/>
+    <br/>
+    <button type="button" (click)="onApplyPrice()">Apply</button>
+    <button type="button" (click)="onCancelChange()">Cancel</button>
+    <hr/>
+</div>
 <div>
     <button type="button" (click)="onRefresh()">Refresh</button>
 </div>
