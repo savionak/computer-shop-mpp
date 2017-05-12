@@ -1,28 +1,42 @@
-import {OnInit} from "@angular/core";
+import {OnDestroy, OnInit} from "@angular/core";
 
 import {ActivatedRoute} from "@angular/router";
+import {Subscription} from "rxjs/Subscription";
 
-export class BasePage implements OnInit {
+export class BasePage implements OnInit, OnDestroy {
     protected route: ActivatedRoute;
     protected error: string;
     protected isReadOnly: boolean;
+    private sub: Subscription;
 
     constructor(route: ActivatedRoute) {
         this.route = route;
     }
 
     ngOnInit(): void {
-        let type = this.route.snapshot.params['type'];
-        alert(type);
-        switch (type) {
-            case 'view':
-                this.isReadOnly = true;
-                break;
-            case 'edit':
-                this.isReadOnly = false;
-                break;
-            default:
-                alert("404!");
+        this.sub = this.route.params.subscribe(
+            x => {
+                let type = x['type'];
+                alert(type);
+                switch (type) {
+                    case 'view':
+                        this.isReadOnly = true;
+                        break;
+                    case 'edit':
+                        this.isReadOnly = false;
+                        break;
+                    default:
+                        alert("404!");
+                    // TODO: navigate to 404
+                }
+            },
+            error => this.error = error
+        );
+    }
+
+    ngOnDestroy(): void {
+        if (this.sub) {
+            this.sub.unsubscribe();
         }
     }
 

@@ -15,8 +15,6 @@ export class OrderPage extends BasePage {
     private service: OrderService;
     protected error: string;
 
-    protected isReadOnly: boolean;
-
     @ViewChild(OrderListComponent) list: OrderListComponent;
     @ViewChild(OrderCanceledListComponent) removedList: OrderCanceledListComponent;
 
