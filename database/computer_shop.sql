@@ -828,6 +828,28 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure check_admins
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `computer_shop`$$
+CREATE PROCEDURE check_admins()
+  BEGIN
+    IF (
+      (
+        SELECT COUNT(1)
+        FROM `user_auth`
+        WHERE `role` = 'ADMIN' AND NOT `removed`
+      ) = 0)
+    THEN
+      SIGNAL SQLSTATE '45000'
+      SET MESSAGE_TEXT = 'FORBIDDEN: Remove last ADMIN.';
+    END IF;
+  END$$
+
+DELIMITER ;
 USE `computer_shop`;
 
 DELIMITER $$
@@ -1111,29 +1133,19 @@ BEGIN
 END$$
 
 USE `computer_shop`$$
-CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`user_auth_BEFORE_INSERT`
-BEFORE INSERT ON `user_auth`
+CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`user_auth_AFTER_UPDATE`
+AFTER UPDATE ON `user_auth`
 FOR EACH ROW
   BEGIN
-
-  END
-$$
+    CALL check_admins();
+  END$$
 
 USE `computer_shop`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `computer_shop`.`user_auth_AFTER_DELETE`
 AFTER DELETE ON `user_auth`
 FOR EACH ROW
 BEGIN
-	IF (
-		(
-			SELECT COUNT(1)
-			FROM `user_auth`
-			WHERE `role` = 'ADMIN'
-		) = 0)
-    THEN
-		SIGNAL SQLSTATE '45000'
-			SET MESSAGE_TEXT = 'FORBIDDEN: Remove last ADMIN.';
-    END IF;
+  CALL check_admins();
 END$$
 
 USE `computer_shop`$$
