@@ -1,6 +1,6 @@
 <div>
     <button type="button" (click)="onRefresh()">Refresh</button>
-    <button type="button" (click)="onAdd()">Add</button>
+    <button *ngIf="!isReadOnly" type="button" (click)="onAdd()">Add</button>
 </div>
 <import-edit *ngIf="model"
                 [model]="model"
