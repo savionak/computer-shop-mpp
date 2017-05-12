@@ -112,7 +112,11 @@ const appRoutes: Routes = [
                 component: AssemblyPage
             },
             {
-                path: 'order',
+                path: 'order/edit',
+                component: OrderPage,
+            },
+            {
+                path: 'order/view',
                 component: OrderPage,
             },
             {
