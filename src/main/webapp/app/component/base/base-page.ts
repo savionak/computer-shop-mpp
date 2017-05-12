@@ -12,8 +12,18 @@ export class BasePage implements OnInit {
     }
 
     ngOnInit(): void {
-        let urlSegments = this.route.snapshot.url;
-        this.isReadOnly = urlSegments[1].toString() !== 'edit';
+        let type = this.route.snapshot.params['type'];
+        alert(type);
+        switch (type) {
+            case 'view':
+                this.isReadOnly = true;
+                break;
+            case 'edit':
+                this.isReadOnly = false;
+                break;
+            default:
+                alert("404!");
+        }
     }
 
     onError(error: string) {

@@ -96,27 +96,15 @@ const appRoutes: Routes = [
                 component: ComponentStorePage
             },
             {
-                path: 'order/view/:id/asm/:asmId',
+                path: 'order/:type/:id/asm/:asmId',
                 component: AssemblyComponentPage
             },
             {
-                path: 'order/edit/:id/asm/:asmId',
-                component: AssemblyComponentPage
-            },
-            {
-                path: 'order/view/:id',
+                path: 'order/:type/:id',
                 component: AssemblyPage
             },
             {
-                path: 'order/edit/:id',
-                component: AssemblyPage
-            },
-            {
-                path: 'order/edit',
-                component: OrderPage,
-            },
-            {
-                path: 'order/view',
+                path: 'order/:type',
                 component: OrderPage,
             },
             {
