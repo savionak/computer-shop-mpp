@@ -5,30 +5,28 @@ import {AssemblyService} from "../../service/assembly.service";
 import {ActivatedRoute} from "@angular/router";
 import {OrderModel} from "../../model/full/order-model";
 import {OrderService} from "../../service/order.service";
+import {BasePage} from "../base/base-page";
 
 
 @Component({
     selector: 'asm-page',
     templateUrl: './assembly-page.html'
 })
-export class AssemblyPage implements OnInit {
+export class AssemblyPage extends BasePage implements OnInit {
     private service: AssemblyService;
-    protected error: string;
 
     protected orderId: number;
     protected order: OrderModel;
 
-    protected isReadOnly: boolean;
-
     @ViewChild(AssemblyListComponent) list: AssemblyListComponent;
 
-    constructor(service: AssemblyService, private orderService: OrderService, private route: ActivatedRoute) {
+    constructor(service: AssemblyService, private orderService: OrderService, route: ActivatedRoute) {
+        super(route);
         this.service = service;
     }
 
     ngOnInit(): void {
-        let urlSegments = this.route.snapshot.url;
-        this.isReadOnly = urlSegments[1].toString() !== 'edit';
+        super.ngOnInit();
         this.orderId = +this.route.snapshot.params['id'];
         this.orderService.get(this.orderId).subscribe(
             model => this.order = model,
