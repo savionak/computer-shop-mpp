@@ -1,6 +1,6 @@
 <div>
     <button type="button" (click)="onRefresh()">Refresh</button>
-    <button type="button" (click)="onAdd()">Add</button>
+    <button *ngIf="!isReadOnly" type="button" (click)="onAdd()">Add</button>
 </div>
 <comp-type-edit *ngIf="model"
                 [model]="model"
@@ -17,8 +17,8 @@
         <th>Name</th>
         <th>Description</th>
         <th></th>
-        <th></th>
-        <th></th>
+        <th *ngIf="!isReadOnly"></th>
+        <th *ngIf="!isReadOnly"></th>
     </tr>
     <tr *ngFor="let model of modelsList">
         <td>{{model.id}}</td>
@@ -27,10 +27,10 @@
         <td>
             <button type="button" (click)="onViewDetails(model)">View</button>
         </td>
-        <td>
+        <td *ngIf="!isReadOnly">
             <button type="button" (click)="onEdit(model)">Edit</button>
         </td>
-        <td>
+        <td *ngIf="!isReadOnly">
             <button type="button" (click)="onDelete(model)">Delete</button>
         </td>
     </tr>

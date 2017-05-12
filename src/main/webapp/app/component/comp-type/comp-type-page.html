@@ -6,11 +6,13 @@
     <hr/>
 </div>
 <comp-type-list
+        [isReadOnly]="isReadOnly"
         (onDelete)="onDeleteDone($event)"
         (onError)="onError($event)">
 </comp-type-list>
 <hr/>
 <comp-type-removed-list
+        *ngIf="!isReadOnly"
         (onRestore)="onRestoreDone($event)"
         (onError)="onError($event)">
 </comp-type-removed-list>

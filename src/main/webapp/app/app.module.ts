@@ -76,7 +76,7 @@ const appRoutes: Routes = [
                 component: ProviderPage
             },
             {
-                path: 'type',
+                path: 'type/:type',
                 component: ComponentTypePage
             },
             {
