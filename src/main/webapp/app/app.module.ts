@@ -72,7 +72,7 @@ const appRoutes: Routes = [
         canActivate: [CanActivateViaOAuthGuard],
         children: [
             {
-                path: 'provider',
+                path: 'provider/:type',
                 component: ProviderPage
             },
             {
