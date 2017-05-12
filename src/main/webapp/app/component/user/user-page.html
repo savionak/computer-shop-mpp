@@ -6,11 +6,12 @@
     <hr/>
 </div>
 <user-list
+        [isReadOnly]="isReadOnly"
         (onDelete)="onDeleteDone($event)"
         (onError)="onError($event)">
 </user-list>
 <hr/>
-<user-removed-list
-        (onRestore)="onRestoreDone($event)"
-        (onError)="onError($event)">
+<user-removed-list *ngIf="!isReadOnly"
+                   (onRestore)="onRestoreDone($event)"
+                   (onError)="onError($event)">
 </user-removed-list>

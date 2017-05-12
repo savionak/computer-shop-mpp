@@ -108,7 +108,7 @@ const appRoutes: Routes = [
                 component: OrderPage,
             },
             {
-                path: 'user',
+                path: 'user/:type',
                 component: UserPage
             }
         ]
