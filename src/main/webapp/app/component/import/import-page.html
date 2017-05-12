@@ -6,6 +6,7 @@
     <hr/>
 </div>
 <import-list
+        [isReadOnly]="isReadOnly"
         (onDelete)="onDeleteDone($event)"
         (onError)="onError($event)">
 </import-list>

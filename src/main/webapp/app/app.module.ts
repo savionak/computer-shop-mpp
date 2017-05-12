@@ -88,7 +88,7 @@ const appRoutes: Routes = [
                 component: CustomerPage
             },
             {
-                path: 'import',
+                path: 'import/:type',
                 component: ImportPage
             },
             {
