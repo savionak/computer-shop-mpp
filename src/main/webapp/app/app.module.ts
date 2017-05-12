@@ -84,7 +84,7 @@ const appRoutes: Routes = [
                 component: ComponentModelPage
             },
             {
-                path: 'customer',
+                path: 'customer/:type',
                 component: CustomerPage
             },
             {

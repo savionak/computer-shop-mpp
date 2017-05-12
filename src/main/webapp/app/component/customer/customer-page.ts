@@ -3,20 +3,22 @@ import {Component, ViewChild} from "@angular/core";
 import {CustomerService} from "../../service/customer.service";
 import {CustomerListComponent} from "./customer-list.component";
 import {CustomerRemovedListComponent} from "./customer-removed-list.component";
+import {BasePage} from "../base/base-page";
+import {ActivatedRoute} from "@angular/router";
 
 
 @Component({
     selector: 'customer-page',
     templateUrl: './customer-page.html'
 })
-export class CustomerPage {
+export class CustomerPage extends BasePage {
     private service: CustomerService;
-    protected error: string;
 
     @ViewChild(CustomerListComponent) list: CustomerListComponent;
     @ViewChild(CustomerRemovedListComponent) removedList: CustomerRemovedListComponent;
 
-    constructor(service: CustomerService) {
+    constructor(service: CustomerService, route: ActivatedRoute) {
+        super(route);
         this.service = service;
     }
 
@@ -26,13 +28,5 @@ export class CustomerPage {
 
     onRestoreDone() {
         this.list.onRefresh();
-    }
-
-    onError(error: string) {
-        this.error = error;
-    }
-
-    onCloseError() {
-        this.error = null;
     }
 }
