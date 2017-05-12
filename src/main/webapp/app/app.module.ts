@@ -80,7 +80,7 @@ const appRoutes: Routes = [
                 component: ComponentTypePage
             },
             {
-                path: 'model',
+                path: 'model/:type',
                 component: ComponentModelPage
             },
             {

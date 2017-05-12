@@ -2,20 +2,22 @@ import {Component, ViewChild} from "@angular/core";
 import {ComponentModelListComponent} from "./comp-model-list.component";
 import {ComponentModelRemovedListComponent} from "./comp-model-removed-list.component";
 import {ComponentModelService} from "../../service/component-model.service";
+import {BasePage} from "../base/base-page";
+import {ActivatedRoute} from "@angular/router";
 
 
 @Component({
     selector: 'model-page',
     templateUrl: './comp-model-page.html'
 })
-export class ComponentModelPage {
+export class ComponentModelPage extends BasePage {
     private service: ComponentModelService;
-    protected error: string;
 
     @ViewChild(ComponentModelListComponent) list: ComponentModelListComponent;
     @ViewChild(ComponentModelRemovedListComponent) removedList: ComponentModelRemovedListComponent;
 
-    constructor(service: ComponentModelService) {
+    constructor(service: ComponentModelService, route: ActivatedRoute) {
+        super(route);
         this.service = service;
     }
 
@@ -25,13 +27,5 @@ export class ComponentModelPage {
 
     onRestoreDone() {
         this.list.onRefresh();
-    }
-
-    onError(error: string) {
-        this.error = error;
-    }
-
-    onCloseError() {
-        this.error = null;
     }
 }
