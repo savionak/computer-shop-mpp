@@ -6,6 +6,7 @@
     <hr/>
 </div>
 <comp-store-list
+        [isReadOnly]="isReadOnly"
         (onDelete)="onDeleteDone($event)"
         (onError)="onError($event)">
 </comp-store-list>

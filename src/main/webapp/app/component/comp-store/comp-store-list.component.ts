@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, Input} from "@angular/core";
 
 
 import {ComponentStoreModel} from "../../model/full/component-store-model";
@@ -13,6 +13,8 @@ import {UpdateStorePrice} from "../../model/helper/update-store-price";
     templateUrl: './comp-store-list.component.html'
 })
 export class ComponentStoreListComponent extends ReadOnlyListComponent<ComponentStoreModel, ComponentStoreBriefModel> {
+    @Input() isReadOnly: boolean = false;
+
     private updatePriceModel: UpdateStorePrice = null;
     private updatedStoreRecord: ComponentStoreBriefModel = null;
 

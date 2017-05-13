@@ -37,7 +37,7 @@
         <td>{{model.price}}</td>
         <td>{{model.count}}</td>
         <td>
-            <button type="button" (click)="onChange(model)">Change</button>
+            <button *ngIf="!isReadOnly" type="button" (click)="onChange(model)">Change</button>
         </td>
     </tr>
 </table>

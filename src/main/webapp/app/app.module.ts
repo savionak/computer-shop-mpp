@@ -92,7 +92,7 @@ const appRoutes: Routes = [
                 component: ImportPage
             },
             {
-                path: 'store',
+                path: 'store/:type',
                 component: ComponentStorePage
             },
             {
