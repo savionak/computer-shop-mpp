@@ -1,5 +1,5 @@
 <div *ngIf="model">
-    <div *ngIf="updatePassModel">
+    <div *ngIf="updatePassModel && !isViewing">
         <h3>Change user password: {{model.id}}</h3>
         <label>User: </label><span>{{model.email}}</span>
         <br/>

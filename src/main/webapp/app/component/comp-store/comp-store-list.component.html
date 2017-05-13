@@ -1,4 +1,4 @@
-<div *ngIf="updatePriceModel">
+<div *ngIf="updatePriceModel && !isReadOnly">
     <h3>Change price of record</h3>
     <label>Type: </label><span>{{updatedStoreRecord.typeName}}</span>
     <br/>

@@ -1,16 +1,16 @@
+<comp-model-edit *ngIf="model"
+                 [model]="model"
+                 [isEditing]="isEditing"
+                 [isViewing]="isViewing"
+                 (onAdd)="onAddDone($event)"
+                 (onEdit)="onEditDone($event)"
+                 (onCancel)="onCancel($event)"
+                 (onError)="onError($event)">
+</comp-model-edit>
 <div>
     <button type="button" (click)="onRefresh()">Refresh</button>
     <button *ngIf="!isReadOnly" type="button" (click)="onAdd()">Add</button>
 </div>
-<comp-model-edit *ngIf="model"
-                [model]="model"
-                [isEditing]="isEditing"
-                [isViewing]="isViewing"
-                (onAdd)="onAddDone($event)"
-                (onEdit)="onEditDone($event)"
-                (onCancel)="onCancel($event)"
-                (onError)="onError($event)">
-</comp-model-edit>
 <table>
     <tr>
         <th>Id</th>

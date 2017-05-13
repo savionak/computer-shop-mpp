@@ -17,7 +17,7 @@ export class BasePage implements OnInit, OnDestroy {
         this.sub = this.route.params.subscribe(
             x => {
                 let type = x['type'];
-                alert(type);
+                // alert(type);
                 switch (type) {
                     case 'view':
                         this.isReadOnly = true;

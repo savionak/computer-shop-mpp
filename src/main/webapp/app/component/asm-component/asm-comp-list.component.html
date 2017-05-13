@@ -1,7 +1,3 @@
-<div>
-    <button type="button" (click)="onRefresh()">Refresh</button>
-    <button *ngIf="!isReadOnly" type="button" (click)="onAdd()">Add</button>
-</div>
 <asm-comp-edit *ngIf="model"
                [asmId]="assemblyId"
                [model]="model"
@@ -12,6 +8,10 @@
                (onCancel)="onCancel($event)"
                (onError)="onError($event)">
 </asm-comp-edit>
+<div>
+    <button type="button" (click)="onRefresh()">Refresh</button>
+    <button *ngIf="!isReadOnly" type="button" (click)="onAdd()">Add</button>
+</div>
 <table>
     <tr>
         <th>Id</th>

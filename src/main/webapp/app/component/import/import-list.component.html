@@ -1,16 +1,16 @@
+<import-edit *ngIf="model"
+             [model]="model"
+             [isEditing]="isEditing"
+             [isViewing]="isViewing"
+             (onAdd)="onAddDone($event)"
+             (onEdit)="onEditDone($event)"
+             (onCancel)="onCancel($event)"
+             (onError)="onError($event)">
+</import-edit>
 <div>
     <button type="button" (click)="onRefresh()">Refresh</button>
     <button *ngIf="!isReadOnly" type="button" (click)="onAdd()">Add</button>
 </div>
-<import-edit *ngIf="model"
-                [model]="model"
-                [isEditing]="isEditing"
-                [isViewing]="isViewing"
-                (onAdd)="onAddDone($event)"
-                (onEdit)="onEditDone($event)"
-                (onCancel)="onCancel($event)"
-                (onError)="onError($event)">
-</import-edit>
 <table>
     <tr>
         <th>Id</th>
