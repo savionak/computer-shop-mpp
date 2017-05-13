@@ -1277,6 +1277,11 @@ VALUES
 -- password = 'pass'
 ('2', 'MANAGER', 'man@mail.com', '$2a$12$oCKg9j.hGvce4yxMnJ4RpuEE6/NrGzYq8pgCQ7ZbFx2o3r0KgHKKO');
 
+INSERT INTO `computer_shop`.`user_info`
+(`auth_id`, `first_name`, `last_name`)
+VALUES
+  ('2', 'Manager', 'The Best');
+
 -- password = 'qwerty' => '$2a$12$aGHrSX8E1z/I1nnot6j8/Ogfp6hRlcWx58BdsN4n2FEzS2kcEwrau'
 
 
