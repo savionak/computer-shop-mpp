@@ -22,10 +22,10 @@ public class LogoutControllerImpl implements LogoutController {
 
     @Override
     public void revokeToken(OAuth2Authentication auth) throws ControllerException {
+        logger.info(auth);
         if (auth == null) {
             throw new InvalidDataException();
         }
-        logger.info(auth);
         OAuth2AuthenticationDetails authDetails = (OAuth2AuthenticationDetails) auth.getDetails();
         String tokenValue = authDetails.getTokenValue();
         logger.info("Logging out with token: " + tokenValue);

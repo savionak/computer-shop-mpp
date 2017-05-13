@@ -28,6 +28,8 @@ export class HeaderComponent {
                     (err) => {
                         // TODO: show popup
                         alert(err);
+                        localStorage.removeItem(Util.STORAGE_KEY);
+                        this.router.navigateByUrl("/login");
                     }
                 );
     }
