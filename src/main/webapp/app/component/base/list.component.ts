@@ -8,6 +8,12 @@ export abstract class ListComponent<T extends BaseModel, U> extends ReadOnlyList
     protected isEditing: boolean = false;
     @Input() isReadOnly: boolean = false;
 
+    @Input('isReadOnly')
+    set setReadOnly(value: boolean) {
+        this.isReadOnly = value;
+        this.isViewing = value;
+    }
+
     @Output('onDelete') deleteCallBack: EventEmitter<number> = new EventEmitter();
 
     constructor(private _service: CrudService<T, U>) {
