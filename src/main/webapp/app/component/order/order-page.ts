@@ -4,7 +4,7 @@ import {OrderListComponent} from "./order-list.component";
 import {OrderService} from "../../service/order.service";
 import {OrderCanceledListComponent} from "./order-canceled-list.component";
 import {BasePage} from "../base/base-page";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {HttpOAuthService} from "../../shared/http-oauth.service";
 
 
@@ -19,8 +19,8 @@ export class OrderPage extends BasePage {
     @ViewChild(OrderListComponent) list: OrderListComponent;
     @ViewChild(OrderCanceledListComponent) removedList: OrderCanceledListComponent;
 
-    constructor(authService: HttpOAuthService, service: OrderService, route: ActivatedRoute) {
-        super(authService, route);
+    constructor(authService: HttpOAuthService, r: Router, service: OrderService, route: ActivatedRoute) {
+        super(authService, r, route);
         this.service = service;
     }
 

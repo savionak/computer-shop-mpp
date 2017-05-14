@@ -1,36 +1,41 @@
 import {OnDestroy, OnInit} from "@angular/core";
 
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {Subscription} from "rxjs/Subscription";
 import {ACCESS, EDIT, VIEW} from "../../shared/route-consts";
 import {HttpOAuthService} from "../../shared/http-oauth.service";
 
 export class BasePage implements OnInit, OnDestroy {
+    private router: Router;
     protected route: ActivatedRoute;
     protected error: string;
     protected isReadOnly: boolean;
     private sub: Subscription;
+    private routerSub: Subscription;
 
-    constructor(private authService: HttpOAuthService, route: ActivatedRoute) {
+    constructor(private authService: HttpOAuthService, r: Router, route: ActivatedRoute) {
         this.route = route;
+        this.router = r;
     }
 
     ngOnInit(): void {
-        this.route.url.subscribe(
-            x => {
-                let routes = this.authService.getUserRoutes()['items'];
-                let path = x.join('/');
-                alert(path);
-                let exists = false;
-                for (let i in routes) {
-                    if (i['path'] == path) {
-                        exists = true;
-                        break;
+        this.routerSub = this.router.events.subscribe(
+            e => {
+                if (e instanceof NavigationEnd) {
+                    let routes = this.authService.getUserRoutes()['items'];
+                    let path = e.url.slice(1, e.url.length);
+                    // alert(path);
+                    let exists = false;
+                    let i = 0;
+                    while (!exists && i < routes.length) {
+                        if (routes[i]['path'] == path) {
+                            exists = true;
+                        }
+                        ++i;
                     }
-                }
-                if (!exists) {
-                    alert("!!!");
-// TODO: navigate to 404
+                    if (!exists) {
+                        this.router.navigate(['404'], {skipLocationChange: true});
+                    }
                 }
             }
         );
@@ -45,8 +50,7 @@ export class BasePage implements OnInit, OnDestroy {
                         this.isReadOnly = false;
                         break;
                     default:
-                        alert("404!");
-                    // TODO: navigate to 404
+                        this.router.navigate(['404'], {skipLocationChange: true});
                 }
             },
             error => this.error = error
@@ -56,6 +60,9 @@ export class BasePage implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         if (this.sub) {
             this.sub.unsubscribe();
+        }
+        if (this.routerSub) {
+            this.routerSub.unsubscribe();
         }
     }
 

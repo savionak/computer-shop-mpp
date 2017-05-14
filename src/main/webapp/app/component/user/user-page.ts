@@ -4,7 +4,7 @@ import {UserAuthService} from "../../service/user-auth.service";
 import {UserListComponent} from "./user-list.component";
 import {UserRemovedListComponent} from "./user-removed-list.component";
 import {BasePage} from "../base/base-page";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {HttpOAuthService} from "../../shared/http-oauth.service";
 
 
@@ -18,8 +18,8 @@ export class UserPage extends BasePage {
     @ViewChild(UserListComponent) list: UserListComponent;
     @ViewChild(UserRemovedListComponent) removedList: UserRemovedListComponent;
 
-    constructor(authService: HttpOAuthService, service: UserAuthService, route: ActivatedRoute) {
-        super(authService, route);
+    constructor(authService: HttpOAuthService, r: Router, service: UserAuthService, route: ActivatedRoute) {
+        super(authService, r, route);
         this.service = service;
     }
 

@@ -4,7 +4,7 @@ import {ComponentTypeService} from "../../service/component-type.service";
 import {ComponentTypesListComponent} from "./comp-type-list.component";
 import {ComponentTypeRemovedListComponent} from "./comp-type-removed-list.component";
 import {BasePage} from "../base/base-page";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {HttpOAuthService} from "../../shared/http-oauth.service";
 
 
@@ -18,8 +18,8 @@ export class ComponentTypePage extends BasePage {
     @ViewChild(ComponentTypesListComponent) list: ComponentTypesListComponent;
     @ViewChild(ComponentTypeRemovedListComponent) removedList: ComponentTypeRemovedListComponent;
 
-    constructor(authService: HttpOAuthService, service: ComponentTypeService, route: ActivatedRoute) {
-        super(authService, route);
+    constructor(authService: HttpOAuthService, r: Router, service: ComponentTypeService, route: ActivatedRoute) {
+        super(authService, r, route);
         this.service = service;
     }
 

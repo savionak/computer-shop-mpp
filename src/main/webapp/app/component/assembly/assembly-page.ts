@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit, ViewChild} from "@angular/core";
 
 import {AssemblyListComponent} from "./assembly-list.component";
 import {AssemblyService} from "../../service/assembly.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {OrderModel} from "../../model/full/order-model";
 import {OrderService} from "../../service/order.service";
 import {BasePage} from "../base/base-page";
@@ -23,8 +23,8 @@ export class AssemblyPage extends BasePage implements OnInit, OnDestroy {
 
     @ViewChild(AssemblyListComponent) list: AssemblyListComponent;
 
-    constructor(authService: HttpOAuthService, service: AssemblyService, private orderService: OrderService, route: ActivatedRoute) {
-        super(authService, route);
+    constructor(authService: HttpOAuthService, r: Router, service: AssemblyService, private orderService: OrderService, route: ActivatedRoute) {
+        super(authService, r, route);
         this.service = service;
     }
 
