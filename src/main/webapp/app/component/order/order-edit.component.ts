@@ -32,7 +32,7 @@ export class OrderEditComponent extends EditComponent<OrderModel, OrderBriefMode
     }
 
     protected onModelSet(model: OrderModel) {
-        if (this.isEditing && (model != null) && (model.id != null)) {
+        if (!this.isViewing && this.isEditing && (model != null) && (model.id != null)) {
             this._service.startEdit(model.id)
                 .subscribe(
                     () => {
