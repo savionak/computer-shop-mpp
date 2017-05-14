@@ -1,6 +1,6 @@
 import {OnDestroy, OnInit} from "@angular/core";
 
-import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs/Subscription";
 import {ACCESS, EDIT, VIEW} from "../../shared/route-consts";
 import {HttpOAuthService} from "../../shared/http-oauth.service";
@@ -19,23 +19,25 @@ export class BasePage implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.routerSub = this.router.events.subscribe(
-            e => {
-                if (e instanceof NavigationEnd) {
-                    let routes = this.authService.getUserRoutes()['items'];
-                    let path = e.url.slice(1, e.url.length);
-                    // alert(path);
-                    let exists = false;
-                    let i = 0;
-                    while (!exists && i < routes.length) {
-                        if (routes[i]['path'] == path) {
-                            exists = true;
-                        }
-                        ++i;
+        this.routerSub = this.route.url.subscribe(
+            u => {
+                let current = u[0].toString();
+                let routes = this.authService.getUserRoutes()['items'];
+                let exists = false;
+                let i = 0;
+                while (!exists && i < routes.length) {
+                    if (routes[i]['path'] == current) {
+                        exists = true;
                     }
-                    if (!exists) {
+                    ++i;
+                }
+                if (exists) {
+                    --i;
+                    if ((routes[i]['access'] != EDIT) && (u[1].toString() == EDIT)) {
                         this.router.navigate(['404'], {skipLocationChange: true});
                     }
+                } else {
+                    this.router.navigate(['404'], {skipLocationChange: true});
                 }
             }
         );
