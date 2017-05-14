@@ -2,6 +2,7 @@ import {Component} from "@angular/core";
 import {HttpOAuthService} from "../../shared/http-oauth.service";
 import {Router} from "@angular/router";
 import {Util} from "../../shared/utils";
+import {CUSTOMER, EDIT, IMPORT, MODEL, ORDER, PROVIDER, STORE, TYPE, USER, VIEW} from "../../shared/route-consts";
 
 @Component({
     selector: 'header',
@@ -15,29 +16,29 @@ export class HeaderComponent {
 
     private getNavItems(): any[] {
         let result: any[] = [
-            {'link': "provider/view", 'text': "View Providers"},
-            {'link': "provider/edit", 'text': "Edit Providers"},
+            {'link': PROVIDER + "/" + VIEW, 'text': "View Providers"},
+            {'link': PROVIDER + "/" + EDIT, 'text': "Edit Providers"},
 
-            {'link': "type/view", 'text': "View ComponentTypes"},
-            {'link': "type/edit", 'text': "Edit ComponentTypes"},
+            {'link': TYPE + "/" + VIEW, 'text': "View ComponentTypes"},
+            {'link': TYPE + "/" + EDIT, 'text': "Edit ComponentTypes"},
 
-            {'link': "model/view", 'text': "View ComponentModels"},
-            {'link': "model/edit", 'text': "Edit ComponentModels"},
+            {'link': MODEL + "/" + VIEW, 'text': "View ComponentModels"},
+            {'link': MODEL + "/" + EDIT, 'text': "Edit ComponentModels"},
 
-            {'link': "store/view", 'text': "View Store"},
-            {'link': "store/edit", 'text': "Edit Store"},
+            {'link': STORE + "/" + VIEW, 'text': "View Store"},
+            {'link': STORE + "/" + EDIT, 'text': "Edit Store"},
 
-            {'link': "customer/view", 'text': "View Customers"},
-            {'link': "customer/edit", 'text': "Edit Customers"},
+            {'link': CUSTOMER + "/" + VIEW, 'text': "View Customers"},
+            {'link': CUSTOMER + "/" + EDIT, 'text': "Edit Customers"},
 
-            {'link': "user/view", 'text': "View Users"},
-            {'link': "user/edit", 'text': "Edit Users"},
+            {'link': USER + "/" + VIEW, 'text': "View Users"},
+            {'link': USER + "/" + EDIT, 'text': "Edit Users"},
 
-            {'link': "import/view", 'text': "View Imports"},
-            {'link': "import/edit", 'text': "Edit Imports"},
+            {'link': IMPORT + "/" + VIEW, 'text': "View Imports"},
+            {'link': IMPORT + "/" + EDIT, 'text': "Edit Imports"},
 
-            {'link': "order/view", 'text': "View Order"},
-            {'link': "order/edit", 'text': "Edit Order"}
+            {'link': ORDER + "/" + VIEW, 'text': "View Order"},
+            {'link': ORDER + "/" + EDIT, 'text': "Edit Order"}
         ];
         return result;
     }

@@ -59,15 +59,29 @@ import {AssemblyComponentEditComponent} from "./component/asm-component/asm-comp
 
 import {CanActivateViaOAuthGuard} from "./shared/can-activate-guard";
 
+import {
+    ACCESS,
+    ASSEMBLY,
+    CUSTOMER,
+    IMPORT,
+    LOGIN,
+    MODEL,
+    ORDER,
+    PROVIDER,
+    STORE,
+    TYPE,
+    USER
+} from "./shared/route-consts";
+
 
 const appRoutes: Routes = [
     {
-        path: 'login',
+        path: LOGIN,
         component: LoginComponent
     },
     {
         path: '',
-        redirectTo: 'login',
+        redirectTo: LOGIN,
         pathMatch: 'full'
     },
     {
@@ -76,43 +90,43 @@ const appRoutes: Routes = [
         canActivateChild: [CanActivateViaOAuthGuard],
         children: [
             {
-                path: 'provider/:access',
+                path: PROVIDER + '/:' + ACCESS,
                 component: ProviderPage
             },
             {
-                path: 'type/:access',
+                path: TYPE + '/:' + ACCESS,
                 component: ComponentTypePage
             },
             {
-                path: 'model/:access',
+                path: MODEL + '/:' + ACCESS,
                 component: ComponentModelPage
             },
             {
-                path: 'customer/:access',
+                path: CUSTOMER + '/:' + ACCESS,
                 component: CustomerPage
             },
             {
-                path: 'import/:access',
+                path: IMPORT + '/:' + ACCESS,
                 component: ImportPage
             },
             {
-                path: 'store/:access',
+                path: STORE + '/:' + ACCESS,
                 component: ComponentStorePage
             },
             {
-                path: 'order/:access/:id/asm/:asmId',
+                path: ORDER + '/:' + ACCESS + '/:id/' + ASSEMBLY + '/:asmId',
                 component: AssemblyComponentPage
             },
             {
-                path: 'order/:access/:id',
+                path: ORDER + '/:' + ACCESS + '/:id',
                 component: AssemblyPage
             },
             {
-                path: 'order/:access',
+                path: ORDER + '/:' + ACCESS,
                 component: OrderPage,
             },
             {
-                path: 'user/:access',
+                path: USER + '/:' + ACCESS,
                 component: UserPage
             }
         ]

@@ -5,6 +5,7 @@ import {OrderModel, Status} from "../../model/full/order-model";
 import {OrderBriefModel} from "../../model/brief/order-brief-model";
 import {OrderService} from "../../service/order.service";
 import {Router} from "@angular/router";
+import {EDIT, ORDER, VIEW} from "../../shared/route-consts";
 
 
 @Component({
@@ -23,11 +24,11 @@ export class OrderListComponent extends ListComponent <OrderModel, OrderBriefMod
     }
 
     onViewDetails(model: OrderModel): void {
-        this.router.navigate(['order', 'view', model.id]);
+        this.router.navigate([ORDER, VIEW, model.id]);
     }
 
     onEdit(model: OrderModel): void {
-        this.router.navigate(['order', 'edit', model.id]);
+        this.router.navigate([ORDER, EDIT, model.id]);
     }
 
     onAccept(model: OrderModel): void {

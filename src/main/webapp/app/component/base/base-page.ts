@@ -2,6 +2,7 @@ import {OnDestroy, OnInit} from "@angular/core";
 
 import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs/Subscription";
+import {ACCESS, EDIT, VIEW} from "../../shared/route-consts";
 
 export class BasePage implements OnInit, OnDestroy {
     protected route: ActivatedRoute;
@@ -16,13 +17,13 @@ export class BasePage implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.sub = this.route.params.subscribe(
             x => {
-                let type = x['access'];
+                let type = x[ACCESS];
                 // alert(type);
                 switch (type) {
-                    case 'view':
+                    case VIEW:
                         this.isReadOnly = true;
                         break;
-                    case 'edit':
+                    case EDIT:
                         this.isReadOnly = false;
                         break;
                     default:

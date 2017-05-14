@@ -5,6 +5,7 @@ import {AssemblyModel} from "../../model/full/assembly-model";
 import {AssemblyBriefModel} from "../../model/brief/assembly-brief-model";
 import {AssemblyService} from "../../service/assembly.service";
 import {Router} from "@angular/router";
+import {ASSEMBLY, EDIT, ORDER, VIEW} from "../../shared/route-consts";
 
 
 @Component({
@@ -36,10 +37,10 @@ export class AssemblyListComponent extends ListComponent <AssemblyModel, Assembl
     }
 
     onViewDetails(model: AssemblyModel): void {
-        this.router.navigate(['order', 'view', this.orderId, 'asm', model.id]);
+        this.router.navigate([ORDER, VIEW, this.orderId, ASSEMBLY, model.id]);
     }
 
     onEdit(model: AssemblyModel): void {
-        this.router.navigate(['order', 'edit', this.orderId, 'asm', model.id]);
+        this.router.navigate([ORDER, EDIT, this.orderId, ASSEMBLY, model.id]);
     }
 }
