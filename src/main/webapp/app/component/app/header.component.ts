@@ -2,6 +2,7 @@ import {Component} from "@angular/core";
 import {HttpOAuthService} from "../../shared/http-oauth.service";
 import {Router} from "@angular/router";
 import {Util} from "../../shared/utils";
+import {LOGIN} from "../../shared/route-consts";
 
 
 @Component({
@@ -29,13 +30,13 @@ export class HeaderComponent {
                 .subscribe(
                     (res) => {
                         localStorage.removeItem(Util.STORAGE_KEY);
-                        this.router.navigateByUrl("/login");
+                        this.router.navigate([LOGIN]);
                     },
                     (err) => {
                         // TODO: show popup
                         alert(err);
                         localStorage.removeItem(Util.STORAGE_KEY);
-                        this.router.navigateByUrl("/login");
+                        this.router.navigate([LOGIN]);
                     }
                 );
     }
