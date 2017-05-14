@@ -15,6 +15,10 @@ export class HeaderComponent {
 
     }
 
+    private getUserRole() {
+        return this.authService.getCurrentUser().user.role;
+    }
+
     private getNavItems(): any[] {
         let routes = this.authService.getUserRoutes();
         return routes['items'];
