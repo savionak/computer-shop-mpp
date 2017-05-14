@@ -16,7 +16,7 @@ export class BasePage implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.sub = this.route.params.subscribe(
             x => {
-                let type = x['type'];
+                let type = x['access'];
                 // alert(type);
                 switch (type) {
                     case 'view':

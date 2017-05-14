@@ -1,22 +1,23 @@
 import {Injectable} from "@angular/core";
-import {CanActivate, Router} from "@angular/router";
-import {Util} from "./utils";
+import {ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot} from "@angular/router";
+import {HttpOAuthService} from "./http-oauth.service";
 
 
 @Injectable()
-export class CanActivateViaOAuthGuard implements CanActivate {
-
-    constructor(public router: Router) {
+export class CanActivateViaOAuthGuard implements CanActivate, CanActivateChild {
+    constructor(public router: Router, private authService: HttpOAuthService) {
 
     }
 
-
+    canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+        alert(childRoute.url.toString());
+        return true;
+    }
 
     canActivate() {
-        if (!localStorage.getItem(Util.STORAGE_KEY)) {
+        if (!this.authService.getCurrentUser()) {
             this.router.navigateByUrl('/login');
-            // TODO: pass abstract method to redirect-back: check role and show appropriate page
         }
-        return (localStorage.getItem(Util.STORAGE_KEY) !== null);
+        return true;
     }
 }

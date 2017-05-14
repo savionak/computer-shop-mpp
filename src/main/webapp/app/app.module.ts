@@ -6,7 +6,7 @@ import {RouterModule, Routes} from "@angular/router";
 
 import {AppComponent} from "./component/app/app.component";
 
-import {CanActivateViaOAuthGuard} from "./shared/can-activate-guard";
+import {HttpOAuthService} from "./shared/http-oauth.service";
 
 import {HeaderComponent} from "./component/app/header.component";
 import {FooterComponent} from "./component/app/footer.component";
@@ -41,6 +41,7 @@ import {ComponentStoreListComponent} from "./component/comp-store/comp-store-lis
 
 import {OrderPage} from "./component/order/order-page";
 import {OrderListComponent} from "./component/order/order-list.component";
+import {OrderCanceledListComponent} from "./component/order/order-canceled-list.component";
 import {OrderEditComponent} from "./component/order/order-edit.component";
 
 import {AssemblyPage} from "./component/assembly/assembly-page";
@@ -51,10 +52,12 @@ import {UserPage} from "./component/user/user-page";
 import {UserListComponent} from "./component/user/user-list.component";
 import {UserRemovedListComponent} from "./component/user/user-removed-list.component";
 import {UserEditComponent} from "./component/user/user-edit.component";
+
 import {AssemblyComponentPage} from "./component/asm-component/asm-comp-page";
 import {AssemblyComponentListComponent} from "./component/asm-component/asm-comp-list.component";
 import {AssemblyComponentEditComponent} from "./component/asm-component/asm-comp-edit.component";
-import {OrderCanceledListComponent} from "./component/order/order-canceled-list.component";
+
+import {CanActivateViaOAuthGuard} from "./shared/can-activate-guard";
 
 
 const appRoutes: Routes = [
@@ -70,45 +73,46 @@ const appRoutes: Routes = [
     {
         path: '',
         canActivate: [CanActivateViaOAuthGuard],
+        canActivateChild: [CanActivateViaOAuthGuard],
         children: [
             {
-                path: 'provider/:type',
+                path: 'provider/:access',
                 component: ProviderPage
             },
             {
-                path: 'type/:type',
+                path: 'type/:access',
                 component: ComponentTypePage
             },
             {
-                path: 'model/:type',
+                path: 'model/:access',
                 component: ComponentModelPage
             },
             {
-                path: 'customer/:type',
+                path: 'customer/:access',
                 component: CustomerPage
             },
             {
-                path: 'import/:type',
+                path: 'import/:access',
                 component: ImportPage
             },
             {
-                path: 'store/:type',
+                path: 'store/:access',
                 component: ComponentStorePage
             },
             {
-                path: 'order/:type/:id/asm/:asmId',
+                path: 'order/:access/:id/asm/:asmId',
                 component: AssemblyComponentPage
             },
             {
-                path: 'order/:type/:id',
+                path: 'order/:access/:id',
                 component: AssemblyPage
             },
             {
-                path: 'order/:type',
+                path: 'order/:access',
                 component: OrderPage,
             },
             {
-                path: 'user/:type',
+                path: 'user/:access',
                 component: UserPage
             }
         ]
@@ -117,6 +121,7 @@ const appRoutes: Routes = [
 
 @NgModule({
     providers: [
+        HttpOAuthService,
         CanActivateViaOAuthGuard
     ],
     imports: [
