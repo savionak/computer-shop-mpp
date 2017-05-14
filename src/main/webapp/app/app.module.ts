@@ -73,6 +73,7 @@ import {
     TYPE,
     USER
 } from "./shared/route-consts";
+import {NotFoundPage} from "./component/app/not-found-page";
 
 
 const appRoutes: Routes = [
@@ -130,6 +131,14 @@ const appRoutes: Routes = [
             {
                 path: USER + '/:' + ACCESS,
                 component: UserPage
+            },
+            {
+                path: '404',
+                component: NotFoundPage
+            },
+            {
+                path: '**',
+                component: NotFoundPage
             }
         ]
     }
@@ -154,6 +163,7 @@ const appRoutes: Routes = [
         FooterComponent,
         HeaderComponent,
         LoginComponent,
+        NotFoundPage,
 
         ProviderPage,
         ProviderListComponent,
