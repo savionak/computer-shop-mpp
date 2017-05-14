@@ -7,7 +7,7 @@ import {ResponseHandler} from "./response-handler";
 import {CurrentUser} from "./current-user.model";
 import {Util} from "./utils";
 import {Role} from "../model/full/user-auth-model";
-import {ADMIN_ROUTES, DIRECTOR_ROUTES, MANAGER_ROUTES} from "./route-consts";
+import {ADMIN_ROUTES, DIRECTOR_ROUTES, GUEST_ROUTES, MANAGER_ROUTES} from "./route-consts";
 
 
 @Injectable()
@@ -27,8 +27,15 @@ export class HttpOAuthService {
     }
 
     getUserRoutes() {
-        let role = this.getCurrentUser().user.role;
-        return this.ROUTES_MAP[role];
+        let result;
+        let user = this.getCurrentUser();
+        if (!!user) {
+            let role = user.user.role;
+            result = this.ROUTES_MAP[role];
+        } else {
+            result = GUEST_ROUTES;
+        }
+        return result;
     }
 
     setCurrentUser(user: CurrentUser) {

@@ -54,3 +54,8 @@ export const ADMIN_ROUTES = {
         {'name': 'Providers', 'path': PROVIDER + '/' + EDIT}
     ]
 };
+
+export const GUEST_ROUTES = {
+    'default': LOGIN,
+    'items': new Array(0)
+};

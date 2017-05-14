@@ -58,6 +58,7 @@ import {AssemblyComponentListComponent} from "./component/asm-component/asm-comp
 import {AssemblyComponentEditComponent} from "./component/asm-component/asm-comp-edit.component";
 
 import {CanActivateViaOAuthGuard} from "./shared/can-activate-guard";
+import {CanActivateRoot} from "./shared/can-activate-root";
 
 import {
     ACCESS,
@@ -81,8 +82,9 @@ const appRoutes: Routes = [
     },
     {
         path: '',
-        redirectTo: LOGIN,
-        pathMatch: 'full'
+        canActivate: [CanActivateRoot],
+        pathMatch: 'full',
+        children: []
     },
     {
         path: '',
@@ -136,7 +138,8 @@ const appRoutes: Routes = [
 @NgModule({
     providers: [
         HttpOAuthService,
-        CanActivateViaOAuthGuard
+        CanActivateViaOAuthGuard,
+        CanActivateRoot
     ],
     imports: [
         BrowserModule,
