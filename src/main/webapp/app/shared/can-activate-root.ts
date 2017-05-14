@@ -10,7 +10,7 @@ export class CanActivateRoot implements CanActivate {
 
     canActivate() {
         let defaultRoute = this.authService.getUserRoutes()['default'];
-        this.router.navigate([defaultRoute]);
+        this.router.navigate([defaultRoute['path'], defaultRoute['access']]);
         return true;
     }
 

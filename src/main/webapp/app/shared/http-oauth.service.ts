@@ -18,7 +18,7 @@ export class HttpOAuthService {
         this.ROUTES_MAP[Role[Role.DIRECTOR]] = DIRECTOR_ROUTES;
         this.ROUTES_MAP[Role[Role.MANAGER]] = MANAGER_ROUTES;
         this.ROUTES_MAP[Role[Role.ADMIN]] = ADMIN_ROUTES;
-        console.log(this.ROUTES_MAP);
+        // console.log(this.ROUTES_MAP);
     }
 
     getCurrentUser(): CurrentUser {

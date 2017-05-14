@@ -5,7 +5,8 @@
 
     <div>
         <ul *ngIf="isLoggedIn()">
-            <li *ngFor="let item of getNavItems()"><a routerLink="{{item['path']}}">{{item['name']}}</a></li>
+            <li *ngFor="let item of getNavItems()"><a
+                    routerLink="{{item['path']+'/'+item['access']}}">{{item['name']}}</a></li>
             <li><a (click)="onLogout()">Logout</a></li>
         </ul>
         <div *ngIf="isLoggedIn()">

@@ -18,44 +18,44 @@ export const VIEW = 'view';
 
 
 export const DIRECTOR_ROUTES = {
-    'default': ORDER + '/' + VIEW,
+    'default': {'path': ORDER, 'access': VIEW},
     'items': [
-        {'name': 'Orders', 'path': ORDER + '/' + VIEW},
-        {'name': 'Customers', 'path': CUSTOMER + '/' + VIEW},
-        {'name': 'Store', 'path': STORE + '/' + VIEW},
-        {'name': 'Imports', 'path': IMPORT + '/' + VIEW},
-        {'name': 'Providers', 'path': PROVIDER + '/' + EDIT}
+        {'name': 'Orders', 'path': ORDER, 'access': VIEW},
+        {'name': 'Customers', 'path': CUSTOMER, 'access': VIEW},
+        {'name': 'Store', 'path': STORE, 'access': VIEW},
+        {'name': 'Imports', 'path': IMPORT, 'access': VIEW},
+        {'name': 'Providers', 'path': PROVIDER, 'access': EDIT}
     ]
 };
 
 export const MANAGER_ROUTES = {
-    'default': ORDER + '/' + EDIT,
+    'default': {'path': ORDER, 'access': EDIT},
     'items': [
-        {'name': 'Orders', 'path': ORDER + '/' + EDIT},
-        {'name': 'Customers', 'path': CUSTOMER + '/' + EDIT},
-        {'name': 'Store', 'path': STORE + '/' + EDIT},
-        {'name': 'Imports', 'path': IMPORT + '/' + EDIT},
-        {'name': 'Models', 'path': MODEL + '/' + EDIT},
-        {'name': 'Types', 'path': TYPE + '/' + VIEW},
-        {'name': 'Providers', 'path': PROVIDER + '/' + VIEW}
+        {'name': 'Orders', 'path': ORDER, 'access': EDIT},
+        {'name': 'Customers', 'path': CUSTOMER, 'access': EDIT},
+        {'name': 'Store', 'path': STORE, 'access': EDIT},
+        {'name': 'Imports', 'path': IMPORT, 'access': EDIT},
+        {'name': 'Models', 'path': MODEL, 'access': EDIT},
+        {'name': 'Types', 'path': TYPE, 'access': VIEW},
+        {'name': 'Providers', 'path': PROVIDER, 'access': VIEW}
     ]
 };
 
 export const ADMIN_ROUTES = {
-    'default': USER + '/' + EDIT,
+    'default': {'path': USER, 'access': EDIT},
     'items': [
-        {'name': 'Users', 'path': USER + '/' + EDIT},
-        {'name': 'Orders', 'path': ORDER + '/' + EDIT},
-        {'name': 'Customers', 'path': CUSTOMER + '/' + EDIT},
-        {'name': 'Store', 'path': STORE + '/' + EDIT},
-        {'name': 'Imports', 'path': IMPORT + '/' + EDIT},
-        {'name': 'Models', 'path': MODEL + '/' + EDIT},
-        {'name': 'Types', 'path': TYPE + '/' + EDIT},
-        {'name': 'Providers', 'path': PROVIDER + '/' + EDIT}
+        {'name': 'Users', 'path': USER, 'access': EDIT},
+        {'name': 'Orders', 'path': ORDER, 'access': EDIT},
+        {'name': 'Customers', 'path': CUSTOMER, 'access': EDIT},
+        {'name': 'Store', 'path': STORE, 'access': EDIT},
+        {'name': 'Imports', 'path': IMPORT, 'access': EDIT},
+        {'name': 'Models', 'path': MODEL, 'access': EDIT},
+        {'name': 'Types', 'path': TYPE, 'access': EDIT},
+        {'name': 'Providers', 'path': PROVIDER, 'access': EDIT}
     ]
 };
 
 export const GUEST_ROUTES = {
-    'default': LOGIN,
+    'default': {'path': LOGIN, 'access': ""},
     'items': new Array(0)
 };
