@@ -3,6 +3,7 @@ import {ComponentStoreService} from "../../service/component-store.service";
 import {ComponentStoreListComponent} from "./comp-store-list.component";
 import {BasePage} from "../base/base-page";
 import {ActivatedRoute} from "@angular/router";
+import {HttpOAuthService} from "../../shared/http-oauth.service";
 
 
 @Component({
@@ -14,8 +15,8 @@ export class ComponentStorePage extends BasePage {
 
     @ViewChild(ComponentStoreListComponent) list: ComponentStoreListComponent;
 
-    constructor(service: ComponentStoreService, route: ActivatedRoute) {
-        super(route);
+    constructor(authService: HttpOAuthService, service: ComponentStoreService, route: ActivatedRoute) {
+        super(authService, route);
         this.service = service;
     }
 

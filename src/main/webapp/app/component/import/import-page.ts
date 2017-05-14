@@ -3,6 +3,7 @@ import {ImportService} from "../../service/import.service";
 import {ImportListComponent} from "./import-list.component";
 import {BasePage} from "../base/base-page";
 import {ActivatedRoute} from "@angular/router";
+import {HttpOAuthService} from "../../shared/http-oauth.service";
 
 
 @Component({
@@ -14,8 +15,8 @@ export class ImportPage extends BasePage {
 
     @ViewChild(ImportListComponent) list: ImportListComponent;
 
-    constructor(service: ImportService, route: ActivatedRoute) {
-        super(route);
+    constructor(authService: HttpOAuthService, service: ImportService, route: ActivatedRoute) {
+        super(authService, route);
         this.service = service;
     }
 

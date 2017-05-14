@@ -4,6 +4,7 @@ import {ComponentModelRemovedListComponent} from "./comp-model-removed-list.comp
 import {ComponentModelService} from "../../service/component-model.service";
 import {BasePage} from "../base/base-page";
 import {ActivatedRoute} from "@angular/router";
+import {HttpOAuthService} from "../../shared/http-oauth.service";
 
 
 @Component({
@@ -16,8 +17,8 @@ export class ComponentModelPage extends BasePage {
     @ViewChild(ComponentModelListComponent) list: ComponentModelListComponent;
     @ViewChild(ComponentModelRemovedListComponent) removedList: ComponentModelRemovedListComponent;
 
-    constructor(service: ComponentModelService, route: ActivatedRoute) {
-        super(route);
+    constructor(authService: HttpOAuthService, service: ComponentModelService, route: ActivatedRoute) {
+        super(authService, route);
         this.service = service;
     }
 

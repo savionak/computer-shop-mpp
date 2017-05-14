@@ -5,6 +5,7 @@ import {ActivatedRoute} from "@angular/router";
 import {AssemblyModel} from "../../model/full/assembly-model";
 import {AssemblyService} from "../../service/assembly.service";
 import {BasePage} from "../base/base-page";
+import {HttpOAuthService} from "../../shared/http-oauth.service";
 
 
 @Component({
@@ -17,8 +18,8 @@ export class AssemblyComponentPage extends BasePage implements OnInit {
 
     @ViewChild(AssemblyComponentListComponent) list: AssemblyComponentListComponent;
 
-    constructor(route: ActivatedRoute, private assemblyService: AssemblyService) {
-        super(route);
+    constructor(authService: HttpOAuthService, route: ActivatedRoute, private assemblyService: AssemblyService) {
+        super(authService, route);
     }
 
     ngOnInit(): void {
