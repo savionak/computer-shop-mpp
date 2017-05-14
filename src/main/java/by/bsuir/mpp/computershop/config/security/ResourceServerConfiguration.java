@@ -60,6 +60,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                         "/api/component/model").hasAnyAuthority(MANAGER, ADMIN)
 
                 .antMatchers("/api/user/**", "/api/component/type/**").hasAuthority(ADMIN)
+                .antMatchers("/api/**").denyAll()
         ;
     }
 }
