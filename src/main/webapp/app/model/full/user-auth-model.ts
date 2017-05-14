@@ -29,4 +29,4 @@ export enum Role {
     DIRECTOR = 2
 }
 
-export const RoleNames: string[] = ["Менеджер", "Директор", "Администратор"];
+export const RoleNames: string[] = ["Администратор", "Менеджер", "Директор"];

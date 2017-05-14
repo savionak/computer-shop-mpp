@@ -27,3 +27,5 @@ export const enum Status{
     IN_PROGRESS,
     READY
 }
+
+export const StatusNames: string[] = ["В процессе", "Принят"];
