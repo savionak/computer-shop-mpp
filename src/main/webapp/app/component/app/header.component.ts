@@ -13,6 +13,35 @@ export class HeaderComponent {
 
     }
 
+    private getNavItems(): any[] {
+        let result: any[] = [
+            {'link': "provider/view", 'text': "View Providers"},
+            {'link': "provider/edit", 'text': "Edit Providers"},
+
+            {'link': "type/view", 'text': "View ComponentTypes"},
+            {'link': "type/edit", 'text': "Edit ComponentTypes"},
+
+            {'link': "model/view", 'text': "View ComponentModels"},
+            {'link': "model/edit", 'text': "Edit ComponentModels"},
+
+            {'link': "store/view", 'text': "View Store"},
+            {'link': "store/edit", 'text': "Edit Store"},
+
+            {'link': "customer/view", 'text': "View Customers"},
+            {'link': "customer/edit", 'text': "Edit Customers"},
+
+            {'link': "user/view", 'text': "View Users"},
+            {'link': "user/edit", 'text': "Edit Users"},
+
+            {'link': "import/view", 'text': "View Imports"},
+            {'link': "import/edit", 'text': "Edit Imports"},
+
+            {'link': "order/view", 'text': "View Order"},
+            {'link': "order/edit", 'text': "Edit Order"}
+        ];
+        return result;
+    }
+
     private isLoggedIn(): boolean {
         return !!this.authService.getCurrentUser();
     }
