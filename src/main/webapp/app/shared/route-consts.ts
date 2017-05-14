@@ -1,5 +1,3 @@
-import {Role} from "../model/full/user-auth-model";
-
 export const LOGIN = 'login';
 
 // Main routes
@@ -19,47 +17,40 @@ export const EDIT = 'edit';
 export const VIEW = 'view';
 
 
-const DIRECTOR_ROUTES = {
+export const DIRECTOR_ROUTES = {
     'default': ORDER + '/' + VIEW,
     'items': [
-        {'Orders': ORDER + '/' + VIEW},
-        {'Customers': CUSTOMER + '/' + VIEW},
-        {'Store': STORE + '/' + VIEW},
-        {'Imports': IMPORT + '/' + VIEW},
-        {'Providers': PROVIDER + '/' + EDIT}
+        {'name': 'Orders', 'path': ORDER + '/' + VIEW},
+        {'name': 'Customers', 'path': CUSTOMER + '/' + VIEW},
+        {'name': 'Store', 'path': STORE + '/' + VIEW},
+        {'name': 'Imports', 'path': IMPORT + '/' + VIEW},
+        {'name': 'Providers', 'path': PROVIDER + '/' + EDIT}
     ]
 };
 
-const MANAGER_ROUTES = {
+export const MANAGER_ROUTES = {
     'default': ORDER + '/' + EDIT,
     'items': [
-        {'Orders': ORDER + '/' + EDIT},
-        {'Customers': CUSTOMER + '/' + EDIT},
-        {'Store': STORE + '/' + EDIT},
-        {'Imports': IMPORT + '/' + EDIT},
-        {'Models': MODEL + '/' + EDIT},
-        {'Types': TYPE + '/' + VIEW},
-        {'Providers': PROVIDER + '/' + VIEW}
+        {'name': 'Orders', 'path': ORDER + '/' + EDIT},
+        {'name': 'Customers', 'path': CUSTOMER + '/' + EDIT},
+        {'name': 'Store', 'path': STORE + '/' + EDIT},
+        {'name': 'Imports', 'path': IMPORT + '/' + EDIT},
+        {'name': 'Models', 'path': MODEL + '/' + EDIT},
+        {'name': 'Types', 'path': TYPE + '/' + VIEW},
+        {'name': 'Providers', 'path': PROVIDER + '/' + VIEW}
     ]
 };
 
-const ADMIN_ROUTES = {
+export const ADMIN_ROUTES = {
     'default': USER + '/' + EDIT,
     'items': [
-        {'Users': USER + '/' + EDIT},
-        {'Orders': ORDER + '/' + EDIT},
-        {'Customers': CUSTOMER + '/' + EDIT},
-        {'Store': STORE + '/' + EDIT},
-        {'Imports': IMPORT + '/' + EDIT},
-        {'Models': MODEL + '/' + EDIT},
-        {'Types': TYPE + '/' + EDIT},
-        {'Providers': PROVIDER + '/' + EDIT}
+        {'name': 'Users', 'path': USER + '/' + EDIT},
+        {'name': 'Orders', 'path': ORDER + '/' + EDIT},
+        {'name': 'Customers', 'path': CUSTOMER + '/' + EDIT},
+        {'name': 'Store', 'path': STORE + '/' + EDIT},
+        {'name': 'Imports', 'path': IMPORT + '/' + EDIT},
+        {'name': 'Models', 'path': MODEL + '/' + EDIT},
+        {'name': 'Types', 'path': TYPE + '/' + EDIT},
+        {'name': 'Providers', 'path': PROVIDER + '/' + EDIT}
     ]
 };
-
-
-export const ROUTES = {};
-
-ROUTES[Role.DIRECTOR] = DIRECTOR_ROUTES;
-ROUTES[Role.MANAGER] = MANAGER_ROUTES;
-ROUTES[Role.ADMIN] = ADMIN_ROUTES;

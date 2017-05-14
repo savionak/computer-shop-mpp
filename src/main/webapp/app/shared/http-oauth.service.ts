@@ -6,18 +6,29 @@ import {CredentialsModel} from "../component/login/login-model";
 import {ResponseHandler} from "./response-handler";
 import {CurrentUser} from "./current-user.model";
 import {Util} from "./utils";
+import {Role} from "../model/full/user-auth-model";
+import {ADMIN_ROUTES, DIRECTOR_ROUTES, MANAGER_ROUTES} from "./route-consts";
 
 
 @Injectable()
 export class HttpOAuthService {
+    private ROUTES_MAP = {};
 
     constructor(private http: Http) {
-
+        this.ROUTES_MAP[Role[Role.DIRECTOR]] = DIRECTOR_ROUTES;
+        this.ROUTES_MAP[Role[Role.MANAGER]] = MANAGER_ROUTES;
+        this.ROUTES_MAP[Role[Role.ADMIN]] = ADMIN_ROUTES;
+        console.log(this.ROUTES_MAP);
     }
 
     getCurrentUser(): CurrentUser {
         let result = localStorage.getItem(Util.STORAGE_KEY);
         return (!!result) ? JSON.parse(result) : null;
+    }
+
+    getUserRoutes() {
+        let role = this.getCurrentUser().user.role;
+        return this.ROUTES_MAP[role];
     }
 
     setCurrentUser(user: CurrentUser) {
