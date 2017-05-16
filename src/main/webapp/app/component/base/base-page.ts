@@ -71,8 +71,38 @@ export class BasePage implements OnInit, OnDestroy {
         }
     }
 
-    onError(error: string) {
-        this.toasterService.pop('error', 'Ошибка', error);
+    onError(error: any) {
+        console.log(error);
+        let errNum = error['errorNumber'];
+        if (errNum) {
+            if ((errNum == "OPERATION_ERROR") || (errNum == "CONSTRAINTS_ERROR")) {
+                this.popDataError();
+            } else {
+                this.popServerError();
+            }
+        } else {
+            let fields = error['errors'];
+            if (fields) {
+                for (let i in fields) {
+                    let text = `${fields[i].field} ${fields[i].message}`;
+                    this.popError(text);
+                }
+            } else {
+                this.popError();
+            }
+        }
+    }
+
+    popError(text?: string) {
+        this.toasterService.pop('error', 'Ошибка', text);
+    }
+
+    popServerError() {
+        this.toasterService.pop('error', 'Ошибка сервера', 'Свяжитесь с администаратором');
+    }
+
+    popDataError() {
+        this.toasterService.pop('error', 'Неверные данные', 'Проверьте корректность данных');
     }
 
     popConnectionError() {

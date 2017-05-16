@@ -8,7 +8,7 @@ export abstract class ReadOnlyListComponent<T extends BaseModel, U> implements O
     protected model: T = null;
     protected isViewing: boolean = true;
 
-    @Output('onError') errorCallBack: EventEmitter<string> = new EventEmitter();
+    @Output('onError') errorCallBack: EventEmitter<any> = new EventEmitter();
 
     constructor(private service: ReadOnlyService<T, U>) {
         this.service = service;

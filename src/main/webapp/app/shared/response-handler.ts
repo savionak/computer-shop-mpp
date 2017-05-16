@@ -14,15 +14,18 @@ export class ResponseHandler {
 
     static handleError(error: Response | any) {
         // TODO: rewrite
-        let errMsg: string;
+        let result: any;
+        let text: string;
         if (error instanceof Response) {
             const body = error.json() || '';
-            const err = body.error || JSON.stringify(body);
-            errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+            const err = body || JSON.stringify(body);
+            text = `${error.status} - ${error.statusText || ''}`;
+            result = err;
         } else {
-            errMsg = error.message ? error.message : error.toString();
+            text = error.message ? error.message : error.toString();
+            result = text;
         }
-        console.error(errMsg);
-        return Observable.throw(errMsg);
+        console.error(text);
+        return Observable.throw(result);
     }
 }

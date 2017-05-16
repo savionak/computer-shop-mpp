@@ -20,7 +20,7 @@ export class EditComponent<T extends BaseModel, U> {
     @Output('onAdd') addCallback: EventEmitter<T> = new EventEmitter();
     @Output('onEdit') editCallback: EventEmitter<T> = new EventEmitter();
     @Output('onCancel') cancelCallback: EventEmitter<null> = new EventEmitter();
-    @Output('onError') errorCallback: EventEmitter<string> = new EventEmitter();
+    @Output('onError') errorCallback: EventEmitter<any> = new EventEmitter();
 
     constructor(service: CrudService<T, U>) {
         this.service = service;
@@ -28,7 +28,6 @@ export class EditComponent<T extends BaseModel, U> {
 
     onAction(): void {
         if (this.isViewing) {
-            alert('View only!');
             return;
         }
 
