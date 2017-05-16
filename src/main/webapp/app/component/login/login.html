@@ -1,12 +1,10 @@
 <h3>Sign in</h3>
 <hr>
-<div *ngIf="error" class="error">{{error}}
-    <button (click)="onCloseError()">X</button>
-</div>
+<toaster-container></toaster-container>
 <form (submit)="onSubmit($event)">
     <div>
         <label for="email">Email</label>
-        <input type="text" id="email" name="email" [(ngModel)]="credentials.email" equired/>
+        <input type="text" id="email" name="email" [(ngModel)]="credentials.email" required/>
     </div>
     <div>
         <label for="pass">Password</label>

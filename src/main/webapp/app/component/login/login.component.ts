@@ -3,6 +3,7 @@ import {CredentialsModel} from "./login-model";
 import {HttpOAuthService} from "../../shared/http-oauth.service";
 import {Router} from "@angular/router";
 
+import {ToasterService} from "angular2-toaster";
 
 @Component({
     selector: 'login',
@@ -11,9 +12,8 @@ import {Router} from "@angular/router";
 export class LoginComponent {
 
     private credentials = new CredentialsModel();
-    private error: string;
 
-    constructor(private authService: HttpOAuthService, private router: Router) {
+    constructor(private authService: HttpOAuthService, private router: Router, private toasterService: ToasterService) {
 
     }
 
@@ -22,21 +22,14 @@ export class LoginComponent {
         this.authService.login(this.credentials)
             .subscribe(
                 (res) => {
-                    alert("Success!");
                     console.log("Success!\nUser is:\n", res);
                     this.authService.setCurrentUser(res);
                     let next = this.authService.getUserRoutes()['default'];
                     this.router.navigate([next['path'], next['access']]);
                 },
                 (err) => {
-                    // TODO: show popup
-                    this.error = err;
-                    alert(err);
+                    this.toasterService.pop('error', 'Ошибка', 'Проверьте введенные данные');
                 }
             );
-    }
-
-    onCloseError() {
-        this.error = null;
     }
 }

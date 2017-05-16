@@ -11,6 +11,7 @@ import {AssemblyService} from "../../service/assembly.service";
 import {UserAuthService} from "../../service/user-auth.service";
 import {AssemblyComponentService} from "../../service/assembly-component.service";
 
+import {ToasterService} from "angular2-toaster";
 
 @Component({
     selector: 'app',
@@ -32,7 +33,8 @@ import {AssemblyComponentService} from "../../service/assembly-component.service
         OrderService,
         AssemblyService,
         AssemblyComponentService,
-        UserAuthService
+        UserAuthService,
+        ToasterService
     ]
 })
 export class AppComponent {

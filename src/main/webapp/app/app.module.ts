@@ -60,6 +60,9 @@ import {AssemblyComponentEditComponent} from "./component/asm-component/asm-comp
 import {CanActivateViaOAuthGuard} from "./shared/can-activate-guard";
 import {CanActivateRoot} from "./shared/can-activate-root";
 
+
+import {ToasterModule} from "angular2-toaster";
+
 import {
     ACCESS,
     ASSEMBLY,
@@ -155,7 +158,8 @@ const appRoutes: Routes = [
         RouterModule.forRoot(appRoutes, {useHash: true}),
         FormsModule,
         HttpModule,
-        JsonpModule
+        JsonpModule,
+        ToasterModule
     ],
     declarations: [
         AppComponent,
