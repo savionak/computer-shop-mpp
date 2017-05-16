@@ -1,16 +1,21 @@
-<div>
-    <div>
-        <a routerLink=""><img src="app/styles/logo.png" alt="MPP"></a>
-    </div>
-
-    <div>
-        <ul *ngIf="isLoggedIn()">
-            <li *ngFor="let item of getNavItems()"><a
-                    routerLink="{{item['path']+'/'+item['access']}}">{{item['name']}}</a></li>
-            <li><a (click)="onLogout()">Logout</a></li>
-        </ul>
-        <div *ngIf="isLoggedIn()">
-            {{getUserRole()}}
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" routerLink=""><img src="app/styles/logo.png" alt="MPP"></a>
+        </div>
+        <div class="collapse navbar-collapse" id="navigation" *ngIf="isLoggedIn()">
+            <ul class="nav navbar-nav">
+                <li *ngFor="let item of getNavItems()"><a
+                        routerLink="{{item['path']+'/'+item['access']}}">{{item['name']}}</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a (click)="onLogout()">Logout</a></li>
+            </ul>
         </div>
     </div>
-</div>
+</nav>

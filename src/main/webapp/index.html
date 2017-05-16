@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>Component Store</title>
     <base href="/">
     <meta charset="UTF-8">
@@ -8,14 +8,17 @@
     <!--<link rel="stylesheet" href="styles.css">-->
 
 
-    <!--<link rel="stylesheet" href="app/styles/bootstrap.min.css">-->
+    <link rel="stylesheet" href="app/styles/bootstrap.min.css">
     <link rel="shortcut icon" href="app/styles/logo.png">
 
-    <link rel="stylesheet" media="screen" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
-    <link rel="stylesheet" href="app/styles/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <link rel="stylesheet" href="app/styles/bootstrap-theme.css" media="screen" >
-    <link rel="stylesheet" href="app/styles/main.css">
+    <!--<link rel="stylesheet" media="screen" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">-->
+    <!--<link rel="stylesheet" href="app/styles/font-awesome.min.css">-->
+
+    <link rel="stylesheet" href="app/styles/bootstrap-theme.css" media="screen">
+    <!--<link rel="stylesheet" href="app/styles/main.css">-->
 
 
     <!-- Polyfill(s) for older browsers -->
@@ -26,11 +29,13 @@
 
     <script src="systemjs.config.js"></script>
     <script>
-      System.import('app').catch(function(err){ console.error(err); });
+        System.import('app').catch(function (err) {
+            console.error(err);
+        });
     </script>
-  </head>
+</head>
 
-  <body>
-    <app>Loading application ...</app>
-  </body>
+<body>
+<app>Loading application ...</app>
+</body>
 </html>

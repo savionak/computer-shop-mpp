@@ -15,8 +15,8 @@ export class HeaderComponent {
 
     }
 
-    private getUserRole() {
-        return this.authService.getCurrentUser().user.role;
+    private getUser() {
+        return this.authService.getCurrentUser().user;
     }
 
     private getNavItems(): any[] {
