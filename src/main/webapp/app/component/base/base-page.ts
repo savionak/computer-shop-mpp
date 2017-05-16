@@ -135,4 +135,6 @@ export class BasePage implements OnInit, OnDestroy {
 
     protected NAVIGATION_ERROR_TITLE = 'Oops...';
     protected NAVIGATION_ERROR_MSG = 'Что-то пошло не так';
+
+    protected COMPONENTS_ERROR_MSG = 'Недостаточно компонентов для проведения операции';
 }

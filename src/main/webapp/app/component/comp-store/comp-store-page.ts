@@ -22,6 +22,10 @@ export class ComponentStorePage extends BasePage {
         this.service = service;
     }
 
+    getOperationErrorMessage() {
+        return this.COMPONENTS_ERROR_MSG;
+    }
+
     onUpdateDone() {
         this.popSuccess('Склад обновлен');
         this.list.onRefresh();

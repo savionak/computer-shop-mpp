@@ -34,6 +34,10 @@ export class AssemblyComponentPage extends BasePage implements OnInit {
         );
     }
 
+    getOperationErrorMessage() {
+        return this.COMPONENTS_ERROR_MSG;
+    }
+
     onAsmSave(model: AssemblyModel) {
         this.popSuccess('Сборка обновлена');
     }
