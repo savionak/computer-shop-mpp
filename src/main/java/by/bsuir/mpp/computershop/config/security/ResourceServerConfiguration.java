@@ -55,9 +55,9 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .antMatchers("/api/order/**",
                         "/api/customer/**",
                         "/api/component/store/**",
-                        "/api/assembly",
-                        "/api/imports",
-                        "/api/component/model").hasAnyAuthority(MANAGER, ADMIN)
+                        "/api/assembly/**",
+                        "/api/import/**",
+                        "/api/component/model/**").hasAnyAuthority(MANAGER, ADMIN)
 
                 .antMatchers("/api/user/**", "/api/component/type/**").hasAuthority(ADMIN)
                 .antMatchers("/api/**").denyAll()
