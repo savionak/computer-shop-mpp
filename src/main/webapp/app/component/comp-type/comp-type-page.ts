@@ -25,11 +25,21 @@ export class ComponentTypePage extends BasePage {
         this.service = service;
     }
 
+    onAddDone() {
+        this.popSuccess('Тип добавлен');
+    }
+
+    onSaveDone() {
+        this.popSuccess('Тип обновлен');
+    }
+
     onDeleteDone() {
+        this.popSuccess('Тип удален');
         this.removedList.onRefresh();
     }
 
     onRestoreDone() {
+        this.popSuccess('Тип восстановлен');
         this.list.onRefresh();
     }
 }
