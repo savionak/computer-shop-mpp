@@ -12,7 +12,8 @@
 <asm-comp-list
         [isReadOnly]="isReadOnly"
         [assemblyId]="asmId"
+        (onAdd)="onComponentAdd($event)"
+        (onSave)="onComponentSave($event)"
         (onDelete)="onDeleteDone($event)"
         (onError)="onError($event)">
 </asm-comp-list>
-<hr/>

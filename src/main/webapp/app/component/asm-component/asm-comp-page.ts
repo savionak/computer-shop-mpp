@@ -8,6 +8,7 @@ import {BasePage} from "../base/base-page";
 import {HttpOAuthService} from "../../shared/http-oauth.service";
 
 import {ToasterService} from "angular2-toaster";
+import {AssemblyComponentModel} from "../../model/full/assembly-component-model";
 
 @Component({
     selector: 'asm-comp-page',
@@ -35,6 +36,14 @@ export class AssemblyComponentPage extends BasePage implements OnInit {
 
     onAsmSave(model: AssemblyModel) {
         this.toasterService.pop('success', 'Сборка обновлена');
+    }
+
+    onComponentAdd(model: AssemblyComponentModel) {
+        this.toasterService.pop('success', 'Компонент добавлен');
+    }
+
+    onComponentSave(model: AssemblyComponentModel) {
+        this.toasterService.pop('success', 'Компонент обновлен');
     }
 
     onDeleteDone() {
