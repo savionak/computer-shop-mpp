@@ -25,11 +25,33 @@ export class UserPage extends BasePage {
         this.service = service;
     }
 
+    getOperationErrorMessage() {
+        return 'Запрещено оставлять систему без Администратора';
+    }
+
+    onAddDone() {
+        this.popSuccess('Пользователь добавлен');
+    }
+
+    onSaveDone() {
+        this.popSuccess('Пользователь обновлен');
+    }
+
+    onChangePassDone() {
+        this.popSuccess('Пароль успешно изменен');
+    }
+
     onDeleteDone() {
+        this.popSuccess('Пользователь заблокирован');
         this.removedList.onRefresh();
     }
 
     onRestoreDone() {
+        this.popSuccess('Пользователь восстановлен');
         this.list.onRefresh();
+    }
+
+    onDropDone(id: number) {
+        this.popSuccess('Пользователь удален из системы');
     }
 }

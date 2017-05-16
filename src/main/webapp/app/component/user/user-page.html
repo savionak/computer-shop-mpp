@@ -3,11 +3,15 @@
 <toaster-container></toaster-container>
 <user-list
         [isReadOnly]="isReadOnly"
+        (onAdd)="onAddDone()"
+        (onSave)="onSaveDone()"
+        (onChangePassDone)="onChangePassDone()"
         (onDelete)="onDeleteDone($event)"
         (onError)="onError($event)">
 </user-list>
 <hr/>
 <user-removed-list *ngIf="!isReadOnly"
                    (onRestore)="onRestoreDone($event)"
+                   (onDrop)="onDropDone($event)"
                    (onError)="onError($event)">
 </user-removed-list>

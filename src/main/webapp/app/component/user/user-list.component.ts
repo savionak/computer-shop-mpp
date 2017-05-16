@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, EventEmitter, Output} from "@angular/core";
 
 import {ListComponent} from "../base/list.component";
 import {UserBriefModel} from "../../model/brief/user-brief-model";
@@ -11,6 +11,7 @@ import {UserAuthModel} from "../../model/full/user-auth-model";
     templateUrl: './user-list.component.html'
 })
 export class UserListComponent extends ListComponent<UserAuthModel, UserBriefModel> {
+    @Output('onChangePassDone') changePassCallBack: EventEmitter<null> = new EventEmitter();
 
     constructor(service: UserAuthService) {
         super(service);
@@ -18,5 +19,9 @@ export class UserListComponent extends ListComponent<UserAuthModel, UserBriefMod
 
     protected getEmptyModel(): UserAuthModel {
         return UserAuthModel.empty();
+    }
+
+    onChangePassDone() {
+        this.changePassCallBack.emit();
     }
 }
