@@ -26,15 +26,29 @@ export class OrderPage extends BasePage {
         this.service = service;
     }
 
+    getOperationErrorMessage() {
+        return this.COMPONENTS_ERROR_MSG;
+    }
+
+    onAddDone() {
+        this.popSuccess('Заказ добавлен');
+    }
+
+    onDeleteDone() {
+        this.popSuccess('Заказ удален');
+    }
+
+    onAcceptDone() {
+        this.popSuccess('Заказ принят');
+    }
+
     onCancelDone() {
+        this.popSuccess('Заказ отменен');
         this.removedList.onRefresh();
     }
 
     onRestoreDone() {
+        this.popSuccess('Заказ восстановлен');
         this.list.onRefresh();
-    }
-
-    onDeleteDone() {
-
     }
 }

@@ -4,6 +4,8 @@
 <order-list
         [isReadOnly]="isReadOnly"
         (onCancelOrderDone)="onCancelDone($event)"
+        (onAcceptOrderDone)="onAcceptDone($event)"
+        (onAdd)="onAddDone($event)"
         (onError)="onError($event)">
 </order-list>
 <hr/>
