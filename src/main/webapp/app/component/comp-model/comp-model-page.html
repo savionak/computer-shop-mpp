@@ -3,6 +3,8 @@
 <toaster-container></toaster-container>
 <comp-model-list
         [isReadOnly]="isReadOnly"
+        (onAdd)="onAddDone($event)"
+        (onSave)="onSaveDone($event)"
         (onDelete)="onDeleteDone($event)"
         (onError)="onError($event)">
 </comp-model-list>

@@ -7,6 +7,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {HttpOAuthService} from "../../shared/http-oauth.service";
 
 import {ToasterService} from "angular2-toaster";
+import {ComponentModelModel} from "../../model/full/component-model-model";
 
 @Component({
     selector: 'model-page',
@@ -24,11 +25,21 @@ export class ComponentModelPage extends BasePage {
         this.service = service;
     }
 
+    onAddDone(model: ComponentModelModel) {
+        this.toasterService.pop('success', 'Модель добавлена');
+    }
+
+    onSaveDone(model: ComponentModelModel) {
+        this.toasterService.pop('success', 'Модель обновлена');
+    }
+
     onDeleteDone() {
+        this.toasterService.pop('success', 'Модель удалена');
         this.removedList.onRefresh();
     }
 
     onRestoreDone() {
+        this.toasterService.pop('success', 'Модель восстановлена');
         this.list.onRefresh();
     }
 }
