@@ -49,14 +49,14 @@ export class AssemblyPage extends BasePage implements OnInit, OnDestroy {
     }
 
     onOrderSaveDone(model: OrderModel) {
-        this.toasterService.pop('success', 'Заказ обновлен');
+        this.popSuccess('Заказ обновлен');
     }
 
     onAddDone(model: AssemblyModel) {
-        this.toasterService.pop('success', 'Сборка добавлена');
+        this.popSuccess('Сборка добавлена');
     }
 
     onDeleteDone() {
-        this.toasterService.pop('success', `Сборка удалена из заказа`);
+        this.popSuccess('Сборка удалена из заказа');
     }
 }

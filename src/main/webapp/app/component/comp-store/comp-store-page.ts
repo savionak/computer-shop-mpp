@@ -23,7 +23,7 @@ export class ComponentStorePage extends BasePage {
     }
 
     onUpdateDone() {
-        this.toasterService.pop('success', 'Склад обновлен');
+        this.popSuccess('Склад обновлен');
         this.list.onRefresh();
     }
 }

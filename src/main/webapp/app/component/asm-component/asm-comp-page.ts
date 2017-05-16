@@ -35,19 +35,19 @@ export class AssemblyComponentPage extends BasePage implements OnInit {
     }
 
     onAsmSave(model: AssemblyModel) {
-        this.toasterService.pop('success', 'Сборка обновлена');
+        this.popSuccess('Сборка обновлена');
     }
 
     onComponentAdd(model: AssemblyComponentModel) {
-        this.toasterService.pop('success', 'Компонент добавлен');
+        this.popSuccess('Компонент добавлен');
     }
 
     onComponentSave(model: AssemblyComponentModel) {
-        this.toasterService.pop('success', 'Компонент обновлен');
+        this.popSuccess('Компонент обновлен');
     }
 
     onDeleteDone() {
-        this.toasterService.pop('success', 'Компонент удален из сборки');
+        this.popSuccess('Компонент удален из сборки');
         this.list.onRefresh();
     }
 }
