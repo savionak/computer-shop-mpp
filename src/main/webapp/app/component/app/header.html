@@ -10,7 +10,7 @@
         </div>
         <div class="collapse navbar-collapse" id="navigation" *ngIf="isLoggedIn()">
             <ul class="nav navbar-nav">
-                <li *ngFor="let item of getNavItems()"><a
+                <li class="{{isActive(item) ? 'active' : ''}}" *ngFor="let item of getNavItems()"><a
                         routerLink="{{item['path']+'/'+item['access']}}">{{item['name']}}</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">

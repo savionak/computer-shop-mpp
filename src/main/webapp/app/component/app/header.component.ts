@@ -15,6 +15,11 @@ export class HeaderComponent {
 
     }
 
+    private isActive(item: any): boolean {
+        let itemPath = '/' + item['path'] + '/' + item['access'];
+        return this.router.url.startsWith(itemPath);
+    }
+
     private getUser() {
         return this.authService.getCurrentUser().user;
     }
