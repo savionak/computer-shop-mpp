@@ -1,6 +1,7 @@
 import {Component} from "@angular/core";
 import {CredentialsModel} from "./login-model";
 import {HttpOAuthService} from "../../shared/http-oauth.service";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -12,7 +13,7 @@ export class LoginComponent {
     private credentials = new CredentialsModel();
     private error: string;
 
-    constructor(private authService: HttpOAuthService) {
+    constructor(private authService: HttpOAuthService, private router: Router) {
 
     }
 
@@ -24,6 +25,8 @@ export class LoginComponent {
                     alert("Success!");
                     console.log("Success!\nUser is:\n", res);
                     this.authService.setCurrentUser(res);
+                    let next = this.authService.getUserRoutes()['default'];
+                    this.router.navigate([next['path'], next['access']]);
                 },
                 (err) => {
                     // TODO: show popup
