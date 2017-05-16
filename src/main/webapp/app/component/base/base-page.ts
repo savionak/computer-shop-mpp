@@ -75,7 +75,9 @@ export class BasePage implements OnInit, OnDestroy {
         console.log(error);
         let errNum = error['errorNumber'];
         if (errNum) {
-            if ((errNum == "OPERATION_ERROR") || (errNum == "CONSTRAINTS_ERROR")) {
+            if (errNum == "OPERATION_ERROR") {
+                this.popError(this.getOperationErrorMessage());
+            } else if (errNum == "CONSTRAINTS_ERROR") {
                 this.popDataError();
             } else {
                 this.popServerError();
@@ -93,27 +95,44 @@ export class BasePage implements OnInit, OnDestroy {
         }
     }
 
+    protected getOperationErrorMessage(): string {
+        return this.DATA_ERROR_MSG;
+    }
+
     popSuccess(text: string) {
         this.toasterService.pop('success', text);
     }
 
     popError(text?: string) {
-        this.toasterService.pop('error', 'Ошибка', text);
+        this.toasterService.pop('error', this.ERROR_TITLE, text);
     }
 
     popServerError() {
-        this.toasterService.pop('error', 'Ошибка сервера', 'Свяжитесь с администаратором');
+        this.toasterService.pop('error', this.SERVER_ERROR_TITLE, this.CONTACT_ADMIN);
     }
 
     popDataError() {
-        this.toasterService.pop('error', 'Неверные данные', 'Проверьте корректность данных');
+        this.toasterService.pop('error', this.INVALID_DATA_TITLE, this.DATA_ERROR_MSG);
     }
 
     popConnectionError() {
-        this.toasterService.pop('error', 'Ошибка подключения');
+        this.toasterService.pop('error', this.CONNECTION_ERROR_TITLE);
     }
 
     popNavigationError() {
-        this.toasterService.pop('error', 'Oops...', 'Что-то пошло не так');
+        this.toasterService.pop('error', this.NAVIGATION_ERROR_TITLE, this.NAVIGATION_ERROR_MSG);
     }
+
+    protected ERROR_TITLE = 'Ошибка';
+
+    protected INVALID_DATA_TITLE = 'Неверные данные';
+    protected readonly DATA_ERROR_MSG = 'Проверьте корректность данных';
+
+    protected SERVER_ERROR_TITLE = 'Ошибка сервера';
+    protected readonly CONTACT_ADMIN = 'Свяжитесь с администаратором';
+
+    protected CONNECTION_ERROR_TITLE = 'Ошибка подключения';
+
+    protected NAVIGATION_ERROR_TITLE = 'Oops...';
+    protected NAVIGATION_ERROR_MSG = 'Что-то пошло не так';
 }
