@@ -7,6 +7,7 @@ import {AssemblyService} from "../../service/assembly.service";
 import {BasePage} from "../base/base-page";
 import {HttpOAuthService} from "../../shared/http-oauth.service";
 
+import {ToasterService} from "angular2-toaster";
 
 @Component({
     selector: 'asm-comp-page',
@@ -18,8 +19,9 @@ export class AssemblyComponentPage extends BasePage implements OnInit {
 
     @ViewChild(AssemblyComponentListComponent) list: AssemblyComponentListComponent;
 
-    constructor(authService: HttpOAuthService, r: Router, route: ActivatedRoute, private assemblyService: AssemblyService) {
-        super(authService, r, route);
+    constructor(authService: HttpOAuthService, r: Router, route: ActivatedRoute, private assemblyService: AssemblyService,
+                toasterService: ToasterService) {
+        super(authService, r, route, toasterService);
     }
 
     ngOnInit(): void {
@@ -27,7 +29,7 @@ export class AssemblyComponentPage extends BasePage implements OnInit {
         this.asmId = +this.route.snapshot.params['asmId'];
         this.assemblyService.get(this.asmId).subscribe(
             model => this.assembly = model,
-            error => this.error = error
+            error => this.popConnectionError()
         );
     }
 

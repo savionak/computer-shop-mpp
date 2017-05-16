@@ -1,10 +1,6 @@
 <h2>Provider</h2>
 <hr/>
-<div *ngIf="error">
-    {{error}}
-    <button (click)="onCloseError()">X</button>
-    <hr/>
-</div>
+<toaster-container></toaster-container>
 <provider-list
         [isReadOnly]="isReadOnly"
         (onDelete)="onDeleteDone($event)"

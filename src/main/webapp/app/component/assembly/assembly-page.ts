@@ -9,6 +9,7 @@ import {BasePage} from "../base/base-page";
 import {Subscription} from "rxjs/Subscription";
 import {HttpOAuthService} from "../../shared/http-oauth.service";
 
+import {ToasterService} from "angular2-toaster";
 
 @Component({
     selector: 'asm-page',
@@ -23,8 +24,9 @@ export class AssemblyPage extends BasePage implements OnInit, OnDestroy {
 
     @ViewChild(AssemblyListComponent) list: AssemblyListComponent;
 
-    constructor(authService: HttpOAuthService, r: Router, service: AssemblyService, private orderService: OrderService, route: ActivatedRoute) {
-        super(authService, r, route);
+    constructor(authService: HttpOAuthService, r: Router, service: AssemblyService, private orderService: OrderService, route: ActivatedRoute,
+                toasterService: ToasterService) {
+        super(authService, r, route, toasterService);
         this.service = service;
     }
 
@@ -35,11 +37,11 @@ export class AssemblyPage extends BasePage implements OnInit, OnDestroy {
                 this.orderId = +p['id'];
                 this.orderService.get(this.orderId).subscribe(
                     model => this.order = model,
-                    error => this.error = error
+                    error => this.popConnectionError()
                 );
             },
             error => {
-                this.error = error;
+                this.popNavigationError()
             }
         );
     }
@@ -51,13 +53,5 @@ export class AssemblyPage extends BasePage implements OnInit, OnDestroy {
 
     onDeleteDone() {
         this.list.onRefresh();
-    }
-
-    onError(error: string) {
-        this.error = error;
-    }
-
-    onCloseError() {
-        this.error = null;
     }
 }

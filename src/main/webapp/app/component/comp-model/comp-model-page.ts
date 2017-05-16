@@ -6,6 +6,7 @@ import {BasePage} from "../base/base-page";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpOAuthService} from "../../shared/http-oauth.service";
 
+import {ToasterService} from "angular2-toaster";
 
 @Component({
     selector: 'model-page',
@@ -17,8 +18,9 @@ export class ComponentModelPage extends BasePage {
     @ViewChild(ComponentModelListComponent) list: ComponentModelListComponent;
     @ViewChild(ComponentModelRemovedListComponent) removedList: ComponentModelRemovedListComponent;
 
-    constructor(authService: HttpOAuthService, r: Router, service: ComponentModelService, route: ActivatedRoute) {
-        super(authService, r, route);
+    constructor(authService: HttpOAuthService, r: Router, service: ComponentModelService, route: ActivatedRoute,
+                toasterService: ToasterService) {
+        super(authService, r, route, toasterService);
         this.service = service;
     }
 

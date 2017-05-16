@@ -1,10 +1,6 @@
 <h2>Component</h2>
 <hr/>
-<div *ngIf="error">
-    {{error}}
-    <button (click)="onCloseError()">X</button>
-    <hr/>
-</div>
+<toaster-container></toaster-container>
 <asm-edit
         [model]="assembly"
         [isEmbedded]="true"

@@ -5,15 +5,17 @@ import {Subscription} from "rxjs/Subscription";
 import {ACCESS, EDIT, VIEW} from "../../shared/route-consts";
 import {HttpOAuthService} from "../../shared/http-oauth.service";
 
+import {ToasterService} from "angular2-toaster";
+
 export class BasePage implements OnInit, OnDestroy {
     private router: Router;
     protected route: ActivatedRoute;
-    protected error: string;
     protected isReadOnly: boolean;
     private sub: Subscription;
     private routerSub: Subscription;
 
-    constructor(private authService: HttpOAuthService, r: Router, route: ActivatedRoute) {
+    constructor(private authService: HttpOAuthService, r: Router, route: ActivatedRoute,
+                protected toasterService: ToasterService) {
         this.route = route;
         this.router = r;
     }
@@ -39,7 +41,8 @@ export class BasePage implements OnInit, OnDestroy {
                 } else {
                     this.router.navigate(['404'], {skipLocationChange: true});
                 }
-            }
+            },
+            error => this.popNavigationError()
         );
         this.sub = this.route.params.subscribe(
             x => {
@@ -55,7 +58,7 @@ export class BasePage implements OnInit, OnDestroy {
                         this.router.navigate(['404'], {skipLocationChange: true});
                 }
             },
-            error => this.error = error
+            error => this.popNavigationError()
         );
     }
 
@@ -69,10 +72,14 @@ export class BasePage implements OnInit, OnDestroy {
     }
 
     onError(error: string) {
-        this.error = error;
+        this.toasterService.pop('error', 'Ошибка', error);
     }
 
-    onCloseError() {
-        this.error = null;
+    popConnectionError() {
+        this.toasterService.pop('error', 'Ошибка подключения');
+    }
+
+    popNavigationError() {
+        this.toasterService.pop('error', 'Oops...', 'Что-то пошло не так');
     }
 }
