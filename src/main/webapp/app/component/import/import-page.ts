@@ -22,11 +22,20 @@ export class ImportPage extends BasePage {
         this.service = service;
     }
 
-    onRestoreDone() {
-        this.list.onRefresh();
+    getOperationErrorMessage() {
+        return this.COMPONENTS_ERROR_MSG;
+    }
+
+    onAddDone() {
+        this.popSuccess('Поставка добавлена');
+    }
+
+    onSaveDone() {
+        this.popSuccess('Поставка обновлена');
     }
 
     onDeleteDone() {
+        this.popSuccess('Поставка удалена');
         this.list.onRefresh();
     }
 }

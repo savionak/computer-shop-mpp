@@ -3,7 +3,8 @@
 <toaster-container></toaster-container>
 <import-list
         [isReadOnly]="isReadOnly"
+        (onAdd)="onAddDone($event)"
+        (onSave)="onSaveDone($event)"
         (onDelete)="onDeleteDone($event)"
         (onError)="onError($event)">
 </import-list>
-<hr/>
