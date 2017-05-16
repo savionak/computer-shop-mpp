@@ -3,6 +3,7 @@
 <toaster-container></toaster-container>
 <comp-store-list
         [isReadOnly]="isReadOnly"
+        (onUpdate)="onUpdateDone()"
         (onDelete)="onDeleteDone($event)"
         (onError)="onError($event)">
 </comp-store-list>

@@ -22,7 +22,8 @@ export class ComponentStorePage extends BasePage {
         this.service = service;
     }
 
-    onRestoreDone() {
+    onUpdateDone() {
+        this.toasterService.pop('success', 'Склад обновлен');
         this.list.onRefresh();
     }
 }

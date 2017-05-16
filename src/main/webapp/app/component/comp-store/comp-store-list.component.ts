@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import {Component, EventEmitter, Input, Output} from "@angular/core";
 
 
 import {ComponentStoreModel} from "../../model/full/component-store-model";
@@ -14,6 +14,8 @@ import {UpdateStorePrice} from "../../model/helper/update-store-price";
 })
 export class ComponentStoreListComponent extends ReadOnlyListComponent<ComponentStoreModel, ComponentStoreBriefModel> {
     @Input() isReadOnly: boolean = false;
+
+    @Output('onUpdate') updateCallBack: EventEmitter<null> = new EventEmitter();
 
     private updatePriceModel: UpdateStorePrice = null;
     private updatedStoreRecord: ComponentStoreBriefModel = null;
@@ -40,6 +42,7 @@ export class ComponentStoreListComponent extends ReadOnlyListComponent<Component
             .subscribe(
                 () => {
                     this.cancelChange();
+                    this.updateCallBack.emit();
                     this.refreshList();
                 },
                 error => this.errorCallBack.emit(error)
