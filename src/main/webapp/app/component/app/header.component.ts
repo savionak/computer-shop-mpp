@@ -24,6 +24,11 @@ export class HeaderComponent {
         return routes['items'];
     }
 
+    private getActive(item: any): string {
+        let itemPath = '/' + item['path'] + '/' + item['access'];
+        return (this.router.url.startsWith(itemPath)) ? "active" : "";
+    }
+
     private isLoggedIn(): boolean {
         return !!this.authService.getCurrentUser();
     }
