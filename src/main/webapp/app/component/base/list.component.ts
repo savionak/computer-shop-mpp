@@ -14,6 +14,8 @@ export abstract class ListComponent<T extends BaseModel, U> extends ReadOnlyList
         this.isViewing = value;
     }
 
+    @Output('onAdd') addCallBack: EventEmitter<number> = new EventEmitter();
+    @Output('onSave') saveCallBack: EventEmitter<number> = new EventEmitter();
     @Output('onDelete') deleteCallBack: EventEmitter<number> = new EventEmitter();
 
     constructor(private _service: CrudService<T, U>) {
@@ -30,6 +32,7 @@ export abstract class ListComponent<T extends BaseModel, U> extends ReadOnlyList
 
     onAddDone(model: T) {
         this.onRefresh();
+        this.addCallBack.emit(model.id);
         this.closeDialog();
     }
 
@@ -41,6 +44,7 @@ export abstract class ListComponent<T extends BaseModel, U> extends ReadOnlyList
 
     onEditDone(model: T) {
         this.onRefresh();
+        this.saveCallBack.emit(model.id);
         this.closeDialog();
     }
 

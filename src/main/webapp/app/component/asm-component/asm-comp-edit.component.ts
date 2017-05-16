@@ -40,7 +40,7 @@ export class AssemblyComponentEditComponent extends EditComponent<AssemblyCompon
     protected update(): void {
         this._service.update(this.model.id, this.model, this.asmId + '').subscribe(
             (res) => {
-                this.editCallback.emit(res);
+                this.saveCallback.emit(res);
             },
             (error) => {
                 this.errorCallback.emit(error);

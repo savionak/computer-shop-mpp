@@ -10,6 +10,7 @@ import {Subscription} from "rxjs/Subscription";
 import {HttpOAuthService} from "../../shared/http-oauth.service";
 
 import {ToasterService} from "angular2-toaster";
+import {AssemblyModel} from "../../model/full/assembly-model";
 
 @Component({
     selector: 'asm-page',
@@ -51,7 +52,16 @@ export class AssemblyPage extends BasePage implements OnInit, OnDestroy {
         super.ngOnDestroy();
     }
 
+    onOrderSaveDone(model: OrderModel) {
+        this.toasterService.pop('success', 'Заказ обновлен');
+    }
+
+    onAddDone(model: AssemblyModel) {
+        this.toasterService.pop('success', 'Сборка добавлена');
+    }
+
     onDeleteDone() {
+        this.toasterService.pop('success', 'Сборка удалена из заказа');
         this.list.onRefresh();
     }
 }

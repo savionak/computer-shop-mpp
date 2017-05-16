@@ -6,12 +6,13 @@
         [isEmbedded]="true"
         [isViewing]="isReadOnly"
         [isEditing]="true"
+        (onSave)="onOrderSaveDone($event)"
         (onError)="onError($event)">
 </order-edit>
 <asm-list
         [isReadOnly]="isReadOnly"
         [orderId]="orderId"
+        (onAdd)="onAddDone($event)"
         (onDelete)="onDeleteDone($event)"
         (onError)="onError($event)">
 </asm-list>
-<hr/>

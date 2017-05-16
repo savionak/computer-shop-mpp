@@ -18,7 +18,7 @@ export class EditComponent<T extends BaseModel, U> {
     }
 
     @Output('onAdd') addCallback: EventEmitter<T> = new EventEmitter();
-    @Output('onEdit') editCallback: EventEmitter<T> = new EventEmitter();
+    @Output('onSave') saveCallback: EventEmitter<T> = new EventEmitter();
     @Output('onCancel') cancelCallback: EventEmitter<null> = new EventEmitter();
     @Output('onError') errorCallback: EventEmitter<any> = new EventEmitter();
 
@@ -50,7 +50,7 @@ export class EditComponent<T extends BaseModel, U> {
         this.service.update(this.model.id, this.model)
             .subscribe(
                 (res) => {
-                    this.editCallback.emit(res);
+                    this.saveCallback.emit(res);
                 },
                 (error) => {
                     this.errorCallback.emit(error);
