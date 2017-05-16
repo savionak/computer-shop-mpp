@@ -16,8 +16,10 @@ import {AssemblyComponentService} from "../../service/assembly-component.service
     selector: 'app',
     template: `
         <header></header>
-        <router-outlet></router-outlet>
-        <!--<footer></footer>-->
+        <div class="page container">
+            <router-outlet></router-outlet>
+        </div>
+        <footer class="footer1"></footer>
     `,
     providers: [
         ProviderService,
