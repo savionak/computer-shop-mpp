@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.validation.Valid;
+
 @RequestMapping("api/assembly")
 public interface AssemblyController
         extends CrudController<AssemblyBriefDto, AssemblyFullDto, Long> {
@@ -26,12 +28,12 @@ public interface AssemblyController
             throws ControllerException;
 
     @RequestMapping(value = "{id}/components/add")
-    AssemblyComponentFullDto addComponent(@PathVariable("id") Long assemblyId, @RequestBody AssemblyComponentFullDto component)
+    AssemblyComponentFullDto addComponent(@PathVariable("id") Long assemblyId, @Valid @RequestBody AssemblyComponentFullDto component)
             throws ControllerException;
 
     @RequestMapping(value = "{id}/components/update/{component_id}")
     AssemblyComponentFullDto updateComponent(@PathVariable("id") Long assemblyId, @PathVariable("component_id") Long componentId,
-                                             @RequestBody AssemblyComponentFullDto componentDto)
+                                             @Valid @RequestBody AssemblyComponentFullDto componentDto)
             throws ControllerException;
 
     @RequestMapping(value = "{id}/components/delete/{component_id}")

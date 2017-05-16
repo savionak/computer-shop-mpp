@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.Objects;
 
 import static by.bsuir.mpp.computershop.controller.exception.wrapper.ServiceCallWrapper.wrapServiceCall;
@@ -71,7 +72,7 @@ public class AssemblyControllerImpl
 
     @Override
     public AssemblyComponentFullDto addComponent(@PathVariable("id") Long assemblyId,
-                                                 @RequestBody AssemblyComponentFullDto componentDto)
+                                                 @Valid @RequestBody AssemblyComponentFullDto componentDto)
             throws ControllerException {
         logger.info(String.format("ADD COMPONENT to ASSEMBLY [%s]", assemblyId));
         componentDto.setAssemblyId(assemblyId);
@@ -83,7 +84,7 @@ public class AssemblyControllerImpl
     @Override
     public AssemblyComponentFullDto updateComponent(@PathVariable("id") Long assemblyId,
                                                     @PathVariable("component_id") Long componentId,
-                                                    @RequestBody AssemblyComponentFullDto componentDto)
+                                                    @Valid @RequestBody AssemblyComponentFullDto componentDto)
             throws ControllerException {
         logger.info(String.format("UPDATE COMPONENT [%s] of ASSEMBLY [%s]", componentId, assemblyId));
         getCheckComponent(assemblyId, componentId);
