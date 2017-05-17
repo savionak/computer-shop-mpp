@@ -9,6 +9,8 @@ export class ResponseHandler {
         let body;
         if (res.text()) {
             body = res.json();
+            // console.log(body);
+            body = ResponseHandler.processPage(body);
             body = ResponseHandler.processModel(body);
         }
         return body || {};
@@ -24,6 +26,16 @@ export class ResponseHandler {
         date = body['orderDate'];
         if (date) {
             result['orderDate'] = new Date(date);
+        }
+        return result;
+    }
+
+    private static processPage(body: any) {
+        let result = Util.copy(body);
+        let content = result['content'];
+        if (content) {
+            // console.log('Page found');
+            result['content'] = content.map(ResponseHandler.processModel);
         }
         return result;
     }
