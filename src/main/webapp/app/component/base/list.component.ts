@@ -5,6 +5,8 @@ import {ReadOnlyListComponent} from "./read-only-list.component";
 
 // T - FullDto, U - BriefDto
 export abstract class ListComponent<T extends BaseModel, U> extends ReadOnlyListComponent<T, U> {
+    private idToDelete: number = null;
+
     protected isEditing: boolean = false;
     @Input() isReadOnly: boolean = false;
 
@@ -23,6 +25,10 @@ export abstract class ListComponent<T extends BaseModel, U> extends ReadOnlyList
     }
 
     protected abstract getEmptyModel(): T;
+
+    protected getDeleteTitle(): string {
+        return "Are you sure?";
+    }
 
     onAdd(): void {
         this.isViewing = false;
@@ -49,10 +55,18 @@ export abstract class ListComponent<T extends BaseModel, U> extends ReadOnlyList
     }
 
     onDelete(model: T): void {
-        let id: number = model.id;
-        if (confirm('Delete model with id = [' + id + '] ?')) {
-            this.remove(id);
+        this.idToDelete = model.id;
+    }
+
+    onDeleteOk() {
+        if (this.idToDelete) {
+            this.remove(this.idToDelete);
         }
+        this.closePopup();
+    }
+
+    protected closePopup() {
+        this.idToDelete = null;
     }
 
     protected remove(id: number) {

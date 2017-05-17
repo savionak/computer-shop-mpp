@@ -8,6 +8,12 @@
                 (onCancel)="onCancel($event)"
                 (onError)="onError($event)">
 </comp-type-edit>
+<popup class="modal ng2modal"
+       *ngIf="idToDelete"
+       [title]="getDeleteTitle()"
+       (onOk)="onDeleteOk()"
+       (onCancel)="closePopup()">
+</popup>
 <div class="row">
     <button type="button" class="btn btn-default btn-sm" (click)="onRefresh()">Refresh</button>
     <button *ngIf="!isReadOnly" type="button" class="btn btn-default btn-sm" (click)="onAdd()">

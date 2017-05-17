@@ -78,6 +78,7 @@ import {
     USER
 } from "./shared/route-consts";
 import {NotFoundPage} from "./component/app/not-found-page";
+import {Popup} from "./component/app/popup.component";
 
 
 const appRoutes: Routes = [
@@ -165,6 +166,8 @@ const appRoutes: Routes = [
     ],
     declarations: [
         AppComponent,
+
+        Popup,
 
         FooterComponent,
         HeaderComponent,

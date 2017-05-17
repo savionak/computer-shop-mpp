@@ -36,4 +36,5 @@ app {
     flex-direction: column;
     background: white;
     border-radius: 5px;
+    box-shadow: grey 3px 3px 8px 4px
 }
