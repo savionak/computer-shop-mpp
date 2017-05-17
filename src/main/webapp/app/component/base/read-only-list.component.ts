@@ -40,7 +40,7 @@ export abstract class ReadOnlyListComponent<T extends BaseModel, U> implements O
         this.service.getList()
             .subscribe(
                 page => {
-                    this.modelsList = page.content
+                    this.modelsList = page.content;
                 },
                 error => {
                     this.errorCallBack.emit(error);

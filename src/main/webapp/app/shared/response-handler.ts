@@ -10,32 +10,41 @@ export class ResponseHandler {
         if (res.text()) {
             body = res.json();
             // console.log(body);
-            body = ResponseHandler.processPage(body);
             body = ResponseHandler.processModel(body);
+            body = ResponseHandler.processPage(body);
         }
         return body || {};
     }
 
-    private static processModel(body: any) {
+    public static processModel(body: any, getString: boolean = false) {
         let result = Util.copy(body);
-        let date = body['importDate'];
-        if (date) {
-            result['importDate'] = new Date(date);
-            // console.log(date);
+        let dateNum = body['importDate'];
+        if (dateNum) {
+            let date: any = new Date(dateNum);
+            if (getString) {
+                date = date.toLocaleString();
+            }
+            result['importDate'] = date;
         }
-        date = body['orderDate'];
-        if (date) {
-            result['orderDate'] = new Date(date);
+        dateNum = body['orderDate'];
+        if (dateNum) {
+            let date: any = new Date(dateNum);
+            if (getString) {
+                date = date.toLocaleString();
+            }
+            result['orderDate'] = date;
         }
         return result;
     }
 
-    private static processPage(body: any) {
-        let result = Util.copy(body);
+    private static processPage(page: any) {
+        let result = Util.copy(page);
         let content = result['content'];
         if (content) {
-            // console.log('Page found');
-            result['content'] = content.map(ResponseHandler.processModel);
+            result['content'] = content.map(
+                (x: any) => {
+                    return ResponseHandler.processModel(x, true);
+                });
         }
         return result;
     }
