@@ -29,6 +29,7 @@
             'angular2-toaster': 'npm:angular2-toaster/bundles/angular2-toaster.umd.js',
 
             'ng2-datetime-picker': 'npm:ng2-datetime-picker/dist',
+            '@ngui/popup': 'npm:@ngui/popup/dist/popup.umd.js',
         },
         // packages tells the System loader how to load when no filename and/or no extension
         packages: {

@@ -64,6 +64,8 @@ import {CanActivateRoot} from "./shared/can-activate-root";
 import {ToasterModule} from "angular2-toaster";
 import {Ng2DatetimePickerModule} from "ng2-datetime-picker";
 
+import {NguiPopupModule} from "@ngui/popup";
+
 import {
     ACCESS,
     ASSEMBLY,
@@ -161,7 +163,8 @@ const appRoutes: Routes = [
         HttpModule,
         JsonpModule,
         ToasterModule,
-        Ng2DatetimePickerModule
+        Ng2DatetimePickerModule,
+        NguiPopupModule,
     ],
     declarations: [
         AppComponent,
