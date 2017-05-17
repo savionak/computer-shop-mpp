@@ -8,6 +8,12 @@
            (onCancel)="onCancel($event)"
            (onError)="onError($event)">
 </user-edit>
+<popup class="modal ng2modal"
+       *ngIf="idToDelete"
+       [title]="getDeleteTitle()"
+       (onOk)="onDeleteOk()"
+       (onCancel)="closePopup()">
+</popup>
 <div>
     <button type="button" (click)="onRefresh()">Refresh</button>
     <button *ngIf="!isReadOnly" type="button" (click)="onAdd()">Add</button>

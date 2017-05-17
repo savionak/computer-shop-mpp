@@ -20,3 +20,9 @@
         </div>
     </div>
 </nav>
+<popup class="modal ng2modal"
+       *ngIf="showPopup"
+       [title]="'Do you really want to Log Out?'"
+       (onOk)="onOk()"
+       (onCancel)="closePopup()">
+</popup>

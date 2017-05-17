@@ -4,14 +4,16 @@ import {Router} from "@angular/router";
 import {Util} from "../../shared/utils";
 import {LOGIN} from "../../shared/route-consts";
 
+import {ToasterService} from "angular2-toaster";
 
 @Component({
     selector: 'header',
     templateUrl: './header.html'
 })
 export class HeaderComponent {
+    private showPopup: boolean;
 
-    constructor(private authService: HttpOAuthService, private router: Router) {
+    constructor(private authService: HttpOAuthService, private router: Router, private toasterService: ToasterService) {
 
     }
 
@@ -39,19 +41,29 @@ export class HeaderComponent {
     }
 
     onLogout() {
-        if (confirm("Are you sure ?"))
-            this.authService.logout()
-                .subscribe(
-                    (res) => {
-                        localStorage.removeItem(Util.STORAGE_KEY);
-                        this.router.navigate([LOGIN]);
-                    },
-                    (err) => {
-                        // TODO: show popup
-                        alert(err);
-                        localStorage.removeItem(Util.STORAGE_KEY);
-                        this.router.navigate([LOGIN]);
-                    }
-                );
+        this.showPopup = true;
+    }
+
+    onOk() {
+        this.authService.logout()
+            .subscribe(
+                (res) => {
+                    this.endLogout();
+                },
+                (err) => {
+                    this.toasterService.pop('error', 'Ошибка при выходе из системы');
+                    this.endLogout();
+                }
+            );
+    }
+
+    closePopup() {
+        this.showPopup = false;
+    }
+
+    endLogout() {
+        localStorage.removeItem(Util.STORAGE_KEY);
+        this.router.navigate([LOGIN]);
+        this.closePopup();
     }
 }
