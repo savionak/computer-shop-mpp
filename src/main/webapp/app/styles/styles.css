@@ -25,3 +25,15 @@ app {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.ng2modal {
+    display: block;
+}
+
+.ng2-modal-dialog {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 5px;
+}

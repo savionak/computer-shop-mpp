@@ -1,19 +1,21 @@
-<div>
-    <button type="button" (click)="onRefresh()">Refresh</button>
+<div class="row">
+    <button type="button" class="btn btn-default btn-sm" (click)="onRefresh()">Refresh</button>
 </div>
-<table>
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Description</th>
-        <th></th>
-    </tr>
-    <tr *ngFor="let model of modelsList">
-        <td>{{model.id}}</td>
-        <td>{{model.name}}</td>
-        <td>{{model.description}}</td>
-        <td>
-            <button type="button" (click)="onRestore(model)">Restore</button>
-        </td>
-    </tr>
-</table>
+<div class="row">
+    <table class="table table-hover table-fixed">
+        <tr>
+            <th class="row__id">Id</th>
+            <th class="row__name">Name</th>
+            <th class="row__descr">Description</th>
+            <th></th>
+        </tr>
+        <tr *ngFor="let model of modelsList">
+            <td class="row__id">{{model.id}}</td>
+            <td class="row__name">{{model.name}}</td>
+            <td class="row__descr">{{model.description}}</td>
+            <td>
+                <button type="button" class="btn btn-success btn-sm" (click)="onRestore(model)">Restore</button>
+            </td>
+        </tr>
+    </table>
+</div>
