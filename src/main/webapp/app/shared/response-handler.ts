@@ -1,6 +1,7 @@
 import {Response} from "@angular/http";
 
 import {Observable} from "rxjs/Observable";
+import {Util} from "./utils";
 
 
 export class ResponseHandler {
@@ -8,8 +9,23 @@ export class ResponseHandler {
         let body;
         if (res.text()) {
             body = res.json();
+            body = ResponseHandler.processModel(body);
         }
         return body || {};
+    }
+
+    private static processModel(body: any) {
+        let result = Util.copy(body);
+        let date = body['importDate'];
+        if (date) {
+            result['importDate'] = new Date(date);
+            console.log(date);
+        }
+        date = body['orderDate'];
+        if (date) {
+            result['orderDate'] = new Date(date);
+        }
+        return result;
     }
 
     static handleError(error: Response | any) {
