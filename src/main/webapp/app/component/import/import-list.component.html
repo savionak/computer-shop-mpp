@@ -26,7 +26,7 @@
     </tr>
     <tr *ngFor="let model of modelsList">
         <td>{{model.id}}</td>
-        <td>{{model.importDate}}</td>
+        <td>{{model.importDate.toLocaleString()}}</td>
         <td>{{model.typeName}}</td>
         <td>{{model.modelName}}</td>
         <td>{{model.purchasePrice}}</td>

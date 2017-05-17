@@ -2,7 +2,7 @@ import {BaseModel} from "../base-model";
 
 
 export class ImportBriefModel extends BaseModel {
-    importDate?: number;
+    importDate?: Date;
     typeid?: string;
     typeName?: string;
     modelId?: string;

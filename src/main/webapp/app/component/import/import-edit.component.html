@@ -6,7 +6,7 @@
         <br/>
         <label>Model: </label><span>{{model.model.name}}</span>
         <br/>
-        <label>ImportDate: </label><span>{{model.importDate}}</span>
+        <label>ImportDate: </label><span>{{model.importDate.toLocaleString()}}</span>
         <br/>
         <label>Count: </label><span>{{model.count}}</span>
         <br/>
@@ -27,7 +27,8 @@
             <br/>
 
             <label for="provider">Provider</label>
-            <select [(ngModel)]="model.provider" id="provider" name="provider" [compareWith]="compareBriefModel" required>
+            <select [(ngModel)]="model.provider" id="provider" name="provider" [compareWith]="compareBriefModel"
+                    required>
                 <option *ngFor="let provider of providersList" [ngValue]="provider">{{provider.name}}</option>
             </select>
             <br/>
@@ -39,7 +40,8 @@
             <br/>
 
             <label for="importDate">ImportDate</label>
-            <input [(ngModel)]="model.importDate" id="importDate" name="importDate" placeholder="Import date"/>
+            <input [(ngModel)]="model.importDate" ng2-datetime-picker id="importDate" name="importDate"/>
+            <!--<input [(ngModel)]="model.importDate" id="importDate" name="importDate" placeholder="Import date"/>-->
             <br/>
 
             <label for="count">Count</label>
@@ -47,7 +49,8 @@
             <br/>
 
             <label for="purchasePrice">PurchasePrice</label>
-            <input [(ngModel)]="model.purchasePrice" id="purchasePrice" name="purchasePrice" placeholder="Import purchasePrice"/>
+            <input [(ngModel)]="model.purchasePrice" id="purchasePrice" name="purchasePrice"
+                   placeholder="Import purchasePrice"/>
             <br/>
 
             <label for="price">Price</label>

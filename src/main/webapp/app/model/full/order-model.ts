@@ -5,7 +5,7 @@ import {CustomerBriefModel} from "../brief/customer-brief-model";
 export class OrderModel extends BaseModel {
     customer: CustomerBriefModel;
     cost: number;
-    orderDate: number;
+    orderDate: Date;
     status: Status;
     canceled: boolean;
     exportAddress: Status;

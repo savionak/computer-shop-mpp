@@ -6,7 +6,7 @@ import {ComponentModelBriefModel} from "../brief/component-model-brief-model";
 export class ImportModel extends BaseModel {
     provider: ProviderBriefModel;
     model: ComponentModelBriefModel;
-    importDate: number;
+    importDate: Date;
     count: number;
     purchasePrice: number;
     price: number;
