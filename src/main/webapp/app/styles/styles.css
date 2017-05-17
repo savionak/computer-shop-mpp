@@ -12,4 +12,16 @@ app {
 
 .page {
     flex-grow: 1;
+    margin: 0 20px;
+}
+
+.table-fixed {
+    table-layout: fixed;
+}
+
+.row__descr {
+    max-width: 65%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
