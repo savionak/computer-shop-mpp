@@ -6,7 +6,7 @@
         <br/>
         <label>Cost: </label><span>{{model.cost}}</span>
         <br/>
-        <label>Order date: </label><span>{{model.orderDate}}</span>
+        <label>Order date: </label><span>{{model.orderDate.toLocaleString()}}</span>
         <br/>
         <label>Status: </label><span>{{model.status}}</span>
         <br/>
@@ -32,7 +32,8 @@
             <br/>
 
             <label for="orderDate">Order Date: </label>
-            <input [(ngModel)]="model.orderDate" id="orderDate" name="orderDate" placeholder="Order date" required/>
+            <input [(ngModel)]="model.orderDate" ng2-datetime-picker id="orderDate" name="orderDate"/>
+            <!--<input [(ngModel)]="model.orderDate" id="orderDate" name="orderDate" placeholder="Order date" required/>-->
             <br/>
 
             <label>Status: </label><span>{{model.status}}</span>

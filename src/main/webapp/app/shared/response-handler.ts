@@ -21,7 +21,7 @@ export class ResponseHandler {
         let date = body['importDate'];
         if (date) {
             result['importDate'] = new Date(date);
-            console.log(date);
+            // console.log(date);
         }
         date = body['orderDate'];
         if (date) {

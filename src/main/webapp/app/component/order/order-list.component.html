@@ -28,7 +28,7 @@
         <td>{{model.id}}</td>
         <td>{{model.customer.name}}</td>
         <td>{{model.cost}}</td>
-        <td>{{model.orderDate}}</td>
+        <td>{{model.orderDate.toLocaleString()}}</td>
         <td>{{model.status}}</td>
         <td>
             <button type="button" (click)="onViewDetails(model)">View</button>
