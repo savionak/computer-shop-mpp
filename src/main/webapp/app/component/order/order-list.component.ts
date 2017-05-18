@@ -43,7 +43,7 @@ export class OrderListComponent extends ListComponent <OrderModel, OrderBriefMod
                     this.refreshList();
                     this.onCancelEmitter.emit();
                 },
-                error => this.errorCallBack.emit(error)
+                error => this.errorCallback.emit(error)
             )
     }
 }

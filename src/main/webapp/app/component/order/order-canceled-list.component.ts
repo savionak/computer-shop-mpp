@@ -48,7 +48,7 @@ export class OrderCanceledListComponent extends RemovedListComponent<OrderModel,
                     this.deleteCallBack.emit(id);
                 },
                 (error) => {
-                    this.errorCallBack.emit(error);
+                    this.errorCallback.emit(error);
                 }
             );
     }
