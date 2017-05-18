@@ -7,6 +7,7 @@
         [isViewing]="isReadOnly"
         [isEditing]="true"
         (onSave)="onAsmSave($event)"
+        (onCancel)="goToAssemblies()"
         (onError)="onError($event)">
 </asm-edit>
 <asm-comp-list
