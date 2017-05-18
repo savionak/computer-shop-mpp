@@ -25,10 +25,6 @@
         <th>Date</th>
         <th>Status</th>
         <th></th>
-        <th></th>
-        <th *ngIf="!isReadOnly"></th>
-        <th *ngIf="!isReadOnly"></th>
-        <th *ngIf="!isReadOnly"></th>
     </tr>
     <tr *ngFor="let model of modelsList">
         <td>{{model.id}}</td>
@@ -38,15 +34,11 @@
         <td>{{model.status}}</td>
         <td>
             <button type="button" (click)="onViewDetails(model)">View</button>
-        </td>
-        <td *ngIf="!isReadOnly">
-            <button type="button" (click)="onEdit(model)">Edit</button>
-        </td>
-        <td *ngIf="!isReadOnly">
-            <button type="button" (click)="onAccept(model)">Accept</button>
-        </td>
-        <td *ngIf="!isReadOnly">
-            <button type="button" (click)="onCancelOrder(model)">Cancel</button>
+            <span *ngIf="!isReadOnly">
+                <button type="button" (click)="onEdit(model)">Edit</button>
+                <button type="button" (click)="onAccept(model)">Accept</button>
+                <button type="button" (click)="onCancelOrder(model)">Cancel</button>
+            </span>
         </td>
     </tr>
 </table>
