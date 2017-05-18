@@ -102,11 +102,19 @@ app {
         min-width: 500px;
     }
 
+    .table-order {
+        min-width: 700px;
+    }
+
     .modal .dialog {
         max-width: 90vw;
     }
 
     .popup {
         max-width: 90vw;
+    }
+
+    .wrappable {
+        white-space: normal !important;
     }
 }

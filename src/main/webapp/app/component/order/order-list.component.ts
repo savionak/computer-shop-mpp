@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Output} from "@angular/core";
 
 import {ListComponent} from "../base/list.component";
-import {OrderModel, Status} from "../../model/full/order-model";
+import {OrderModel} from "../../model/full/order-model";
 import {OrderBriefModel} from "../../model/brief/order-brief-model";
 import {OrderService} from "../../service/order.service";
 import {Router} from "@angular/router";
@@ -32,19 +32,12 @@ export class OrderListComponent extends ListComponent <OrderModel, OrderBriefMod
         this.router.navigate([ORDER, EDIT, model.id]);
     }
 
-    onAccept(model: OrderModel): void {
-        this.orderService.accept(model.id)
-            .subscribe(
-                () => {
-                    this.onAcceptEmitter.emit();
-                    this.refreshList()
-                },
-                error => this.errorCallBack.emit(error)
-            )
+    protected getDeleteTitle(): string {
+        return "Cancel order ?";
     }
 
-    onCancelOrder(model: OrderBriefModel) {
-        this.orderService.cancel(model.id)
+    protected remove(id: number) {
+        this.orderService.cancel(id)
             .subscribe(
                 () => {
                     this.refreshList();
@@ -52,13 +45,5 @@ export class OrderListComponent extends ListComponent <OrderModel, OrderBriefMod
                 },
                 error => this.errorCallBack.emit(error)
             )
-    }
-
-    canAccept(model: OrderModel): boolean {
-        return model.status != Status.READY;
-    }
-
-    canCancel(model: OrderModel): boolean {
-        return model.status != Status.READY;
     }
 }

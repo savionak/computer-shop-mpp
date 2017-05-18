@@ -43,7 +43,7 @@ export class OrderPage extends BasePage {
     }
 
     onCancelDone() {
-        this.popSuccess('Заказ отменен');
+        this.popWarning('Заказ отменен');
         this.removedList.onRefresh();
     }
 
