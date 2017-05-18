@@ -1,4 +1,4 @@
-<div *ngIf="model">
+<div *ngIf="model" class="ng2-modal-dialog dialog v-center h-center">
     <div *ngIf="isViewing">
         <h3>View assembly {{model.id}}</h3>
         <br/>
@@ -11,7 +11,7 @@
         <label>Count: </label><span>{{model.count}}</span>
         <br/>
 
-        <button type="button" (click)="onClose()">Cancel</button>
+        <button type="button" class="btn btn-default" (click)="onClose()">Cancel</button>
     </div>
     <div *ngIf="!isViewing">
         <h3>{{isEditing ? "Edit" : "Add"}} component:</h3>
@@ -22,7 +22,8 @@
             <label>Asm id: </label><span>{{asmId}}</span>
             <br/>
             <label for="component">Component: </label>
-            <select *ngIf="!isEditing" [(ngModel)]="model.component" id="component" name="component"
+            <select *ngIf="!isEditing" class="form-control" id="component" name="component"
+                    [(ngModel)]="model.component"
                     [compareWith]="compareBriefModel" required>
                 <option *ngFor="let store of storeList" [ngValue]="store">{{store.typeName}} - {{store.modelName}} -
                     {{store.price}}
@@ -30,14 +31,18 @@
             </select>
             <span *ngIf="isEditing">{{model.component.typeName}} - {{model.component.modelName}}</span>
             <br/>
+
             <label>Price: </label><span>{{model.component.price}}</span>
             <br/>
-            <label for="count">Count: </label><input [(ngModel)]="model.count" id="count" name="count"
-                                                     placeholder="Component count"/>
+            <label for="count">Count: </label>
+            <input class="form-control" id="count" name="count"
+                   [(ngModel)]="model.count"
+                   placeholder="Component count"/>
             <br/>
-
-            <button type="submit">{{isEditing ? "Save" : "Add"}}</button>
-            <button *ngIf="!isEmbedded" type="button" (click)="onClose()">Cancel</button>
+            <div>
+                <button type="submit" class="btn btn-success">{{isEditing ? "Save" : "Add"}}</button>
+                <button *ngIf="!isEmbedded" type="button" class="btn btn-default" (click)="onClose()">Cancel</button>
+            </div>
         </form>
     </div>
 </div>

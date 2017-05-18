@@ -22,8 +22,10 @@
             <textarea [(ngModel)]="model.description" id="description" name="description" rows="5"
                       placeholder="Type description" class="form-control">
             </textarea><br/>
-            <button type="submit" class="btn btn-success">{{isEditing ? "Save" : "Add"}}</button>
-            <button type="button" class="btn btn-default" (click)="onClose()">Cancel</button>
+            <div>
+                <button type="submit" class="btn btn-success">{{isEditing ? "Save" : "Add"}}</button>
+                <button type="button" class="btn btn-default" (click)="onClose()">Cancel</button>
+            </div>
         </form>
     </div>
 </div>
