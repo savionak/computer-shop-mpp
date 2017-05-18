@@ -15,6 +15,8 @@ app {
     margin: 0 20px;
 }
 
+/* Table */
+
 .table-fixed {
     table-layout: fixed;
 }
@@ -25,6 +27,8 @@ app {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+/* Modal dialog */
 
 .ng2modal {
     display: block;
@@ -40,27 +44,8 @@ app {
     box-shadow: grey 3px 3px 8px 4px
 }
 
-.popup__title {
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.popup__buttons {
-    margin-left: auto;
-    margin-right: auto;
-}
-
 .modal .dialog {
     max-width: 75vw;
-}
-
-.dialog textarea {
-    resize: vertical;
-}
-
-.popup {
-    margin-top: 10vh;
-    max-width: 50vw;
 }
 
 .modal .v-center {
@@ -74,12 +59,33 @@ app {
     margin-right: auto;
 }
 
+.dialog textarea {
+    resize: vertical;
+}
+
+/* Popup */
+
+.popup {
+    margin-top: 10vh;
+    max-width: 50vw;
+}
+
+.popup__title {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.popup__buttons {
+    margin-left: auto;
+    margin-right: auto;
+}
+
 @media (max-width: 768px) {
-    .popup {
+    .modal .dialog {
         max-width: 90vw;
     }
 
-    .modal .dialog {
+    .popup {
         max-width: 90vw;
     }
 }
