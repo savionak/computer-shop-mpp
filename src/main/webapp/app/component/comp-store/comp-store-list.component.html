@@ -1,22 +1,29 @@
-<div *ngIf="updatePriceModel && !isReadOnly">
-    <h3>Change price of record</h3>
-    <label>Type: </label><span>{{updatedStoreRecord.typeName}}</span>
-    <br/>
-    <label>Model: </label><span>{{updatedStoreRecord.modelName}}</span>
-    <br/>
-    <label>Price: </label><span>{{updatedStoreRecord.price}}</span>
-    <br/>
-    <label>Count: </label><span>{{updatedStoreRecord.count}}</span>
-    <hr/>
-    <label for="price">New Price: </label>
-    <input [(ngModel)]="updatePriceModel.newPrice" id="price" name="price" placeholder="Assembly count" required/>
-    <br/>
-    <label for="count">New Count: </label>
-    <input [(ngModel)]="updatePriceModel.newCount" id="count" name="count" placeholder="Assembly count" required/>
-    <br/>
-    <button type="button" (click)="onApplyPrice()">Apply</button>
-    <button type="button" (click)="onCancelChange()">Cancel</button>
-    <hr/>
+<div *ngIf="updatePriceModel && !isReadOnly" class="modal ng2modal">
+    <div class="ng2-modal-dialog dialog v-center h-center">
+        <div class="form-group">
+            <h3>Change price of record</h3>
+            <label>Type: </label><span>{{updatedStoreRecord.typeName}}</span>
+            <br/>
+            <label>Model: </label><span>{{updatedStoreRecord.modelName}}</span>
+            <br/>
+            <label>Price: </label><span>{{updatedStoreRecord.price}}</span>
+            <br/>
+            <label>Count: </label><span>{{updatedStoreRecord.count}}</span>
+            <hr/>
+            <label for="price">New Price: </label>
+            <input class="form-control" id="price" name="price"
+                   [(ngModel)]="updatePriceModel.newPrice"
+                   placeholder="{{updatedStoreRecord.price}}" required/>
+            <br/>
+            <label for="count">New Count: </label>
+            <input class="form-control" id="count" name="count"
+                   [(ngModel)]="updatePriceModel.newCount"
+                   placeholder="{{updatedStoreRecord.count}}" required/>
+            <br/>
+            <button type="button" class="btn btn-success" (click)="onApplyPrice()">Apply</button>
+            <button type="button" class="btn btn-default" (click)="onCancelChange()">Cancel</button>
+        </div>
+    </div>
 </div>
 <div>
     <button type="button" (click)="onRefresh()">Refresh</button>
@@ -37,7 +44,7 @@
         <td>{{model.price}}</td>
         <td>{{model.count}}</td>
         <td>
-            <button *ngIf="!isReadOnly" type="button" (click)="onChange(model)">Change</button>
+            <button *ngIf="!isReadOnly" type="button" class="btn btn-default" (click)="onChange(model)">Change</button>
         </td>
     </tr>
 </table>
