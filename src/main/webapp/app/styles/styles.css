@@ -19,9 +19,23 @@ app {
 
 .table-fixed {
     table-layout: fixed;
+    border-collapse: collapse;
+    white-space: nowrap;
 }
 
-.row__descr {
+.th__id {
+    width: 50px;
+}
+
+.th__name {
+    width: 200px;
+}
+
+.th__buttons {
+    width: 150px;
+}
+
+.row__text {
     width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -80,6 +94,10 @@ app {
 }
 
 @media (max-width: 768px) {
+    .table-fixed {
+        min-width: 500px;
+    }
+
     .modal .dialog {
         max-width: 90vw;
     }
