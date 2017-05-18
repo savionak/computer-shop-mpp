@@ -18,7 +18,9 @@
                 <td class="row__text">{{model.name}}</td>
                 <td class="row__text">{{model.description}}</td>
                 <td>
-                    <button type="button" class="btn btn-success btn-sm" (click)="onRestore(model)">Restore</button>
+                    <div class="row__buttons">
+                        <button type="button" class="btn btn-success btn-sm" (click)="onRestore(model)">Restore</button>
+                    </div>
                 </td>
             </tr>
             </tbody>

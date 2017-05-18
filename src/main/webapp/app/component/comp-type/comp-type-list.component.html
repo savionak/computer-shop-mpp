@@ -37,17 +37,19 @@
                 <td class="row__text">{{model.name}}</td>
                 <td class="row__text">{{model.description}}</td>
                 <td>
-                    <button type="button" class="btn btn-info btn-sm" (click)="onViewDetails(model)">
-                        <span class="glyphicon glyphicon-info-sign"></span>
-                    </button>
-                    <span *ngIf="!isReadOnly">
-                    <button type="button" class="btn btn-default btn-sm" (click)="onEdit(model)">
-                        <span class="glyphicon glyphicon-pencil"></span>
-                    </button>
-                    <button type="button" class="btn btn-danger btn-sm" (click)="onDelete(model)">
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </button>
-                </span>
+                    <div class="row__buttons">
+                        <button type="button" class="btn btn-info btn-sm" (click)="onViewDetails(model)">
+                            <span class="glyphicon glyphicon-info-sign"></span>
+                        </button>
+                        <span *ngIf="!isReadOnly">
+                            <button type="button" class="btn btn-default btn-sm" (click)="onEdit(model)">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                            <button type="button" class="btn btn-danger btn-sm" (click)="onDelete(model)">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </span>
+                    </div>
                 </td>
             </tr>
             </tbody>

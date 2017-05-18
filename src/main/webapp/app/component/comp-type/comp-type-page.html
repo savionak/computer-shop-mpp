@@ -8,7 +8,7 @@
         (onDelete)="onDeleteDone($event)"
         (onError)="onError($event)">
 </comp-type-list>
-<hr/>
+<hr *ngIf="!isReadOnly"/>
 <comp-type-removed-list
         *ngIf="!isReadOnly"
         (onRestore)="onRestoreDone($event)"

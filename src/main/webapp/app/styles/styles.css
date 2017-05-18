@@ -41,6 +41,9 @@ app {
     text-overflow: ellipsis;
 }
 
+.row__buttons {
+    float: right;
+}
 /* Modal dialog */
 
 .ng2modal {
@@ -74,6 +77,10 @@ app {
 
 .dialog textarea {
     resize: vertical;
+}
+
+.dialog__row {
+    margin-top: 5px;
 }
 
 /* Popup */
