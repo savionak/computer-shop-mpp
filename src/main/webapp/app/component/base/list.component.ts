@@ -77,7 +77,7 @@ export abstract class ListComponent<T extends BaseModel, U> extends ReadOnlyList
                     this.deleteCallBack.emit(id);
                 },
                 (error) => {
-                    this.errorCallBack.emit(error);
+                    this.errorCallback.emit(error);
                 }
             );
     }
