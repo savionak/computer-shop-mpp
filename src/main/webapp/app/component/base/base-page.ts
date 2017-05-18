@@ -103,6 +103,10 @@ export class BasePage implements OnInit, OnDestroy {
         this.toasterService.pop('success', text);
     }
 
+    popWarning(text: string) {
+        this.toasterService.pop('warning', text);
+    }
+
     popError(text?: string) {
         this.toasterService.pop('error', this.ERROR_TITLE, text);
     }
