@@ -9,6 +9,7 @@ import {HttpOAuthService} from "../../shared/http-oauth.service";
 
 import {ToasterService} from "angular2-toaster";
 import {AssemblyModel} from "../../model/full/assembly-model";
+import {EDIT, ORDER} from "../../shared/route-consts";
 
 @Component({
     selector: 'asm-page',
@@ -21,7 +22,7 @@ export class AssemblyPage extends BasePage implements OnInit, OnDestroy {
     protected orderId: number;
     protected order: OrderModel;
 
-    constructor(authService: HttpOAuthService, r: Router, service: AssemblyService, private orderService: OrderService, route: ActivatedRoute,
+    constructor(authService: HttpOAuthService, private r: Router, service: AssemblyService, private orderService: OrderService, route: ActivatedRoute,
                 toasterService: ToasterService) {
         super(authService, r, route, toasterService);
         this.service = service;
@@ -48,8 +49,22 @@ export class AssemblyPage extends BasePage implements OnInit, OnDestroy {
         super.ngOnDestroy();
     }
 
-    onOrderSaveDone(model: OrderModel) {
-        this.popSuccess('Заказ обновлен');
+    onOrderSaveDone(model: OrderModel): void {
+        this.orderService.accept(model.id)
+            .subscribe(
+                () => {
+                    this.popSuccess('Заказ обновлен');
+                    setTimeout(() => {
+                        this.goToOrders();
+                    }, 500);
+
+                },
+                error => this.onError(error)
+            )
+    }
+
+    goToOrders() {
+        this.r.navigate([ORDER, EDIT]);
     }
 
     onAddDone(model: AssemblyModel) {

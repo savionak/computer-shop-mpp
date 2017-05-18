@@ -14,7 +14,6 @@ import {EDIT, ORDER, VIEW} from "../../shared/route-consts";
 })
 export class OrderListComponent extends ListComponent <OrderModel, OrderBriefModel> {
     @Output('onCancelOrderDone') onCancelEmitter: EventEmitter<null> = new EventEmitter();
-    @Output('onAcceptOrderDone') onAcceptEmitter: EventEmitter<null> = new EventEmitter();
 
     constructor(private orderService: OrderService, private router: Router) {
         super(orderService);
