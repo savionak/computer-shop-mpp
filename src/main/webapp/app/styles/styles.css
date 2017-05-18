@@ -20,7 +20,6 @@ app {
 .table-fixed {
     table-layout: fixed;
     border-collapse: collapse;
-    white-space: nowrap;
 }
 
 .th__id {
@@ -37,6 +36,7 @@ app {
 
 .row__text {
     width: 100%;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
