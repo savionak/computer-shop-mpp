@@ -12,7 +12,7 @@
         <button type="button" class="btn btn-default" (click)="onClose()">Cancel</button>
     </div>
     <div *ngIf="!isViewing">
-        <h3>{{isEditing ? "Edit" : "Add"}} type №{{model.id}}</h3>
+        <h3>{{isEditing ? "Edit" : "Add"}} type {{isEditing ? '№' + model.id : ''}}</h3>
         <form (submit)="onAction()">
             <label for="name">Name</label>
             <input [(ngModel)]="model.name" class="form-control" id="name" name="name" placeholder="Type name"/>
