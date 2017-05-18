@@ -1,30 +1,43 @@
-<div>
-    <button type="button" (click)="onRefresh()">Refresh</button>
+<popup class="modal ng2modal"
+       *ngIf="idToDrop"
+       [title]="getRemoveTitle()"
+       (onOk)="onDropOk()"
+       (onCancel)="closePopup()">
+</popup>
+<div class="row">
+    <button type="button" class="btn btn-default btn-sm" (click)="onRefresh()">Refresh</button>
 </div>
-<table>
-    <tr>
-        <th>Id</th>
-        <th>Customer</th>
-        <th>Cost</th>
-        <th>Date</th>
-        <th>Status</th>
-        <th></th>
-        <th></th>
-    </tr>
-    <tr *ngFor="let model of modelsList">
-        <td>{{model.id}}</td>
-        <td>{{model.customer.name}}</td>
-        <td>{{model.cost}}</td>
-        <td>{{model.orderDate}}</td>
-        <td>{{model.status}}</td>
-        <td>
-            <button type="button" (click)="onViewDetails(model)">View</button>
-        </td>
-        <td>
-            <button type="button" (click)="onRestore(model)">Restore</button>
-        </td>
-        <td *ngIf="!isReadOnly">
-            <button type="button" (click)="onDeleteOrder(model)">Drop</button>
-        </td>
-    </tr>
-</table>
+<div class="row">
+    <div class="table-responsive">
+        <table class="table table-hover table-fixed table-order">
+            <thead>
+            <tr>
+                <th class="th__id">Id</th>
+                <th>Date</th>
+                <th>Customer</th>
+                <th>Cost</th>
+                <th class="th__buttons"></th>
+            </tr>
+            </thead>
+            <tr *ngFor="let model of modelsList">
+                <td>{{model.id}}</td>
+                <td class="wrappable">{{model.orderDate}}</td>
+                <td class="row__text">{{model.customer.name}}</td>
+                <td>{{model.cost}}</td>
+                <td class="row__buttons">
+                    <button type="button" class="btn btn-info btn-sm" (click)="onViewDetails(model)">
+                        <span class="glyphicon glyphicon-info-sign"></span>
+                    </button>
+                    <span *ngIf="!isReadOnly">
+                        <button type="button" class="btn btn-success btn-sm" (click)="onRestore(model)">
+                            <span class="glyphicon glyphicon-arrow-up"></span>
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm" (click)="onDrop(model)">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

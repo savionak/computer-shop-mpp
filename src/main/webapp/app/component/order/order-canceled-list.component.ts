@@ -13,6 +13,8 @@ import {Router} from "@angular/router";
 export class OrderCanceledListComponent extends RemovedListComponent<OrderModel, OrderBriefModel> {
     @Output('onDelete') deleteCallBack: EventEmitter<number> = new EventEmitter();
 
+    private idToDrop: number;
+
     constructor(private orderService: OrderService, private router: Router) {
         super(orderService);
     }
@@ -21,11 +23,21 @@ export class OrderCanceledListComponent extends RemovedListComponent<OrderModel,
         this.router.navigate(['order', 'view', model.id]);
     }
 
-    onDeleteOrder(model: OrderModel): void {
-        let id: number = model.id;
-        if (confirm('Delete order with id = [' + id + '] ?')) {
-            this.remove(id);
-        }
+    onDrop(model: OrderModel) {
+        this.idToDrop = model.id;
+    }
+
+    getRemoveTitle(): string {
+        return "Drop order ?";
+    }
+
+    onDropOk() {
+        this.remove(this.idToDrop);
+        this.closePopup();
+    }
+
+    closePopup() {
+        this.idToDrop = null;
     }
 
     protected remove(id: number) {
