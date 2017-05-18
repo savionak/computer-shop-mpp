@@ -1,41 +1,57 @@
 <div *ngIf="model" class="ng2-modal-dialog dialog v-center h-center">
     <div *ngIf="isViewing">
         <h3>View order №{{model.id}}</h3>
-        <br/>
-        <label>Customer: </label><span>{{model.customer.name}}</span>
-        <br/>
-        <label>Cost: </label><span>{{model.cost}}</span>
-        <br/>
-        <label>Order date: </label><span>{{model.orderDate.toLocaleString()}}</span>
-        <br/>
-        <label>Status: </label><span>{{model.status}}</span>
-        <br/>
-        <label>Export address: </label><span>{{model.exportAddress}}</span>
-        <br/>
-        <button *ngIf="!isEmbedded" type="button" class="btn btn-default" (click)="onClose()">Cancel</button>
+        <div class="dialog__row">
+            <label>Customer: </label><span>{{model.customer.name}}</span>
+        </div>
+        <div class="dialog__row">
+            <label>Cost: </label><span>{{model.cost}}</span>
+        </div>
+        <div class="dialog__row">
+            <label>Order date: </label><span>{{model.orderDate.toLocaleString()}}</span>
+        </div>
+        <div class="dialog__row">
+            <label>Status: </label><span>{{model.status}}</span>
+        </div>
+        <div class="dialog__row">
+            <label>Export address: </label><span>{{model.exportAddress}}</span>
+        </div>
+        <div class="dialog__row">
+            <button *ngIf="!isEmbedded" type="button" class="btn btn-default" (click)="onClose()">Cancel</button>
+        </div>
     </div>
     <div *ngIf="!isViewing">
         <h3>{{isEditing ? "Edit" : "Add"}} order {{isEditing ? '№' + model.id : ''}}</h3>
         <form (submit)="onAction()">
-            <label for="customer">Customer: </label>
-            <select [(ngModel)]="model.customer" class="form-control" id="customer" name="customer"
-                    [compareWith]="compareBriefModel" required>
-                <option *ngFor="let customer of customersList" [ngValue]="customer">{{customer.name}}</option>
-            </select>
-            <br/>
-            <label>Cost: <span>{{model.cost || "N/A"}}</span></label>
-            <br/>
-            <label for="orderDate">Order Date: </label>
-            <input [(ngModel)]="model.orderDate" ng2-datetime-picker id="orderDate" name="orderDate"/>
-            <br/>
-            <label>Status: </label><span>{{model.status}}</span>
-            <br/>
-            <label for="exportAddress">Export address: </label>
-            <input [(ngModel)]="model.exportAddress" id="exportAddress" name="exportAddress"
-                   placeholder="Export address" required/>
-            <br/>
-            <button type="submit" class="btn btn-success">{{isEditing ? "Save" : "Add"}}</button>
-            <button *ngIf="!isEmbedded" type="button" class="btn btn-default" (click)="onClose()">Cancel</button>
+            <label for="customer">Customer</label>
+            <div class="dialog__row">
+                <select class="form-control" id="customer" name="customer"
+                        [(ngModel)]="model.customer"
+                        [compareWith]="compareBriefModel" required>
+                    <option *ngFor="let customer of customersList" [ngValue]="customer">{{customer.name}}</option>
+                </select>
+            </div>
+            <div class="dialog__row">
+                <label>Cost: <span>{{model.cost || "N/A"}}</span></label>
+            </div>
+            <div class="dialog__row">
+                <label for="orderDate">Order Date: </label>
+                <input class="form-control" id="orderDate" name="orderDate"
+                       [(ngModel)]="model.orderDate" ng2-datetime-picker/>
+            </div>
+            <div class="dialog__row">
+                <label>Status: </label><span>{{model.status}}</span>
+            </div>
+            <div class="dialog__row">
+                <label for="exportAddress">Export address: </label>
+                <input class="form-control" id="exportAddress" name="exportAddress"
+                       [(ngModel)]="model.exportAddress"
+                       placeholder="Export address" required/>
+            </div>
+            <div class="dialog__row">
+                <button type="submit" class="btn btn-success">{{isEditing ? "Save" : "Add"}}</button>
+                <button *ngIf="!isEmbedded" type="button" class="btn btn-default" (click)="onClose()">Cancel</button>
+            </div>
         </form>
     </div>
     <hr *ngIf="isEmbedded"/>
