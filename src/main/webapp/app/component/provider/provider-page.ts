@@ -26,20 +26,20 @@ export class ProviderPage extends BasePage {
     }
 
     onAddDone() {
-        this.popSuccess('Поставщик добавлен');
+        this.popSuccess('Provider added');
     }
 
     onSaveDone() {
-        this.popSuccess('Поставщик обновлен');
+        this.popSuccess('Provider updated');
     }
 
     onDeleteDone() {
-        this.popSuccess('Поставщик удален');
+        this.popSuccess('Provider deleted');
         this.removedList.onRefresh();
     }
 
     onRestoreDone() {
-        this.popSuccess('Поставщик восстановлен');
+        this.popSuccess('Provider restored');
         this.list.onRefresh();
     }
 }

@@ -54,7 +54,7 @@ export class AssemblyComponentPage extends BasePage implements OnInit, OnDestroy
     }
 
     onAsmSave(model: AssemblyModel) {
-        this.popSuccess('Сборка обновлена');
+        this.popSuccess('Assembly updated');
         setTimeout(() => {
             this.goToAssemblies();
         }, 500);
@@ -66,15 +66,15 @@ export class AssemblyComponentPage extends BasePage implements OnInit, OnDestroy
     }
 
     onComponentAdd(model: AssemblyComponentModel) {
-        this.popSuccess('Компонент добавлен');
+        this.popSuccess('Component added');
     }
 
     onComponentSave(model: AssemblyComponentModel) {
-        this.popSuccess('Компонент обновлен');
+        this.popSuccess('Component updated');
     }
 
     onDeleteDone() {
-        this.popSuccess('Компонент удален из сборки');
+        this.popSuccess('Component deleted from assembly');
         this.list.onRefresh();
     }
 }

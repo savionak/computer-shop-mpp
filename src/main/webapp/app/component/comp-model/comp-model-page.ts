@@ -26,20 +26,20 @@ export class ComponentModelPage extends BasePage {
     }
 
     onAddDone(model: ComponentModelModel) {
-        this.popSuccess('Модель добавлена');
+        this.popSuccess('Model added');
     }
 
     onSaveDone(model: ComponentModelModel) {
-        this.popSuccess('Модель обновлена');
+        this.popSuccess('Model updated');
     }
 
     onDeleteDone() {
-        this.popSuccess('Модель удалена');
+        this.popSuccess('Model deleted');
         this.removedList.onRefresh();
     }
 
     onRestoreDone() {
-        this.popSuccess('Модель восстановлена');
+        this.popSuccess('Model restored');
         this.list.onRefresh();
     }
 }

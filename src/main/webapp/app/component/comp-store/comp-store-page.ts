@@ -27,7 +27,7 @@ export class ComponentStorePage extends BasePage {
     }
 
     onUpdateDone() {
-        this.popSuccess('Склад обновлен');
+        this.popSuccess('Store updated');
         this.list.onRefresh();
     }
 }

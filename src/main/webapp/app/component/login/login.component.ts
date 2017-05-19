@@ -28,7 +28,7 @@ export class LoginComponent {
                     this.router.navigate([next['path'], next['access']]);
                 },
                 (err) => {
-                    this.toasterService.pop('error', 'Ошибка', 'Проверьте введенные данные');
+                    this.toasterService.pop('error', 'Error', 'Check credentials');
                 }
             );
     }

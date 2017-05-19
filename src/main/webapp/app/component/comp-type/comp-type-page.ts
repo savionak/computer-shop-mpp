@@ -26,20 +26,20 @@ export class ComponentTypePage extends BasePage {
     }
 
     onAddDone() {
-        this.popSuccess('Тип добавлен');
+        this.popSuccess('Type added');
     }
 
     onSaveDone() {
-        this.popSuccess('Тип обновлен');
+        this.popSuccess('Type updated');
     }
 
     onDeleteDone() {
-        this.popSuccess('Тип удален');
+        this.popSuccess('Type deletes');
         this.removedList.onRefresh();
     }
 
     onRestoreDone() {
-        this.popSuccess('Тип восстановлен');
+        this.popSuccess('Type restored');
         this.list.onRefresh();
     }
 }
