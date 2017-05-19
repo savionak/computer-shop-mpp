@@ -2,14 +2,18 @@
     <div class="ng2-modal-dialog dialog v-center h-center">
         <div class="form-group">
             <h3>Change price of record</h3>
+            <div  class="dialog__row">
             <label>Type: </label><span>{{updatedStoreRecord.typeName}}</span>
-            <br/>
+                </div>
+            <div  class="dialog__row">
             <label>Model: </label><span>{{updatedStoreRecord.modelName}}</span>
-            <br/>
+            </div>
+            <div  class="dialog__row">
             <label>Price: </label><span>{{updatedStoreRecord.price}}</span>
-            <br/>
+            </div>
+            <div  class="dialog__row">
             <label>Count: </label><span>{{updatedStoreRecord.count}}</span>
-            <hr/>
+           </div>
             <label for="price">New Price: </label>
             <input class="form-control" id="price" name="price"
                    [(ngModel)]="updatePriceModel.newPrice"
@@ -25,26 +29,38 @@
         </div>
     </div>
 </div>
-<div>
-    <button type="button" (click)="onRefresh()">Refresh</button>
+<div class="row">
+    <button type="button"  class="btn btn-default btn-sm" (click)="onRefresh()">Refresh</button>
 </div>
-<table>
+<div class="row">
+    <div class="table-responsive">
+<table class="table table-hover table-fixed">
+    <thead>
     <tr>
-        <th>Id</th>
-        <th>Type</th>
-        <th>Model</th>
-        <th>Price</th>
-        <th>Count</th>
-        <th></th>
+        <th class="th__id">Id</th>
+        <th class="th__type">Type</th>
+        <th class="th__model">Model</th>
+        <th class="th__price">Price</th>
+        <th class="th__count">Count</th>
+        <th class="th__buttons"></th>
     </tr>
+    </thead>
+    <tbody>
     <tr *ngFor="let model of modelsList">
         <td>{{model.id}}</td>
-        <td>{{model.typeName}}</td>
-        <td>{{model.modelName}}</td>
-        <td>{{model.price}}</td>
-        <td>{{model.count}}</td>
+        <td class="row__text">{{model.typeName}}</td>
+        <td class="row__text">{{model.modelName}}</td>
+        <td class="row__text">{{model.price}}</td>
+        <td class="row__text">{{model.count}}</td>
         <td>
-            <button *ngIf="!isReadOnly" type="button" class="btn btn-default" (click)="onChange(model)">Change</button>
+            <div class="row__buttons">
+            <button *ngIf="!isReadOnly" type="button" class="btn btn-default btn-sm" (click)="onChange(model)">
+                <span class="glyphicon glyphicon-pencil"></span>
+            </button>
+                </div>
         </td>
     </tr>
+    </tbody>
 </table>
+    </div>
+</div>

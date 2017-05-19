@@ -17,7 +17,7 @@ import {ToasterService} from "angular2-toaster";
     selector: 'app',
     template: `
         <header></header>
-        <div class="page container-fluid">
+        <div class="page  container-fluid">
             <router-outlet></router-outlet>
         </div>
         <footer class="footer1"></footer>

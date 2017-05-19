@@ -1,32 +1,40 @@
-<div *ngIf="model">
+<div *ngIf="model" class="ng2-modal-dialog dialog v-center h-center">
     <div *ngIf="isViewing">
         <h3>View provider {{model.id}}</h3>
-        <br/>
+        <div class="dialog__row">
         <label>Name: </label><span>{{model.name}}</span>
-        <br/>
+        </div>
+        <div class="dialog__row">
         <label>Removed: </label><span>{{model.removed}}</span>
-        <br/>
-        <label>Description:</label><br/>
-        <textarea readonly>{{model.description}}</textarea>
-        <br/>
-        <button type="button" (click)="onClose()">Cancel</button>
+        </div>
+        <div class="dialog__row">
+        <label for="descr">Description:</label><br/>
+        <textarea class="form-control" id="descr" rows="5"  readonly>{{model.description}}</textarea>
+        </div>
+        <div class="dialog__row">
+        <button type="button" class="btn btn-default" (click)="onClose()">Cancel</button>
+            </div>
     </div>
     <div *ngIf="!isViewing">
         <h3>{{isEditing ? "Edit" : "Add"}} provider:</h3>
         <form (submit)="onAction()">
             <label>Id</label>
             <span>{{model.id}}</span>
-            <br/>
+            <div class="dialog__row">
             <label for="name">Name</label>
-            <input [(ngModel)]="model.name" id="name" name="name" placeholder="Provider name"/>
-            <br/>
+            <input [(ngModel)]="model.name" id="name" name="name" class="form-control" placeholder="Provider name"/>
+            </div>
+            <div class="dialog__row">
             <label for="description">Description</label>
-            <br/>
-            <textarea [(ngModel)]="model.description" id="description" name="description"
+
+            <textarea [(ngModel)]="model.description" id="description" name="description" rows="5" class="form-control"
                       placeholder="Provider description">
-            </textarea><br/>
-            <button type="submit">{{isEditing ? "Save" : "Add"}}</button>
-            <button type="button" (click)="onClose()">Cancel</button>
+            </textarea>
+                </div>
+                <div class="dialog__row">
+                    <button type="submit" class="btn btn-success">{{isEditing ? "Save" : "Add"}}</button>
+                    <button type="button" class="btn btn-default" (click)="onClose()">Cancel</button>
+                    </div>
         </form>
     </div>
 </div>
