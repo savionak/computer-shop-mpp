@@ -9,6 +9,7 @@
         (onError)="onError($event)">
 </provider-list>
 <hr *ngIf="!isReadOnly"/>
+<h3 *ngIf="!isReadOnly">Removed providers</h3>
 <provider-removed-list
         *ngIf="!isReadOnly"
         (onRestore)="onRestoreDone($event)"
