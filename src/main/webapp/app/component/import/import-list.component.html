@@ -1,4 +1,5 @@
-<import-edit *ngIf="model"
+<import-edit  class="modal ng2modal"
+              *ngIf="model"
              [model]="model"
              [isEditing]="isEditing"
              [isViewing]="isViewing"
@@ -13,39 +14,56 @@
        (onOk)="onDeleteOk()"
        (onCancel)="closePopup()">
 </popup>
-<div>
-    <button type="button" (click)="onRefresh()">Refresh</button>
-    <button *ngIf="!isReadOnly" type="button" (click)="onAdd()">Add</button>
+<div class="row">
+    <button type="button" class="btn btn-default btn-sm" (click)="onRefresh()">Refresh</button>
+    <button *ngIf="!isReadOnly" type="button" class="btn btn-default btn-sm" (click)="onAdd()">
+        <span class="glyphicon glyphicon-plus"></span>
+    </button>
 </div>
-<table>
+<div class="row">
+    <div class="table-responsive">
+        <table class="table table-hover table-fixed">
+            <thead>
+
     <tr>
-        <th>Id</th>
-        <th>Date</th>
-        <th>Type</th>
-        <th>Model</th>
-        <th>purchasePrice</th>
-        <th>count</th>
-        <th>providerName</th>
-        <th></th>
-        <th *ngIf="!isReadOnly"></th>
-        <th *ngIf="!isReadOnly"></th>
+        <th class="th__id">Id</th>
+        <th class="th__date">Date</th>
+        <th class="th__type">Type</th>
+        <th class="th__model">Model</th>
+        <th class="th__price">purchasePrice</th>
+        <th class="th__Count">count</th>
+        <th class="th__Provider">providerName</th>
+        <th class="th__buttons"></th>
+        <!--<th *ngIf="!isReadOnly"></th>-->
+        <!--<th *ngIf="!isReadOnly"></th>-->
     </tr>
+            </thead>
+            <tbody>
     <tr *ngFor="let model of modelsList">
-        <td>{{model.id}}</td>
-        <td>{{model.importDate.toString()}}</td>
-        <td>{{model.typeName}}</td>
-        <td>{{model.modelName}}</td>
-        <td>{{model.purchasePrice}}</td>
-        <td>{{model.count}}</td>
-        <td>{{model.providerName}}</td>
+        <td  class="row__text">{{model.id}}</td>
+        <td  class="row__text">{{model.importDate.toString()}}</td>
+        <td  class="row__text">{{model.typeName}}</td>
+        <td  class="row__text">{{model.modelName}}</td>
+        <td  class="row__text">{{model.purchasePrice}}</td>
+        <td  class="row__text">{{model.count}}</td>
+        <td  class="row__text">{{model.providerName}}</td>
         <td>
-            <button type="button" (click)="onViewDetails(model)">View</button>
-        </td>
-        <td *ngIf="!isReadOnly">
-            <button type="button" (click)="onEdit(model)">Edit</button>
-        </td>
-        <td *ngIf="!isReadOnly">
-            <button type="button" (click)="onDelete(model)">Delete</button>
+            <div class="row__buttons">
+                <button type="button" class="btn btn-info btn-sm" (click)="onViewDetails(model)">
+                    <span class="glyphicon glyphicon-info-sign"></span>
+                </button>
+                <span *ngIf="!isReadOnly">
+                            <button type="button" class="btn btn-default btn-sm" (click)="onEdit(model)">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                            <button type="button" class="btn btn-danger btn-sm" (click)="onDelete(model)">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </span>
+            </div>
         </td>
     </tr>
-</table>
+            </tbody>
+        </table>
+    </div>
+</div>

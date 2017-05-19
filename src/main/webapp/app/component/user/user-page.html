@@ -9,7 +9,7 @@
         (onDelete)="onDeleteDone($event)"
         (onError)="onError($event)">
 </user-list>
-<hr/>
+<hr *ngIf="!isReadOnly"/>
 <user-removed-list *ngIf="!isReadOnly"
                    (onRestore)="onRestoreDone($event)"
                    (onDrop)="onDropDone($event)"

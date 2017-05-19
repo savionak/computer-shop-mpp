@@ -1,82 +1,104 @@
-<div *ngIf="model">
+<div *ngIf="model" class="ng2-modal-dialog dialog v-center h-center">
     <div *ngIf="updatePassModel && !isViewing">
         <h3>Change user password: {{model.id}}</h3>
+        <div class="dialog__row">
         <label>User: </label><span>{{model.email}}</span>
-        <br/>
+        </div>
+        <div class="dialog__row">
         <label for="newpass">New password: </label>
-        <input [(ngModel)]="updatePassModel.newHash" id="newpass" name="newpass"
+        <input [(ngModel)]="updatePassModel.newHash" id="newpass" name="newpass " class="form-control"
                placeholder="New password"/>
-        <br/>
-        <button type="button" (click)="onChangePass()">Apply</button>
-        <button type="button" (click)="onCancelChangePass()">Cancel</button>
+       </div>
+        <div class="dialog__row">
+        <button type="button" class="btn btn-success" (click)="onChangePass()">Apply</button>
+        <button type="button" class="btn btn-default" (click)="onCancelChangePass()">Cancel</button>
+            </div>
     </div>
 
     <div *ngIf="isViewing">
         <h3>View users {{model.id}}</h3>
-        <br/>
+        <div class="dialog__row">
         <label>Email: </label><span>{{model.email}}</span>
-        <br/>
+        </div>
+        <div class="dialog__row">
         <label>Pass: </label><span>{{model.pass}}</span>
-        <br/>
+        </div>
+        <div class="dialog__row">
         <label>Role: </label><span>{{model.role}}</span>
-        <br/>
+        </div>
+        <div class="dialog__row">
         <label>Blocked: </label><span>{{model.blocked}}</span>
-        <br/>
+        </div>
+        <div class="dialog__row">
         <label>Removed: </label><span>{{model.removed}}</span>
-        <br/>
+        </div>
+        <div class="dialog__row">
         <label>First Name: </label><span>{{model.userInfo.firstName}}</span>
-        <br/>
+        </div>
+        <div class="dialog__row">
         <label>Last Name: </label><span>{{model.userInfo.lastName}}</span>
-        <br/>
+        </div>
+        <div class="dialog__row">
         <label>Patronymic: </label><span>{{model.userInfo.patronymic}}</span>
-        <br/>
+        </div>
+        <div class="dialog__row">
         <label>Phone: </label><span>{{model.userInfo.phone}}</span>
-        <br/>
+        </div>
+        <div class="dialog__row">
 
-        <button type="button" (click)="onClose()">Cancel</button>
+        <button type="button" class=" btn btn-default" (click)="onClose()">Cancel</button>
+            </div>
     </div>
     <div *ngIf="!isViewing">
         <h3>{{isEditing ? "Edit" : "Add"}} user:</h3>
         <form (submit)="onAction()">
             <label>Id</label>
             <span>{{model.id}}</span>
-            <br/>
+
+    <div class="dialog__row">
             <label for="email">Email</label>
-            <input [(ngModel)]="model.email" id="email" name="email" placeholder="User email"/>
-            <br/>
+            <input [(ngModel)]="model.email" id="email" name="email" class="form-control" placeholder="User email"/>
+    </div>
+            <div class="dialog__row">
 
             <label *ngIf="!isEditing" for="pass">Pass</label>
-            <input *ngIf="!isEditing" [(ngModel)]="model.pass" id="pass" name="pass" placeholder="User pass"/>
+            <input *ngIf="!isEditing" [(ngModel)]="model.pass" id="pass" name="pass" class="form-control" placeholder="User pass"/>
 
-            <button *ngIf="isEditing" type="button" (click)="onStartChangePass(model)">Change pass</button>
-            <br/>
+            <button *ngIf="isEditing" type="button" class="btn btn-success" (click)="onStartChangePass(model)">Change pass</button>
+            </div>
+            <div class="dialog__row">
 
             <label for="role">Role</label>
-            <select [(ngModel)]="model.role" id="role" name="role" required>
+            <select [(ngModel)]="model.role" id="role" name="role" class="form-control" required>
                 <option *ngFor="let role of roles" [ngValue]="role">{{role}}</option>
             </select>
-            <br/>
+            </div>
+            <div class="dialog__row">
 
             <label for="firstName">First Name</label>
-            <input [(ngModel)]="model.userInfo.firstName" id="firstName" name="firstName"
+            <input [(ngModel)]="model.userInfo.firstName" id="firstName" class="form-control" name="firstName"
                    placeholder="User first Name"/>
-            <br/>
+            </div>
+            <div class="dialog__row">
 
             <label for="lastName">Last Name</label>
-            <input [(ngModel)]="model.userInfo.lastName" id="lastName" name="lastName" placeholder="User last Name"/>
-            <br/>
+            <input [(ngModel)]="model.userInfo.lastName" id="lastName" class="form-control" name="lastName" placeholder="User last Name"/>
+            </div>
+            <div class="dialog__row">
 
             <label for="patronymic">Patronymic</label>
-            <input [(ngModel)]="model.userInfo.patronymic" id="patronymic" name="patronymic"
+            <input [(ngModel)]="model.userInfo.patronymic" class="form-control" id="patronymic" name="patronymic"
                    placeholder="User patronymic"/>
-            <br/>
+            </div>
+            <div class="dialog__row">
 
             <label for="phone">Phone</label>
-            <input [(ngModel)]="model.userInfo.phone" id="phone" name="phone" placeholder="User phone"/>
-            <br/>
-
-            <button type="submit">{{isEditing ? "Save" : "Add"}}</button>
-            <button type="button" (click)="onClose()">Cancel</button>
+            <input [(ngModel)]="model.userInfo.phone" id="phone" name="phone" class="form-control" placeholder="User phone"/>
+            </div>
+            <div class="dialog__row">
+                    <button type="submit" class="btn btn-success ">{{isEditing ? "Save" : "Add"}}</button>
+                    <button type="button" class="btn btn-default " (click)="onClose()">Cancel</button>
+                </div>
         </form>
     </div>
 </div>

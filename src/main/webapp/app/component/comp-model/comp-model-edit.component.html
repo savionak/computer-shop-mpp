@@ -1,39 +1,49 @@
-<div *ngIf="model">
+<div *ngIf="model" class="ng2-modal-dialog dialog v-center h-center">
     <div *ngIf="isViewing">
         <h3>View model {{model.id}}</h3>
-        <br/>
+        <div class="dialog__row">
         <label>Name: </label><span>{{model.name}}</span>
-        <br/>
+        </div>
+        <div class="dialog__row">
         <label>Removed: </label><span>{{model.removed}}</span>
-        <br/>
+        </div>
+        <div class="dialog__row">
         <label>Type: </label><span>{{model.type.name}}</span>
-        <br/>
+        </div>
+        <div class="dialog__row">
         <label>Description:</label><br/>
-        <textarea readonly>{{model.description}}</textarea>
-        <br/>
-        <button type="button" (click)="onClose()">Cancel</button>
+        <textarea class="form-control" id="descr" rows="5"  readonly>{{model.description}}</textarea>
+        </div>
+        <div class="dialog__row">
+        <button type="button" class="btn btn-default" (click)="onClose()">Cancel</button>
+        </div>
     </div>
     <div *ngIf="!isViewing">
         <h3>{{isEditing ? "Edit" : "Add"}} model:</h3>
         <form (submit)="onAction()">
             <label>Id</label>
             <span>{{model.id}}</span>
-            <br/>
+            <div class="dialog__row">
             <label for="name">Name</label>
-            <input [(ngModel)]="model.name" id="name" name="name" placeholder="Model name"/>
-            <br/>
+            <input [(ngModel)]="model.name" class="form-control" id="name" name="name" placeholder="Model name"/>
+            </div>
+            <div class="dialog__row">
             <label for="type">Type</label>
-            <select [(ngModel)]="model.type" id="type" name="type" [compareWith]="compareBriefModel" required>
+            <select [(ngModel)]="model.type" class="form-control" id="type" name="type" [compareWith]="compareBriefModel" required>
                 <option *ngFor="let type of typesList" [ngValue]="type">{{type.name}}</option>
             </select>
-            <br/>
+            </div>
+            <div class="dialog__row">
             <label for="description">Description</label>
-            <br/>
+
             <textarea [(ngModel)]="model.description" id="description" name="description"
-                      placeholder="Model description">
-            </textarea><br/>
-            <button type="submit">{{isEditing ? "Save" : "Add"}}</button>
-            <button type="button" (click)="onClose()">Cancel</button>
+                      placeholder="Model description" class="form-control" rows="5">
+            </textarea>
+                </div>
+            <div class="dialog__row">
+            <button type="submit"  class="btn btn-success">{{isEditing ? "Save" : "Add"}}</button>
+            <button type="button"  class="btn btn-default" (click)="onClose()">Cancel</button>
+                </div>
         </form>
     </div>
 </div>

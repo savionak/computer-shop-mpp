@@ -8,7 +8,7 @@
         (onDelete)="onDeleteDone($event)"
         (onError)="onError($event)">
 </provider-list>
-<hr/>
+<hr *ngIf="!isReadOnly"/>
 <provider-removed-list
         *ngIf="!isReadOnly"
         (onRestore)="onRestoreDone($event)"
