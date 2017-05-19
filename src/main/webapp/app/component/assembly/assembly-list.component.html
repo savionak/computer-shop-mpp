@@ -1,5 +1,6 @@
 <asm-edit class="modal ng2modal"
           *ngIf="model"
+          [model]="model"
           [isEditing]="isEditing"
           [isViewing]="isViewing"
           (onAdd)="onAddDone($event)"
