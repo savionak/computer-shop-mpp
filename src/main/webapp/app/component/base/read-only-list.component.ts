@@ -8,7 +8,7 @@ export abstract class ReadOnlyListComponent<T extends BaseModel, U> implements O
     protected model: T = null;
     protected isViewing: boolean = true;
 
-    @Output('onError') errorCallBack: EventEmitter<any> = new EventEmitter();
+    @Output('onError') errorCallback: EventEmitter<any> = new EventEmitter();
 
     constructor(private service: ReadOnlyService<T, U>) {
         this.service = service;
@@ -33,7 +33,7 @@ export abstract class ReadOnlyListComponent<T extends BaseModel, U> implements O
     }
 
     onError(error: string) {
-        this.errorCallBack.emit(error);
+        this.errorCallback.emit(error);
     }
 
     protected refreshList() {
@@ -43,7 +43,7 @@ export abstract class ReadOnlyListComponent<T extends BaseModel, U> implements O
                     this.modelsList = page.content;
                 },
                 error => {
-                    this.errorCallBack.emit(error);
+                    this.errorCallback.emit(error);
                 }
             )
     }
@@ -54,7 +54,7 @@ export abstract class ReadOnlyListComponent<T extends BaseModel, U> implements O
                 this.model = res
             },
             error => {
-                this.errorCallBack.emit(error);
+                this.errorCallback.emit(error);
             }
         )
     }

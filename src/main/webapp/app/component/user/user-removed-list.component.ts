@@ -25,7 +25,7 @@ export class UserRemovedListComponent extends RemovedListComponent<UserAuthModel
                         this.dropCallBack.emit(model.id);
                         this.onRefresh();
                     },
-                    error => this.errorCallBack.emit(error)
+                    error => this.errorCallback.emit(error)
                 )
             }
         }

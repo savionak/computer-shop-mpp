@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from "@angular/core";
+import {Component, OnDestroy, OnInit, ViewChild} from "@angular/core";
 
 import {AssemblyComponentListComponent} from "./asm-comp-list.component";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -9,29 +9,44 @@ import {HttpOAuthService} from "../../shared/http-oauth.service";
 
 import {ToasterService} from "angular2-toaster";
 import {AssemblyComponentModel} from "../../model/full/assembly-component-model";
+import {Subscription} from "rxjs/Subscription";
+import {EDIT, ORDER} from "../../shared/route-consts";
 
 @Component({
     selector: 'asm-comp-page',
     templateUrl: './asm-comp-page.html'
 })
-export class AssemblyComponentPage extends BasePage implements OnInit {
+export class AssemblyComponentPage extends BasePage implements OnInit, OnDestroy {
     protected asmId: number;
     protected assembly: AssemblyModel;
+    private routeSub: Subscription;
 
     @ViewChild(AssemblyComponentListComponent) list: AssemblyComponentListComponent;
 
-    constructor(authService: HttpOAuthService, r: Router, route: ActivatedRoute, private assemblyService: AssemblyService,
+    constructor(authService: HttpOAuthService, private r: Router, route: ActivatedRoute, private assemblyService: AssemblyService,
                 toasterService: ToasterService) {
         super(authService, r, route, toasterService);
     }
 
     ngOnInit(): void {
         super.ngOnInit();
-        this.asmId = +this.route.snapshot.params['asmId'];
-        this.assemblyService.get(this.asmId).subscribe(
-            model => this.assembly = model,
-            error => this.popConnectionError()
+        this.routeSub = this.route.params.subscribe(
+            p => {
+                this.asmId = +p['asmId'];
+                this.assemblyService.get(this.asmId).subscribe(
+                    model => this.assembly = model,
+                    error => this.popConnectionError()
+                );
+            },
+            error => {
+                this.popNavigationError()
+            }
         );
+    }
+
+    ngOnDestroy(): void {
+        this.routeSub.unsubscribe();
+        super.ngOnDestroy();
     }
 
     getOperationErrorMessage() {
@@ -40,6 +55,14 @@ export class AssemblyComponentPage extends BasePage implements OnInit {
 
     onAsmSave(model: AssemblyModel) {
         this.popSuccess('Сборка обновлена');
+        setTimeout(() => {
+            this.goToAssemblies();
+        }, 500);
+    }
+
+    goToAssemblies() {
+        let orderId = this.assembly.order.id;
+        this.r.navigate([ORDER, EDIT, orderId]);
     }
 
     onComponentAdd(model: AssemblyComponentModel) {

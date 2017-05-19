@@ -45,7 +45,7 @@ export class ComponentStoreListComponent extends ReadOnlyListComponent<Component
                     this.updateCallBack.emit();
                     this.refreshList();
                 },
-                error => this.errorCallBack.emit(error)
+                error => this.errorCallback.emit(error)
             );
     }
 

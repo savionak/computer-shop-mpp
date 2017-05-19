@@ -13,32 +13,49 @@
        (onOk)="onDeleteOk()"
        (onCancel)="closePopup()">
 </popup>
-<div>
-    <button type="button" (click)="onRefresh()">Refresh</button>
-    <button *ngIf="!isReadOnly" type="button" (click)="onAdd()">Add</button>
+<div class="row">
+    <button type="button" class="btn btn-default btn-sm" (click)="onRefresh()">Refresh</button>
+    <button *ngIf="!isReadOnly" type="button" class="btn btn-default btn-sm" (click)="onAdd()">
+        <span class="glyphicon glyphicon-plus"></span>
+    </button>
 </div>
-<table>
-    <tr>
-        <th>Id</th>
-        <th>Customer</th>
-        <th>Cost</th>
-        <th>Date</th>
-        <th>Status</th>
-        <th></th>
-    </tr>
-    <tr *ngFor="let model of modelsList">
-        <td>{{model.id}}</td>
-        <td>{{model.customer.name}}</td>
-        <td>{{model.cost}}</td>
-        <td>{{model.orderDate.toLocaleString()}}</td>
-        <td>{{model.status}}</td>
-        <td>
-            <button type="button" (click)="onViewDetails(model)">View</button>
-            <span *ngIf="!isReadOnly">
-                <button type="button" (click)="onEdit(model)">Edit</button>
-                <button type="button" (click)="onAccept(model)">Accept</button>
-                <button type="button" (click)="onCancelOrder(model)">Cancel</button>
-            </span>
-        </td>
-    </tr>
-</table>
+<div class="row">
+    <div class="table-responsive">
+        <table class="table table-hover table-fixed table-order">
+            <thead>
+            <tr>
+                <th class="th__id">Id</th>
+                <th>Date</th>
+                <th>Customer</th>
+                <th>Cost</th>
+                <th>Status</th>
+                <th class="th__buttons"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let model of modelsList">
+                <td>{{model.id}}</td>
+                <td class="wrappable">{{model.orderDate.toLocaleString()}}</td>
+                <td class="row__text">{{model.customer.name}}</td>
+                <td>{{model.cost}}</td>
+                <td>{{model.status}}</td>
+                <td>
+                    <div class="row__buttons">
+                        <button type="button" class="btn btn-info btn-sm" (click)="onViewDetails(model)">
+                            <span class="glyphicon glyphicon-info-sign"></span>
+                        </button>
+                        <span *ngIf="!isReadOnly">
+                            <button type="button" class="btn btn-default btn-sm" (click)="onEdit(model)">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                            <button type="button" class="btn btn-warning btn-sm" (click)="onDelete(model)">
+                                <span class="glyphicon glyphicon-arrow-down"></span>
+                            </button>
+                        </span>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

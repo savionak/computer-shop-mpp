@@ -32,7 +32,7 @@ export class AssemblyComponentListComponent extends ListComponent <AssemblyCompo
                     this.modelsList = page.content
                 },
                 error => {
-                    this.errorCallBack.emit(error);
+                    this.errorCallback.emit(error);
                 }
             )
     }
@@ -43,7 +43,7 @@ export class AssemblyComponentListComponent extends ListComponent <AssemblyCompo
                 this.model = res
             },
             error => {
-                this.errorCallBack.emit(error);
+                this.errorCallback.emit(error);
             }
         )
     }
@@ -56,7 +56,7 @@ export class AssemblyComponentListComponent extends ListComponent <AssemblyCompo
                     this.deleteCallBack.emit(id);
                 },
                 (error) => {
-                    this.errorCallBack.emit(error);
+                    this.errorCallback.emit(error);
                 }
             );
     }

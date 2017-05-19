@@ -18,7 +18,7 @@ export class RemovedListComponent<T extends BaseModel, U> extends ReadOnlyListCo
                     this.modelsList = page.content
                 },
                 error => {
-                    this.errorCallBack.emit(error);
+                    this.errorCallback.emit(error);
                 }
             )
     }
@@ -31,7 +31,7 @@ export class RemovedListComponent<T extends BaseModel, U> extends ReadOnlyListCo
                     this.restoreCallBack.emit(model.id);
                 },
                 error => {
-                    this.errorCallBack.emit(error);
+                    this.errorCallback.emit(error);
                 }
             );
 

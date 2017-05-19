@@ -31,7 +31,7 @@ export class AssemblyListComponent extends ListComponent <AssemblyModel, Assembl
                 this.modelsList = page.content
             },
             error => {
-                this.errorCallBack.emit(error)
+                this.errorCallback.emit(error)
             }
         );
     }

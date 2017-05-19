@@ -19,7 +19,7 @@
             <input [(ngModel)]="model.count" class="form-control" id="count" name="count" placeholder="Assembly count"/>
             <br/>
             <button type="submit" class="btn btn-success">{{isEditing ? "Save" : "Add"}}</button>
-            <button *ngIf="!isEmbedded" type="button" class="btn btn-default" (click)="onClose()">Cancel</button>
+            <button type="button" class="btn btn-default" (click)="onClose()">Cancel</button>
         </form>
     </div>
     <hr *ngIf="isEmbedded"/>

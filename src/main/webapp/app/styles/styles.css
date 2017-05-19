@@ -26,10 +26,6 @@ app {
     width: 50px;
 }
 
-.th__name {
-    width: 200px;
-}
-
 .th__buttons {
     width: 150px;
 }
@@ -44,6 +40,7 @@ app {
 .row__buttons {
     float: right;
 }
+
 /* Modal dialog */
 
 .ng2modal {
@@ -101,8 +98,12 @@ app {
 }
 
 @media (max-width: 768px) {
-    .table-fixed {
+    .table-type {
         min-width: 500px;
+    }
+
+    .table-order {
+        min-width: 700px;
     }
 
     .modal .dialog {
@@ -111,5 +112,9 @@ app {
 
     .popup {
         max-width: 90vw;
+    }
+
+    .wrappable {
+        white-space: normal !important;
     }
 }
