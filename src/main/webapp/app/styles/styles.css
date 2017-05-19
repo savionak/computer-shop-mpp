@@ -12,7 +12,7 @@ app {
 
 .page {
     flex-grow: 1;
-    margin: 0 20px;
+    margin: 0 5%;
 }
 
 /* Table */
@@ -26,7 +26,15 @@ app {
     width: 50px;
 }
 
-.th__buttons {
+.th__buttons-1 {
+    width: 50px;
+}
+
+.th__buttons-2 {
+    width: 100px;
+}
+
+.th__buttons-3 {
     width: 150px;
 }
 
@@ -97,13 +105,35 @@ app {
     margin-right: auto;
 }
 
+/* Bootstrap override */
+
+.navbar-inverse .navbar-nav > li > a {
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
 @media (max-width: 768px) {
+    .page {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
     .table-type {
         min-width: 500px;
     }
 
     .table-order {
         min-width: 700px;
+    }
+
+    .table-import {
+        min-width: 500px;
+    }
+
+    .table-customers {
+        min-width: 500px;
     }
 
     .modal .dialog {
