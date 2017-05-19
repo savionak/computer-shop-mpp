@@ -144,6 +144,10 @@ app {
         min-width: 600px;
     }
 
+    .table-provider {
+        min-width: 400px;
+    }
+
     .modal .dialog {
         max-width: 90vw;
     }
