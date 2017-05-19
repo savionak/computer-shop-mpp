@@ -13,6 +13,10 @@ export class BasePage implements OnInit, OnDestroy {
     protected isReadOnly: boolean;
     private sub: Subscription;
     private routerSub: Subscription;
+    private pageAccess: string;
+
+    private readonly viewAccess: string = VIEW;
+    private readonly editAccess: string = EDIT;
 
     constructor(private authService: HttpOAuthService, r: Router, route: ActivatedRoute,
                 protected toasterService: ToasterService) {
@@ -46,8 +50,8 @@ export class BasePage implements OnInit, OnDestroy {
         );
         this.sub = this.route.params.subscribe(
             x => {
-                let type = x[ACCESS];
-                switch (type) {
+                this.pageAccess = x[ACCESS];
+                switch (this.pageAccess) {
                     case VIEW:
                         this.isReadOnly = true;
                         break;

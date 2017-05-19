@@ -25,14 +25,14 @@
     <div class="table-responsive">
         <table class="table table-hover table-fixed table-type">
             <thead>
-    <tr>
-        <th class="th__id">Id</th>
-        <th>Type</th>
-        <th>Model</th>
-        <th>Price</th>
-        <th>Count</th>
-        <th class="th__buttons-2"></th>
-    </tr>
+            <tr>
+                <th class="th__id">Id</th>
+                <th>Type</th>
+                <th>Model</th>
+                <th>Price</th>
+                <th>Count</th>
+                <th class="th__buttons-2"></th>
+            </tr>
             </thead>
             <tbody>
             <tr *ngFor="let model of modelsList">
@@ -43,14 +43,14 @@
                 <td>{{model.count}}</td>
                 <td>
                     <div class="row__buttons">
-
+                        <span *ngIf="!isReadOnly">
                         <button type="button" class="btn btn-default btn-sm" (click)="onEdit(model)">
                             <span class="glyphicon glyphicon-pencil"></span>
                         </button>
                         <button type="button" class="btn btn-danger btn-sm" (click)="onDelete(model)">
                             <span class="glyphicon glyphicon-remove"></span>
                         </button>
-
+                        </span>
                     </div>
                 </td>
             </tr>
