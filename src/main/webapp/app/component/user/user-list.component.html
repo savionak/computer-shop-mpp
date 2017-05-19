@@ -1,5 +1,5 @@
-<user-edit  class="modal ng2modal"
-            *ngIf="model"
+<user-edit class="modal ng2modal"
+           *ngIf="model"
            [model]="model"
            [isEditing]="isEditing"
            [isViewing]="isViewing"
@@ -23,32 +23,30 @@
 </div>
 <div class="row">
     <div class="table-responsive">
-        <table class="table table-hover table-fixed">
+        <table class="table table-hover table-fixed table-users">
             <thead>
             <tr>
-        <th class="th__id">Id</th>
-        <th class="th__email">Email</th>
-        <th class="th_role">Role</th>
-        <th class="th__first_name">First Name</th>
-        <th class="th__last_nmae">Last Name</th>
-        <th class="th__buttons"></th>
-        <!--<th *ngIf="!isReadOnly"></th>-->
-        <!--<th *ngIf="!isReadOnly"></th>-->
-    </tr>
+                <th class="th__id">Id</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th class="th__first_name">First Name</th>
+                <th>Last Name</th>
+                <th class="th__buttons-3"></th>
+            </tr>
             </thead>
             <tbody>
-    <tr *ngFor="let model of modelsList">
-        <td class="row__text">{{model.id}}</td>
-        <td class="row__text">{{model.email}}</td>
-        <td class="row__text">{{model.role}}</td>
-        <td class="row__text">{{model.firstName}}</td>
-        <td class="row__text">{{model.lastName}}</td>
-        <td>
-            <div class="row__buttons">
-                <button type="button" class="btn btn-info btn-sm" (click)="onViewDetails(model)">
-                    <span class="glyphicon glyphicon-info-sign"></span>
-                </button>
-                <span *ngIf="!isReadOnly">
+            <tr *ngFor="let model of modelsList">
+                <td class="row__text">{{model.id}}</td>
+                <td class="row__text">{{model.email}}</td>
+                <td class="row__text">{{model.role}}</td>
+                <td class="row__text">{{model.firstName}}</td>
+                <td class="row__text">{{model.lastName}}</td>
+                <td>
+                    <div class="row__buttons">
+                        <button type="button" class="btn btn-info btn-sm" (click)="onViewDetails(model)">
+                            <span class="glyphicon glyphicon-info-sign"></span>
+                        </button>
+                        <span *ngIf="!isReadOnly">
                             <button type="button" class="btn btn-default btn-sm" (click)="onEdit(model)">
                             <span class="glyphicon glyphicon-pencil"></span>
                             </button>
@@ -56,9 +54,9 @@
                                 <span class="glyphicon glyphicon-remove"></span>
                             </button>
                         </span>
-            </div>
-        </td>
-    </tr>
+                    </div>
+                </td>
+            </tr>
             </tbody>
         </table>
     </div>
