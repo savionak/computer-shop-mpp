@@ -1,6 +1,6 @@
 <div *ngIf="model" class="ng2-modal-dialog dialog h-center">
     <div *ngIf="isViewing">
-        <h3>View provider {{model.id}}</h3>
+        <h3>View provider №{{model.id}}</h3>
         <div class="dialog__row">
         <label>Name: </label><span>{{model.name}}</span>
         </div>
@@ -16,10 +16,8 @@
             </div>
     </div>
     <div *ngIf="!isViewing">
-        <h3>{{isEditing ? "Edit" : "Add"}} provider:</h3>
+        <h3>{{isEditing ? "Edit" : "Add"}} provider {{isEditing ? '№' + model.id : ''}}</h3>
         <form (submit)="onAction()">
-            <label>Id</label>
-            <span>{{model.id}}</span>
             <div class="dialog__row">
             <label for="name">Name</label>
             <input [(ngModel)]="model.name" id="name" name="name" class="form-control" placeholder="Provider name"/>
