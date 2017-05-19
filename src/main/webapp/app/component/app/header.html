@@ -1,5 +1,4 @@
 <nav class="navbar navbar-inverse ">
-    <div class="container">
     <div class="navbar-header">
         <button type="button" class="navbar-toggle" *ngIf="isLoggedIn()" data-toggle="collapse"
                 data-target="#navigation">
@@ -17,7 +16,6 @@
         <ul class="nav navbar-nav navbar-right">
             <li><a (click)="onLogout()">Logout</a></li>
         </ul>
-    </div>
     </div>
 </nav>
 <popup class="modal ng2modal"
