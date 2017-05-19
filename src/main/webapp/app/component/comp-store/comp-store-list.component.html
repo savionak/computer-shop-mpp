@@ -34,7 +34,7 @@
 </div>
 <div class="row">
     <div class="table-responsive">
-<table class="table table-hover table-fixed">
+        <table class="table table-hover table-fixed table-import">
     <thead>
     <tr>
         <th class="th__id">Id</th>
@@ -42,7 +42,7 @@
         <th class="th__model">Model</th>
         <th class="th__price">Price</th>
         <th class="th__count">Count</th>
-        <th class="th__buttons"></th>
+        <th class="th__buttons-1"></th>
     </tr>
     </thead>
     <tbody>
@@ -50,8 +50,8 @@
         <td>{{model.id}}</td>
         <td class="row__text">{{model.typeName}}</td>
         <td class="row__text">{{model.modelName}}</td>
-        <td class="row__text">{{model.price}}</td>
-        <td class="row__text">{{model.count}}</td>
+        <td>{{model.price}}</td>
+        <td>{{model.count}}</td>
         <td>
             <div class="row__buttons">
             <button *ngIf="!isReadOnly" type="button" class="btn btn-default btn-sm" (click)="onChange(model)">

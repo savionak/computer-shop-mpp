@@ -129,7 +129,7 @@ app {
     }
 
     .table-import {
-        min-width: 500px;
+        min-width: 600px;
     }
 
     .table-customers {
@@ -145,6 +145,12 @@ app {
     }
 
     .wrappable {
+        width: 80px;
+        white-space: normal !important;
+    }
+
+    .th__date {
+        width: 80px;
         white-space: normal !important;
     }
 }

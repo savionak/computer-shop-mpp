@@ -10,6 +10,7 @@
         (onCancel)="goToAssemblies()"
         (onError)="onError($event)">
 </asm-edit>
+<hr *ngIf="!isReadOnly"/>
 <asm-comp-list
         [isReadOnly]="isReadOnly"
         [assemblyId]="asmId"
