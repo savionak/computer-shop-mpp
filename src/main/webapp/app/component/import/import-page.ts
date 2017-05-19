@@ -27,15 +27,15 @@ export class ImportPage extends BasePage {
     }
 
     onAddDone() {
-        this.popSuccess('Поставка добавлена');
+        this.popSuccess('Import added');
     }
 
     onSaveDone() {
-        this.popSuccess('Поставка обновлена');
+        this.popSuccess('Import updated');
     }
 
     onDeleteDone() {
-        this.popSuccess('Поставка удалена');
+        this.popSuccess('Import deleted');
         this.list.onRefresh();
     }
 }

@@ -53,7 +53,7 @@ export class AssemblyPage extends BasePage implements OnInit, OnDestroy {
         this.orderService.accept(model.id)
             .subscribe(
                 () => {
-                    this.popSuccess('Заказ обновлен');
+                    this.popSuccess('Order updated');
                     setTimeout(() => {
                         this.goToOrders();
                     }, 500);
@@ -68,10 +68,10 @@ export class AssemblyPage extends BasePage implements OnInit, OnDestroy {
     }
 
     onAddDone(model: AssemblyModel) {
-        this.popSuccess('Сборка добавлена');
+        this.popSuccess('Assembly added');
     }
 
     onDeleteDone() {
-        this.popSuccess('Сборка удалена из заказа');
+        this.popSuccess('Assembly deleted from order');
     }
 }

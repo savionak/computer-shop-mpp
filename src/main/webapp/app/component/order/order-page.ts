@@ -31,24 +31,24 @@ export class OrderPage extends BasePage {
     }
 
     onAddDone() {
-        this.popSuccess('Заказ добавлен');
+        this.popSuccess('Order added');
     }
 
     onDeleteDone() {
-        this.popSuccess('Заказ удален');
+        this.popSuccess('Order deleted');
     }
 
     onAcceptDone() {
-        this.popSuccess('Заказ принят');
+        this.popSuccess('Order accepted');
     }
 
     onCancelDone() {
-        this.popWarning('Заказ отменен');
+        this.popWarning('Order canceled');
         this.removedList.onRefresh();
     }
 
     onRestoreDone() {
-        this.popSuccess('Заказ восстановлен');
+        this.popSuccess('Order restored');
         this.list.onRefresh();
     }
 }

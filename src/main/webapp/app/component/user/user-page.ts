@@ -26,32 +26,32 @@ export class UserPage extends BasePage {
     }
 
     getOperationErrorMessage() {
-        return 'Запрещено оставлять систему без Администратора';
+        return 'Forbidden: cannot leave system without Admin';
     }
 
     onAddDone() {
-        this.popSuccess('Пользователь добавлен');
+        this.popSuccess('User added');
     }
 
     onSaveDone() {
-        this.popSuccess('Пользователь обновлен');
+        this.popSuccess('User updated');
     }
 
     onChangePassDone() {
-        this.popSuccess('Пароль успешно изменен');
+        this.popSuccess('Пароль successfully changed');
     }
 
     onDeleteDone() {
-        this.popSuccess('Пользователь заблокирован');
+        this.popWarning('User blocked');
         this.removedList.onRefresh();
     }
 
     onRestoreDone() {
-        this.popSuccess('Пользователь восстановлен');
+        this.popSuccess('User restored');
         this.list.onRefresh();
     }
 
     onDropDone(id: number) {
-        this.popSuccess('Пользователь удален из системы');
+        this.popSuccess('User deleted from system');
     }
 }

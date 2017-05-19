@@ -26,20 +26,20 @@ export class CustomerPage extends BasePage {
     }
 
     onAddDone() {
-        this.popSuccess('Заказчик добавлен');
+        this.popSuccess('Customer added');
     }
 
     onSaveDone() {
-        this.popSuccess('Заказчик обновлен');
+        this.popSuccess('Customer updated');
     }
 
     onDeleteDone() {
-        this.popSuccess('Заказчик удален');
+        this.popSuccess('Customer deleted');
         this.removedList.onRefresh();
     }
 
     onRestoreDone() {
-        this.popSuccess('Заказчик восстановлен');
+        this.popSuccess('Customer restored');
         this.list.onRefresh();
     }
 }
