@@ -67,6 +67,8 @@ app {
 
 .modal .dialog {
     max-width: 75vw;
+    margin-top: 5%;
+    margin-bottom: 5%;
 }
 
 .modal .v-center {
@@ -136,6 +138,10 @@ app {
 
     .table-customers {
         min-width: 500px;
+    }
+
+    .table-users {
+        min-width: 600px;
     }
 
     .modal .dialog {
