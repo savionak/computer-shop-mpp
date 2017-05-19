@@ -15,6 +15,20 @@ app {
     margin: 0 5%;
 }
 
+.white {
+    color: white;
+}
+
+.role-email {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 5px;
+}
+
+.header__role {
+    color: rgba(255, 255, 255, .4)
+}
+
 /* Table */
 
 .table-fixed {
@@ -90,8 +104,12 @@ app {
     margin-right: auto;
 }
 
-.dialog textarea {
-    resize: vertical;
+textarea {
+    resize: none;
+}
+
+textarea:read-only {
+    cursor: not-allowed;
 }
 
 .dialog__row {
@@ -124,6 +142,13 @@ app {
     padding-right: 5px;
     margin-left: 5px;
     margin-right: 5px;
+}
+
+@media (max-width: 500px) {
+    .role-email {
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 
 @media (max-width: 768px) {
