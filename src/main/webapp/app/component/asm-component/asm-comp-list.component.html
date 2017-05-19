@@ -15,33 +15,46 @@
        (onOk)="onDeleteOk()"
        (onCancel)="closePopup()">
 </popup>
-<div>
-    <button type="button" (click)="onRefresh()">Refresh</button>
-    <button *ngIf="!isReadOnly" type="button" (click)="onAdd()">Add</button>
+<div class="row">
+    <button type="button" class="btn btn-default btn-sm" (click)="onRefresh()">Refresh</button>
+    <button *ngIf="!isReadOnly" type="button" class="btn btn-default btn-sm" (click)="onAdd()">
+        <span class="glyphicon glyphicon-plus"></span>
+    </button>
 </div>
-<table>
+<div class="row">
+    <div class="table-responsive">
+        <table class="table table-hover table-fixed table-type">
+            <thead>
     <tr>
-        <th>Id</th>
+        <th class="th__id">Id</th>
         <th>Type</th>
         <th>Model</th>
         <th>Price</th>
         <th>Count</th>
-        <th></th>
-        <th *ngIf="!isReadOnly"></th>
-        <th *ngIf="!isReadOnly"></th>
+        <th class="th__buttons"></th>
     </tr>
-    <tr *ngFor="let model of modelsList">
-        <td>{{model.id}}</td>
-        <td>{{model.typeName}}</td>
-        <td>{{model.modelName}}</td>
-        <td>{{model.price}}</td>
-        <td>{{model.count}}</td>
+            </thead>
+            <tbody>
+            <tr *ngFor="let model of modelsList">
+                <td>{{model.id}}</td>
+                <td class="row__text">{{model.typeName}}</td>
+                <td class="row__text">{{model.modelName}}</td>
+                <td>{{model.price}}</td>
+                <td>{{model.count}}</td>
+                <td>
+                    <div class="row__buttons">
 
-        <td *ngIf="!isReadOnly">
-            <button type="button" (click)="onEdit(model)">Edit</button>
-        </td>
-        <td *ngIf="!isReadOnly">
-            <button type="button" (click)="onDelete(model)">Delete</button>
-        </td>
-    </tr>
-</table>
+                        <button type="button" class="btn btn-default btn-sm" (click)="onEdit(model)">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm" (click)="onDelete(model)">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

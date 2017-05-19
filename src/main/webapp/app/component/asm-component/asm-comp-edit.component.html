@@ -1,26 +1,27 @@
 <div *ngIf="model" class="ng2-modal-dialog dialog v-center h-center">
     <div *ngIf="isViewing">
         <h3>View assembly {{model.id}}</h3>
-        <br/>
+        <div class="dialog__row">
         <label>Asm id: </label><span>{{model.asmId}}</span>
-        <br/>
+        </div>
+        <div class="dialog__row">
         <label>Type: </label><span>{{model.component.typeName}}</span>
-        <br/>
+        </div>
+        <div class="dialog__row">
         <label>Model: </label><span>{{model.component.modelName}}</span>
-        <br/>
+        </div>
+        <div class="dialog__row">
         <label>Count: </label><span>{{model.count}}</span>
-        <br/>
+        </div>
+        <div class="dialog__row">
 
         <button type="button" class="btn btn-default" (click)="onClose()">Cancel</button>
+        </div>
     </div>
     <div *ngIf="!isViewing">
         <h3>{{isEditing ? "Edit" : "Add"}} component:</h3>
         <form (submit)="onAction()">
-            <label>Id: </label>
-            <span>{{model.id}}</span>
-            <br/>
-            <label>Asm id: </label><span>{{asmId}}</span>
-            <br/>
+            <div class="dialog__row">
             <label for="component">Component: </label>
             <select *ngIf="!isEditing" class="form-control" id="component" name="component"
                     [(ngModel)]="model.component"
@@ -29,19 +30,23 @@
                     {{store.price}}
                 </option>
             </select>
+            </div>
             <span *ngIf="isEditing">{{model.component.typeName}} - {{model.component.modelName}}</span>
-            <br/>
+            <div class="dialog__row">
 
             <label>Price: </label><span>{{model.component.price}}</span>
-            <br/>
+            </div>
+            <div class="dialog__row">
             <label for="count">Count: </label>
-            <input class="form-control" id="count" name="count"
-                   [(ngModel)]="model.count"
-                   placeholder="Component count"/>
-            <br/>
+                <input class="form-control" id="count" name="count" class="form-control"
+                       [(ngModel)]="model.count"
+                       placeholder="Component count"/>
+            </div>
+            <div class="dialog__row">
             <div>
                 <button type="submit" class="btn btn-success">{{isEditing ? "Save" : "Add"}}</button>
                 <button *ngIf="!isEmbedded" type="button" class="btn btn-default" (click)="onClose()">Cancel</button>
+            </div>
             </div>
         </form>
     </div>

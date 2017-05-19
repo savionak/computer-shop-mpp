@@ -1,6 +1,6 @@
 <div *ngIf="model" class="ng2-modal-dialog dialog v-center h-center">
     <div *ngIf="isViewing">
-        <h3>View import {{model.id}}</h3>
+        <!--<h3>View import {{model.id}}</h3>-->
         <div class="dialog__row">
         <label>Provider: </label><span>{{model.provider.name}}</span>
         </div>
@@ -28,10 +28,10 @@
             </div>
     </div>
     <div *ngIf="!isViewing">
-        <h3>{{isEditing ? "Edit" : "Add"}} import:</h3>
+        <h3>{{isEditing ? "Edit" : "Add"}} import {{isEditing ? '№' + model.id : ''}}</h3>
         <form (submit)="onAction()">
-            <label>Id</label>
-            <span>{{model.id}}</span>
+            <!--<label>Id</label>-->
+            <!--<span>{{model.id}}</span>-->
             <div class="dialog__row">
 
             <label for="provider">Provider</label>
