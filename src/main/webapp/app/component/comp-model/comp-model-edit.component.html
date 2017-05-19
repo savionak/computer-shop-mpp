@@ -19,10 +19,8 @@
         </div>
     </div>
     <div *ngIf="!isViewing">
-        <h3>{{isEditing ? "Edit" : "Add"}} model:</h3>
+        <h3>{{isEditing ? "Edit" : "Add"}} model {{isEditing ? '№' + model.id : ''}}</h3>
         <form (submit)="onAction()">
-            <label>Id</label>
-            <span>{{model.id}}</span>
             <div class="dialog__row">
             <label for="name">Name</label>
             <input [(ngModel)]="model.name" class="form-control" id="name" name="name" placeholder="Model name"/>

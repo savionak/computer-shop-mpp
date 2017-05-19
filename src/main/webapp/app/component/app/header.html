@@ -11,14 +11,15 @@
         </div>
         <div class="collapse navbar-collapse" id="navigation" *ngIf="isLoggedIn()">
             <ul class="nav navbar-nav">
-                <li class="{{isActive(item) ? 'active' : ''}}" *ngFor="let item of getNavItems()"
-                    data-toggle="collapse"
-                    data-target="#navigation">
+                <li class="{{isActive(item) ? 'active' : ''}}" *ngFor="let item of getNavItems()">
                     <a routerLink="{{item['path']+'/'+item['access']}}">{{item['name']}}</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a (click)="onLogout()">Logout</a></li>
             </ul>
+        </div>
+        <div *ngIf="isLoggedIn()" class="role-email white">
+            <span>{{getUser().email}} </span><span class="header__role">{{getUser().role}}</span>
         </div>
     </div>
 </nav>
