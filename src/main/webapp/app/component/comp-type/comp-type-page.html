@@ -9,6 +9,7 @@
         (onError)="onError($event)">
 </comp-type-list>
 <hr *ngIf="!isReadOnly"/>
+<h3 *ngIf="!isReadOnly">Removed types</h3>
 <comp-type-removed-list
         *ngIf="!isReadOnly"
         (onRestore)="onRestoreDone($event)"
