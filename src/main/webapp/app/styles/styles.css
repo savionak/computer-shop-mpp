@@ -26,6 +26,14 @@ app {
     width: 50px;
 }
 
+.th__count {
+    width: 65px;
+}
+
+.th__price {
+    width: 80px;
+}
+
 .th__buttons-1 {
     width: 50px;
 }
