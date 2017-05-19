@@ -10,6 +10,7 @@
         (onError)="onError($event)">
 </user-list>
 <hr *ngIf="!isReadOnly"/>
+<h3 *ngIf="!isReadOnly">Blocked users</h3>
 <user-removed-list *ngIf="!isReadOnly"
                    (onRestore)="onRestoreDone($event)"
                    (onDrop)="onDropDone($event)"
