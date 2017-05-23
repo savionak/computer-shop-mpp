@@ -8,6 +8,9 @@ import by.bsuir.mpp.computershop.service.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 import static by.bsuir.mpp.computershop.service.exception.wrapper.RepositoryCallWrapper.wrapRepositoryCall;
 
 @Service
@@ -27,5 +30,22 @@ public class ComponentStoreServiceImpl extends AbstractCrudService<ComponentStor
         Long newPrice = dto.getNewPrice();
         Long newCount = dto.getNewCount();
         wrapRepositoryCall(() -> storeRepository.updateStorePrice(id, newPrice, newCount));
+    }
+
+    @Override
+    public Iterable<ComponentStore> getCurrentState() throws ServiceException {
+        Iterable<ComponentStore> storeItems = wrapRepositoryCall(() -> storeRepository.findAll());
+        Iterable<ComponentStore> presentItems = filterPresentItems(storeItems);
+        return presentItems;
+    }
+
+    private Iterable<ComponentStore> filterPresentItems(Iterable<ComponentStore> storeItems) {
+        return StreamSupport.stream(storeItems.spliterator(), false)
+                .filter(i -> isPresent(i))
+                .collect(Collectors.toList());
+    }
+
+    private static boolean isPresent(ComponentStore componentStore) {
+        return componentStore.getCount() > 0;
     }
 }
