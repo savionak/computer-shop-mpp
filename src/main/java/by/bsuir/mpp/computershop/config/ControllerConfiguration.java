@@ -13,32 +13,39 @@ import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 public class ControllerConfiguration {
 
     @Bean
-    public AssemblyController assemblyController(AssemblyService assemblyService, AssemblyComponentService componentService, MapperFacade mapperFacade) {
+    public AssemblyController assemblyController(AssemblyService assemblyService,
+                                                 AssemblyComponentService componentService,
+                                                 MapperFacade mapperFacade) {
         return new AssemblyControllerImpl(assemblyService, componentService, mapperFacade);
     }
 
     @Bean
-    public ComponentModelController componentModelController(ComponentModelService componentModelService, MapperFacade mapperFacade) {
+    public ComponentModelController componentModelController(ComponentModelService componentModelService,
+                                                             MapperFacade mapperFacade) {
         return new ComponentModelControllerImpl(componentModelService, mapperFacade);
     }
 
     @Bean
-    public ComponentStoreController componentStoreController(ComponentStoreService storeService, MapperFacade mapperFacade) {
+    public ComponentStoreController componentStoreController(ComponentStoreService storeService,
+                                                             MapperFacade mapperFacade) {
         return new ComponentStoreControllerImpl(storeService, mapperFacade);
     }
 
     @Bean
-    public ComponentTypeController componentTypeController(ComponentTypeService componentTypeService, MapperFacade mapperFacade) {
+    public ComponentTypeController componentTypeController(ComponentTypeService componentTypeService,
+                                                           MapperFacade mapperFacade) {
         return new ComponentTypeControllerImpl(componentTypeService, mapperFacade);
     }
 
     @Bean
-    public CustomerController customerController(CustomerService customerService, MapperFacade mapperFacade) {
+    public CustomerController customerController(CustomerService customerService,
+                                                 MapperFacade mapperFacade) {
         return new CustomerControllerImpl(customerService, mapperFacade);
     }
 
     @Bean
-    public ImportController importController(ImportService importService, MapperFacade mapperFacade) {
+    public ImportController importController(ImportService importService,
+                                             MapperFacade mapperFacade) {
         return new ImportControllerImpl(importService, mapperFacade);
     }
 
@@ -48,18 +55,30 @@ public class ControllerConfiguration {
     }
 
     @Bean
-    public OrderController orderController(OrderService orderService, MapperFacade mapperFacade) {
+    public OrderController orderController(OrderService orderService,
+                                           MapperFacade mapperFacade) {
         return new OrderControllerImpl(orderService, mapperFacade);
     }
 
     @Bean
-    public ProviderController providerController(ProviderService providerService, MapperFacade mapperFacade) {
+    public ProviderController providerController(ProviderService providerService,
+                                                 MapperFacade mapperFacade) {
         return new ProviderControllerImpl(providerService, mapperFacade);
     }
 
     @Bean
-    public UserAuthController userAuthController(UserAuthService userAuthService, MapperFacade mapperFacade,
+    public UserAuthController userAuthController(UserAuthService userAuthService,
+                                                 MapperFacade mapperFacade,
                                                  PasswordEncoder passwordEncoder) {
         return new UserAuthControllerImpl(userAuthService, mapperFacade, passwordEncoder);
+    }
+
+    @Bean
+    public DocumentController documentController(ComponentStoreService storeService,
+                                                 ImportService importService,
+                                                 OrderService orderService,
+                                                 UserAuthService userAuthService,
+                                                 CustomerService customerService) {
+        return new DocumentControllerImpl(storeService, importService, orderService, userAuthService, customerService);
     }
 }

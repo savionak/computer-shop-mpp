@@ -8,7 +8,7 @@ import by.bsuir.mpp.computershop.document.generator.DocumentGenerator;
 import by.bsuir.mpp.computershop.document.model.provider.ContentProvider;
 import by.bsuir.mpp.computershop.document.model.provider.impl.ComponentStoreProvider;
 import by.bsuir.mpp.computershop.entity.ComponentStore;
-import by.bsuir.mpp.computershop.service.ComponentStoreService;
+import by.bsuir.mpp.computershop.service.*;
 import by.bsuir.mpp.computershop.utils.Util;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +23,22 @@ public class DocumentControllerImpl implements DocumentController {
 
     private static final Logger logger = Logger.getLogger(DocumentControllerImpl.class);
     private ComponentStoreService storeService;
+    private ImportService importService;
+    private OrderService orderService;
+    private UserAuthService userAuthService;
+    private CustomerService customerService;
 
     @Autowired
-    public DocumentControllerImpl(ComponentStoreService storeService) {
+    public DocumentControllerImpl(ComponentStoreService storeService,
+                                  ImportService importService,
+                                  OrderService orderService,
+                                  UserAuthService userAuthService,
+                                  CustomerService customerService) {
         this.storeService = storeService;
+        this.importService = importService;
+        this.orderService = orderService;
+        this.userAuthService = userAuthService;
+        this.customerService = customerService;
     }
 
     @Override
