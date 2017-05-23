@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {HttpOAuthService} from "../../shared/http-oauth.service";
 
 import {ToasterService} from "angular2-toaster";
+import {DocumentService, DocumentType} from "../../shared/document.service";
 
 @Component({
     selector: 'store-page',
@@ -17,7 +18,8 @@ export class ComponentStorePage extends BasePage {
     @ViewChild(ComponentStoreListComponent) list: ComponentStoreListComponent;
 
     constructor(authService: HttpOAuthService, r: Router, service: ComponentStoreService, route: ActivatedRoute,
-                toasterService: ToasterService) {
+                toasterService: ToasterService,
+                private documentService: DocumentService) {
         super(authService, r, route, toasterService);
         this.service = service;
     }
@@ -29,5 +31,10 @@ export class ComponentStorePage extends BasePage {
     onUpdateDone() {
         this.popSuccess('Store updated');
         this.list.onRefresh();
+    }
+
+    onGetCurrentState(documentType: DocumentType) {
+        alert("here");
+        this.documentService.getStoreState(documentType);
     }
 }

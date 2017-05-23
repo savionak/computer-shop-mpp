@@ -7,6 +7,7 @@ import {RouterModule, Routes} from "@angular/router";
 import {AppComponent} from "./component/app/app.component";
 
 import {HttpOAuthService} from "./shared/http-oauth.service";
+import {DocumentService} from "./shared/document.service";
 
 import {HeaderComponent} from "./component/app/header.component";
 import {FooterComponent} from "./component/app/footer.component";
@@ -152,6 +153,7 @@ const appRoutes: Routes = [
 @NgModule({
     providers: [
         HttpOAuthService,
+        DocumentService,
         CanActivateViaOAuthGuard,
         CanActivateRoot
     ],
