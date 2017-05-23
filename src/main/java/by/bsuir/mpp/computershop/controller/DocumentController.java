@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("api/documents")
 public interface DocumentController {
 
-    @RequestMapping(path = "/users/{id}/profile/export", method = RequestMethod.GET)
+    @RequestMapping(path = "store", method = RequestMethod.GET)
     void exportComponentStore(
             @RequestParam("type") DocumentType documentType,
             HttpServletResponse response) throws ControllerException;
