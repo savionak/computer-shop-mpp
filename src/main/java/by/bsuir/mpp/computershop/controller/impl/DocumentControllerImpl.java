@@ -6,13 +6,16 @@ import by.bsuir.mpp.computershop.controller.exception.wrapper.DocumentGeneratorC
 import by.bsuir.mpp.computershop.document.DocumentType;
 import by.bsuir.mpp.computershop.document.generator.DocumentGenerator;
 import by.bsuir.mpp.computershop.document.model.provider.ContentProvider;
+import by.bsuir.mpp.computershop.document.model.provider.impl.ComponentStoreProvider;
 import by.bsuir.mpp.computershop.entity.ComponentStore;
 import by.bsuir.mpp.computershop.service.ComponentStoreService;
+import by.bsuir.mpp.computershop.utils.Util;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
+import java.util.List;
 
 import static by.bsuir.mpp.computershop.controller.exception.wrapper.ServiceCallWrapper.wrapServiceCall;
 
@@ -28,7 +31,9 @@ public class DocumentControllerImpl implements DocumentController {
 
     @Override
     public void exportComponentStore(DocumentType documentType, HttpServletResponse response) throws ControllerException {
-        Iterable<ComponentStore> store = wrapServiceCall(() -> storeService.getCurrentState(), logger);
+        Iterable<ComponentStore> storeIterable = wrapServiceCall(() -> storeService.getCurrentState(), logger);
+
+        List<ComponentStore> store = Util.toList(storeIterable);
 
         dispatchDocumentRequest(
                 response,
