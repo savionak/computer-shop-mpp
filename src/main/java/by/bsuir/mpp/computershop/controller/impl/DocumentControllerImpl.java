@@ -12,6 +12,7 @@ import by.bsuir.mpp.computershop.service.*;
 import by.bsuir.mpp.computershop.utils.Util;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
@@ -42,7 +43,8 @@ public class DocumentControllerImpl implements DocumentController {
     }
 
     @Override
-    public void exportComponentStore(DocumentType documentType, HttpServletResponse response) throws ControllerException {
+    public void exportComponentStore(@RequestParam("type") DocumentType documentType,
+                                     HttpServletResponse response) throws ControllerException {
         Iterable<ComponentStore> storeIterable = wrapServiceCall(() -> storeService.getCurrentState(), logger);
 
         List<ComponentStore> store = Util.toList(storeIterable);
