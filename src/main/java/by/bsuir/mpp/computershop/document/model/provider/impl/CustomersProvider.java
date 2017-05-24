@@ -1,7 +1,6 @@
 package by.bsuir.mpp.computershop.document.model.provider.impl;
 
 import by.bsuir.mpp.computershop.document.model.provider.ContentProvider;
-import by.bsuir.mpp.computershop.entity.ComponentStore;
 import by.bsuir.mpp.computershop.entity.Customer;
 import org.springframework.data.util.Pair;
 
@@ -11,16 +10,16 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
-public class CustomerProvider implements ContentProvider<Customer, Customer> {
+public class CustomersProvider implements ContentProvider<Customer, Customer> {
     @Override
     public String createFilename(Customer customer) {
-        return "customer_state";
+        return "customers_list";
     }
 
     @Override
     public String createTitle(Customer customer) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        return String.format("Customer State for %s", dateFormat.format(new Date()));
+        return String.format("Customers list for %s", dateFormat.format(new Date()));
     }
 
     @Override
@@ -30,22 +29,21 @@ public class CustomerProvider implements ContentProvider<Customer, Customer> {
 
     @Override
     public List<String> getHeaders() {
-        return Arrays.asList("Type", "Model", "Price", "Count");
+        return Arrays.asList("Name", "Orders Count");
     }
 
     @Override
-    public String createTableTitle(Customer customer, Collection<Customer> courseFeedbacks) {
-        return "Customer state";
+    public String createTableTitle(Customer customer, Collection<Customer> customers) {
+        return "Customers list";
     }
 
     @Override
     public List<List<String>> createRows(Collection<Customer> customers) {
         return customers.stream()
                 .map(customerItem -> Arrays.asList(
-                        customerItem.getModel().getType().getName(),
-                        customerItem.getModel().getName(),
-                        customerItem.getPrice().toString(),
-                        customerItem.getCount().toString()))
+                        customerItem.getName(),
+                        customerItem.getOrdersCount().toString())
+                )
                 .collect(Collectors.toList());
     }
 }
