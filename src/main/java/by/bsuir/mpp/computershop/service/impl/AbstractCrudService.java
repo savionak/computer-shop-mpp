@@ -58,7 +58,7 @@ public abstract class AbstractCrudService<E extends BaseEntity<ID>, ID extends S
     }
 
     @Override
-    public Page<E> getAll(Pageable pageable) throws ServiceException {
+    public Page<E> getAllPage(Pageable pageable) throws ServiceException {
         return wrapRepositoryCall(() -> repository.findAll(pageable));
     }
 

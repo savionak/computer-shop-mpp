@@ -62,7 +62,7 @@ public abstract class CrudServiceTest<E extends BaseEntity<ID>, ID extends Seria
         Pageable pageable = new PageRequest(0, Integer.MAX_VALUE);
         when(getCrudRepository().findAll(pageable)).thenReturn(databasePage);
 
-        Page<E> result = getCrudService().getAll(pageable);
+        Page<E> result = getCrudService().getAllPage(pageable);
 
         verify(getCrudRepository(), times(1)).findAll(Matchers.<Pageable>any());
         Assert.assertEquals(content.size(), result.getTotalElements());
@@ -75,7 +75,7 @@ public abstract class CrudServiceTest<E extends BaseEntity<ID>, ID extends Seria
         Pageable pageable = new PageRequest(0, 10);
         when(getCrudRepository().findAll(pageable)).thenReturn(databasePage);
 
-        Page<E> result = getCrudService().getAll(pageable);
+        Page<E> result = getCrudService().getAllPage(pageable);
 
         verify(getCrudRepository(), times(1)).findAll(Matchers.<Pageable>any());
         Assert.assertEquals(0, result.getTotalElements());

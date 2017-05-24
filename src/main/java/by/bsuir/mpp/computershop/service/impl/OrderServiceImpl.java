@@ -23,7 +23,7 @@ public class OrderServiceImpl extends AbstractCrudService<Order, Long> implement
     }
 
     @Override
-    public Page<Order> getAll(Pageable pageable) throws ServiceException {
+    public Page<Order> getAllPage(Pageable pageable) throws ServiceException {
         return wrapRepositoryCall(() -> orderRepository.findAllByCanceledIsFalse(pageable));
     }
 
