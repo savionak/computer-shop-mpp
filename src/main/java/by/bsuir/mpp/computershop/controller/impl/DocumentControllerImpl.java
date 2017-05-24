@@ -15,7 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletResponse;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import static by.bsuir.mpp.computershop.controller.exception.wrapper.ServiceCallWrapper.wrapServiceCall;
@@ -76,8 +79,12 @@ public class DocumentControllerImpl implements DocumentController {
     private <TMainEntity, TTableEntity> String createFilename(TMainEntity mainEntity,
                                                               ContentProvider<TMainEntity, TTableEntity> contentProvider,
                                                               DocumentGenerator<TMainEntity, TTableEntity> documentGenerator) {
-        String filename = String.format("%s.%s",
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+        String now = dateFormat.format(new Date());
+
+        String filename = String.format("%s-%s.%s",
                 contentProvider.createFilename(mainEntity),
+                now,
                 documentGenerator.getFileExtension());
         filename = sanitizeFilename(filename);
         return filename;
