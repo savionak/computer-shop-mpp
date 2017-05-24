@@ -6,8 +6,8 @@ import by.bsuir.mpp.computershop.controller.exception.wrapper.DocumentGeneratorC
 import by.bsuir.mpp.computershop.document.DocumentType;
 import by.bsuir.mpp.computershop.document.generator.DocumentGenerator;
 import by.bsuir.mpp.computershop.document.model.provider.ContentProvider;
-import by.bsuir.mpp.computershop.document.model.provider.impl.ComponentStoreProvider;
-import by.bsuir.mpp.computershop.entity.ComponentStore;
+import by.bsuir.mpp.computershop.document.model.provider.impl.*;
+import by.bsuir.mpp.computershop.entity.*;
 import by.bsuir.mpp.computershop.service.*;
 import by.bsuir.mpp.computershop.utils.Util;
 import org.apache.log4j.Logger;
@@ -58,6 +58,66 @@ public class DocumentControllerImpl implements DocumentController {
                 null,
                 store,
                 new ComponentStoreProvider());
+    }
+
+    @Override
+    public void exportImport(@RequestParam("type") DocumentType documentType,
+                             HttpServletResponse response) throws ControllerException {
+        Iterable<Import> importIterable = wrapServiceCall(() -> importService.getCurrentState(), logger);
+
+        List<Import> imports = Util.toList(importIterable);
+
+        dispatchDocumentRequest(
+                response,
+                documentType,
+                null,
+                imports,
+                new ImportProvider());
+    }
+
+    @Override
+    public void exportOrder(@RequestParam("type") DocumentType documentType,
+                            HttpServletResponse response) throws ControllerException {
+        Iterable<Order> orderIterable = wrapServiceCall(() -> orderService.getCurrentState(), logger);
+
+        List<Order> order = Util.toList(orderIterable);
+
+        dispatchDocumentRequest(
+                response,
+                documentType,
+                null,
+                order,
+        new OrderProvider());
+    }
+
+    @Override
+    public void exportUser(@RequestParam("type") DocumentType documentType,
+                           HttpServletResponse response) throws ControllerException {
+        Iterable<UserAuth> userIterable = wrapServiceCall(() -> userAuthService.getCurrentState(), logger);
+
+        List<UserAuth> user = Util.toList(userIterable);
+
+        dispatchDocumentRequest(
+                response,
+                documentType,
+                null,
+                user,
+        new UserProvider());
+    }
+
+    @Override
+    public void exportCustomer(@RequestParam("type") DocumentType documentType,
+                               HttpServletResponse response) throws ControllerException {
+        Iterable<Customer> customerIterable = wrapServiceCall(() -> customerService.getCurrentState(), logger);
+
+        List<Customer> customer = Util.toList(customerIterable);
+
+        dispatchDocumentRequest(
+                response,
+                documentType,
+                null,
+                customer,
+        new CustomerProvider());
     }
 
     private <TMainEntity, TTableEntity> void dispatchDocumentRequest(HttpServletResponse response,
