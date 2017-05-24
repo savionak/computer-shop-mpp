@@ -8,6 +8,7 @@ import {CurrentUser} from "./current-user.model";
 import {Util} from "./utils";
 import {Role} from "../model/full/user-auth-model";
 import {ADMIN_ROUTES, DIRECTOR_ROUTES, GUEST_ROUTES, MANAGER_ROUTES} from "./route-consts";
+import {DocumentType} from "./document.service";
 
 
 @Injectable()
@@ -139,4 +140,12 @@ export class HttpOAuthService {
         options = this.appendAuthHeader(options);
         return this.http.options(url, options);
     };
+
+    //----------------------------------------------------------------------------------
+    // Append access_token to document requests
+    //----------------------------------------------------------------------------------
+
+    public getDocument(url: string, type: DocumentType) {
+        window.open(url + '?type=' + type + '&access_token=' + this.getCurrentUser().access_token);
+    }
 }
