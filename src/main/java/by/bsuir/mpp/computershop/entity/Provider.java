@@ -2,7 +2,9 @@ package by.bsuir.mpp.computershop.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name = "provider")
@@ -17,6 +19,9 @@ public class Provider extends BaseSoftEntity<Long> {
     @Column(name = "imports_count", nullable = false,
             insertable = false, updatable = false)
     private Integer importsCount;
+
+    @OneToMany(mappedBy = "provider")
+    private List<Import> imports;
 
     public String getName() {
         return this.name;
@@ -42,4 +47,11 @@ public class Provider extends BaseSoftEntity<Long> {
         this.importsCount = importsCount;
     }
 
+    public List<Import> getImports() {
+        return imports;
+    }
+
+    public void setImports(List<Import> imports) {
+        this.imports = imports;
+    }
 }
