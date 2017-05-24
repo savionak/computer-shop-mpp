@@ -2,6 +2,7 @@ package by.bsuir.mpp.computershop.document.model.provider.impl;
 
 import by.bsuir.mpp.computershop.document.model.provider.ContentProvider;
 import by.bsuir.mpp.computershop.entity.Import;
+import by.bsuir.mpp.computershop.entity.Provider;
 import org.springframework.data.util.Pair;
 
 import java.text.DateFormat;
@@ -10,21 +11,24 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
-public class ImportProvider implements ContentProvider<Import, Import> {
+public class ProviderImportsProvider implements ContentProvider<Provider, Import> {
     @Override
-    public String createFilename(Import imports) {
-        return "import_state";
+    public String createFilename(Provider provider) {
+        return "provider_imports";
     }
 
     @Override
-    public String createTitle(Import imports) {
+    public String createTitle(Provider provider) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         return String.format("Import State for %s", dateFormat.format(new Date()));
     }
 
     @Override
-    public List<Pair<String, String>> createSubtitles(Import imports) {
-        return Collections.emptyList();
+    public List<Pair<String, String>> createSubtitles(Provider provider) {
+        List<Pair<String, String>> subtitles = new ArrayList<>();
+        subtitles.add(Pair.of("Provider name", provider.getName()));
+        subtitles.add(Pair.of("Imports count", provider.getImportsCount().toString()));
+        return subtitles;
     }
 
     @Override
@@ -33,7 +37,7 @@ public class ImportProvider implements ContentProvider<Import, Import> {
     }
 
     @Override
-    public String createTableTitle(Import imports, Collection<Import> courseFeedbacks) {
+    public String createTableTitle(Provider provider, Collection<Import> mports) {
         return "Component store state";
     }
 
