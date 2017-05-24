@@ -8,6 +8,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {HttpOAuthService} from "../../shared/http-oauth.service";
 
 import {ToasterService} from "angular2-toaster";
+import {DocumentService} from "../../shared/document.service";
 
 @Component({
     selector: 'user-page',
@@ -20,7 +21,8 @@ export class UserPage extends BasePage {
     @ViewChild(UserRemovedListComponent) removedList: UserRemovedListComponent;
 
     constructor(authService: HttpOAuthService, r: Router, service: UserAuthService, route: ActivatedRoute,
-                toasterService: ToasterService) {
+                toasterService: ToasterService,
+                private documentService: DocumentService) {
         super(authService, r, route, toasterService);
         this.service = service;
     }
@@ -53,5 +55,10 @@ export class UserPage extends BasePage {
 
     onDropDone(id: number) {
         this.popSuccess('User deleted from system');
+    }
+
+    onGetAllPage(documentType: DocumentType) {
+        alert("here");
+        this.documentService.getStoreState(documentType);
     }
 }
