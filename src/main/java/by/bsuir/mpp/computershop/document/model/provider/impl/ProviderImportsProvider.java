@@ -33,12 +33,12 @@ public class ProviderImportsProvider implements ContentProvider<Provider, Import
 
     @Override
     public List<String> getHeaders() {
-        return Arrays.asList("Type", "Model", "Price", "Count");
+        return Arrays.asList("Type", "Model", "Purchase Price", "Count");
     }
 
     @Override
-    public String createTableTitle(Provider provider, Collection<Import> mports) {
-        return "Component store state";
+    public String createTableTitle(Provider provider, Collection<Import> imports) {
+        return String.format("Imports list of provider %d", provider.getId());
     }
 
     @Override
@@ -47,7 +47,7 @@ public class ProviderImportsProvider implements ContentProvider<Provider, Import
                 .map(importItem -> Arrays.asList(
                         importItem.getModel().getType().getName(),
                         importItem.getModel().getName(),
-                        importItem.getPrice().toString(),
+                        importItem.getPurchasePrice().toString(),
                         importItem.getCount().toString()))
                 .collect(Collectors.toList());
     }

@@ -33,7 +33,7 @@ public class ComponentStoreProvider implements ContentProvider<ComponentStore, C
     }
 
     @Override
-    public String createTableTitle(ComponentStore store, Collection<ComponentStore> courseFeedbacks) {
+    public String createTableTitle(ComponentStore store, Collection<ComponentStore> stores) {
         return "Component store state";
     }
 

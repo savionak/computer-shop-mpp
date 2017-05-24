@@ -24,10 +24,7 @@ public class ProvidersProvider implements ContentProvider<Provider, Provider> {
 
     @Override
     public List<Pair<String, String>> createSubtitles(Provider provider) {
-        List<Pair<String, String>> subtitles = new ArrayList<>();
-        subtitles.add(Pair.of("Provider name", provider.getName()));
-        subtitles.add(Pair.of("Imports count", provider.getImportsCount().toString()));
-        return subtitles;
+        return Collections.emptyList();
     }
 
     @Override
