@@ -8,6 +8,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {HttpOAuthService} from "../../shared/http-oauth.service";
 
 import {ToasterService} from "angular2-toaster";
+import {DocumentService} from "../../shared/document.service";
 
 @Component({
     selector: 'customer-page',
@@ -20,7 +21,8 @@ export class CustomerPage extends BasePage {
     @ViewChild(CustomerRemovedListComponent) removedList: CustomerRemovedListComponent;
 
     constructor(authService: HttpOAuthService, r: Router, service: CustomerService, route: ActivatedRoute,
-                toasterService: ToasterService) {
+                toasterService: ToasterService,
+                private documentService: DocumentService) {
         super(authService, r, route, toasterService);
         this.service = service;
     }
@@ -41,5 +43,11 @@ export class CustomerPage extends BasePage {
     onRestoreDone() {
         this.popSuccess('Customer restored');
         this.list.onRefresh();
+    }
+
+
+    onGetAllPage(documentType: DocumentType) {
+        alert("here");
+        this.documentService.getStoreState(documentType);
     }
 }

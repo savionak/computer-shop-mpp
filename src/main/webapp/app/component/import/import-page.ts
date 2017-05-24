@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {HttpOAuthService} from "../../shared/http-oauth.service";
 
 import {ToasterService} from "angular2-toaster";
+import {DocumentService} from "../../shared/document.service";
 
 @Component({
     selector: 'import-page',
@@ -17,7 +18,8 @@ export class ImportPage extends BasePage {
     @ViewChild(ImportListComponent) list: ImportListComponent;
 
     constructor(authService: HttpOAuthService, r: Router, service: ImportService, route: ActivatedRoute,
-                toasterService: ToasterService) {
+                toasterService: ToasterService,
+                private documentService: DocumentService) {
         super(authService, r, route, toasterService);
         this.service = service;
     }
@@ -37,5 +39,10 @@ export class ImportPage extends BasePage {
     onDeleteDone() {
         this.popSuccess('Import deleted');
         this.list.onRefresh();
+    }
+
+    onGetAllPage(documentType: DocumentType) {
+        alert("here");
+        this.documentService.getStoreState(documentType);
     }
 }
