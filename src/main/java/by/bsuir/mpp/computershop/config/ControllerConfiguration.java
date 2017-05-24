@@ -75,10 +75,9 @@ public class ControllerConfiguration {
 
     @Bean
     public DocumentController documentController(ComponentStoreService storeService,
-                                                 ImportService importService,
-                                                 OrderService orderService,
+                                                 ProviderService providerService,
                                                  UserAuthService userAuthService,
                                                  CustomerService customerService) {
-        return new DocumentControllerImpl(storeService, importService, orderService, userAuthService, customerService);
+        return new DocumentControllerImpl(storeService, providerService, userAuthService, customerService);
     }
 }

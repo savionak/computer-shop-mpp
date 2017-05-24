@@ -8,10 +8,14 @@ import by.bsuir.mpp.computershop.document.generator.DocumentGenerator;
 import by.bsuir.mpp.computershop.document.model.provider.ContentProvider;
 import by.bsuir.mpp.computershop.document.model.provider.impl.*;
 import by.bsuir.mpp.computershop.entity.*;
-import by.bsuir.mpp.computershop.service.*;
+import by.bsuir.mpp.computershop.service.ComponentStoreService;
+import by.bsuir.mpp.computershop.service.CustomerService;
+import by.bsuir.mpp.computershop.service.ProviderService;
+import by.bsuir.mpp.computershop.service.UserAuthService;
 import by.bsuir.mpp.computershop.utils.Util;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletResponse;
@@ -27,22 +31,23 @@ public class DocumentControllerImpl implements DocumentController {
 
     private static final Logger logger = Logger.getLogger(DocumentControllerImpl.class);
     private ComponentStoreService storeService;
-    private ImportService importService;
-    private OrderService orderService;
+    private ProviderService providerService;
     private UserAuthService userAuthService;
     private CustomerService customerService;
 
     @Autowired
     public DocumentControllerImpl(ComponentStoreService storeService,
-                                  ImportService importService,
-                                  OrderService orderService,
+                                  ProviderService providerService,
                                   UserAuthService userAuthService,
                                   CustomerService customerService) {
         this.storeService = storeService;
-        this.importService = importService;
-        this.orderService = orderService;
+        this.providerService = providerService;
         this.userAuthService = userAuthService;
         this.customerService = customerService;
+    }
+
+    private static String sanitizeFilename(String filename) {
+        return filename.replaceAll("[^a-zA-Z0-9.-]", "_");
     }
 
     @Override
@@ -61,63 +66,65 @@ public class DocumentControllerImpl implements DocumentController {
     }
 
     @Override
-    public void exportImport(@RequestParam("type") DocumentType documentType,
-                             HttpServletResponse response) throws ControllerException {
-        Iterable<Import> importIterable = wrapServiceCall(() -> importService.getCurrentState(), logger);
+    public void exportProviderImports(
+            @PathVariable Long id,
+            @RequestParam("type") DocumentType documentType,
+            HttpServletResponse response) throws ControllerException {
+        Provider provider = wrapServiceCall(() -> providerService.getOne(id), logger);
 
-        List<Import> imports = Util.toList(importIterable);
+        List<Import> imports = provider.getImports();
 
         dispatchDocumentRequest(
                 response,
                 documentType,
-                null,
+                provider,
                 imports,
-                new ImportProvider());
+                new ProviderImportsProvider());
     }
 
     @Override
-    public void exportOrder(@RequestParam("type") DocumentType documentType,
+    public void exportProviders(@RequestParam("type") DocumentType documentType,
+                                HttpServletResponse response) throws ControllerException {
+        Iterable<Provider> providersIterable = wrapServiceCall(() -> providerService.getAll(), logger);
+
+        List<Provider> providers = Util.toList(providersIterable);
+
+        dispatchDocumentRequest(
+                response,
+                documentType,
+                null,
+                providers,
+                new ProvidersProvider());
+    }
+
+    @Override
+    public void exportUsers(@RequestParam("type") DocumentType documentType,
                             HttpServletResponse response) throws ControllerException {
-        Iterable<Order> orderIterable = wrapServiceCall(() -> orderService.getCurrentState(), logger);
+        Iterable<UserAuth> usersIterable = wrapServiceCall(() -> userAuthService.getAll(), logger);
 
-        List<Order> order = Util.toList(orderIterable);
-
-        dispatchDocumentRequest(
-                response,
-                documentType,
-                null,
-                order,
-        new OrderProvider());
-    }
-
-    @Override
-    public void exportUser(@RequestParam("type") DocumentType documentType,
-                           HttpServletResponse response) throws ControllerException {
-        Iterable<UserAuth> userIterable = wrapServiceCall(() -> userAuthService.getCurrentState(), logger);
-
-        List<UserAuth> user = Util.toList(userIterable);
+        List<UserAuth> users = Util.toList(usersIterable);
 
         dispatchDocumentRequest(
                 response,
                 documentType,
                 null,
-                user,
-        new UserProvider());
+                users,
+                new UsersProvider());
     }
 
     @Override
-    public void exportCustomer(@RequestParam("type") DocumentType documentType,
-                               HttpServletResponse response) throws ControllerException {
-        Iterable<Customer> customerIterable = wrapServiceCall(() -> customerService.getCurrentState(), logger);
+    public void exportCustomers(@RequestParam("type") DocumentType documentType,
+                                HttpServletResponse response) throws ControllerException {
+        Iterable<Customer> customersIterable = wrapServiceCall(() -> customerService.getAll(), logger);
 
-        List<Customer> customer = Util.toList(customerIterable);
+        List<Customer> customer = Util.toList(customersIterable);
 
         dispatchDocumentRequest(
                 response,
                 documentType,
                 null,
                 customer,
-        new CustomerProvider());
+                new CustomersProvider());
     }
 
     private <TMainEntity, TTableEntity> void dispatchDocumentRequest(HttpServletResponse response,
@@ -148,9 +155,5 @@ public class DocumentControllerImpl implements DocumentController {
                 documentGenerator.getFileExtension());
         filename = sanitizeFilename(filename);
         return filename;
-    }
-
-    private static String sanitizeFilename(String filename) {
-        return filename.replaceAll("[^a-zA-Z0-9.-]", "_");
     }
 }
