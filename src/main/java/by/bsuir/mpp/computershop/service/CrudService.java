@@ -16,7 +16,7 @@ public interface CrudService<E extends BaseEntity<ID>, ID extends Serializable> 
     @Transactional
     E update(ID id, E entity) throws ServiceException;
 
-    Page<E> getAll(Pageable pageable) throws ServiceException;
+    Page<E> getAllPage(Pageable pageable) throws ServiceException;
 
     E getOne(ID id) throws ServiceException;
 

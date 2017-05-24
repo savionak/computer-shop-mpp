@@ -46,7 +46,7 @@ public abstract class SoftDeleteServiceTest<E extends BaseSoftEntity<ID>, ID ext
         Pageable pageable = new PageRequest(0, Integer.MAX_VALUE);
         when(getCrudRepository().findAllByRemovedIsFalse(pageable)).thenReturn(databasePage);
 
-        Page<E> result = getCrudService().getAll(pageable);
+        Page<E> result = getCrudService().getAllPage(pageable);
 
         verify(getCrudRepository(), times(1)).findAllByRemovedIsFalse(Matchers.<Pageable>any());
         Assert.assertEquals(content.size(), result.getTotalElements());
@@ -59,7 +59,7 @@ public abstract class SoftDeleteServiceTest<E extends BaseSoftEntity<ID>, ID ext
         Pageable pageable = new PageRequest(0, 10);
         when(getCrudRepository().findAllByRemovedIsFalse(pageable)).thenReturn(databasePage);
 
-        Page<E> result = getCrudService().getAll(pageable);
+        Page<E> result = getCrudService().getAllPage(pageable);
 
         verify(getCrudRepository(), times(1)).findAllByRemovedIsFalse(Matchers.<Pageable>any());
         Assert.assertEquals(0, result.getTotalElements());

@@ -26,7 +26,7 @@ public class AbstractSoftDeleteService<E extends BaseSoftEntity<ID>, ID extends 
     }
 
     @Override
-    public Page<E> getAll(Pageable pageable) throws ServiceException {
+    public Page<E> getAllPage(Pageable pageable) throws ServiceException {
         return wrapRepositoryCall(() -> repository.findAllByRemovedIsFalse(pageable));
     }
 
