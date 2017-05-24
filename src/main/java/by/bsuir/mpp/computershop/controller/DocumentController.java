@@ -16,4 +16,25 @@ public interface DocumentController {
     void exportComponentStore(
             @RequestParam("type") DocumentType documentType,
             HttpServletResponse response) throws ControllerException;
+
+
+    @RequestMapping(path = "import", method = RequestMethod.GET)
+    void exportImport(
+            @RequestParam("type") DocumentType documentType,
+            HttpServletResponse response) throws ControllerException;
+
+    @RequestMapping(path = "order", method = RequestMethod.GET)
+    void exportOrder(
+            @RequestParam("type") DocumentType documentType,
+            HttpServletResponse response) throws ControllerException;
+
+    @RequestMapping(path = "user", method = RequestMethod.GET)
+    void exportUser(
+            @RequestParam("type") DocumentType documentType,
+            HttpServletResponse response) throws ControllerException;
+
+    @RequestMapping(path = "customer", method = RequestMethod.GET)
+    void exportCustomer(
+            @RequestParam("type") DocumentType documentType,
+            HttpServletResponse response) throws ControllerException;
 }
