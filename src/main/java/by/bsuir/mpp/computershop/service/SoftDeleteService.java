@@ -12,7 +12,7 @@ public interface SoftDeleteService<E extends BaseEntity<ID>, ID extends Serializ
     void restore(ID id) throws ServiceException;
 
     @Override
-    Page<E> getAll(Pageable pageable) throws ServiceException;
+    Page<E> getAllPage(Pageable pageable) throws ServiceException;
 
     Page<E> getRemoved(Pageable pageable) throws ServiceException;
 }

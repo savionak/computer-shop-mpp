@@ -49,9 +49,9 @@ public abstract class AbstractReadController
     }
 
     @Override
-    public PageDto getAll(Pageable pageable) throws ControllerException {
+    public PageDto getAllPage(Pageable pageable) throws ControllerException {
         logger.info("GET ALL entities.");
-        Page<E> all = wrapServiceCall(() -> service.getAll(pageable), logger);
+        Page<E> all = wrapServiceCall(() -> service.getAllPage(pageable), logger);
         return asPageDto(all, briefDtoClass);
     }
 

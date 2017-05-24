@@ -16,5 +16,5 @@ public interface ReadController<F extends BaseFullDto<ID>, ID extends Serializab
     F getById(@PathVariable ID id) throws ControllerException;
 
     @RequestMapping(method = RequestMethod.GET)
-    PageDto getAll(Pageable pageable) throws ControllerException;
+    PageDto getAllPage(Pageable pageable) throws ControllerException;
 }
