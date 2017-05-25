@@ -50,8 +50,8 @@ export class ProviderPage extends BasePage {
         this.documentService.getProviderState(documentType);
     }
 
-    onGetAllPageID(id,documentType: DocumentType) {
-        // alert("here");
-        this.documentService.getImportState(documentType);
-    }
+    // onGetAllPageID(id :number, documentType: DocumentType) {
+    //     // alert("here");
+    //     this.documentService.getImportState(documentType);
+    // }
 }

@@ -22,8 +22,5 @@ export class ProviderListComponent extends ListComponent<ProviderModel, Provider
     }
 
 
-    onGetAllPageID(id,documentType: DocumentType) {
-        // alert("here");
-        this.documentService.getImportState(documentType);
-    }
+
 }
