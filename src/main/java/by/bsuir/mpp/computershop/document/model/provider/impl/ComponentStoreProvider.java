@@ -29,7 +29,7 @@ public class ComponentStoreProvider implements ContentProvider<ComponentStore, C
 
     @Override
     public List<String> getHeaders() {
-        return Arrays.asList("Type", "Model", "Price", "Count");
+        return Arrays.asList( "Model", "Price", "Count");
     }
 
     @Override
@@ -41,7 +41,6 @@ public class ComponentStoreProvider implements ContentProvider<ComponentStore, C
     public List<List<String>> createRows(Collection<ComponentStore> stores) {
         return stores.stream()
                 .map(storeItem -> Arrays.asList(
-                        storeItem.getModel().getType().getName(),
                         storeItem.getModel().getName(),
                         storeItem.getPrice().toString(),
                         storeItem.getCount().toString()))

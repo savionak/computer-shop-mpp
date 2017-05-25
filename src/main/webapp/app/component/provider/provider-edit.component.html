@@ -12,6 +12,15 @@
         <textarea class="form-control" id="descr" rows="5"  readonly>{{model.description}}</textarea>
         </div>
         <div class="dialog__row">
+            <button type="button" class="btn btn-default btn-sm" (click)="onGetAllPageID(model.id, 'PDF')">
+                PDF</button>
+            <button type="button" class="btn btn-default btn-sm" (click)="onGetAllPageID(model.id, 'CSV')">
+                CSV</button>
+            <button type="button" class="btn btn-default btn-sm" (click)="onGetAllPageID(model.id, 'XLSX')">
+                XLSX
+            </button>
+        </div>
+        <div class="dialog__row">
         <button type="button" class="btn btn-default" (click)="onClose()">Cancel</button>
             </div>
     </div>
@@ -28,15 +37,7 @@
             <textarea [(ngModel)]="model.description" id="description" name="description" rows="5" class="form-control"
                       placeholder="Provider description">
             </textarea>
-                <div class="dialog__row">
-                    <button type="button" class="btn btn-default btn-sm" (click)="onGetAllPageID(model.id, 'PDF')">
-                        PDF</button>
-                    <button type="button" class="btn btn-default btn-sm" (click)="onGetAllPageID(model.id, 'CSV')">
-                        CSV</button>
-                    <button type="button" class="btn btn-default btn-sm" (click)="onGetAllPageID(model.id, 'XLSX')">
-                        XLSX
-                    </button>
-                </div>
+
                 </div>
                 <div class="dialog__row">
                     <button type="submit" class="btn btn-success">{{isEditing ? "Save" : "Add"}}</button>
