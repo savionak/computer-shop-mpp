@@ -33,7 +33,7 @@ public class ProviderImportsProvider implements ContentProvider<Provider, Import
 
     @Override
     public List<String> getHeaders() {
-        return Arrays.asList("Type", "Model", "Purchase Price", "Count");
+        return Arrays.asList( "Model", "Purchase Price", "Count");
     }
 
     @Override
@@ -45,7 +45,6 @@ public class ProviderImportsProvider implements ContentProvider<Provider, Import
     public List<List<String>> createRows(Collection<Import> imports) {
         return imports.stream()
                 .map(importItem -> Arrays.asList(
-                        importItem.getModel().getType().getName(),
                         importItem.getModel().getName(),
                         importItem.getPurchasePrice().toString(),
                         importItem.getCount().toString()))
