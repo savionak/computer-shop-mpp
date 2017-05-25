@@ -31,7 +31,7 @@ export class DocumentService {
 
     public getImportState( id: number, documentType: DocumentType) {
         console.log("type:" + documentType);
-        this.http.getDocument(DocumentService.DOCS_URL + DocumentService.PROVIDER_ID_URL, documentType, id );
+        this.http.getDocument(DocumentService.DOCS_URL + DocumentService.PROVIDER_ID_URL + id, documentType);
     }
 
     public getUserState(documentType: DocumentType) {
