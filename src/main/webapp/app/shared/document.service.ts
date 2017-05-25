@@ -15,7 +15,7 @@ export class DocumentService {
     private static readonly STORE_URL = "/store";
     private static readonly USER_URL = "/user";
     private static readonly PROVIDER_URL = "/provider";
-    private static readonly PROVIDER_ID_URL = "/provider/{id}";
+    private static readonly PROVIDER_ID_URL = "/provider/";
     private static readonly CUSTOMER_URL = "/customer";
 
     // отчет о текущем состоянии склада
@@ -29,9 +29,9 @@ export class DocumentService {
         this.http.getDocument(DocumentService.DOCS_URL + DocumentService.CUSTOMER_URL, documentType);
     }
 
-    public getImportState(,documentType: DocumentType) {
+    public getImportState( id: number, documentType: DocumentType) {
         console.log("type:" + documentType);
-        this.http.getDocument(DocumentService.DOCS_URL + DocumentService.PROVIDER_ID_URL, documentType);
+        this.http.getDocument(DocumentService.DOCS_URL + DocumentService.PROVIDER_ID_URL, documentType, id );
     }
 
     public getUserState(documentType: DocumentType) {
