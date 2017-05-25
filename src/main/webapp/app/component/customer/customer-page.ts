@@ -8,7 +8,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {HttpOAuthService} from "../../shared/http-oauth.service";
 
 import {ToasterService} from "angular2-toaster";
-import {DocumentService} from "../../shared/document.service";
+import {DocumentService, DocumentType} from "../../shared/document.service";
 
 @Component({
     selector: 'customer-page',
@@ -26,7 +26,9 @@ export class CustomerPage extends BasePage {
         super(authService, r, route, toasterService);
         this.service = service;
     }
-
+    getOperationErrorMessage() {
+        return this.COMPONENTS_ERROR_MSG;
+    }
     onAddDone() {
         this.popSuccess('Customer added');
     }
@@ -47,7 +49,7 @@ export class CustomerPage extends BasePage {
 
 
     onGetAllPage(documentType: DocumentType) {
-        alert("here");
-        this.documentService.getStoreState(documentType);
+        // alert("here");
+        this.documentService.getCustomerState(documentType);
     }
 }

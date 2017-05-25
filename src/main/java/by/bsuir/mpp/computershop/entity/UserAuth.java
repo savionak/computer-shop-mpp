@@ -91,17 +91,17 @@ public class UserAuth extends BaseSoftEntity<Long> {
     public enum Role {
         MANAGER {
             public String toString() {
-                return "Менеджер";
+                return "MANAGER";
             }
         },
         DIRECTOR {
             public String toString() {
-                return "Директор";
+                return "DIRECTOR";
             }
         },
         ADMIN {
             public String toString() {
-                return "Администратор";
+                return "ADMIN";
             }
         };
 
