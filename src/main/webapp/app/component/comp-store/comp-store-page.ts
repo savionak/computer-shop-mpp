@@ -34,7 +34,7 @@ export class ComponentStorePage extends BasePage {
     }
 
     onGetCurrentState(documentType: DocumentType) {
-        alert("here");
+        // alert("here");
         this.documentService.getStoreState(documentType);
     }
 }
